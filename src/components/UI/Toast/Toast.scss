@@ -1,0 +1,29 @@
+.Toast {
+  position: fixed;
+  left: 50%;
+  bottom: -100px;
+  transform: translateX(-50%);
+  padding-bottom: 3em;
+  padding-top: 2px;
+  transition: bottom 0.4s;
+  z-index: 5;
+  display: block;
+
+  &__message {
+    font-size: 0.875em;
+    font-weight: bold;
+    text-align: center;
+    background: #555;
+    color: white;
+    box-shadow: 0 0 2px #000;
+    display: block;
+    padding: 0.5em 2em;
+    border-radius: 6px;
+    max-width: 250px;
+
+  }
+
+  &_isVisible {
+    bottom : 0;
+  }
+}
