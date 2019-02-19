@@ -14,7 +14,8 @@ import PrivateRoute from './components/PrivateRoute';
 import User from './components/Loadables/User';
 import Login from './components/Pages/Login';
 import Toast from './components/UI/Toast';
-
+import SystemMessage from './components/UI/SystemMessage';
+import Loader from './components/UI/Loader';
 
 import './App.scss';
 
@@ -41,7 +42,9 @@ const App = ({ onWindowResize }) => (
       <Route exact path="/login" component={Login} />
       <PrivateRoute path="/user" component={User} />
     </Switch>
-  <Toast />
+    <Toast />
+    <SystemMessage />
+    <Loader />
   </>
 );
 

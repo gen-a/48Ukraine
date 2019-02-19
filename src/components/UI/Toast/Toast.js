@@ -20,7 +20,7 @@ const propTypes = {
   /* Text message of the toast. */
   message: PropTypes.string.isRequired,
   /* Flag to switch show/hide state */
-  show: PropTypes.bool,
+  isVisible: PropTypes.bool,
   /* Time of showing toast in milliseconds */
   duration: PropTypes.number,
   /* Function to hide Toast */
@@ -31,21 +31,21 @@ const propTypes = {
  * @type {object}
  */
 const defaultProps = {
-  show: false,
+  isVisible: false,
   duration: 2000,
   onHideToast: () => console.log('onHideToast'),
 };
 
 
-const Toast = ({ message, show, duration, onHideToast }) => {
-  if (show) {
+const Toast = ({ message, isVisible, duration, onHideToast }) => {
+  if (isVisible) {
     setTimeout(() => {
       onHideToast();
     }, duration);
   }
   return ReactDOM.createPortal(
     (
-      <div className={show ? 'Toast Toast_isVisible' : 'Toast'}>
+      <div className={isVisible ? 'Toast Toast_isVisible' : 'Toast'}>
         <div className="Toast__message">
           {message}
         </div>
@@ -61,7 +61,7 @@ Toast.defaultProps = defaultProps;
 
 const mapStateToProps = (state) => {
   return {
-    show: state.app.toast.isActive,
+    isVisible: state.app.toast.isActive,
     message: state.app.toast.message
   }
 };

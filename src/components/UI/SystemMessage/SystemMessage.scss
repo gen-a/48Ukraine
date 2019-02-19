@@ -1,0 +1,120 @@
+.SystemMessage {
+
+  position: fixed;
+  z-index: 2;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 100%;
+  transition: bottom 0s linear 0.2s;
+  overflow: hidden;
+  user-select: none;
+
+  &_error {
+    .SystemMessage{
+      &__header {
+        background: red;
+      }
+      &__body {
+        background: #f2c0c6;
+      }
+    }
+  }
+  &_info {
+    .SystemMessage{
+      &__header {
+        background: #565cb3;
+      }
+      &__body {
+        background: #cbd0ef;
+      }
+    }
+  }
+  &_success {
+    .SystemMessage{
+      &__header {
+        background: #2c944c;
+      }
+      &__body {
+        background: #d2f7e4;
+      }
+    }
+  }
+
+  &__scrim {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.7);
+    z-index: 2;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0;
+    transition: opacity 0.2s linear 0s;
+  }
+
+  &__window {
+    position: absolute;
+    background: rgba(255, 255, 255, 1);
+    z-index: 3;
+    left: 100%;
+    top: 10px;
+    min-width: 300px;
+    max-height: 600px;
+    overflow: hidden;
+    transform: translateX(10px);
+    box-shadow: 0 0 2px #000;
+    transition: left 0.4s, transform 0.4s;
+  }
+
+  &_isVisible {
+    bottom: 0;
+    transition: bottom 0s linear 0s;
+    & .SystemMessage{
+      &__scrim {
+        opacity: 1;
+        transition: opacity 0.2s linear 0s;
+      }
+      &__window {
+        left: 50%;
+        transform: translateX(-50%);
+      }
+    }
+  }
+
+  &__header {
+    position: relative;
+    box-sizing: border-box;
+    height: 32px;
+    padding: 0;
+  }
+&__title{
+  position:absolute;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: bold;
+  color: white;
+  top:0;
+  left:10px;
+  right:42px;
+  bottom:0;
+  line-height: 32px;
+}
+  &__body {
+    padding: 10px;
+    color: black;
+    text-align: center;
+  }
+
+  &__closeButton {
+    position: absolute;
+    right: 0;
+    top: 0;
+    padding: 0;
+    border: 0;
+    outline: none;
+    background: none;
+    cursor: pointer;
+  }
+}
