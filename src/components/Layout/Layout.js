@@ -1,6 +1,6 @@
 /**
  * Application layout Component
- * Detect language from the parent route and set page layout
+ * Detect locale from the parent route and set page layout
  * @module Layout
  */
 import React from 'react';
