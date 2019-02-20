@@ -6,7 +6,9 @@ import {
   SET_WINDOW_SIZE,
   SHOW_LOADER,
   HIDE_LOADER,
+  SET_LOCALE,
 } from '../actions/app';
+import { APP_DEFAULT_LOCALE } from '../config/app';
 
 const initialState = {
   toast: {
@@ -16,7 +18,7 @@ const initialState = {
   systemMessage: {
     title: '',
     body: '',
-    type: '',
+    type: 'error',
     isActive: false,
   },
   window: {
@@ -28,14 +30,16 @@ const initialState = {
   loader: {
     isActive: false,
   },
-  local: {
-    current: 'uk',
-    default: 'uk',
-  }
+  locale: APP_DEFAULT_LOCALE
 };
 
 function app(state = initialState, action) {
   switch (action.type) {
+    case SET_LOCALE:
+      return {
+        ...state,
+        locale: action.payload
+      };
     case SHOW_TOAST:
       return {
         ...state,

@@ -1,60 +1,25 @@
 /**
  * Main Application Component.
- * Load important application settings into redux and set the basic routes
+ * Load local detection path and pass it to Layout component
  * @module App
  */
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Route, Switch } from 'react-router-dom';
-import { connect } from 'react-redux';
-import Container from './components/Dev/Container';
-import WindowResizeDetect from './components/UI/Detect/WindowResize';
-import { setWindowSize } from './actions/app';
-import PrivateRoute from './components/PrivateRoute';
-import User from './components/Loadables/User';
-import Login from './components/Pages/Login';
-import Toast from './components/UI/Toast';
-import SystemMessage from './components/UI/SystemMessage';
-import Loader from './components/UI/Loader';
+import Layout from './components/Layout';
+import { APP_LOCALES, APP_DEFAULT_LOCALE } from './config/app';
 
 import './App.scss';
 
 /**
- * PropTypes of the component
- * @type {object}
+ * Locals in path
+ * @type {string}
  */
-const propTypes = {
-  /* On resize window to store data into redux store. */
-  onWindowResize: PropTypes.func.isRequired
-};
-/**
- * Default settings for resize detection.
- * @type {object}
- */
-const defaultProps = {};
+const localePath = `/:locale(${APP_LOCALES.filter(locale => locale !== APP_DEFAULT_LOCALE).join('|')})`;
 
-const App = ({ onWindowResize }) => (
-  <>
-    <WindowResizeDetect onResize={onWindowResize} />
-    <Switch>
-      <Route exact path="/dev" component={Container} />
-      <Route exact path="/" component={Container} />
-      <Route exact path="/login" component={Login} />
-      <PrivateRoute path="/user" component={User} />
-    </Switch>
-    <Toast />
-    <SystemMessage />
-    <Loader />
-  </>
+const App = () => (
+  <Switch>
+    <Route path={localePath} component={Layout} />
+    <Route path="/" component={Layout} />
+  </Switch>
 );
-
-App.propTypes = propTypes;
-App.defaultProps = defaultProps;
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    onWindowResize: (data) => dispatch(setWindowSize(data))
-  }
-};
-
-export default connect(null, mapDispatchToProps)(App);
+export default App;

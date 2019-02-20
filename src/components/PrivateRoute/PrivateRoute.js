@@ -6,6 +6,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Route, Redirect } from 'react-router-dom';
+import { localizePath } from '../../services/locale';
 
 /**
  * PropTypes of the component
@@ -16,6 +17,8 @@ const propTypes = {
   isAuthenticated: PropTypes.bool,
   /* Children element to be rendered inside the component. */
   component: PropTypes.element.isRequired,
+  /* Current application locale */
+  locale: PropTypes.string.isRequired,
 };
 /**
  * Default settings for move detection.
@@ -27,18 +30,19 @@ const defaultProps = {
 
 /**
  * Main function of the PrivateRoute component.
- * @param Component
- * @param isAuthenticated
+ * @param Component {Element}
+ * @param isAuthenticated {boolean}
+ * @param locale {string}
  * @param rest
  * @constructor
  */
-const PrivateRoute = ({ component: Component, isAuthenticated, ...rest }) => (
+const PrivateRoute = ({ component: Component, isAuthenticated, locale, ...rest }) => (
   <Route
     {...rest}
     render={props => (
       isAuthenticated === true
         ? <Component {...props} />
-        : <Redirect to="/login" />
+        : <Redirect to={localizePath('/login', locale)} />
     )}
   />
 );
@@ -48,7 +52,8 @@ PrivateRoute.defaultProps = defaultProps;
 
 const mapStateToProps = (state) => {
   return {
-    isAuthenticated: state.user.isAuthenticated
+    isAuthenticated: state.user.isAuthenticated,
+    locale: state.app.locale
   };
 };
 

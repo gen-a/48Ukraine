@@ -5,6 +5,7 @@ export const HIDE_SYSTEM_MESSAGE = 'HIDE_SYSTEM_MESSAGE';
 export const SET_WINDOW_SIZE = 'SET_WINDOW_SIZE';
 export const SHOW_LOADER = 'SHOW_LOADER';
 export const HIDE_LOADER = 'HIDE_LOADER';
+export const SET_LOCALE = 'SET_LOCALE';
 
 /**
  * Fetching customer profile data from the server
@@ -71,6 +72,16 @@ export function hideToast() {
  */
 export function showToast(message) {
   return (dispatch, getState) => {
-    dispatch({ type: SHOW_TOAST, payload: {message} });
+    dispatch({ type: SHOW_TOAST, payload: message });
+  };
+}
+
+/**
+ * Set application locale
+ * @returns {function(*, *)}
+ */
+export function setLocale(loacale) {
+  return (dispatch, getState) => {
+    dispatch({ type: SET_LOCALE, payload: loacale });
   };
 }
