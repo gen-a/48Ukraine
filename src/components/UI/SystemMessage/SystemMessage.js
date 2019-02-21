@@ -35,7 +35,7 @@ const propTypes = {
   onHideSystemMessage: PropTypes.func,
 };
 /**
- * Default settings for move detection.
+ * Default settings of the component
  * @type {object}
  */
 const defaultProps = {

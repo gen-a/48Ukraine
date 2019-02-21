@@ -27,7 +27,7 @@ const propTypes = {
   onHideToast: PropTypes.func,
 };
 /**
- * Default settings for move detection.
+ * Default props of the component
  * @type {object}
  */
 const defaultProps = {

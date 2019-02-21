@@ -6,13 +6,37 @@ export const SET_WINDOW_SIZE = 'SET_WINDOW_SIZE';
 export const SHOW_LOADER = 'SHOW_LOADER';
 export const HIDE_LOADER = 'HIDE_LOADER';
 export const SET_LOCALE = 'SET_LOCALE';
+export const SET_MAIN_NAVIGATOR_SELECTED_ID = 'SET_MAIN_NAVIGATOR_SELECTED_ID';
+export const SET_MAIN_NAVIGATOR_EXPANDED_ID = 'SET_MAIN_NAVIGATOR_EXPANDED_ID';
 
 /**
- * Fetching customer profile data from the server
+ * Set selected id of the main departments navigator
+ * @param id {string} id of the node to be set
+ * @returns {function(*)}
+ */
+export function setMainNavigatorSelectedId(id) {
+  return (dispatch) => {
+    dispatch({ type: SET_MAIN_NAVIGATOR_SELECTED_ID, payload: id });
+  };
+}
+
+/**
+ * Set expanded node id of the main departments navigator
+ * @param id {string} id of the node to be set
+ * @param value {bool} value to remove or add from/to expanded array
+ * @returns {function(*)}
+ */
+export function setMainNavigatorExpandedId(id, value) {
+  return (dispatch) => {
+    dispatch({ type: SET_MAIN_NAVIGATOR_EXPANDED_ID, payload: { id, value } });
+  };
+}
+/**
+ * Set window size
  * @returns {function(*, *)}
  */
 export function setWindowSize(data) {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch({ type: SET_WINDOW_SIZE, payload: data });
   };
 }
@@ -25,7 +49,7 @@ export function setWindowSize(data) {
  * @returns {function(*, *)}
  */
 export function showSystemMessage(body, title= 'System message', type= 'error') {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch({ type: SHOW_SYSTEM_MESSAGE, payload: {body, title, type} });
   };
 }
@@ -35,7 +59,7 @@ export function showSystemMessage(body, title= 'System message', type= 'error') 
  * @returns {function(*, *)}
  */
 export function hideSystemMessage() {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch({ type: HIDE_SYSTEM_MESSAGE, payload: {} });
   };
 }
@@ -44,7 +68,7 @@ export function hideSystemMessage() {
  * @returns {function(*, *)}
  */
 export function hideLoader() {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch({ type: HIDE_LOADER, payload: {} });
   };
 }
@@ -53,7 +77,7 @@ export function hideLoader() {
  * @returns {function(*, *)}
  */
 export function showLoader() {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch({ type: SHOW_LOADER, payload: {} });
   };
 }
@@ -62,26 +86,28 @@ export function showLoader() {
  * @returns {function(*, *)}
  */
 export function hideToast() {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch({ type: HIDE_TOAST, payload: {} });
   };
 }
 /**
  * Show toast
+ * @param message {string} - text message of the toast
  * @returns {function(*, *)}
  */
 export function showToast(message) {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch({ type: SHOW_TOAST, payload: message });
   };
 }
 
 /**
  * Set application localization
+ * @param locale {string} - locale to be set as current locale
  * @returns {function(*, *)}
  */
-export function setLocale(loacale) {
-  return (dispatch, getState) => {
-    dispatch({ type: SET_LOCALE, payload: loacale });
+export function setLocale(locale) {
+  return (dispatch) => {
+    dispatch({ type: SET_LOCALE, payload: locale });
   };
 }

@@ -7,6 +7,8 @@ import {
   SHOW_LOADER,
   HIDE_LOADER,
   SET_LOCALE,
+  SET_MAIN_NAVIGATOR_SELECTED_ID,
+  SET_MAIN_NAVIGATOR_EXPANDED_ID,
 } from '../actions/app';
 import { APP_DEFAULT_LOCALE } from '../localization';
 
@@ -30,11 +32,58 @@ const initialState = {
   loader: {
     isActive: false,
   },
-  locale: APP_DEFAULT_LOCALE
+  locale: APP_DEFAULT_LOCALE,
+  navigatorNodes: [
+    {
+      label: 'Name 1',
+      id: '1',
+      children:
+        [
+          { label: 'Name 1.1', id: '1.1', children: [] },
+          { label: 'Name 1.2', id: '1.2', children: [] },
+          { label: 'Name 1.3', id: '1.3', children: [] },
+        ]
+    },
+    { label: 'Name 2', id: '2', children: [] },
+    {
+      label: 'Name 3',
+      id: '3',
+      children: [
+        { label: 'Name 3.1', id: '3.1', children: [] },
+        { label: 'Name 3.2', id: '3.2', children: [] },
+        { label: 'Name 3.3', id: '3.3', children: [] },
+      ]
+    },
+    { label: 'Name 4', id: '4', children: [] },
+    { label: 'Name 5', id: '5', children: [] },
+  ],
+  mainNavigator: {
+    selectedId: '1',
+    expanded: ['1']
+  }
 };
 
 function app(state = initialState, action) {
   switch (action.type) {
+    case SET_MAIN_NAVIGATOR_SELECTED_ID:
+      return {
+        ...state,
+        mainNavigator: {
+          ...state.mainNavigator,
+          selectedId: action.payload
+        }
+      };
+    case SET_MAIN_NAVIGATOR_EXPANDED_ID:
+      return {
+        ...state,
+        mainNavigator: {
+          ...state.mainNavigator,
+          expanded:
+            action.payload.value
+              ? [...state.mainNavigator.expanded, action.payload.id]
+              : state.mainNavigator.expanded.filter(id => action.payload.id !== id)
+        }
+      };
     case SET_LOCALE:
       return {
         ...state,
