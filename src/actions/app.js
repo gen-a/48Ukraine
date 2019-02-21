@@ -77,7 +77,7 @@ export function showToast(message) {
 }
 
 /**
- * Set application locale
+ * Set application localization
  * @returns {function(*, *)}
  */
 export function setLocale(loacale) {

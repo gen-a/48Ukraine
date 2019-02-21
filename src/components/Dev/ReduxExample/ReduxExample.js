@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { SET_IS_AUTHENTICATED } from '../../../actions/user';
+import { importDictionaryAcrticles } from '../../../actions/dictionary';
 
 const propTypes = {
   isAuthenticated: PropTypes.bool
@@ -16,13 +17,15 @@ const defaultProps = {
  */
 
 
-const ReduxExample = ({ auth, isAuthenticated }) => (
+const ReduxExample = ({ auth, isAuthenticated, importDictionary }) => {
+  importDictionary();
+  return (
   <div className="reduxExample">
     {isAuthenticated && 'is authenticated'}
     {isAuthenticated || 'is not authenticated'}
     <button onClick={() => auth( !isAuthenticated )}>change</button>
   </div>
-);
+)};
 
 ReduxExample.propTypes = propTypes;
 ReduxExample.defaultProps = defaultProps;
@@ -35,8 +38,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    auth: (data) => dispatch({ type: SET_IS_AUTHENTICATED, payload: data })
-  }
+    auth: (data) => dispatch({ type: SET_IS_AUTHENTICATED, payload: data }),
+    importDictionary: () => dispatch(importDictionaryAcrticles('ru')),
+  };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ReduxExample);

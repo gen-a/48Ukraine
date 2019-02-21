@@ -15,8 +15,7 @@ import WindowResizeDetect from '../UI/Detect/WindowResize';
 import Toast from '../UI/Toast';
 import SystemMessage from '../UI/SystemMessage';
 import Loader from '../UI/Loader';
-import { localizePath } from '../../services/locale';
-import { APP_DEFAULT_LOCALE } from '../../config/app';
+import { APP_DEFAULT_LOCALE, localizePath } from '../../localization';
 import { setLocale, setWindowSize } from '../../actions/app';
 
 /**

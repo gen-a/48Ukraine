@@ -8,7 +8,7 @@ import {
   HIDE_LOADER,
   SET_LOCALE,
 } from '../actions/app';
-import { APP_DEFAULT_LOCALE } from '../config/app';
+import { APP_DEFAULT_LOCALE } from '../localization';
 
 const initialState = {
   toast: {

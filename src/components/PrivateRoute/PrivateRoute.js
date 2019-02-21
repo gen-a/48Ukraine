@@ -6,7 +6,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Route, Redirect } from 'react-router-dom';
-import { localizePath } from '../../services/locale';
+import { localizePath } from '../../localization';
 
 /**
  * PropTypes of the component
@@ -17,7 +17,7 @@ const propTypes = {
   isAuthenticated: PropTypes.bool,
   /* Children element to be rendered inside the component. */
   component: PropTypes.element.isRequired,
-  /* Current application locale */
+  /* Current application localization */
   locale: PropTypes.string.isRequired,
 };
 /**

@@ -25,6 +25,12 @@ const propTypes = {
   onShowLoader: PropTypes.func,
   /* Function to hide loader */
   onHideLoader: PropTypes.func,
+  /* Message on error loading */
+  messageErrorLoading: PropTypes.string.isRequired,
+  /* Message on error timeout */
+  messageErrorTimeout: PropTypes.string.isRequired,
+  /* Error title for System message */
+  titleError: PropTypes.string.isRequired,
 };
 /**
  * Default settings for move detection.
@@ -40,13 +46,17 @@ const defaultProps = {
 };
 
 
-const Loading = ({ onShowLoader, onHideLoader, onShowMessage, retry, error, pastDelay, timedOut }) => {
-  if (error){
+const Loading = ({
+  titleError, messageErrorLoading, messageErrorTimeout,
+  onShowLoader, onHideLoader, onShowMessage,
+  retry, error, pastDelay, timedOut
+}) => {
+  if (error) {
     onHideLoader();
-    onShowMessage('Error to loading component... Please try again', 'Error!', 'error');
+    onShowMessage(messageErrorLoading, titleError, 'error');
   } else if (timedOut) {
     onHideLoader();
-    onShowMessage('Taking a long time... Please try again', 'Error!', 'error');
+    onShowMessage(messageErrorTimeout, titleError, 'error');
   } else if (pastDelay) {
     onShowLoader();
   } else {
@@ -78,6 +88,14 @@ const Loading = ({ onShowLoader, onHideLoader, onShowMessage, retry, error, past
 Loading.propTypes = propTypes;
 Loading.defaultProps = defaultProps;
 
+const mapStateToProps = (state) => {
+  return {
+    messageErrorLoading: state.dictionary.loading.message.error.loading,
+    messageErrorTimeout: state.dictionary.loading.message.error.timeout,
+    titleError: state.dictionary.systemMessage.title.error,
+  };
+};
+
 const mapDispatchToProps = (dispatch) => {
   return {
     onShowMessage: (body, title, type) => dispatch(showSystemMessage(body, title, type)),
@@ -86,6 +104,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(null, mapDispatchToProps)(Loading);
-
-
+export default connect(mapStateToProps, mapDispatchToProps)(Loading);

@@ -6,19 +6,13 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import Layout from './components/Layout';
-import { APP_LOCALES, APP_DEFAULT_LOCALE } from './config/app';
+import { localeInPath } from './localization';
 
 import './App.scss';
 
-/**
- * Locales in path
- * @type {string}
- */
-const localePath = `/:locale(${APP_LOCALES.filter(locale => locale !== APP_DEFAULT_LOCALE).join('|')})`;
-
 const App = () => (
   <Switch>
-    <Route path={localePath} component={Layout} />
+    <Route path={localeInPath} component={Layout} />
     <Route path="/" component={Layout} />
   </Switch>
 );
