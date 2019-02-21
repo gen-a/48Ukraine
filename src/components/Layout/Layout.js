@@ -16,21 +16,15 @@ import Toast from '../UI/Toast';
 import SystemMessage from '../UI/SystemMessage';
 import Loader from '../UI/Loader';
 import { APP_DEFAULT_LOCALE, localizePath } from '../../localization';
-import { setLocale, setWindowSize } from '../../actions/app';
+import { setWindowSize } from '../../actions/app';
 
 /**
  * PropTypes of the component
  * @type {object}
  */
 const propTypes = {
-  /* Object of the parent path matches. */
-  match: PropTypes.shape({
-    params: PropTypes.shape({
-      locale: PropTypes.string
-    }),
-  }),
-  /* Function to hide Toast */
-  onSetLocale: PropTypes.func,
+  /* Current locale string . */
+  locale: PropTypes.string,
   /* On resize window to store data into redux store. */
   onWindowResize: PropTypes.func.isRequired,
 };
@@ -39,19 +33,10 @@ const propTypes = {
  * @type {object}
  */
 const defaultProps = {
-  match: {
-    params: {
-      locale: APP_DEFAULT_LOCALE
-    }
-  },
-  onSetLocale: console.log,
+  locale: APP_DEFAULT_LOCALE
 };
 
-const Layout = ({ match, onSetLocale, onWindowResize }) => {
-  const { params: { locale } } = match;
-  if( locale !== APP_DEFAULT_LOCALE ){
-    onSetLocale(locale);
-  }
+const Layout = ({ locale, onWindowResize }) => {
   return (
     <>
       <WindowResizeDetect onResize={onWindowResize} />
@@ -71,11 +56,16 @@ const Layout = ({ match, onSetLocale, onWindowResize }) => {
 Layout.propTypes = propTypes;
 Layout.defaultProps = defaultProps;
 
+const mapStateToProps = (state) => {
+  return {
+    locale: state.app.locale
+  }
+};
+
 const mapDispatchToProps = (dispatch) => {
   return {
-    onSetLocale: (data) => dispatch(setLocale(data)),
     onWindowResize: (data) => dispatch(setWindowSize(data))
   };
 };
 
-export default connect(null, mapDispatchToProps)(Layout);
+export default connect(mapStateToProps, mapDispatchToProps)(Layout);

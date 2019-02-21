@@ -1,19 +1,39 @@
 /**
  * Main Application Component.
- * Load locale detection path and pass it to Layout component
+ * Store locale detected current locale and render Layout
  * @module App
  */
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import Layout from './components/Layout';
-import { localeInPath } from './localization';
+import Localize from './localization/Localize';
+import { setLocale } from './actions/app';
 
 import './App.scss';
 
-const App = () => (
-  <Switch>
-    <Route path={localeInPath} component={Layout} />
-    <Route path="/" component={Layout} />
-  </Switch>
+/**
+ * PropTypes of the component
+ * @type {object}
+ */
+const propTypes = {
+  /* Function to store into redux current locale */
+  onSetLocale: PropTypes.func.isRequired,
+};
+
+const App = ({ onSetLocale }) => (
+  <Localize onSetLocale={onSetLocale}>
+    <Layout />
+  </Localize>
 );
-export default App;
+
+App.propTypes = propTypes;
+
+const mapDispatchToProps = dispatch => (
+  {
+    onSetLocale: data => dispatch(setLocale(data))
+  }
+);
+
+export default connect(null, mapDispatchToProps)(App);
+
