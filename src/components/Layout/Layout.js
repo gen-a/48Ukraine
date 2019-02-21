@@ -1,6 +1,6 @@
 /**
  * Application layout Component
- * Detect locale from the parent route and set page layout
+ * Set page layout
  * @module Layout
  */
 import React from 'react';
@@ -15,8 +15,8 @@ import WindowResizeDetect from '../UI/Detect/WindowResize';
 import Toast from '../UI/Toast';
 import SystemMessage from '../UI/SystemMessage';
 import Loader from '../UI/Loader';
-import { APP_DEFAULT_LOCALE, localizePath } from '../../localization';
 import { setWindowSize } from '../../actions/app';
+import { localizePath } from '../../localization';
 
 /**
  * PropTypes of the component
@@ -24,16 +24,9 @@ import { setWindowSize } from '../../actions/app';
  */
 const propTypes = {
   /* Current locale string . */
-  locale: PropTypes.string,
+  locale: PropTypes.string.isRequired,
   /* On resize window to store data into redux store. */
   onWindowResize: PropTypes.func.isRequired,
-};
-/**
- * Default settings for move detection.
- * @type {object}
- */
-const defaultProps = {
-  locale: APP_DEFAULT_LOCALE
 };
 
 const Layout = ({ locale, onWindowResize }) => {
@@ -54,18 +47,17 @@ const Layout = ({ locale, onWindowResize }) => {
 };
 
 Layout.propTypes = propTypes;
-Layout.defaultProps = defaultProps;
 
-const mapStateToProps = (state) => {
-  return {
+const mapStateToProps = state => (
+  {
     locale: state.app.locale
   }
-};
+);
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    onWindowResize: (data) => dispatch(setWindowSize(data))
-  };
-};
+const mapDispatchToProps = dispatch => (
+  {
+    onWindowResize: data => dispatch(setWindowSize(data))
+  }
+);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Layout);

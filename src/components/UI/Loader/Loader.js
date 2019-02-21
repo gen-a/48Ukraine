@@ -55,10 +55,10 @@ const Loader = ({ isVisible }) => {
 Loader.propTypes = propTypes;
 Loader.defaultProps = defaultProps;
 
-const mapStateToProps = (state) => {
-  return {
+const mapStateToProps = state => (
+  {
     isVisible: state.app.loader.isActive
-  };
-};
+  }
+);
 
 export default connect(mapStateToProps, null)(Loader);

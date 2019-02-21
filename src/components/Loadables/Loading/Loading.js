@@ -47,10 +47,10 @@ const defaultProps = {
 
 
 const Loading = ({
-  titleError, messageErrorLoading, messageErrorTimeout,
-  onShowLoader, onHideLoader, onShowMessage,
-  retry, error, pastDelay, timedOut
-}) => {
+                   titleError, messageErrorLoading, messageErrorTimeout,
+                   onShowLoader, onHideLoader, onShowMessage,
+                   retry, error, pastDelay, timedOut
+                 }) => {
   if (error) {
     onHideLoader();
     onShowMessage(messageErrorLoading, titleError, 'error');
@@ -88,20 +88,20 @@ const Loading = ({
 Loading.propTypes = propTypes;
 Loading.defaultProps = defaultProps;
 
-const mapStateToProps = (state) => {
-  return {
+const mapStateToProps = state => (
+  {
     messageErrorLoading: state.dictionary.loading.message.error.loading,
     messageErrorTimeout: state.dictionary.loading.message.error.timeout,
     titleError: state.dictionary.systemMessage.title.error,
-  };
-};
+  }
+);
 
-const mapDispatchToProps = (dispatch) => {
-  return {
+const mapDispatchToProps = dispatch => (
+  {
     onShowMessage: (body, title, type) => dispatch(showSystemMessage(body, title, type)),
     onShowLoader: () => dispatch(showLoader()),
     onHideLoader: () => dispatch(hideLoader())
-  };
-};
+  }
+);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Loading);

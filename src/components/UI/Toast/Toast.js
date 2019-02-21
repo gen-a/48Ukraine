@@ -55,23 +55,20 @@ const Toast = ({ message, isVisible, duration, onHideToast }) => {
   );
 };
 
-
 Toast.propTypes = propTypes;
 Toast.defaultProps = defaultProps;
 
-const mapStateToProps = (state) => {
-  return {
+const mapStateToProps = state => (
+  {
     isVisible: state.app.toast.isActive,
     message: state.app.toast.message
   }
-};
+);
 
-const mapDispatchToProps = (dispatch) => {
-  return {
+const mapDispatchToProps = dispatch => (
+  {
     onHideToast: () => dispatch(hideToast())
   }
-};
+);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Toast);
-
-

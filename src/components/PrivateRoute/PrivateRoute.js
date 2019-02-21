@@ -42,7 +42,7 @@ const PrivateRoute = ({ component: Component, isAuthenticated, locale, ...rest }
     render={props => (
       isAuthenticated === true
         ? <Component {...props} />
-        : <Redirect to={localizePath('/login', locale)} />
+        : <Redirect to={localizePath('/login', locale)}/>
     )}
   />
 );
@@ -50,11 +50,11 @@ const PrivateRoute = ({ component: Component, isAuthenticated, locale, ...rest }
 PrivateRoute.propTypes = propTypes;
 PrivateRoute.defaultProps = defaultProps;
 
-const mapStateToProps = (state) => {
-  return {
+const mapStateToProps = state => (
+  {
     isAuthenticated: state.user.isAuthenticated,
     locale: state.app.locale
-  };
-};
+  }
+);
 
 export default connect(mapStateToProps, null)(PrivateRoute);

@@ -65,7 +65,7 @@ const SystemMessage = ({ body, title, type, isVisible, onHideSystemMessage }) =>
               {title}
             </div>
             <button type="button" className="SystemMessage__closeButton" onClick={() => onHideSystemMessage()}>
-              <Icon size={32} svg={ <IconClose /> } />
+              <Icon size={32} svg={<IconClose/>}/>
             </button>
           </div>
           <div className="SystemMessage__body">
@@ -82,21 +82,19 @@ const SystemMessage = ({ body, title, type, isVisible, onHideSystemMessage }) =>
 SystemMessage.propTypes = propTypes;
 SystemMessage.defaultProps = defaultProps;
 
-const mapStateToProps = (state) => {
-  return {
+const mapStateToProps = state => (
+  {
     isVisible: state.app.systemMessage.isActive,
     body: state.app.systemMessage.body,
     type: state.app.systemMessage.type,
     title: state.app.systemMessage.title
   }
-};
+);
 
-const mapDispatchToProps = (dispatch) => {
-  return {
+const mapDispatchToProps = dispatch => (
+  {
     onHideSystemMessage: () => dispatch(hideSystemMessage())
   }
-};
+);
 
 export default connect(mapStateToProps, mapDispatchToProps)(SystemMessage);
-
-
