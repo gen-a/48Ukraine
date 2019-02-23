@@ -8,6 +8,7 @@ import PropTypes from 'prop-types';
 import { Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Container from '../Dev/Container';
+import Browse from '../Sections/Browse';
 import PrivateRoute from '../PrivateRoute';
 import User from '../Loadables/User';
 import Login from '../Pages/Login';
@@ -32,16 +33,17 @@ const propTypes = {
 const Layout = ({ locale, onWindowResize }) => {
   return (
     <>
-      <WindowResizeDetect onResize={onWindowResize} />
-      <Switch>
-        <Route exact path={localizePath('/dev', locale)} component={Container} />
-        <Route exact path={localizePath('/', locale)} component={Container} />
-        <Route exact path={localizePath('/login', locale)} component={Login} />
-        <PrivateRoute path={localizePath('/user', locale)} component={User} />
-      </Switch>
-      <Toast />
-      <SystemMessage />
-      <Loader />
+    <WindowResizeDetect onResize={onWindowResize} />
+    <Switch>
+      <Route exact path={localizePath('/dev', locale)} component={Container} />
+      <Route exact path={localizePath('/', locale)} component={Container} />
+      <Route exact path={localizePath('/browse/:department', locale)} component={Browse} />
+      <Route exact path={localizePath('/login', locale)} component={Login} />
+      <PrivateRoute path={localizePath('/user', locale)} component={User} />
+    </Switch>
+    <Toast />
+    <SystemMessage />
+    <Loader />
     </>
   );
 };
@@ -60,4 +62,5 @@ const mapDispatchToProps = dispatch => (
   }
 );
 
-export default connect(mapStateToProps, mapDispatchToProps)(Layout);
+const C = connect(mapStateToProps, mapDispatchToProps)(Layout);
+export default props => <Route render={routeProps => <C {...routeProps} {...props} />} />;

@@ -8,7 +8,7 @@ export const IMPORT_DICTIONARY_ARTICLES_REJECTED = 'IMPORT_DICTIONARY_ARTICLES_R
  * Fetching customer profile data from the server
  * @returns {function(*, *)}
  */
-export function importDictionaryAcrticles(locale) {
+export function importDictionaryArticles(locale) {
   return (dispatch, getState) => {
     dispatch(
       { type: IMPORT_DICTIONARY_ARTICLES_PENDING, payload: { } }

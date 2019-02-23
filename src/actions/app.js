@@ -1,3 +1,5 @@
+import {importDictionaryArticles} from './dictionary';
+
 export const SHOW_TOAST = 'SHOW_TOAST';
 export const HIDE_TOAST = 'HIDE_TOAST';
 export const SHOW_SYSTEM_MESSAGE = 'SHOW_SYSTEM_MESSAGE';
@@ -6,17 +8,18 @@ export const SET_WINDOW_SIZE = 'SET_WINDOW_SIZE';
 export const SHOW_LOADER = 'SHOW_LOADER';
 export const HIDE_LOADER = 'HIDE_LOADER';
 export const SET_LOCALE = 'SET_LOCALE';
-export const SET_MAIN_NAVIGATOR_SELECTED_ID = 'SET_MAIN_NAVIGATOR_SELECTED_ID';
-export const SET_MAIN_NAVIGATOR_EXPANDED_ID = 'SET_MAIN_NAVIGATOR_EXPANDED_ID';
-
+export const SET_CURRENT_DEPARTMENT = 'SET_CURRENT_DEPARTMENT';
+export const EXPAND_NODE_OF_DEPARTMENT_TREE = 'EXPAND_NODE_OF_DEPARTMENT_TREE';
+export const SET_REDIRECT_PATH = 'SET_REDIRECT_PATH';
+export const SET_OPEN_PANEL = 'SET_OPEN_PANEL';
 /**
  * Set selected id of the main departments navigator
- * @param id {string} id of the node to be set
+ * @param value {string} id of the node to be set
  * @returns {function(*)}
  */
-export function setMainNavigatorSelectedId(id) {
+export function setDepartment(value) {
   return (dispatch) => {
-    dispatch({ type: SET_MAIN_NAVIGATOR_SELECTED_ID, payload: id });
+    dispatch({ type: SET_CURRENT_DEPARTMENT, payload: value });
   };
 }
 
@@ -26,9 +29,9 @@ export function setMainNavigatorSelectedId(id) {
  * @param value {bool} value to remove or add from/to expanded array
  * @returns {function(*)}
  */
-export function setMainNavigatorExpandedId(id, value) {
+export function expandNodeOfDepartmentTree(id, value) {
   return (dispatch) => {
-    dispatch({ type: SET_MAIN_NAVIGATOR_EXPANDED_ID, payload: { id, value } });
+    dispatch({ type: EXPAND_NODE_OF_DEPARTMENT_TREE, payload: { id, value } });
   };
 }
 /**
@@ -103,11 +106,23 @@ export function showToast(message) {
 
 /**
  * Set application localization
+ * And call import dictionary
  * @param locale {string} - locale to be set as current locale
  * @returns {function(*, *)}
  */
 export function setLocale(locale) {
   return (dispatch) => {
     dispatch({ type: SET_LOCALE, payload: locale });
+    importDictionaryArticles(locale)(dispatch);
+  };
+}
+/**
+ * Set open panel  name
+ * @param name {string} - name of the panel to be open
+ * @returns {function(*, *)}
+ */
+export function setOpenPanel(name) {
+  return (dispatch) => {
+    dispatch({ type: SET_OPEN_PANEL, payload: name });
   };
 }

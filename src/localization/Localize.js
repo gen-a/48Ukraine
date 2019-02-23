@@ -36,7 +36,7 @@ const Localize = ({ children, onSetLocale }) => {
           return children;
         }}
       />
-      <Route path="/" render={() => children}/>
+      <Route path="/" render={() => children} />
     </Switch>
   );
 };

@@ -3,9 +3,8 @@ import {
   IMPORT_DICTIONARY_ARTICLES_PENDING,
   IMPORT_DICTIONARY_ARTICLES_REJECTED,
 } from '../actions/dictionary';
-import { importInitialDictionary } from '../localization';
 
-const initialState = importInitialDictionary();
+const initialState = {};
 
 function dictionary(state = initialState, action) {
   switch (action.type) {

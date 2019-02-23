@@ -7,8 +7,9 @@ import {
   SHOW_LOADER,
   HIDE_LOADER,
   SET_LOCALE,
-  SET_MAIN_NAVIGATOR_SELECTED_ID,
-  SET_MAIN_NAVIGATOR_EXPANDED_ID,
+  SET_CURRENT_DEPARTMENT,
+  EXPAND_NODE_OF_DEPARTMENT_TREE,
+  SET_OPEN_PANEL
 } from '../actions/app';
 import { APP_DEFAULT_LOCALE } from '../localization';
 
@@ -33,7 +34,7 @@ const initialState = {
     isActive: false,
   },
   locale: APP_DEFAULT_LOCALE,
-  navigatorNodes: [
+  departments: [
     {
       label: 'Name 1',
       id: '1',
@@ -57,31 +58,34 @@ const initialState = {
     { label: 'Name 4', id: '4', children: [] },
     { label: 'Name 5', id: '5', children: [] },
   ],
-  mainNavigator: {
-    selectedId: '1',
-    expanded: ['1']
-  }
+  currentDepartment: '',
+  departmentsTree: {
+    expanded: []
+  },
+  openPanel: ''
 };
 
 function app(state = initialState, action) {
   switch (action.type) {
-    case SET_MAIN_NAVIGATOR_SELECTED_ID:
+    case SET_OPEN_PANEL:
       return {
         ...state,
-        mainNavigator: {
-          ...state.mainNavigator,
-          selectedId: action.payload
-        }
+        openPanel: action.payload
       };
-    case SET_MAIN_NAVIGATOR_EXPANDED_ID:
+    case SET_CURRENT_DEPARTMENT:
       return {
         ...state,
-        mainNavigator: {
-          ...state.mainNavigator,
+        currentDepartment: action.payload
+      };
+    case EXPAND_NODE_OF_DEPARTMENT_TREE:
+      return {
+        ...state,
+        departmentsTree: {
+          ...state.departmentsTree,
           expanded:
             action.payload.value
-              ? [...state.mainNavigator.expanded, action.payload.id]
-              : state.mainNavigator.expanded.filter(id => action.payload.id !== id)
+              ? [...state.departmentsTree.expanded, action.payload.id]
+              : state.departmentsTree.expanded.filter(id => action.payload.id !== id)
         }
       };
     case SET_LOCALE:

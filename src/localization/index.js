@@ -1,9 +1,6 @@
 export const APP_LOCALES = ['uk', 'ru', 'en'];
 export const APP_DEFAULT_LOCALE = 'uk';
 
-
-
-
 /**
  * Locale in path
  * @type {string}
@@ -26,7 +23,7 @@ export const localizePath = (path, locale) => {
  * @param locale {string} - name of the localization
  * @returns {Promise}
  */
-export const importDictionary = ( locale ) => {
+export const  importDictionary = ( locale ) => {
   switch (locale){
     case 'uk':
       return import('./uk');
@@ -36,17 +33,5 @@ export const importDictionary = ( locale ) => {
       return import('./ru');
     default:
       throw new Error(`No import source default for ${locale} `);
-  }
-};
-/**
- * Load initial dictionary articles
- * @returns {Promise.<void>}
- */
-export const importInitialDictionary= async () => {
-  try{
-    const loaded = await importDictionary(APP_DEFAULT_LOCALE);
-    return loaded.default;
-  }catch(err){
-    throw err;
   }
 };

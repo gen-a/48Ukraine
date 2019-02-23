@@ -9,8 +9,8 @@ import { connect } from 'react-redux';
 import Layout from './components/Layout';
 import Localize from './localization/Localize';
 import { setLocale } from './actions/app';
-
 import './App.scss';
+import { Route } from 'react-router-dom';
 
 /**
  * PropTypes of the component
@@ -22,9 +22,11 @@ const propTypes = {
 };
 
 const App = ({ onSetLocale }) => (
-  <Localize onSetLocale={onSetLocale}>
-    <Layout />
-  </Localize>
+  <>
+    <Localize onSetLocale={onSetLocale}>
+      <Layout />
+    </Localize>
+  </>
 );
 
 App.propTypes = propTypes;
@@ -35,5 +37,5 @@ const mapDispatchToProps = dispatch => (
   }
 );
 
-export default connect(null, mapDispatchToProps)(App);
-
+const C = connect(null, mapDispatchToProps)(App);
+export default props => <Route render={routeProps => <C {...routeProps} {...props} />} />;

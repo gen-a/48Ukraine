@@ -17,16 +17,16 @@ const propTypes = {
   data: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string,
-      label: PropTypes.string,
+      label: PropTypes.node,
       children: PropTypes.arrayOf(PropTypes.any),
     })
   ).isRequired,
   /* Id of the selected node. */
-  selectedId: PropTypes.string,
+  selected: PropTypes.string,
   /* On set expanded attribute of node. */
-  setExpanded: PropTypes.func.isRequired,
+  onToggle: PropTypes.func.isRequired,
   /* On set current attribute of node. */
-  setSelected: PropTypes.func.isRequired,
+  onSelect: PropTypes.func,
   /* Array of expanded nodes. */
   expanded: PropTypes.arrayOf(PropTypes.string),
   /* Set tree hidden state. */
@@ -43,9 +43,10 @@ const propTypes = {
 const defaultProps = {
   level: 0,
   expanded: [],
-  selectedId: '',
+  selected: '',
   isHidden: false,
   nodeHeight: 35,
+  onSelect: () => {}
 };
 /**
  * Count expanded (visible) nodes for tree height calculation
@@ -65,9 +66,9 @@ const countVisibleNodes = (data, expanded) => {
 };
 
 
-const Tree = ({ data, expanded, selectedId, setExpanded, setSelected, isHidden, level, nodeHeight }) => {
+const Tree = ({ data, expanded, selected, onToggle, onSelect, isHidden, level, nodeHeight }) => {
   const commonProps = {
-    expanded, selectedId, setExpanded, setSelected, nodeHeight
+    expanded, selected, onToggle, onSelect, nodeHeight
   };
   // count max height of the tree for css animation
   let maxHeight = isHidden ? 0 : countVisibleNodes(data, expanded) * nodeHeight;
@@ -80,7 +81,7 @@ const Tree = ({ data, expanded, selectedId, setExpanded, setSelected, isHidden, 
       {data.map((node) => {
         const { id, children, label } = node;
         const isExpanded = expanded.includes(id);
-        const isSelected = selectedId === id;
+        const isSelected = selected === id;
         // if children exists create subtree
         const subTree = children.length > 0
           ? (
@@ -102,12 +103,12 @@ const Tree = ({ data, expanded, selectedId, setExpanded, setSelected, isHidden, 
         }
         return (
           <li key={id} className={nodeClassName}>
-            <button type="button" className="Tree__label" tabIndex="-1" onClick={() => setSelected(id)}>
+            <button type="button" className="Tree__label" tabIndex="-1" onClick={() => onSelect(id)}>
               {label}
             </button>
             {!!children.length
             && (
-              <button type="button" className="Tree__toggle" onClick={() => setExpanded(id, !isExpanded)}>
+              <button type="button" className="Tree__toggle" onClick={() => onToggle(id, !isExpanded)}>
                 <div className="Tree__toggleIcon">
                   <IconTreeArrow />
                 </div>

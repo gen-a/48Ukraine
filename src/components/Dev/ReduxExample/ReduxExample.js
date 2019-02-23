@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { SET_IS_AUTHENTICATED } from '../../../actions/user';
-import { importDictionaryAcrticles } from '../../../actions/dictionary';
+import { importDictionaryArticles } from '../../../actions/dictionary';
 
 const propTypes = {
   isAuthenticated: PropTypes.bool
@@ -39,7 +39,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     auth: (data) => dispatch({ type: SET_IS_AUTHENTICATED, payload: data }),
-    importDictionary: () => dispatch(importDictionaryAcrticles('ru')),
+    importDictionary: () => dispatch(importDictionaryArticles('ru')),
   };
 };
 
