@@ -33,17 +33,27 @@ const propTypes = {
 const Layout = ({ locale, onWindowResize }) => {
   return (
     <>
-    <WindowResizeDetect onResize={onWindowResize} />
-    <Switch>
-      <Route exact path={localizePath('/dev', locale)} component={Container} />
-      <Route exact path={localizePath('/', locale)} component={Container} />
-      <Route exact path={localizePath('/browse/:department', locale)} component={Browse} />
-      <Route exact path={localizePath('/login', locale)} component={Login} />
-      <PrivateRoute path={localizePath('/user', locale)} component={User} />
-    </Switch>
-    <Toast />
-    <SystemMessage />
-    <Loader />
+      <WindowResizeDetect onResize={onWindowResize} />
+      <header className="Layer__header">
+        header
+      </header>
+      <div className="Layer__body">
+
+          <Switch>
+            <Route exact path={localizePath('/dev', locale)} component={Container} />
+            <Route exact path={localizePath('/', locale)} component={Container} />
+            <Route exact path={localizePath('/browse/:department', locale)} component={Browse} />
+            <Route exact path={localizePath('/login', locale)} component={Login} />
+            <PrivateRoute path={localizePath('/user', locale)} component={User} />
+          </Switch>
+
+      </div>
+      <div className="Layer__footer">
+        footer
+      </div>
+      <Toast />
+      <SystemMessage />
+      <Loader />
     </>
   );
 };
