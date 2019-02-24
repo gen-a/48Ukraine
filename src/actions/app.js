@@ -2,8 +2,8 @@ import {importDictionaryArticles} from './dictionary';
 
 export const SHOW_TOAST = 'SHOW_TOAST';
 export const HIDE_TOAST = 'HIDE_TOAST';
-export const SHOW_SYSTEM_MESSAGE = 'SHOW_SYSTEM_MESSAGE';
-export const HIDE_SYSTEM_MESSAGE = 'HIDE_SYSTEM_MESSAGE';
+export const SHOW_FLASH_MESSAGE = 'SHOW_FLASH_MESSAGE';
+export const HIDE_FLASH_MESSAGE = 'HIDE_FLASH_MESSAGE';
 export const SET_WINDOW_SIZE = 'SET_WINDOW_SIZE';
 export const SHOW_LOADER = 'SHOW_LOADER';
 export const HIDE_LOADER = 'HIDE_LOADER';
@@ -51,9 +51,9 @@ export function setWindowSize(data) {
  * @param type {string} - one of the error|info|success. It will be used for css style adjustment
  * @returns {function(*, *)}
  */
-export function showSystemMessage(body, title= 'System message', type= 'error') {
+export function showFlashMessage(body, title= 'System message', type= 'error') {
   return (dispatch) => {
-    dispatch({ type: SHOW_SYSTEM_MESSAGE, payload: {body, title, type} });
+    dispatch({ type: SHOW_FLASH_MESSAGE, payload: {body, title, type} });
   };
 }
 
@@ -61,9 +61,9 @@ export function showSystemMessage(body, title= 'System message', type= 'error') 
  * Hide system message
  * @returns {function(*, *)}
  */
-export function hideSystemMessage() {
+export function hideFlashMessage() {
   return (dispatch) => {
-    dispatch({ type: HIDE_SYSTEM_MESSAGE, payload: {} });
+    dispatch({ type: HIDE_FLASH_MESSAGE, payload: {} });
   };
 }
 /**

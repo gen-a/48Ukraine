@@ -1,19 +1,19 @@
 /**
- * SystemMessage message Component.
+ * FlashMessage message Component.
  * Show small messages to the visitor
- * @module SystemMessage
+ * @module FlashMessage
  */
 import React from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { hideSystemMessage } from '../../../actions/app';
+import { hideFlashMessage } from '../../../actions/app';
 import { APP_ROOT } from '../../../config/app';
 import IconClose from '../../Svg/IconClose';
 import Icon from '../Icon';
 
 
-import './SystemMessage.scss';
+import './FlashMessage.scss';
 
 /**
  * PropTypes of the component
@@ -31,8 +31,8 @@ const propTypes = {
   isVisible: PropTypes.bool,
   /* Type of the message. */
   type: PropTypes.oneOf(['error', 'success', 'info']),
-  /* Function to hide SystemMessage */
-  onHideSystemMessage: PropTypes.func,
+  /* Function to hide FlashMessage */
+  onHideFlashMessage: PropTypes.func,
 };
 /**
  * Default settings of the component
@@ -42,33 +42,33 @@ const defaultProps = {
   type: 'error',
   isVisible: false,
   duration: 2000,
-  onHideSystemMessage: () => console.log('onHideSystemMessage'),
+  onHideFlashMessage: () => console.log('onHideFlashMessage'),
 };
 
 
-const SystemMessage = ({ body, title, type, isVisible, onHideSystemMessage }) => {
-  let className = 'SystemMessage';
+const FlashMessage = ({ body, title, type, isVisible, onHideFlashMessage }) => {
+  let className = 'FlashMessage';
   if (isVisible) {
-    className += ' SystemMessage_isVisible';
+    className += ' FlashMessage_isVisible';
   }
   if (type) {
-    className += ` SystemMessage_${type}`;
+    className += ` FlashMessage_${type}`;
   }
 
   return ReactDOM.createPortal(
     (
       <div className={className}>
-        <div className="SystemMessage__scrim" onClick={() => onHideSystemMessage()}/>
-        <div className="SystemMessage__window">
-          <div className="SystemMessage__header">
-            <div className="SystemMessage__title">
+        <div className="FlashMessage__scrim" onClick={() => onHideFlashMessage()}/>
+        <div className="FlashMessage__window">
+          <div className="FlashMessage__header">
+            <div className="FlashMessage__title">
               {title}
             </div>
-            <button type="button" className="SystemMessage__closeButton" onClick={() => onHideSystemMessage()}>
+            <button type="button" className="FlashMessage__closeButton" onClick={() => onHideFlashMessage()}>
               <Icon size={32} svg={<IconClose/>}/>
             </button>
           </div>
-          <div className="SystemMessage__body">
+          <div className="FlashMessage__body">
             {body}
           </div>
         </div>
@@ -79,22 +79,22 @@ const SystemMessage = ({ body, title, type, isVisible, onHideSystemMessage }) =>
 };
 
 
-SystemMessage.propTypes = propTypes;
-SystemMessage.defaultProps = defaultProps;
+FlashMessage.propTypes = propTypes;
+FlashMessage.defaultProps = defaultProps;
 
 const mapStateToProps = state => (
   {
-    isVisible: state.app.systemMessage.isActive,
-    body: state.app.systemMessage.body,
-    type: state.app.systemMessage.type,
-    title: state.app.systemMessage.title
+    isVisible: state.app.flashMessage.isActive,
+    body: state.app.flashMessage.body,
+    type: state.app.flashMessage.type,
+    title: state.app.flashMessage.title
   }
 );
 
 const mapDispatchToProps = dispatch => (
   {
-    onHideSystemMessage: () => dispatch(hideSystemMessage())
+    onHideFlashMessage: () => dispatch(hideFlashMessage())
   }
 );
 
-export default connect(mapStateToProps, mapDispatchToProps)(SystemMessage);
+export default connect(mapStateToProps, mapDispatchToProps)(FlashMessage);

@@ -14,10 +14,13 @@ import User from '../Loadables/User';
 import Login from '../Pages/Login';
 import WindowResizeDetect from '../UI/Detect/WindowResize';
 import Toast from '../UI/Toast';
-import SystemMessage from '../UI/SystemMessage';
+import FlashMessage from '../UI/FlashMessage';
 import Loader from '../UI/Loader';
 import { setWindowSize } from '../../actions/app';
 import { localizePath } from '../../localization';
+import Header from '../Header';
+
+import './Layout.scss';
 
 /**
  * PropTypes of the component
@@ -34,11 +37,11 @@ const Layout = ({ locale, onWindowResize }) => {
   return (
     <>
       <WindowResizeDetect onResize={onWindowResize} />
-      <header className="Layer__header">
-        header
+      <header className="Layout__header">
+        <Header />
       </header>
-      <div className="Layer__body">
-
+      <div className="Layout__body">
+        <div className="Layout__bodyMain">
           <Switch>
             <Route exact path={localizePath('/dev', locale)} component={Container} />
             <Route exact path={localizePath('/', locale)} component={Container} />
@@ -46,13 +49,20 @@ const Layout = ({ locale, onWindowResize }) => {
             <Route exact path={localizePath('/login', locale)} component={Login} />
             <PrivateRoute path={localizePath('/user', locale)} component={User} />
           </Switch>
-
+        </div>
+        <div className="Layout__bodyScrim" />
+        <div className="Layout__panel Layout__panel_left">
+          left
+        </div>
+        <div className="Layout__panel Layout__panel_right">
+          right
+        </div>
       </div>
-      <div className="Layer__footer">
+      <div className="Layout__footer">
         footer
       </div>
       <Toast />
-      <SystemMessage />
+      <FlashMessage />
       <Loader />
     </>
   );

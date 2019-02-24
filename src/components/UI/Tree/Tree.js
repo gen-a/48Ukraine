@@ -5,7 +5,7 @@
  */
 import React from 'react';
 import PropTypes from 'prop-types';
-import IconTreeArrow from '../../Svg/IconTreeArrow';
+import ChevronLeft from '../../Svg/ChevronLeft';
 import './Tree.scss';
 
 /**
@@ -110,7 +110,7 @@ const Tree = ({ data, expanded, selected, onToggle, onSelect, isHidden, level, n
             && (
               <button type="button" className="Tree__toggle" onClick={() => onToggle(id, !isExpanded)}>
                 <div className="Tree__toggleIcon">
-                  <IconTreeArrow />
+                  <ChevronLeft />
                 </div>
               </button>
             )}

@@ -4,7 +4,7 @@
  */
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { showSystemMessage, showLoader, hideLoader } from '../../../actions/app';
+import { showFlashMessage, showLoader, hideLoader } from '../../../actions/app';
 
 /**
  * PropTypes of the component
@@ -98,7 +98,7 @@ const mapStateToProps = state => (
 
 const mapDispatchToProps = dispatch => (
   {
-    onShowMessage: (body, title, type) => dispatch(showSystemMessage(body, title, type)),
+    onShowMessage: (body, title, type) => dispatch(showFlashMessage(body, title, type)),
     onShowLoader: () => dispatch(showLoader()),
     onHideLoader: () => dispatch(hideLoader())
   }

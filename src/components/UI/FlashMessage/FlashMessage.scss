@@ -1,4 +1,4 @@
-.SystemMessage {
+.FlashMessage {
 
   position: fixed;
   z-index: 2;
@@ -11,7 +11,7 @@
   user-select: none;
 
   &_error {
-    .SystemMessage{
+    .FlashMessage{
       &__header {
         background: red;
       }
@@ -21,7 +21,7 @@
     }
   }
   &_info {
-    .SystemMessage{
+    .FlashMessage{
       &__header {
         background: #565cb3;
       }
@@ -31,7 +31,7 @@
     }
   }
   &_success {
-    .SystemMessage{
+    .FlashMessage{
       &__header {
         background: #2c944c;
       }
@@ -70,7 +70,7 @@
   &_isVisible {
     bottom: 0;
     transition: bottom 0s linear 0s;
-    & .SystemMessage{
+    & .FlashMessage{
       &__scrim {
         opacity: 1;
         transition: opacity 0.2s linear 0s;

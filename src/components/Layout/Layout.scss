@@ -1,0 +1,55 @@
+$top-bar-size: 40px;
+$bottom-bar-size: 40px;
+
+
+.Layout{
+  /*
+  &__body{
+    position:fixed;
+    overflow:auto;
+    top:$top-bar-size;
+    left:0;
+    width:100%;
+    bottom:$bottom-bar-size;
+  }
+  &__header{
+    height:$top-bar-size;
+    background:green;
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    z-index:60;
+    box-shadow: 0 0 2px #000;
+  }
+  &__bodyScrim{
+    position:absolute;
+    width:100%;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    background:rgba(0,0,0,0.5);
+    z-index:50;
+  }
+  &__panel{
+    position:fixed;
+    width:100%;
+    max-width:300px;
+    top:$top-bar-size;
+    bottom:0;
+    background:rgba(255,255,255,1);
+    z-index:50;
+    box-shadow: 0 0 2px #000;
+  }
+  &__panel_left{
+    left:0;
+    right:auto;
+  }
+  &__panel_right{
+    right:0;
+    left:auto;
+  }*/
+}
+
+

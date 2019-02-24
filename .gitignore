@@ -3,6 +3,7 @@
 .idea
 .env
 /~source
+/tmp
 
 # dependencies
 /node_modules

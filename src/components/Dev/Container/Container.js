@@ -1,7 +1,6 @@
 import React from 'react';
 import DepartmentsNavigator from '../../Containers/DepartmentsNavigator';
 import { Route } from 'react-router-dom';
-import ToggleMenuIcon from '../../Containers/ToggleMenuIcon';
 import ScrollBox from '../../UI/ScrollBox';
 /**
  * Temporary place for component development
@@ -9,8 +8,6 @@ import ScrollBox from '../../UI/ScrollBox';
 const Container = () => (
   <>
 
-
-    <ToggleMenuIcon />
     <DepartmentsNavigator />
   <div style={{width: '200px', height: '200px', position: 'relative'}}>
     <ScrollBox>

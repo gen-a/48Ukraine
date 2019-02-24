@@ -1,0 +1,28 @@
+@import '../../colors';
+
+$header-height: 48px;
+$sm-header-height: 40px;
+$md-header-height: 40px;
+$lg-header-height: 40px;
+$xl-header-height: 40px;
+
+.Header{
+  position:relative;
+  width:100%;
+  height:$header-height;
+
+  background:$corporate-lightest-blue;
+
+  display:flex;
+
+  &__logoBox{
+    flex: 1 1 200px;
+    text-align:center;
+  }
+  &__toggleIconBox{
+    flex: 0 0 48px;
+    padding:5px;
+    box-sizing: border-box;
+  }
+
+}

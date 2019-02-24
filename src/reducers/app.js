@@ -1,8 +1,8 @@
 import {
   SHOW_TOAST,
   HIDE_TOAST,
-  SHOW_SYSTEM_MESSAGE,
-  HIDE_SYSTEM_MESSAGE,
+  SHOW_FLASH_MESSAGE,
+  HIDE_FLASH_MESSAGE,
   SET_WINDOW_SIZE,
   SHOW_LOADER,
   HIDE_LOADER,
@@ -18,7 +18,7 @@ const initialState = {
     message: '',
     isActive: false,
   },
-  systemMessage: {
+  flashMessage: {
     title: '',
     body: '',
     type: 'error',
@@ -109,19 +109,19 @@ function app(state = initialState, action) {
           isActive: false
         }
       };
-    case SHOW_SYSTEM_MESSAGE:
+    case SHOW_FLASH_MESSAGE:
       return {
         ...state,
-        systemMessage: {
+        flashMessage: {
           ...action.payload,
           isActive: true
         }
       };
-    case HIDE_SYSTEM_MESSAGE:
+    case HIDE_FLASH_MESSAGE:
       return {
         ...state,
-        systemMessage: {
-          ...state.systemMessage,
+        flashMessage: {
+          ...state.flashMessage,
           isActive: false,
         }
       };
