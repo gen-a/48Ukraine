@@ -5,7 +5,6 @@
 import React, { Component, createRef } from 'react';
 import PropTypes from 'prop-types';
 import VerticalSlider from './VerticalSlider';
-
 import './ScrollBox.scss';
 
 /**
@@ -50,22 +49,38 @@ class ScrollBox extends Component {
       topSliderValue: 0,
     };
     this.sizes = {};
+    this.interval = 0;
+    this.scrollHeight = 0;
+    this.detectClientHeight = this.detectClientHeight.bind(this);
   }
 
   /**
    * Initialise after component did mount
    */
   componentDidMount() {
-    this.initSliders();
+    this.interval = setInterval(this.detectClientHeight, 100);
+  }
+
+  /**
+   * Initialise after component did mount
+   */
+  componentWillUnmount() {
+    clearInterval(this.interval);
   }
 
   /**
    * Turn off hidden overflow if touch event detected
    */
   onTouchStart() {
+    this.isEnabled = false;
     this.box.current.style.overflow = 'auto';
   }
 
+  onTouchMove(){
+    const box = this.box.current;
+    const max = box.scrollHeight - box.clientHeight;
+    this.setTopScrollValue( box.scrollTop / max );
+  }
   /**
    * Turn on hidden after touch is ended
    */
@@ -94,7 +109,7 @@ class ScrollBox extends Component {
    * Scroll by client height up/down.
    * @param direction {number} - integer to define the direction of scrolling
    */
-  setTopScrollPage(direction){
+  setTopScrollPage(direction) {
     const box = this.box.current;
     const max = box.scrollHeight - box.clientHeight;
     this.setTopScrollValue((box.scrollTop + (box.clientHeight + 10) * direction) / max);
@@ -102,7 +117,7 @@ class ScrollBox extends Component {
 
   /**
    * Scroll top by offset slider cursor value
-   * @param rawValue {float} - value in range of 0 - 1
+   * @param rawValue {number} - value in range of 0 - 1
    */
   setTopScrollValue(rawValue) {
     const value = Math.max(0, Math.min(1, rawValue));
@@ -115,6 +130,14 @@ class ScrollBox extends Component {
     }));
   }
 
+  detectClientHeight() {
+    const { current: { scrollHeight } } = this.box;
+    if (scrollHeight !== this.scrollHeight) {
+      this.initSliders();
+      this.scrollHeight = scrollHeight;
+    }
+  }
+
   /**
    * Initialize scroll box sizes
    */
@@ -125,10 +148,10 @@ class ScrollBox extends Component {
 
     state.topSliderIsRequired = box.clientHeight < box.scrollHeight;
     state.leftSliderIsRequired = false;
-    state.topSliderHeight = (state.topSliderIsRequired ? box.clientHeight - sliderSize : box.clientHeight) - sliderMargin;
-    state.topSliderCursorHeight = cursorMinSize + ( state.topSliderHeight - cursorMinSize ) * (box.clientHeight / box.scrollHeight);
 
-    if (state.topSliderIsRequired) {
+    if ( state.topSliderIsRequired ) {
+      state.topSliderHeight = (state.topSliderIsRequired ? box.clientHeight - sliderSize : box.clientHeight) - sliderMargin;
+      state.topSliderCursorHeight = cursorMinSize + ( state.topSliderHeight - cursorMinSize ) * (box.clientHeight / box.scrollHeight);
       state.topSliderValue = box.scrollTop / (box.scrollHeight - box.clientHeight);
     }
 
@@ -136,31 +159,34 @@ class ScrollBox extends Component {
       ...prevState,
       ...state
     }));
-  }
+}
 
   render() {
     const { children } = this.props;
     const { topSliderHeight, topSliderIsRequired, topSliderCursorHeight, topSliderValue } = this.state;
-
     const boxStyle = {
       overflow: 'hidden',
       position: 'absolute',
       left: 0,
       top: 0,
       bottom: 0,
-      right: 0
+      right: topSliderIsRequired ? '20px':  0
     };
 
     return (
-      <div className="ScrollBox">
+      <div
+        className="ScrollBox"
+      >
         <div
           className="ScrollBox__box"
           onTouchStart={() => this.onTouchStart()}
-          onTouchEnd ={() => this.onTouchEnd()}
+          onTouchMove= {() => this.onTouchMove()}
+          onTouchEnd={() => this.onTouchEnd()}
           onWheel={(e) => {
             e.preventDefault();
             this.onWheel(e.deltaY);
           }}
+
           style={boxStyle}
           ref={this.box}
         >
@@ -173,7 +199,7 @@ class ScrollBox extends Component {
             cursorHeight={topSliderCursorHeight}
             cursorTop={topSliderValue * (topSliderHeight - topSliderCursorHeight)}
             onChange={(value) => this.setTopScrollValue(value)}
-            onPageChange ={(value) => this.setTopScrollPage(value)}
+            onPageChange={(value) => this.setTopScrollPage(value)}
           />
         )}
       </div>

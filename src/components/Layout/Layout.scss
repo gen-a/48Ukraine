@@ -1,9 +1,43 @@
-$top-bar-size: 40px;
-$bottom-bar-size: 40px;
+$top-bar-size: 48px;
+$bottom-bar-size: 48px;
 
+@mixin fixed {
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  bottom:0;
+}
 
 .Layout{
-  /*
+  &__header{
+    position:fixed;
+    top:0;
+    left:0;
+    right:0;
+    z-index:60;
+  }
+  &__scrim{
+    @include fixed;
+    bottom:100%;
+    background:rgba(0,0,0,0);
+    z-index:50;
+
+    transition: background 0.4s ease-out, bottom 0s linear 0.4s;
+  }
+  &__panel{
+    @include fixed;
+    width:100%;
+    max-width:300px;
+    top:$top-bar-size;
+    bottom:0px;
+    background:rgba(255,255,255,1);
+    z-index:50;
+    box-shadow: 0 0 2px #000;
+    transition: transform 0.2s ease-out;
+    box-sizing: border-box;
+    padding:0 10px 0 10px;
+  }
   &__body{
     position:fixed;
     overflow:auto;
@@ -12,44 +46,34 @@ $bottom-bar-size: 40px;
     width:100%;
     bottom:$bottom-bar-size;
   }
-  &__header{
-    height:$top-bar-size;
-    background:green;
-    position:fixed;
-    top:0;
-    left:0;
-    width:100%;
-    z-index:60;
-    box-shadow: 0 0 2px #000;
-  }
-  &__bodyScrim{
-    position:absolute;
-    width:100%;
-    top:0;
-    left:0;
-    right:0;
-    bottom:0;
-    background:rgba(0,0,0,0.5);
-    z-index:50;
-  }
-  &__panel{
-    position:fixed;
-    width:100%;
-    max-width:300px;
-    top:$top-bar-size;
-    bottom:0;
-    background:rgba(255,255,255,1);
-    z-index:50;
-    box-shadow: 0 0 2px #000;
+  &__panel_right{
+    left:100%;
+    margin-left:10px;
+    padding-right:20px;
+    box-sizing: border-box;
+    right:auto;
+    transform:translateX(0);
   }
   &__panel_left{
-    left:0;
-    right:auto;
-  }
-  &__panel_right{
-    right:0;
+    right:100%;
+    margin-right:10px;
+    padding-left:20px;
+    box-sizing: border-box;
     left:auto;
-  }*/
+    transform:translateX(0);
+  }
 }
 
+.Layout_user .Layout__scrim,
+.Layout_menu .Layout__scrim {
+  bottom:0;
+  background:rgba(0,0,0,0.6);
+  transition: background 0.4s ease-out, bottom 0s;
+}
 
+.Layout_user .Layout__panel_right{
+    transform:translateX(-100%);
+}
+.Layout_menu .Layout__panel_left{
+    transform:translateX(100%);
+}

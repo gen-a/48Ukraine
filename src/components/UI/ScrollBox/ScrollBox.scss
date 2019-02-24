@@ -1,47 +1,53 @@
 @import 'vars';
 
-.ScrollBox{
+.ScrollBox {
   position: relative;
   display: block;
   box-sizing: border-box;
   height: 100%;
-  border-left:1px solid #b1bcd7;
-  border-right:1px solid #b1bcd7;
   &__box {
     z-index: 1;
-    padding:10px 20px 10px 10px;
+    padding: 0;
+    transition: right 0.2s;
   }
 
   &__slider {
     opacity: 0;
     transition: opacity 0.4s;
   }
-  .VerticalSlider{
-    position:absolute;
+  .VerticalSlider {
+    position: absolute;
     z-index: 3;
     top: $margins-size;
     right: $margins-size;
     width: $bar-size;
   }
-  .VerticalSlider__bar{
-    width:$bar-size;
-    background:rgba(0,0,0,0);
+  .VerticalSlider__bar {
+    width: $bar-size;
+    background: rgba(77, 92, 116, .1);
     border-radius: $border-radius;
-    transition:background 0.2s;
+    transition: background 0.2s;
   }
-  .VerticalSlider__cursor{
+  .VerticalSlider__cursor {
     position: absolute;
-    width:$bar-size;
-    background:rgba(0,0,0,0);
+    width: $bar-size;
+    background: rgba(77, 92, 116, 0.3);
     border-radius: $border-radius;
-    transition:background 0.2s;
+    transition: background 0.2s;
   }
-  &:hover .VerticalSlider__cursor{
-    background: rgb(77, 92, 116);
+  .VerticalSlider {
+    &:hover .VerticalSlider__cursor {
+      background: rgba(77, 92, 116, 0.6);
+    }
+    &:hover .VerticalSlider__cursor:hover {
+      background: rgba(77, 92, 116, 1);
+    }
+    &:hover .VerticalSlider__bar {
+      background: rgba(77, 92, 116, 0.3);
+    }
   }
-  &:hover .VerticalSlider__bar{
-    background:rgba(77, 92, 116,0.3);
-  }
+
+  /*
   &:after{
     content:'';
     position:absolute;
@@ -58,5 +64,5 @@
     height:1.5em;
     z-index:2;
     background: linear-gradient(to top, rgba(255,255,255,1) 0%,rgba(255,255,255,0) 100%);
-  }
+  }*/
 }

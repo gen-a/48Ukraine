@@ -7,17 +7,18 @@ $lg-header-height: 40px;
 $xl-header-height: 40px;
 
 .Header{
-  position:relative;
+  position:absolute;
   width:100%;
   height:$header-height;
 
   background:$corporate-lightest-blue;
-
+  box-shadow: 0 0 2px #000;
   display:flex;
 
   &__logoBox{
     flex: 1 1 200px;
     text-align:center;
+    padding:8px;
   }
   &__toggleIconBox{
     flex: 0 0 48px;

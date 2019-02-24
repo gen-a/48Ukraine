@@ -16,7 +16,9 @@ import WindowResizeDetect from '../UI/Detect/WindowResize';
 import Toast from '../UI/Toast';
 import FlashMessage from '../UI/FlashMessage';
 import Loader from '../UI/Loader';
-import { setWindowSize } from '../../actions/app';
+import DepartmentsNavigator from '../Containers/DepartmentsNavigator';
+import ScrollBox from '../UI/ScrollBox';
+import { setWindowSize, setOpenPanel } from '../../actions/app';
 import { localizePath } from '../../localization';
 import Header from '../Header';
 
@@ -31,17 +33,35 @@ const propTypes = {
   locale: PropTypes.string.isRequired,
   /* On resize window to store data into redux store. */
   onWindowResize: PropTypes.func.isRequired,
+  /* Current open panel name. */
+  openPanel: PropTypes.string.isRequired,
+  /* Hide panels handler. */
+  onScrimClick: PropTypes.func.isRequired,
 };
 
-const Layout = ({ locale, onWindowResize }) => {
+const Layout = ({ locale, onWindowResize, openPanel, onScrimClick }) => {
+
+  let bodyClassName = 'Layout';
+  if (openPanel !== '') {
+    bodyClassName += ` Layout_${openPanel}` ;
+  }
+
   return (
-    <>
+    <div className={bodyClassName}>
       <WindowResizeDetect onResize={onWindowResize} />
       <header className="Layout__header">
         <Header />
       </header>
       <div className="Layout__body">
         <div className="Layout__bodyMain">
+          <div className="Layout__scrim" onClick={() => onScrimClick()} />
+          <div className="Layout__panel Layout__panel_left">
+
+              <ScrollBox>
+                  <DepartmentsNavigator />
+              </ScrollBox>
+              <div style={{ position: 'absolute', height: '100%', width: '100%', left:0 }}></div>
+          </div>
           <Switch>
             <Route exact path={localizePath('/dev', locale)} component={Container} />
             <Route exact path={localizePath('/', locale)} component={Container} />
@@ -49,10 +69,6 @@ const Layout = ({ locale, onWindowResize }) => {
             <Route exact path={localizePath('/login', locale)} component={Login} />
             <PrivateRoute path={localizePath('/user', locale)} component={User} />
           </Switch>
-        </div>
-        <div className="Layout__bodyScrim" />
-        <div className="Layout__panel Layout__panel_left">
-          left
         </div>
         <div className="Layout__panel Layout__panel_right">
           right
@@ -64,7 +80,7 @@ const Layout = ({ locale, onWindowResize }) => {
       <Toast />
       <FlashMessage />
       <Loader />
-    </>
+    </div>
   );
 };
 
@@ -72,13 +88,15 @@ Layout.propTypes = propTypes;
 
 const mapStateToProps = state => (
   {
-    locale: state.app.locale
+    locale: state.app.locale,
+    openPanel: state.app.openPanel,
   }
 );
 
 const mapDispatchToProps = dispatch => (
   {
-    onWindowResize: data => dispatch(setWindowSize(data))
+    onWindowResize: data => dispatch(setWindowSize(data)),
+    onScrimClick: () => dispatch(setOpenPanel('')),
   }
 );
 

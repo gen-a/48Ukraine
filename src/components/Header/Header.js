@@ -37,7 +37,7 @@ const defaultProps = {
  */
 const Header = ({ locale, mediaPrefix }) => {
 
-  const logoWidth = 48 * ASPECT_RATIO;
+  const logoWidth = 32 * ASPECT_RATIO;
   return (
     <div className="Header">
       <div className="Header__toggleIconBox">
