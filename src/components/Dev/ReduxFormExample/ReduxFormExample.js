@@ -13,8 +13,8 @@ import {
   email, required, maxLength, minLength
 } from '../../../validation/validations';
 import { addUser } from '../../../actions/user';
-import RenderField from '../RenderField';
-import RenderForm from '../RenderForm';
+import RenderField from '../../UI/Forms/RenderField';
+import RenderForm from '../../UI/Forms/RenderForm';
 
 /**
  * Validate all form fields and return object with invalid entries error messages

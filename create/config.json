@@ -3,7 +3,8 @@
   "templates":{
     "class":"statefulComponent.js",
     "func":"functionalComponent.js",
-    "cont":"containerComponent.js"
+    "cont":"containerComponent.js",
+    "form":"reduxFormComponent"
   },
   "default":"func",
   "conventions":{

@@ -12,15 +12,15 @@ import './ScrollBox.scss';
  * @type {object}
  */
 const propTypes = {
-  /* Slider  */
+  /** Slider  */
   sliderSize: PropTypes.number,
-  /* Cursor min size  */
+  /** Cursor min size  */
   cursorMinSize: PropTypes.number,
-  /* Slider margin size  */
+  /** Slider margin size  */
   sliderMargin: PropTypes.number,
-  /* Wheel pixels per step  */
+  /** Wheel pixels per step  */
   wheelScrollStep: PropTypes.number,
-  /* Renderable content  */
+  /** Renderable content  */
   children: PropTypes.node.isRequired,
 };
 /**

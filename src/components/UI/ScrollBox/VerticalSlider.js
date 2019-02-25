@@ -10,15 +10,15 @@ import PropTypes from 'prop-types';
  * @type {object}
  */
 const propTypes = {
-  /* Height of the slider bar. */
+  /** Height of the slider bar. */
   barHeight: PropTypes.number.isRequired,
-  /* Height of the slider cursor. */
+  /** Height of the slider cursor. */
   cursorHeight: PropTypes.number.isRequired,
-  /* Top of the slider cursor. */
+  /** Top of the slider cursor. */
   cursorTop: PropTypes.number.isRequired,
-  /* On change value handler. */
+  /** On change value handler. */
   onChange: PropTypes.func.isRequired,
-  /* On change by page up/down value. */
+  /** On change by page up/down value. */
   onPageChange: PropTypes.func.isRequired,
 };
 

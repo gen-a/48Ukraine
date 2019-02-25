@@ -16,7 +16,7 @@ import './Loader.scss';
  * @type {object}
  */
 const propTypes = {
-  /* Flag to switch show/hide state. */
+  /** Flag to switch show/hide state. */
   isVisible: PropTypes.bool,
 };
 /**

@@ -12,13 +12,13 @@ import PropTypes from 'prop-types';
  * @type {object}
  */
 const propTypes = {
-  /* On move function to dispatch. */
+  /** On move function to dispatch. */
   onMove: PropTypes.func,
-  /* On start function to dispatch. */
+  /** On start function to dispatch. */
   onStart: PropTypes.func,
-  /* On end function to dispatch. */
+  /** On end function to dispatch. */
   onEnd: PropTypes.func,
-  /* Children elemEnt to be rendered inside the component. */
+  /** Children elemEnt to be rendered inside the component. */
   children: PropTypes.element.isRequired,
 };
 /**

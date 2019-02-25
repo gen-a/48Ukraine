@@ -12,15 +12,15 @@ import PropTypes from 'prop-types';
  * @type {object}
  */
 const propTypes = {
-  /* Relational width for ratio calculation. */
+  /** Relational width for ratio calculation. */
   width: PropTypes.number.isRequired,
-  /* Relational height for ratio calculation. */
+  /** Relational height for ratio calculation. */
   height: PropTypes.number.isRequired,
-  /* Renderable element. */
+  /** Renderable element. */
   children: PropTypes.node.isRequired,
-  /* CSS style object. */
+  /** CSS style object. */
   style: stylePropType,
-  /* CSS className. */
+  /** CSS className. */
   className: stylePropType,
 };
 /**

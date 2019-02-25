@@ -12,13 +12,13 @@ import './ToggleIcon.scss';
  * @type {object}
  */
 const propTypes = {
-  /* Svg image of the icon. */
+  /** Svg image of the icon. */
   svg: PropTypes.node.isRequired,
-  /* Size of the icon in pixels. */
+  /** Size of the icon in pixels. */
   size: PropTypes.number,
-  /* Status of the toggle. */
+  /** Status of the toggle. */
   isOn: PropTypes.bool.isRequired,
-  /* On change handler. */
+  /** On change handler. */
   onChange: PropTypes.func.isRequired,
 };
 /**

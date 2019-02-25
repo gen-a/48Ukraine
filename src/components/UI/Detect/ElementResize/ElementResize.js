@@ -13,7 +13,7 @@ import './ElementResize.scss';
  * @type {object}
  */
 const propTypes = {
-  /* onResize element handler. */
+  /** onResize element handler. */
   onResize: PropTypes.func,
 };
 /**

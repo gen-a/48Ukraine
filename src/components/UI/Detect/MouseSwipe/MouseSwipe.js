@@ -12,13 +12,13 @@ import PropTypes from 'prop-types';
  * @type {object}
  */
 const propTypes = {
-  /* Pointer motion distance to be detected as swipe. */
+  /** Pointer motion distance to be detected as swipe. */
   swipeDistance: PropTypes.number,
-  /* Pointer motion time to be detected as swipe. */
+  /** Pointer motion time to be detected as swipe. */
   swipeTime: PropTypes.number,
-  /* On swipe function to dispatch swipe with object. */
+  /** On swipe function to dispatch swipe with object. */
   onSwipe: PropTypes.func,
-  /* Children elemEnt to be rendered inside the component. */
+  /** Children elemEnt to be rendered inside the component. */
   children: PropTypes.element.isRequired,
 };
 /**

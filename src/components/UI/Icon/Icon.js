@@ -8,9 +8,9 @@ import './Icon.scss';
  * @type {object}
  */
 const propTypes = {
-  /* Text message of the toast. */
+  /** Text message of the toast. */
   svg: PropTypes.node.isRequired,
-  /* Text message of the toast. */
+  /** Text message of the toast. */
   size: PropTypes.number,
 };
 /**

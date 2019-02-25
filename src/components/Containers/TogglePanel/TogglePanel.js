@@ -13,13 +13,13 @@ import { setOpenPanel } from '../../../actions/app';
  * @type {object}
  */
 const propTypes = {
-  /* Name of the linked panel. */
+  /** Name of the linked panel. */
   name: PropTypes.string.isRequired,
-  /* Name of the current open panel. */
+  /** Name of the current open panel. */
   openPanel: PropTypes.string.isRequired,
-  /* Onchange handler. */
+  /** Onchange handler. */
   onChange: PropTypes.func.isRequired,
-  /* Image of the icon. */
+  /** Image of the icon. */
   svg: PropTypes.node.isRequired,
 };
 

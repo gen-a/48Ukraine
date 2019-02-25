@@ -13,7 +13,7 @@ import './Tree.scss';
  * @type {object}
  */
 const propTypes = {
-  /* Tree data. */
+  /** Tree data. */
   data: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string,
@@ -21,19 +21,19 @@ const propTypes = {
       children: PropTypes.arrayOf(PropTypes.any),
     })
   ).isRequired,
-  /* Id of the selected node. */
+  /** Id of the selected node. */
   selected: PropTypes.string,
-  /* On set expanded attribute of node. */
+  /** On set expanded attribute of node. */
   onToggle: PropTypes.func.isRequired,
-  /* On set current attribute of node. */
+  /** On set current attribute of node. */
   onSelect: PropTypes.func,
-  /* Array of expanded nodes. */
+  /** Array of expanded nodes. */
   expanded: PropTypes.arrayOf(PropTypes.string),
-  /* Set tree hidden state. */
+  /** Set tree hidden state. */
   isHidden: PropTypes.bool,
-  /* Depth level of the tree. */
+  /** Depth level of the tree. */
   level: PropTypes.number,
-  /* Height of the node fo height calculations. */
+  /** Height of the node fo height calculations. */
   nodeHeight: PropTypes.number,
 };
 /**

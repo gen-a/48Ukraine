@@ -13,11 +13,11 @@ import { localizePath } from '../../localization';
  * @type {object}
  */
 const propTypes = {
-  /* Flag Is user authenticated. */
+  /** Flag Is user authenticated. */
   isAuthenticated: PropTypes.bool,
-  /* Children element to be rendered inside the component. */
+  /** Children element to be rendered inside the component. */
   component: PropTypes.element.isRequired,
-  /* Current application localization */
+  /** Current application localization */
   locale: PropTypes.string.isRequired,
 };
 /**

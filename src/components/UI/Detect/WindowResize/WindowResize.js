@@ -12,11 +12,11 @@ import PropTypes from 'prop-types';
  */
 const propTypes = {
 
-  /* On resize window function to dispatch resize with object. */
+  /** On resize window function to dispatch resize with object. */
   onResize: PropTypes.func,
-  /* Delay to avoid too often refreshes */
+  /** Delay to avoid too often refreshes */
   delay: PropTypes.number,
-  /* Media prefixes map for css */
+  /** Media prefixes map for css */
   mediaPrefixes: PropTypes.shape({}),
 };
 /**

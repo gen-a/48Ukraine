@@ -13,7 +13,7 @@ import './__componentName__.scss';
  * @type {object}
  */
 const propTypes = {
-  /* Text message of the toast. */
+  /** Text message of the toast. */
   //prop: PropTypes.string,
 };
 /**

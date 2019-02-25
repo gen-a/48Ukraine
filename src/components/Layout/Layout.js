@@ -29,13 +29,13 @@ import './Layout.scss';
  * @type {object}
  */
 const propTypes = {
-  /* Current locale string . */
+  /** Current locale string . */
   locale: PropTypes.string.isRequired,
-  /* On resize window to store data into redux store. */
+  /** On resize window to store data into redux store. */
   onWindowResize: PropTypes.func.isRequired,
-  /* Current open panel name. */
+  /** Current open panel name. */
   openPanel: PropTypes.string.isRequired,
-  /* Hide panels handler. */
+  /** Hide panels handler. */
   onScrimClick: PropTypes.func.isRequired,
 };
 

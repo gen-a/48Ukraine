@@ -17,13 +17,13 @@ import './Toast.scss';
  * @type {object}
  */
 const propTypes = {
-  /* Text message of the toast. */
+  /** Text message of the toast. */
   message: PropTypes.string.isRequired,
-  /* Flag to switch show/hide state */
+  /** Flag to switch show/hide state */
   isVisible: PropTypes.bool,
-  /* Time of showing toast in milliseconds */
+  /** Time of showing toast in milliseconds */
   duration: PropTypes.number,
-  /* Function to hide Toast */
+  /** Function to hide Toast */
   onHideToast: PropTypes.func,
 };
 /**

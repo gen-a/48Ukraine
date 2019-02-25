@@ -20,18 +20,18 @@ import './FlashMessage.scss';
  * @type {object}
  */
 const propTypes = {
-  /* Text message or element for body. */
+  /** Text message or element for body. */
   body: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.element
   ]).isRequired,
-  /* Title on the header. */
+  /** Title on the header. */
   title: PropTypes.string,
-  /* Flag to switch show/hide state. */
+  /** Flag to switch show/hide state. */
   isVisible: PropTypes.bool,
-  /* Type of the message. */
+  /** Type of the message. */
   type: PropTypes.oneOf(['error', 'success', 'info']),
-  /* Function to hide FlashMessage */
+  /** Function to hide FlashMessage */
   onHideFlashMessage: PropTypes.func,
 };
 /**

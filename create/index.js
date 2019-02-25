@@ -42,6 +42,9 @@ function className(name, caseType){
 }
 
 const type = props.type || config.default;
+
+replacements.__pathToRoot__= `${'../'.repeat(parts.length)}`;
+
 if(props.wrap && type === 'cont'){
 
   if(props.wrap.match(/^[a-z]{1}[/a-z]*$/i) === null){
@@ -50,7 +53,7 @@ if(props.wrap && type === 'cont'){
   }
 
   replacements.__wrapComponentName__= props.wrap.split('/').pop();
-  replacements.__wrapComponentPath__= `${'../'.repeat(parts.length)}${props.wrap}`;
+  replacements.__wrapComponentPath__= `${replacements.__pathToRoot__}${props.wrap}`;
 
 }
 
@@ -58,12 +61,16 @@ replacements.__componentName__ = parts.pop();
 replacements.__className__ = className(replacements.__componentName__, config.conventions.classNameCase);
 
 const files = [{ src: 'package.json', to: 'package.json' }];
-files.push({
-  src: '__componentName__.scss', to: `${replacements.__componentName__}.scss`
-});
-files.push({
-  src: '__componentName__.spec.js', to: `${replacements.__componentName__}.spec.js`
-});
+
+if (type !== 'form' && type !== 'cont') {
+  files.push({
+    src: '__componentName__.scss', to: `${replacements.__componentName__}.scss`
+  });
+  files.push({
+    src: '__componentName__.spec.js', to: `${replacements.__componentName__}.spec.js`
+  });
+}
+
 files.push({
   src: config.templates[type], to: `${replacements.__componentName__}.js`
 });

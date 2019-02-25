@@ -14,7 +14,7 @@ import { localizePath } from '../../../localization';
  * @type {object}
  */
 const propTypes = {
-  /* Current locale. */
+  /** Current locale. */
   locale: PropTypes.string.isRequired,
 };
 
@@ -26,7 +26,11 @@ class DepartmentsNavigator extends Component {
       const to = `/browse/${id}`;
       return {
         children: this.setLinks(children),
-        label: <NavLink to={localizePath(to, locale)} style={{ textDecoration: 'none', display: 'block' }}>{label}</NavLink>,
+        label: (
+          <NavLink to={localizePath(to, locale)} style={{ textDecoration: 'none', display: 'block' }}>
+            {label}
+          </NavLink>
+        ),
         id
       };
     });

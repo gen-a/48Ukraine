@@ -18,9 +18,9 @@ import './Header.scss';
  * @type {object}
  */
 const propTypes = {
-  /* Current locale. */
+  /** Current locale. */
   locale: PropTypes.string,
-  /* Media query prefix. */
+  /** Media query prefix. */
   mediaPrefix: PropTypes.string,
 };
 /**
