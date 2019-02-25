@@ -41,165 +41,212 @@ class ScrollBox extends Component {
   constructor(props) {
     super(props);
     this.box = createRef();
+    this.root = createRef();
     this.state = {
-      topSliderIsRequired: false,
-      leftSliderIsRequired: false,
-      topSliderHeight: 0,
-      topSliderCursorHeight: 0,
-      topSliderValue: 0,
+      slider: {
+        isVisible: false,
+        value: 0,
+        cursorHeight: 0,
+        height: 0,
+        max: 0,
+      },
     };
-    this.sizes = {};
     this.interval = 0;
     this.scrollHeight = 0;
-    this.detectClientHeight = this.detectClientHeight.bind(this);
+    this.onMouseEnter = this.onMouseEnter.bind(this);
+    this.stopWatchClientHeight = this.stopWatchClientHeight.bind(this);
   }
 
   /**
-   * Initialise after component did mount
+   * Add mouse enter event listener for clientHeight watching
    */
   componentDidMount() {
-    this.interval = setInterval(this.detectClientHeight, 100);
+    this.addMouseEnterListener();
   }
 
   /**
    * Initialise after component did mount
    */
   componentWillUnmount() {
-    clearInterval(this.interval);
+    this.stopWatchClientHeight();
   }
 
   /**
-   * Turn off hidden overflow if touch event detected
+   * Remove mouse event listeners and set overflow to auto
    */
   onTouchStart() {
-    this.isEnabled = false;
     this.box.current.style.overflow = 'auto';
+    this.removeMouseEnterListener();
   }
 
-  onTouchMove(){
-    const box = this.box.current;
-    const max = box.scrollHeight - box.clientHeight;
-    this.setTopScrollValue( box.scrollTop / max );
-  }
   /**
-   * Turn on hidden after touch is ended
+   * On timeout add mouse event listeners and set overflow to hidden
+   * Timeout for ignoring MouseEnter event emitted by TouchEnd
    */
   onTouchEnd() {
-    this.box.current.style.overflow = 'hidden';
+    setTimeout(() => {
+      this.box.current.style.overflow = 'hidden';
+      this.addMouseEnterListener();
+    }, 10);
   }
 
   /**
-   * Perform scroll on mouse wheel event
-   * @param deltaY {number} - integer to define the direction of scrolling
+   * Start watching and initialize scroll
    */
-  onWheel(deltaY) {
+  onMouseEnter(){
+    this.startWatchClientHeight();
+  }
+
+  /**
+   * Scroll by offset new slider cursor value
+   * Set box scrollTop and update state.scroll.value
+   * @param newValue {number} - value in range of 0 - 1
+   */
+  onChangeScrollValue(newValue) {
+    const value = Math.max(0, Math.min(1, newValue));
     const box = this.box.current;
-    const { wheelScrollStep } = this.props;
-    const max = box.scrollHeight - box.clientHeight;
-    if (deltaY > 0) {
-      this.setTopScrollValue((box.scrollTop + wheelScrollStep) / max);
-    } else {
-      if (deltaY < 0) {
-        this.setTopScrollValue((box.scrollTop - wheelScrollStep) / max);
+    const { slider: { max } } = this.state;
+    box.scrollTop = max * value;
+    this.setState(prevState => ({
+      ...prevState,
+      slider: {
+        ...prevState.slider,
+        value
       }
-    }
+    }));
   }
 
   /**
    * Scroll by client height up/down.
    * @param direction {number} - integer to define the direction of scrolling
    */
-  setTopScrollPage(direction) {
+  onChangePageScrollValue(direction) {
     const box = this.box.current;
-    const max = box.scrollHeight - box.clientHeight;
-    this.setTopScrollValue((box.scrollTop + (box.clientHeight + 10) * direction) / max);
+    const { slider: { max } } = this.state;
+    this.onChangeScrollValue((box.scrollTop + (box.clientHeight + 10) * direction) / max);
   }
 
   /**
-   * Scroll top by offset slider cursor value
-   * @param rawValue {number} - value in range of 0 - 1
+   * Handle scroll on mouse wheel event
+   * @param deltaY {number} - integer to define the direction of scrolling
    */
-  setTopScrollValue(rawValue) {
-    const value = Math.max(0, Math.min(1, rawValue));
+  onWheel(deltaY) {
     const box = this.box.current;
-    box.scrollTop = (box.scrollHeight - box.clientHeight) * value;
-
-    this.setState(prevState => ({
-      ...prevState,
-      topSliderValue: value
-    }));
+    const { wheelScrollStep } = this.props;
+    const { slider: { max } } = this.state;
+    this.onChangeScrollValue((box.scrollTop + wheelScrollStep * (deltaY > 0 ? 1 : -1)) / max);
   }
 
-  detectClientHeight() {
-    const { current: { scrollHeight } } = this.box;
-    if (scrollHeight !== this.scrollHeight) {
-      this.initSliders();
-      this.scrollHeight = scrollHeight;
-    }
+  /**
+   * Add Mouse Events listeners
+   */
+  addMouseEnterListener() {
+    this.root.current.addEventListener('mouseenter', this.onMouseEnter, false);
+    this.root.current.addEventListener('mouseleave', this.stopWatchClientHeight, false);
+  }
+
+  /**
+   * Remove Mouse Events listeners
+   */
+  removeMouseEnterListener() {
+    this.stopWatchClientHeight();
+    this.root.current.removeEventListener('mouseenter', this.onMouseEnter, false);
+    this.root.current.removeEventListener('mouseleave', this.stopWatchClientHeight, false);
+  }
+
+  /**
+   * Set interval to watch scrollHeight change to call initSlider method
+   */
+  startWatchClientHeight() {
+    this.initSlider();
+    this.interval = setInterval(() => {
+      const { current: { scrollHeight } } = this.box;
+      if (scrollHeight !== this.scrollHeight) {
+        this.initSlider();
+        this.scrollHeight = scrollHeight;
+      }
+    }, 100);
+  }
+
+  /**
+   * Stop watcher and se scroll to invisible
+   */
+  stopWatchClientHeight() {
+    this.setState(prevState => ({
+      ...prevState,
+      slider: {
+        ...prevState.slider,
+        isVisible: false
+      }
+    }));
+    clearInterval(this.interval);
   }
 
   /**
    * Initialize scroll box sizes
    */
-  initSliders() {
-    const state = {};
+  initSlider() {
+    const slider = {};
     const box = this.box.current;
-    const { sliderSize, cursorMinSize, sliderMargin } = this.props;
-
-    state.topSliderIsRequired = box.clientHeight < box.scrollHeight;
-    state.leftSliderIsRequired = false;
-
-    if ( state.topSliderIsRequired ) {
-      state.topSliderHeight = (state.topSliderIsRequired ? box.clientHeight - sliderSize : box.clientHeight) - sliderMargin;
-      state.topSliderCursorHeight = cursorMinSize + ( state.topSliderHeight - cursorMinSize ) * (box.clientHeight / box.scrollHeight);
-      state.topSliderValue = box.scrollTop / (box.scrollHeight - box.clientHeight);
+    const { sliderMargin, cursorMinSize } = this.props;
+    slider.max = box.scrollHeight - box.clientHeight;
+    slider.isVisible = slider.max > 0;
+    if (slider.isVisible) {
+      slider.value = box.scrollTop / slider.max;
+      slider.height = box.clientHeight - sliderMargin * 2;
+      slider.cursorHeight = cursorMinSize + ( slider.height - cursorMinSize ) * (box.clientHeight / box.scrollHeight);
     }
-
     this.setState(prevState => ({
       ...prevState,
-      ...state
+      slider: {
+        ...prevState.slider,
+        ...slider
+      }
     }));
-}
+  }
 
+  /**
+   * Render visual presentation
+   * @returns {XML}
+   */
   render() {
-    const { children } = this.props;
-    const { topSliderHeight, topSliderIsRequired, topSliderCursorHeight, topSliderValue } = this.state;
+    const { children, sliderSize, sliderMargin } = this.props;
+    const { slider: { isVisible, value, height, cursorHeight } } = this.state;
     const boxStyle = {
       overflow: 'hidden',
       position: 'absolute',
       left: 0,
       top: 0,
       bottom: 0,
-      right: topSliderIsRequired ? '20px':  0
+      right: isVisible ? `${sliderSize + sliderMargin * 2}px` : 0
     };
-
     return (
       <div
         className="ScrollBox"
+        ref={this.root}
       >
         <div
           className="ScrollBox__box"
-          onTouchStart={() => this.onTouchStart()}
-          onTouchMove= {() => this.onTouchMove()}
-          onTouchEnd={() => this.onTouchEnd()}
           onWheel={(e) => {
             e.preventDefault();
             this.onWheel(e.deltaY);
           }}
+          onTouchStart={() => this.onTouchStart()}
+          onTouchEnd={() => this.onTouchEnd()}
 
           style={boxStyle}
           ref={this.box}
         >
           {children}
         </div>
-        {topSliderIsRequired
+        {isVisible
         && (
           <VerticalSlider
-            barHeight={topSliderHeight}
-            cursorHeight={topSliderCursorHeight}
-            cursorTop={topSliderValue * (topSliderHeight - topSliderCursorHeight)}
-            onChange={(value) => this.setTopScrollValue(value)}
-            onPageChange={(value) => this.setTopScrollPage(value)}
+            barHeight={height}
+            cursorHeight={cursorHeight}
+            cursorTop={value * ( height - cursorHeight )}
+            onChange={(newValue) => this.onChangeScrollValue(newValue)}
+            onPageChange={(direction) => this.onChangePageScrollValue(direction)}
           />
         )}
       </div>
