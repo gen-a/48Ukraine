@@ -45,7 +45,7 @@ const defaultProps = {
   expanded: [],
   selected: '',
   isHidden: false,
-  nodeHeight: 35,
+  nodeHeight: 42,
   onSelect: () => {}
 };
 /**
@@ -103,17 +103,17 @@ const Tree = ({ data, expanded, selected, onToggle, onSelect, isHidden, level, n
         }
         return (
           <li key={id} className={nodeClassName}>
-            <button type="button" className="Tree__label" tabIndex="-1" onClick={() => onSelect(id)}>
+            <label className="Tree__label" tabIndex="-1" onClick={() => onSelect(id)}>
               {label}
-            </button>
+            </label>
             {!!children.length
             && (
               <button type="button" className="Tree__toggle" onClick={() => onToggle(id, !isExpanded)}>
                 <div className="Tree__toggleIcon">
                   <ChevronLeft />
                 </div>
-              </button>
-            )}
+              </button>)
+            }
             {subTree}
           </li>
         );

@@ -1,0 +1,94 @@
+@mixin display-fill(){
+  left:0;
+  top:0;
+  width:100%;
+  height:100%;
+  display:block;
+  position:absolute;
+  box-sizing: border-box;
+}
+
+.RenderCheckbox{
+  display:flex;
+  position:relative;
+
+  &__input{
+    flex: 0 0 32px;
+    box-sizing: border-box;
+  }
+
+  &__label{
+    flex:1 1;
+    line-height:32px;
+    padding-left:5px;
+    height:32px;
+    font-size:1.125em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &__checkbox{
+    position:relative;
+    display:block;
+    width:32px;
+    height:32px;
+
+    box-sizing: border-box;
+    border:0;
+    outline:none;
+    background:transparent;
+    cursor:pointer;
+    transition: background 0.2s ;
+    border-radius:6px;
+
+    & input{
+      @include display-fill;
+      margin:0;
+      padding:0;
+      opacity: 0;
+      z-index:2;
+      cursor:pointer;
+    }
+    & .RenderCheckbox__icon{
+      @include display-fill;
+      z-index:1;
+      padding:2px;
+    }
+  }
+
+  &__input svg *{
+    fill: #345e8d;
+    transition: background 0.2s ;
+  }
+  &__input svg{
+    display:block;
+  }
+  &__error{
+    position:absolute;
+    bottom:0;
+    width:100%;
+    font-size: 1em;
+    color:red;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  /* -------------- */
+  /* with modifiers */
+  /* -------------- */
+  &_focus{
+    .RenderCheckbox__checkbox{
+      background: #c3cfec;
+    }
+    .RenderCheckbox__input svg *{
+      fill: #4d5c74;
+      transition: background 0.2s ;
+    }
+  }
+  &_withError{
+    & .RenderCheckbox__input input{
+      border-bottom:3px solid red;
+    }
+  }
+}

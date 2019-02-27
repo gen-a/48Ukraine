@@ -1,0 +1,41 @@
+@mixin display-fill() {
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  position: absolute;
+  box-sizing: border-box;
+}
+
+.RenderButton {
+
+  &__input button {
+    background: #0477BE;
+    color: white;
+    outline: none;
+    border: 0;
+    padding: 5px 20px;
+    display: block;
+    font-size: 1.25em;
+    line-height: 1.25em;
+    box-sizing: border-box;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  &:hover {
+    .RenderButton__input button {
+      background: #be4835;
+    }
+  }
+  &_focus {
+
+  }
+  &_disabled,
+  &.RenderButton_disabled:hover {
+    .RenderButton__input button {
+      cursor: default;
+      background: #9199a9;
+    }
+  }
+}

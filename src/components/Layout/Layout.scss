@@ -63,7 +63,10 @@ $bottom-bar-size: 48px;
     transform:translateX(0);
   }
 }
-
+.Layout_user .Layout__body,
+.Layout_menu .Layout__body {
+  overflow: hidden;
+}
 .Layout_user .Layout__scrim,
 .Layout_menu .Layout__scrim {
   bottom:0;

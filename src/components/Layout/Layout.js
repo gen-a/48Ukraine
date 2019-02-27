@@ -23,6 +23,7 @@ import { localizePath } from '../../localization';
 import Header from '../Header';
 
 import './Layout.scss';
+import AuthenticationForm from "../Forms/AuthenticationForm/AuthenticationForm";
 
 /**
  * PropTypes of the component
@@ -71,7 +72,7 @@ const Layout = ({ locale, onWindowResize, openPanel, onScrimClick }) => {
           </Switch>
         </div>
         <div className="Layout__panel Layout__panel_right">
-          right
+          <AuthenticationForm />
         </div>
       </div>
       <div className="Layout__footer">

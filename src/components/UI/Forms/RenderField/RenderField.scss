@@ -1,0 +1,112 @@
+.RenderField{
+  position:relative;
+  padding:20px 0;
+
+  &__label{
+    position:absolute;
+    left:0;
+    z-index:1;
+    top:22px;
+    font-size:1.25em;
+    transition: all 0.2s;
+  }
+
+  &__input input{
+    position:relative;
+    display:block;
+    width:100%;
+    padding:5px 0;
+    font-size: 1.25em;
+    box-sizing: border-box;
+    border:0;
+    outline:none;
+    border-bottom:3px solid #d9d9d9;
+    background:transparent;
+    z-index:2;
+  }
+
+  &__input{
+    position:relative;
+  }
+  &__underline{
+    height:3px;
+    width:0;
+    position:absolute;
+    bottom:0;
+    z-index:4;
+    left:50%;
+    background: #565cb3;
+    transition: width 0.2s, left 0.2s;
+  }
+  &__loader{
+    display:none;
+    height:3px;
+    width:100%;
+    position:absolute;
+    bottom:0;
+    z-index:5;
+    left:0;
+    background: #5fff3c
+            url("data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeD0iMHB4IiB5PSIwcHgiIHdpZHRoPSIxMTBweCIgaGVpZ2h0PSIzcHgiIHZpZXdCb3g9IjAgMCAxMTAgMyI+CjxyZWN0IHg9IjAiIGZpbGw9IiM2REM2RDkiIHdpZHRoPSIxMTAiIGhlaWdodD0iMyIvPgo8cmVjdCBmaWxsPSIjMTU4OEI1IiB3aWR0aD0iNTUiIGhlaWdodD0iMyIvPgo8L3N2Zz4=") 0 0 repeat-x;
+
+    animation-name: RenderField__loader;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+  }
+  &__error{
+    position:absolute;
+    bottom:0;
+    width:100%;
+    font-size: 1em;
+    color:red;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* -------------- */
+  /* with modifiers */
+  /* -------------- */
+  &_busy{
+    .RenderField__loader{
+      display: block;
+    }
+  }
+  &_focus{
+    .RenderField__label{
+      top:0;
+      font-size:1em;
+      color: #565cb3;
+    }
+    .RenderField__underline{
+      width:100%;
+      left:0;
+    }
+    &.RenderField_disabled,
+    &.RenderField_readOnly{
+      & .RenderField__underline{
+        left:50%;
+        width:0;
+      }
+    }
+  }
+
+  &_withError{
+    & .RenderField__input input{
+      border-bottom:3px solid red;
+    }
+  }
+  &_notEmpty{
+    .RenderField__label{
+      top:0;
+      font-size:1em;
+      color: #565cb3;
+    }
+  }
+}
+
+@keyframes RenderField__loader {
+  0%   {background-position: 111px 0; }
+  100% {background-position: 0 0;}
+}
