@@ -1,5 +1,19 @@
-$node-height: 40px;
+@import '../../../colors';
+
+$node-height: 42px;
 $toggle-size: 38px;
+$toggle-margin: 2px;
+$node-border-height: 1px;
+
+$color-primary-2b: #083364 !default;
+$color-neutral-2h: #d7d7d6 !default;
+$color-neutral-b: #656463 !default;
+
+
+:export {
+  nodeHeight: $node-height;
+  bordeHeight: $node-border-height;
+}
 
 .Tree {
   padding: 0;
@@ -9,10 +23,9 @@ $toggle-size: 38px;
   transition: max-height 0.2s;
   &__node {
     display: block;
-    border-top: 1px solid #a6bdd5;
     position: relative;
     &:last-child {
-      border-bottom: 1px solid #a6bdd5;
+
     }
     &_isSelected{
       & .Tree__label {
@@ -36,24 +49,28 @@ $toggle-size: 38px;
     box-sizing: border-box;
     text-align: left;
     height: $node-height;
-    font-size:1.125em;
+    font-size:1rem;
     line-height: $node-height;
     cursor: pointer;
     transition: all 0.2s;
-    color: #253960;
+    font-weight:700;
+
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    &:hover {
+
+    & a{
+      color: $color-primary-2b;
+    }
+    &:hover a{
       color: black;
-      background: #d7e0f4;
     }
   }
 
   &__toggle {
     position: absolute;
-    right: 1px;
-    top: 1px;
+    right: $toggle-margin;
+    top: $toggle-margin;
     border: 0;
     outline: none;
     background: white;
@@ -62,7 +79,7 @@ $toggle-size: 38px;
     cursor: pointer;
     padding: 0;
     &:hover .Tree__toggleIcon {
-      background: #d7e0f4;
+      background: $color-neutral-2h;
     }
   }
 
@@ -77,7 +94,7 @@ $toggle-size: 38px;
       transition: all 0.2s;
     }
     & polygon {
-      fill: grey;
+      fill: $color-neutral-b;
     }
   }
   &__toggle:hover .Tree__toggleIcon polygon {
@@ -89,17 +106,18 @@ $toggle-size: 38px;
       border-bottom: none;
     }
     & .Tree__label {
-      padding-left: 20px;
+      font-weight:400;
+      padding-left: 1rem;
     }
     /* subtree */
     .Tree {
       & .Tree__label {
-        padding-left: 30px;
+        padding-left: 2rem;
       }
       /* subtree */
       .Tree {
         & .Tree__label {
-          padding-left: 40px;
+          padding-left: 3rem;
         }
       }
     }

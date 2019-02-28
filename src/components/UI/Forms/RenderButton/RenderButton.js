@@ -5,8 +5,6 @@
  */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { MdCheckBox, MdCheckBoxOutlineBlank } from 'react-icons/md';
-
 
 import './RenderButton.scss';
 
@@ -17,42 +15,18 @@ import './RenderButton.scss';
 const propTypes = {
   /** Input node attributes */
   input: PropTypes.shape({
-    /** Checked status of the input */
-    checked: PropTypes.bool,
     /** Disabled status of the input */
     disabled: PropTypes.bool,
-    /** Readonly status of the input */
-    readonly: PropTypes.bool,
-    /** On change handler. */
-    onChange: PropTypes.func,
-  }),
-  /** Input node attributes */
-  meta: PropTypes.shape({
-    /** Warning message text. */
-    warning: PropTypes.string,
-    /** Error message text. */
-    error: PropTypes.string,
   }),
   /** Label of the field.  */
   label: PropTypes.string,
-  /** Type of the button.  */
-  type: PropTypes.string,
 };
 
 const defaultProps = {
   label: 'submit',
   input: {
-    checked: false,
     disabled: false,
-    readonly: false,
-    onChange: () => {
-    }
-  },
-  meta: {
-    error: '',
-    warning: ''
-  },
-  type: 'submit'
+  }
 };
 
 class RenderButton extends Component {
@@ -83,7 +57,7 @@ class RenderButton extends Component {
 
   render() {
 
-    const { type, input, label, meta: { error, warning } } = this.props;
+    const { input, label } = this.props;
     const { focus } = this.state;
 
     let className = 'RenderButton';

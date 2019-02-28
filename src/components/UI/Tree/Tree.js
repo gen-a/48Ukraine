@@ -6,7 +6,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ChevronLeft from '../../Svg/ChevronLeft';
+
 import './Tree.scss';
+import styles from './Tree.scss';
+
 
 /**
  * PropTypes of the component
@@ -33,8 +36,6 @@ const propTypes = {
   isHidden: PropTypes.bool,
   /** Depth level of the tree. */
   level: PropTypes.number,
-  /** Height of the node fo height calculations. */
-  nodeHeight: PropTypes.number,
 };
 /**
  * Default props of the component
@@ -45,7 +46,6 @@ const defaultProps = {
   expanded: [],
   selected: '',
   isHidden: false,
-  nodeHeight: 42,
   onSelect: () => {}
 };
 /**
@@ -66,15 +66,17 @@ const countVisibleNodes = (data, expanded) => {
 };
 
 
-const Tree = ({ data, expanded, selected, onToggle, onSelect, isHidden, level, nodeHeight }) => {
+const Tree = ({ data, expanded, selected, onToggle, onSelect, isHidden, level }) => {
+  const nodeHeight = parseInt(styles.nodeHeight, 10);
   const commonProps = {
     expanded, selected, onToggle, onSelect, nodeHeight
   };
+
   // count max height of the tree for css animation
   let maxHeight = isHidden ? 0 : countVisibleNodes(data, expanded) * nodeHeight;
   // add 1px height (border size) for the root tree for bottom border height compensation
   if (level === 0) {
-    maxHeight += 1;
+    maxHeight += parseInt(styles.borderHeight, 10);
   }
   return (
     <ul className="Tree" style={{ maxHeight: `${maxHeight}px` }}>

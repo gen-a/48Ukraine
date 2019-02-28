@@ -8,24 +8,31 @@
   box-sizing: border-box;
 }
 
+$color-primary-2h: #a0d9fc !default;
+$color-primary-hb: #0477BE !default;
+$color-secondary-b: #ca7609 !default;
+$color-neutral-hb: #8c8b8a !default;
+$color-error-hb: #ff3203!default;
+
 .RenderButton {
 
   &__input button {
-    background: #0477BE;
+    background: $color-primary-hb;
     color: white;
     outline: none;
     border: 0;
-    padding: 5px 20px;
+    padding: 0.5rem 1rem;
     display: block;
-    font-size: 1.25em;
-    line-height: 1.25em;
+    font-size: 1rem;
+    line-height: 1rem;
     box-sizing: border-box;
     cursor: pointer;
     transition: all 0.2s;
+    text-transform: uppercase;
   }
   &:hover {
     .RenderButton__input button {
-      background: #be4835;
+      background: $color-secondary-b;
     }
   }
   &_focus {
@@ -35,7 +42,7 @@
   &.RenderButton_disabled:hover {
     .RenderButton__input button {
       cursor: default;
-      background: #9199a9;
+      background: $color-neutral-hb;
     }
   }
 }

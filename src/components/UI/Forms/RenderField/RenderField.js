@@ -127,7 +127,7 @@ class RenderField extends Component {
           <div className="RenderField__input">
             <input {...input} type={type} />
             <div className="RenderField__underline" />
-            { busy && <div className="RenderField__loader" /> }
+            { busy && <div className="RenderField__loader"><div className="RenderField__loaderIndicator" /></div> }
           </div>
           {(error && <div className="RenderField__error">{error}</div>)
             || (warning && <div className="RenderField__warning">{warning}</div>)}

@@ -1,3 +1,19 @@
-.AuthenticationForm{
+@import '../../../colors';
 
+$color-primary-b: #094f9f !default;
+
+.AuthenticationForm{
+  padding: 2rem 0;
+  &__title{
+    color: $color-primary-b;
+    font-weight:normal;
+    font-size:1.25rem;
+    line-height:1.25rem;
+    padding:0;
+    margin:0 0 2rem 0;
+    text-transform: uppercase;
+  }
+  &__row{
+    margin-bottom:1rem;
+  }
 }

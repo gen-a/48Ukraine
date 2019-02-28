@@ -1,3 +1,10 @@
+@import '../../../../colors';
+
+$color-primary-hb: #0477BE !default;
+$color-primary-2b: #083364 !default;
+$color-neutral-2h: #d7d7d6 !default;
+$color-error-hb: #ff3203 !default;
+
 @mixin display-fill(){
   left:0;
   top:0;
@@ -22,7 +29,7 @@
     line-height:32px;
     padding-left:5px;
     height:32px;
-    font-size:1.125em;
+    font-size:1em;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -58,7 +65,7 @@
   }
 
   &__input svg *{
-    fill: #345e8d;
+    fill: $color-primary-hb;
     transition: background 0.2s ;
   }
   &__input svg{
@@ -69,7 +76,7 @@
     bottom:0;
     width:100%;
     font-size: 1em;
-    color:red;
+    color:$color-error-hb;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -79,16 +86,16 @@
   /* -------------- */
   &_focus{
     .RenderCheckbox__checkbox{
-      background: #c3cfec;
+      background: $color-neutral-2h;
     }
     .RenderCheckbox__input svg *{
-      fill: #4d5c74;
+      fill: $color-primary-2b;
       transition: background 0.2s ;
     }
   }
   &_withError{
     & .RenderCheckbox__input input{
-      border-bottom:3px solid red;
+      border-bottom:3px solid $color-error-hb;
     }
   }
 }
