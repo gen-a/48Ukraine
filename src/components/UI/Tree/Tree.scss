@@ -40,6 +40,11 @@ $color-neutral-b: #656463 !default;
         border-left: 2px solid $color-neutral-2h;
       }
     }
+    &_isSelected{
+      & .Tree .Tree__node:hover .Tree__label {
+        border-left: 2px solid $color-secondary-b;
+      }
+    }
     &_isExpanded .Tree__toggleIcon {
       transform: rotate(-90deg);
     }
