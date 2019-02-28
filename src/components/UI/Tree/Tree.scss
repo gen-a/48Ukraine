@@ -6,9 +6,10 @@ $toggle-margin: 2px;
 $node-border-height: 1px;
 
 $color-primary-2b: #083364 !default;
+$color-secondary-b: #ca7609 !default;
 $color-neutral-2h: #d7d7d6 !default;
+$color-neutral-3h: #eaeaea !default;
 $color-neutral-b: #656463 !default;
-
 
 :export {
   nodeHeight: $node-height;
@@ -27,19 +28,24 @@ $color-neutral-b: #656463 !default;
     &:last-child {
 
     }
-    &_isSelected{
+    /* -------------- */
+    /* node with modifiers */
+    /*-------------- */
+    &_isSelected,
+    &_isSelected:hover {
       & .Tree__label {
-
+        border-left: 2px solid $color-neutral-b;
       }
-      & .Tree  .Tree__label {
-
+      & .Tree__node .Tree__label {
+        border-left: 2px solid $color-neutral-2h;
       }
     }
-    &_isExpanded .Tree__toggleIcon{
+    &_isExpanded .Tree__toggleIcon {
       transform: rotate(-90deg);
     }
   }
   &__label {
+    position: relative;
     display: block;
     border: 0;
     outline: none;
@@ -49,21 +55,24 @@ $color-neutral-b: #656463 !default;
     box-sizing: border-box;
     text-align: left;
     height: $node-height;
-    font-size:1rem;
+    font-size: 1rem;
     line-height: $node-height;
     cursor: pointer;
-    transition: all 0.2s;
-    font-weight:700;
+    transition: border-left-color 0.5s;
+    font-weight: 700;
 
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-
-    & a{
+    border-left: 2px solid $color-neutral-2h;
+    & a {
       color: $color-primary-2b;
     }
-    &:hover a{
-      color: black;
+    &:hover {
+      border-left: 2px solid $color-secondary-b;
+      & a {
+        color: black;
+      }
     }
   }
 
@@ -79,7 +88,7 @@ $color-neutral-b: #656463 !default;
     cursor: pointer;
     padding: 0;
     &:hover .Tree__toggleIcon {
-      background: $color-neutral-2h;
+      background: $color-neutral-3h;
     }
   }
 
@@ -98,16 +107,19 @@ $color-neutral-b: #656463 !default;
     }
   }
   &__toggle:hover .Tree__toggleIcon polygon {
-     fill: black;
+    fill: black;
   }
+  /* -------------- */
   /* subtree */
+  /* -------------- */
   .Tree {
     & .Tree__node:last-child {
       border-bottom: none;
     }
     & .Tree__label {
-      font-weight:400;
+      font-weight: 400;
       padding-left: 1rem;
+      font-size: 0.875rem;
     }
     /* subtree */
     .Tree {

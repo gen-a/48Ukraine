@@ -1,5 +1,9 @@
+@import '../../colors';
+
 $top-bar-size: 48px;
 $bottom-bar-size: 48px;
+
+$color-primary-h: #5aaee2;
 
 @mixin fixed {
   position:fixed;
@@ -30,10 +34,10 @@ $bottom-bar-size: 48px;
     width:100%;
     max-width:300px;
     top:$top-bar-size;
-    bottom:0px;
+    bottom:0;
+    border-top:1px solid $color-primary-h;
     background:rgba(255,255,255,1);
     z-index:50;
-    box-shadow: 0 0 2px #000;
     transition: transform 0.2s ease-out;
     box-sizing: border-box;
     padding:0 10px 0 10px;
@@ -57,7 +61,7 @@ $bottom-bar-size: 48px;
   &__panel_left{
     right:100%;
     margin-right:10px;
-    padding-left:20px;
+    padding:1rem 0 1rem 20px;
     box-sizing: border-box;
     left:auto;
     transform:translateX(0);

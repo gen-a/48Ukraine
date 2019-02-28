@@ -6,15 +6,14 @@ $md-header-height: 40px;
 $lg-header-height: 40px;
 $xl-header-height: 40px;
 
+$color-primary-3h: #d2eeff;
+
 .Header{
   position:absolute;
   width:100%;
   height:$header-height;
-
-  background:$corporate-lightest-blue;
-  box-shadow: 0 0 2px #000;
+  background:$color-primary-3h;
   display:flex;
-
   &__logoBox{
     flex: 1 1 200px;
     text-align:center;

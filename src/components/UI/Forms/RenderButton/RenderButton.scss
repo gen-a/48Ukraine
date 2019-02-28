@@ -11,7 +11,7 @@
 $color-primary-2h: #a0d9fc !default;
 $color-primary-hb: #0477BE !default;
 $color-secondary-b: #ca7609 !default;
-$color-neutral-hb: #8c8b8a !default;
+$color-neutral-h: #bcbcbc !default;
 $color-error-hb: #ff3203!default;
 
 .RenderButton {
@@ -42,7 +42,7 @@ $color-error-hb: #ff3203!default;
   &.RenderButton_disabled:hover {
     .RenderButton__input button {
       cursor: default;
-      background: $color-neutral-hb;
+      background: $color-neutral-h;
     }
   }
 }
