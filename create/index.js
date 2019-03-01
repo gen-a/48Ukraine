@@ -1,7 +1,7 @@
 const path = require('path');
 const fs = require('fs');
 const config = require('./config.json');
-const replacements  = config.replacements;
+const { replacements } = config;
 const props = {};
 
 // extract args form command line
@@ -14,12 +14,12 @@ process.argv.forEach((value) => {
 });
 
 if(!props.name){
-  console.log("Component name argument as --name:ComponentName is required");
+  console.log( 'Component name argument as --name:ComponentName is required ');
   process.exit();
 }
 if(props.name){
   if(props.name.match(/^[a-z]{1}[/a-z]*$/i) === null){
-    console.log("Component name has to begin with letter and conatin only letters and /");
+    console.log( 'Component name has to begin with letter and conatin only letters and / ');
     process.exit();
   }
 }
@@ -48,7 +48,7 @@ replacements.__pathToRoot__= `${'../'.repeat(parts.length)}`;
 if(props.wrap && type === 'cont'){
 
   if(props.wrap.match(/^[a-z]{1}[/a-z]*$/i) === null){
-    console.log("Component wrap has to begin with letter and conatin only letters and /");
+    console.log( 'Component wrap has to begin with letter and conatin only letters and / ');
     process.exit();
   }
 
@@ -81,7 +81,7 @@ files.forEach((data)=>{
     let templ = fs.readFileSync(path.resolve(__dirname, `./templates/${data.src}`), 'utf8');
     //console.log(templ);
 
-    Object.keys(replacements).forEach((k)=>{
+    Object.keys(replacements).forEach((k) => {
       templ = templ.replace( new RegExp(k, 'gi'), replacements[k]);
     });
 

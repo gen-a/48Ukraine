@@ -22,6 +22,19 @@ node create --name=YourNewComponentName --type=class
 ```javascript
 node create --name=YourNewComponentName --type=cont --wrap=WrappedComponent
 ```
-*For the names such as DirName/DirName/ComponentName folders will be created*
+_For the names such as DirName/DirName/ComponentName folders will be created_
+
+- for converting svg to component
+
+```javascript
+node create/svg
+```
+_It reads config.json -> svg for source, target dirs and ignore svg prop array_ 
+
+- for building export index.js for all components in dir
+
+```javascript
+  node create/index-js --dir=Svg\Departments
+```
 
 Enjoy your coding!

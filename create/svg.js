@@ -1,29 +1,26 @@
 const svgr = require('@svgr/core').default;
 const path = require('path');
-const sourceDir = path.resolve(__dirname, '../~source/svg-source');
-const destDir = path.resolve(__dirname, '../~source/components');
 const fs = require('fs');
+const config = require('./config.json').svg;
 
-const files = fs.readdirSync(sourceDir);
-
-const svgProps = {
-  viewBox: '------',
-  enableBackground: '------',
-  xmlSpace: '------',
-  id: '------',
-  x: '------',
-  y: '------'
-};
-
-
+const placeholderForRemovingProp = '------';
+// build object for removing props
+const svgProps = {};
+config.svgPropsToRemove.forEach((key) => {
+  svgProps[key] = placeholderForRemovingProp;
+});
+// collect files
+const files = fs.readdirSync(config.sourceDir);
+// handle filed
 files.forEach((file) => {
   const [name, ext] = file.split('.');
 
   if (ext === 'svg') {
+    // generate name
     const camelCased = name.replace(/-([a-z])/g, g => g[1].toUpperCase());
     const compName = camelCased.substr(0, 1).toUpperCase() + camelCased.substr(1);
-    const svgFile = path.resolve(sourceDir, `./${file}`);
-
+    const svgFile = path.resolve(config.sourceDir, `./${file}`);
+    // create js code from svg
     if (fs.lstatSync(svgFile).isFile()) {
       const svgCode = fs.readFileSync(svgFile, 'utf8');
       let jsCode = svgr.sync(
@@ -37,7 +34,7 @@ files.forEach((file) => {
         { componentName: compName }
       );
 
-      Object.keys(svgProps).forEach(prop => {
+      Object.keys(svgProps).forEach((prop) => {
         jsCode = jsCode.replace(new RegExp(` ${prop}="${svgProps[prop]}"`, 'gi'), '');
       });
 
@@ -45,7 +42,7 @@ files.forEach((file) => {
         .replace(new RegExp('\\sfill="[^"]+"', 'gi'), '')
         .replace(new RegExp('"react"', 'gi'), '\'react\'');
 
-      fs.writeFileSync(path.resolve(destDir, `./${compName}.js`), `${jsCode}\n`, (err) => {
+      fs.writeFileSync(path.resolve(config.destDir, `./${compName}.js`), `${jsCode}\n`, (err) => {
         if (err) {
           console.log(err);
         } else {

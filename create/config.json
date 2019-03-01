@@ -16,5 +16,10 @@
     "__className__":"",
     "__wrapComponentName__":"__wrapComponentName__",
     "__wrapComponentPath__":"__wrapComponentPath__"
+  },
+  "svg":{
+    "sourceDir":"./~source/svg-source",
+    "destDir":"./~source/components",
+    "svgPropsToRemove":["viewBox", "enableBackground", "xmlSpace", "id", "x", "y" ]
   }
 }
