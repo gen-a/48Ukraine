@@ -10,7 +10,6 @@ export const HIDE_LOADER = 'HIDE_LOADER';
 export const SET_LOCALE = 'SET_LOCALE';
 export const SET_CURRENT_DEPARTMENT = 'SET_CURRENT_DEPARTMENT';
 export const EXPAND_NODE_OF_DEPARTMENT_TREE = 'EXPAND_NODE_OF_DEPARTMENT_TREE';
-export const SET_REDIRECT_PATH = 'SET_REDIRECT_PATH';
 export const SET_OPEN_PANEL = 'SET_OPEN_PANEL';
 /**
  * Set selected id of the main departments navigator

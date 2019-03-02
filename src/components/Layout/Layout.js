@@ -16,14 +16,18 @@ import WindowResizeDetect from '../UI/Detect/WindowResize';
 import Toast from '../UI/Toast';
 import FlashMessage from '../UI/FlashMessage';
 import Loader from '../UI/Loader';
-import DepartmentsNavigator from '../Containers/DepartmentsNavigator';
-import ScrollBox from '../UI/ScrollBox';
+import Scrim from '../UI/Scrim';
+
 import { setWindowSize, setOpenPanel } from '../../actions/app';
 import { localizePath } from '../../localization';
+import ToolBarLayer from './ToolBarLayer';
+import DrawerLayer from './DrawerLayer';
+
 import Header from '../Header';
+import Carousel from '../UI/Carousel';
 
 import './Layout.scss';
-import AuthenticationForm from "../Forms/AuthenticationForm/AuthenticationForm";
+
 
 /**
  * PropTypes of the component
@@ -42,45 +46,39 @@ const propTypes = {
 
 const Layout = ({ locale, onWindowResize, openPanel, onScrimClick }) => {
 
-  let bodyClassName = 'Layout';
-  if (openPanel !== '') {
-    bodyClassName += ` Layout_${openPanel}` ;
-  }
+  let blur = openPanel !== '';
 
   return (
-    <div className={bodyClassName}>
+    <div className="Layout">
       <WindowResizeDetect onResize={onWindowResize} />
-      <header className="Layout__header">
-        <Header />
-      </header>
-      <div className="Layout__body">
-        <div className="Layout__bodyMain">
-          <div className="Layout__scrim" onClick={() => onScrimClick()} />
-          <div className="Layout__panel Layout__panel_left">
+      <ToolBarLayer />
+      <DrawerLayer open={openPanel} />
+      <Scrim onClick={() => onScrimClick()} isVisible={openPanel !== ''}/>
 
-              <ScrollBox>
-                  <DepartmentsNavigator />
-              </ScrollBox>
-              <div style={{ position: 'absolute', height: '100%', width: '100%', left:0 }}></div>
+      <div className={ blur ? 'Layout__content Layout__content_blur' : 'Layout__content' }>
+        <header className="Layout__header">
+          <Header />
+        </header>
+        <div className="Layout__body">
+          <div className="Layout__bodyMain">
+            <Carousel/>
+            <Switch>
+              <Route exact path={localizePath('/dev', locale)} component={Container}/>
+              <Route exact path={localizePath('/', locale)} component={Container}/>
+              <Route exact path={localizePath('/browse/:department', locale)} component={Browse}/>
+              <Route exact path={localizePath('/login', locale)} component={Login}/>
+              <PrivateRoute path={localizePath('/user', locale)} component={User}/>
+            </Switch>
           </div>
-          <Switch>
-            <Route exact path={localizePath('/dev', locale)} component={Container} />
-            <Route exact path={localizePath('/', locale)} component={Container} />
-            <Route exact path={localizePath('/browse/:department', locale)} component={Browse} />
-            <Route exact path={localizePath('/login', locale)} component={Login} />
-            <PrivateRoute path={localizePath('/user', locale)} component={User} />
-          </Switch>
         </div>
-        <div className="Layout__panel Layout__panel_right">
-          <AuthenticationForm />
+        <div className="Layout__footer">
+          footer
         </div>
       </div>
-      <div className="Layout__footer">
-        footer
-      </div>
-      <Toast />
-      <FlashMessage />
-      <Loader />
+
+      <Toast/>
+      <FlashMessage/>
+      <Loader/>
     </div>
   );
 };
@@ -102,4 +100,4 @@ const mapDispatchToProps = dispatch => (
 );
 
 const C = connect(mapStateToProps, mapDispatchToProps)(Layout);
-export default props => <Route render={routeProps => <C {...routeProps} {...props} />} />;
+export default props => <Route render={routeProps => <C {...routeProps} {...props} />}/>;

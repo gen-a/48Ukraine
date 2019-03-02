@@ -8,8 +8,6 @@ import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
 import CompanyLogo, { ASPECT_RATIO } from '../Svg/CompanyLogo';
 import { localizePath, APP_DEFAULT_LOCALE } from '../../localization';
-import { MdMenu, MdPerson } from 'react-icons/md';
-import TogglePanel from '../Containers/TogglePanel';
 import './Header.scss';
 
 
@@ -41,7 +39,7 @@ const Header = ({ locale, mediaPrefix }) => {
   return (
     <div className="Header">
       <div className="Header__toggleIconBox">
-        <TogglePanel name="menu" size={38} svg={<MdMenu size="100%" />}/>
+
       </div>
       <div className="Header__logoBox">
         <NavLink to={localizePath('/', locale)}>
@@ -51,7 +49,7 @@ const Header = ({ locale, mediaPrefix }) => {
         </NavLink>
       </div>
       <div className="Header__toggleIconBox">
-        <TogglePanel name="user" size={38} svg={<MdPerson size="100%" />}/>
+
       </div>
 
     </div>

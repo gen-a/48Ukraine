@@ -1,0 +1,22 @@
+@import '../../../colors';
+
+$background-color: $color-primary-3b;
+
+.Scrim{
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  bottom:100%;
+  background: $background-color;
+  opacity:0;
+  z-index:50;
+  transition: opacity 0.4s ease-out, bottom 0s linear 0.4s;
+
+  &_isVisible{
+    bottom:0;
+    opacity:0.6;
+    transition: opacity 0.4s ease-out, bottom 0s;
+  }
+}
+
