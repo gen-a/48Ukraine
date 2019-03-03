@@ -16,7 +16,7 @@ const propTypes = {
   /** Visbility status. */
   isVisible: PropTypes.bool,
   /** On click handler. */
-  onClick: PropTypes.node,
+  onClick: PropTypes.func,
   /** Z-index. */
   depth: PropTypes.number,
 };

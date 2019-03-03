@@ -1,17 +1,22 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { setDepartment } from '../../../actions/app';
 
-const Browse = ({match:{params:{department}}, setDepartment}) => {
-  console.log(setDepartment);
-  setDepartment(department);
-  return  (<div>Browse {department}</div>);
-};
+class Browse extends Component {
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    setDepartment: (id) => {dispatch(setDepartment(id))},
+  componentDidMount() {
+    const { match: { params: { department } }, setDepartment } = this.props;
+    setDepartment(department);
   }
-};
+
+  render() {
+    const { match: { params: { department } } } = this.props;
+    return (<div>Browse {department}</div>);
+  }
+}
+
+const mapDispatchToProps = (dispatch) => ({
+  setDepartment: (id) => dispatch(setDepartment(id)),
+});
 
 export default connect(null, mapDispatchToProps)(Browse);

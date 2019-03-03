@@ -13,8 +13,29 @@ process.argv.forEach((value) => {
   }
 });
 
+if(process.argv.includes('--help')){
+
+  console.log(' - for the functional component');
+  console.log('node create --name=YourNewComponentName');
+
+  console.log(' - for the stateful class component');
+  console.log('node create --name=YourNewComponentName --type=class');
+
+  console.log(' - for the container component');
+  console.log('node create --name=YourNewComponentName --type=cont --wrap=WrappedComponent');
+
+  console.log(' - for converting svg to component');
+  console.log('node create/svg');
+
+  console.log(' - for building export index.js for all components in dir');
+  console.log('node create/index-js --dir=SvgDepartments');
+
+  process.exit();
+}
+
+
 if(!props.name){
-  console.log( 'Component name argument as --name:ComponentName is required ');
+  console.log( 'Run with --help for commands list');
   process.exit();
 }
 if(props.name){

@@ -1,28 +1,60 @@
-export { default as IconAlcohol } from './IconAlcohol';
-export { default as IconBabyFood } from './IconBabyFood';
-export { default as IconCannedFood } from './IconCannedFood';
-export { default as IconCarCare } from './IconCarCare';
-export { default as IconCards } from './IconCards';
-export { default as IconCheese } from './IconCheese';
-export { default as IconCoffee } from './IconCoffee';
-export { default as IconDishes } from './IconDishes';
-export { default as IconFish } from './IconFish';
-export { default as IconGoodsForHome } from './IconGoodsForHome';
-export { default as IconGoodsForKids } from './IconGoodsForKids';
-export { default as IconGoodsForKitchen } from './IconGoodsForKitchen';
-export { default as IconGoodsForPets } from './IconGoodsForPets';
-export { default as IconGrocery } from './IconGrocery';
-export { default as IconHouseholdChemicals } from './IconHouseholdChemicals';
-export { default as IconHygiene } from './IconHygiene';
-export { default as IconMeats } from './IconMeats';
-export { default as IconPetFood } from './IconPetFood';
-export { default as IconPharmacy } from './IconPharmacy';
-export { default as IconSeeds } from './IconSeeds';
-export { default as IconSnacks } from './IconSnacks';
-export { default as IconSocks } from './IconSocks';
-export { default as IconSoftDrinks } from './IconSoftDrinks';
-export { default as IconStationery } from './IconStationery';
-export { default as IconSweets } from './IconSweets';
-export { default as IconToys } from './IconToys';
-export { default as IconVegetables } from './IconVegetables';
-export { default as IconVitamins } from './IconVitamins';
+import IconAlcohol from './IconAlcohol';
+import IconBabyFood from './IconBabyFood';
+import IconCannedFood from './IconCannedFood';
+import IconCarCare from './IconCarCare';
+import IconCards from './IconCards';
+import IconCheese from './IconCheese';
+import IconCoffee from './IconCoffee';
+import IconDishes from './IconDishes';
+import IconFish from './IconFish';
+import IconGoodsForHome from './IconGoodsForHome';
+import IconGoodsForKids from './IconGoodsForKids';
+import IconGoodsForKitchen from './IconGoodsForKitchen';
+import IconGoodsForPets from './IconGoodsForPets';
+import IconGrocery from './IconGrocery';
+import IconHouseholdChemicals from './IconHouseholdChemicals';
+import IconHygiene from './IconHygiene';
+import IconMeats from './IconMeats';
+import IconPetFood from './IconPetFood';
+import IconPharmacy from './IconPharmacy';
+import IconSeeds from './IconSeeds';
+import IconSnacks from './IconSnacks';
+import IconSocks from './IconSocks';
+import IconSoftDrinks from './IconSoftDrinks';
+import IconStationery from './IconStationery';
+import IconSweets from './IconSweets';
+import IconToys from './IconToys';
+import IconVegetables from './IconVegetables';
+import IconVitamins from './IconVitamins';
+
+const data = {IconAlcohol,
+  IconBabyFood,
+  IconCannedFood,
+  IconCarCare,
+  IconCards,
+  IconCheese,
+  IconCoffee,
+  IconDishes,
+  IconFish,
+  IconGoodsForHome,
+  IconGoodsForKids,
+  IconGoodsForKitchen,
+  IconGoodsForPets,
+  IconGrocery,
+  IconHouseholdChemicals,
+  IconHygiene,
+  IconMeats,
+  IconPetFood,
+  IconPharmacy,
+  IconSeeds,
+  IconSnacks,
+  IconSocks,
+  IconSoftDrinks,
+  IconStationery,
+  IconSweets,
+  IconToys,
+  IconVegetables,
+  IconVitamins,
+};
+
+export default data;

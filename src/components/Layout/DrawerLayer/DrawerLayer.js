@@ -38,4 +38,7 @@ const DrawerLayer = ({ open }) => (
   </>
 );
 
+Drawer.defaultProps = defaultProps;
+Drawer.propTypes = propTypes;
+
 export default DrawerLayer;

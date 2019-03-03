@@ -18,8 +18,8 @@ const propTypes = {
   onStart: PropTypes.func,
   /** On end function to dispatch. */
   onEnd: PropTypes.func,
-  /** Children elemEnt to be rendered inside the component. */
-  children: PropTypes.element.isRequired,
+  /** Children element to be rendered inside the component. */
+  children: PropTypes.node.isRequired,
 };
 /**
  * Default settings for move detection.
@@ -88,8 +88,8 @@ class MouseMotion extends Component {
    */
   onEnd( e ) {
 
-    window.removeEventListener('mousemove', this.onMove, false);
-    window.removeEventListener('mouseup', this.onEnd, false);
+    window.removeEventListener('mousemove', this.onMove);
+    window.removeEventListener('mouseup', this.onEnd);
 
     const { onEnd } = this.props;
     onEnd({

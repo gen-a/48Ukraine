@@ -24,9 +24,10 @@ import ToolBarLayer from './ToolBarLayer';
 import DrawerLayer from './DrawerLayer';
 
 import Header from '../Header';
-import Carousel from '../UI/Carousel';
 
 import './Layout.scss';
+import DepartmentsCarousel from "../Containers/DepartmentsCarousel/DepartmentsCarousel";
+
 
 
 /**
@@ -45,9 +46,7 @@ const propTypes = {
 };
 
 const Layout = ({ locale, onWindowResize, openPanel, onScrimClick }) => {
-
-  let blur = openPanel !== '';
-
+  const blur = openPanel !== '';
   return (
     <div className="Layout">
       <WindowResizeDetect onResize={onWindowResize} />
@@ -61,7 +60,8 @@ const Layout = ({ locale, onWindowResize, openPanel, onScrimClick }) => {
         </header>
         <div className="Layout__body">
           <div className="Layout__bodyMain">
-            <Carousel/>
+            <DepartmentsCarousel />
+
             <Switch>
               <Route exact path={localizePath('/dev', locale)} component={Container}/>
               <Route exact path={localizePath('/', locale)} component={Container}/>

@@ -20,6 +20,6 @@
   "svg":{
     "sourceDir":"./~source/svg-source",
     "destDir":"./~source/components",
-    "svgPropsToRemove":["viewBox", "enableBackground", "xmlSpace", "id", "x", "y" ]
+    "svgPropsToRemove":["enableBackground", "xmlSpace", "id", "x", "y" ]
   }
 }

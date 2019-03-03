@@ -26,8 +26,8 @@ files.forEach((file) => {
       let jsCode = svgr.sync(
         svgCode,
         {
-          icon: true,
-          dimensions: false,
+          icon: false,
+          dimensions: true,
           replaceAttrValues: { fill: 'new' },
           svgProps
         },

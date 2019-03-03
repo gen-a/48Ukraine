@@ -5,6 +5,7 @@
  */
 import React, { Component, createRef } from 'react';
 import PropTypes from 'prop-types';
+import uuidv4 from 'uuid/v4';
 
 import './ElementResize.scss';
 
@@ -73,6 +74,7 @@ class ElementResize extends Component {
           width="100%"
           seamless
           ref={this.iframe}
+          title={uuidv4()}
         />
       </div>
     );
