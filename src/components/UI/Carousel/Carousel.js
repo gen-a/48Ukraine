@@ -19,8 +19,10 @@ import TouchMotion from '../Detect/TouchMotion/TouchMotion';
 const propTypes = {
   /** Renderable content  */
   children: PropTypes.node.isRequired,
-  /** Width of the children node slot.  */
+  /** Width of the children node slot in pixels.  */
   slotWidth: PropTypes.number,
+  /** Height of the children node slot in pixels.  */
+  slotHeight: PropTypes.number,
   /** Start drag handler for controlling events by parent container.  */
   onStartDrag: PropTypes.func,
   /** End drag handler for controlling events by parent container.  */
@@ -33,6 +35,7 @@ const propTypes = {
  */
 const defaultProps = {
   slotWidth: 200,
+  slotHeight: 80,
   onStartDrag: () => {
     console.log('disableEvents');
   },
@@ -252,7 +255,7 @@ class Carousel extends Component {
    * @returns {XML}
    */
   render() {
-    const { slotWidth, children } = this.props;
+    const { slotWidth, slotHeight, children } = this.props;
     const { container, frame, scroll } = this.state;
     const containerStyle = {
       transform: `translateX(${container.translateX}px)`,
@@ -273,7 +276,7 @@ class Carousel extends Component {
     )(container.translateX === scroll.min, 'Carousel__button_disabled');
 
     return (
-      <div className="Carousel">
+      <div className="Carousel" style={{height:`${slotHeight}px`}}>
         <ElementResize onResize={e => this.onElementResize(e)}/>
         <TouchMotion
           onStart={e => this.onStartTouchMotion(e)}

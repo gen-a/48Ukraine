@@ -60,6 +60,7 @@ class DepartmentsCarousel extends Component {
       <Carousel
         onStartDrag={() => this.disableNavLink()}
         onEndDrag={() => this.enableNavLink()}
+        slotHeight={80}
       >
         {[...Array(10)].map((v, i) => (
 
@@ -69,7 +70,12 @@ class DepartmentsCarousel extends Component {
             onClick={(e) => this.handleClick(e)}
             style={{ textDecoration: 'none', color: 'white' }}
           >
-            <div className={i === current ? "DepartmentsCarousel__entry DepartmentsCarousel__entry_current" : "DepartmentsCarousel__entry"} >
+            <div
+              className={i === current
+                ? 'DepartmentsCarousel__entry DepartmentsCarousel__entry_current'
+                : 'DepartmentsCarousel__entry'}
+              style={{height:`${80}px`}}
+            >
               <div className="DepartmentsCarousel__icon">
                 <C viewBox="0 0 64 64" width="32px" height="32px" style={{ display: 'block' }}/>
               </div>
