@@ -18,16 +18,15 @@ import FlashMessage from '../UI/FlashMessage';
 import Loader from '../UI/Loader';
 import Scrim from '../UI/Scrim';
 
-import { setWindowSize, setOpenPanel } from '../../actions/app';
+import { setWindowSize, setOpenDrawer } from '../../actions/app';
 import { localizePath } from '../../localization';
 import ToolBarLayer from './ToolBarLayer';
 import DrawerLayer from './DrawerLayer';
-
+import Home from './Stages/Home';
 import Header from '../Header';
 
 import './Layout.scss';
-import DepartmentsCarousel from "../Containers/DepartmentsCarousel/DepartmentsCarousel";
-
+import DepartmentsCarousel from '../Containers/DepartmentsCarousel/DepartmentsCarousel';
 
 
 /**
@@ -39,38 +38,60 @@ const propTypes = {
   locale: PropTypes.string.isRequired,
   /** On resize window to store data into redux store. */
   onWindowResize: PropTypes.func.isRequired,
-  /** Current open panel name. */
-  openPanel: PropTypes.string.isRequired,
+  /** Current open drawer name. */
+  openDrawer: PropTypes.string.isRequired,
   /** Hide panels handler. */
   onScrimClick: PropTypes.func.isRequired,
+  /** Window dimensions data. */
+  window: PropTypes.shape({
+    /** Window height. */
+    height: PropTypes.number.isRequired,
+    /** Window width. */
+    width: PropTypes.number.isRequired,
+    /** CSS media query prefix. */
+    mediaPrefix: PropTypes.string.isRequired,
+    /** Device Pixel Ratio. */
+    devicePixelRatio: PropTypes.number.isRequired,
+  }).isRequired,
+
 };
 
-const Layout = ({ locale, onWindowResize, openPanel, onScrimClick }) => {
-  const blur = openPanel !== '';
+const Layout = ({ window, locale, onWindowResize, openDrawer, onScrimClick }) => {
+  const blur = openDrawer !== '';
   return (
     <div className="Layout">
-      <WindowResizeDetect onResize={onWindowResize} />
-      <ToolBarLayer />
-      <DrawerLayer open={openPanel} />
-      <Scrim onClick={() => onScrimClick()} isVisible={openPanel !== ''}/>
+      <WindowResizeDetect onResize={onWindowResize}/>
+      <ToolBarLayer/>
+      <DrawerLayer open={openDrawer}/>
+      <Scrim onClick={() => onScrimClick()} isVisible={openDrawer !== ''}/>
 
-      <div className={ blur ? 'Layout__content Layout__content_blur' : 'Layout__content' }>
-        <header className="Layout__header">
-          <Header />
-        </header>
-        <div className="Layout__body">
-          <div className="Layout__bodyMain">
-            <DepartmentsCarousel />
+      <div className={blur ? 'Layout__content Layout__content_blur' : 'Layout__content'}>
 
-            <Switch>
-              <Route exact path={localizePath('/dev', locale)} component={Container}/>
-              <Route exact path={localizePath('/', locale)} component={Container}/>
-              <Route exact path={localizePath('/browse/:department', locale)} component={Browse}/>
-              <Route exact path={localizePath('/login', locale)} component={Login}/>
-              <PrivateRoute path={localizePath('/user', locale)} component={User}/>
-            </Switch>
-          </div>
-        </div>
+        <Header height={48}/>
+        <DepartmentsCarousel height={80}/>
+
+        <Switch>
+          <Route
+            exact
+            path={localizePath('/', locale)}
+            render={
+              routeProps => <Home
+                {...routeProps}
+                window={window}
+                locale={locale}
+                top={48 + 80}
+              />
+            }
+          />
+
+
+          <Route exact path={localizePath('/dev', locale)} component={Container}/>
+          <Route exact path={localizePath('/browse/:department', locale)} component={Browse}/>
+          <Route exact path={localizePath('/login', locale)} component={Login}/>
+          <PrivateRoute path={localizePath('/user', locale)} component={User}/>
+        </Switch>
+
+
         <div className="Layout__footer">
           footer
         </div>
@@ -88,14 +109,15 @@ Layout.propTypes = propTypes;
 const mapStateToProps = state => (
   {
     locale: state.app.locale,
-    openPanel: state.app.openPanel,
+    openDrawer: state.app.openDrawer,
+    window: state.app.window,
   }
 );
 
 const mapDispatchToProps = dispatch => (
   {
     onWindowResize: data => dispatch(setWindowSize(data)),
-    onScrimClick: () => dispatch(setOpenPanel('')),
+    onScrimClick: () => dispatch(setOpenDrawer('')),
   }
 );
 

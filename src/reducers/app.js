@@ -9,7 +9,7 @@ import {
   SET_LOCALE,
   SET_CURRENT_DEPARTMENT,
   EXPAND_NODE_OF_DEPARTMENT_TREE,
-  SET_OPEN_PANEL
+  SET_OPEN_DRAWER
 } from '../actions/app';
 import { APP_DEFAULT_LOCALE } from '../localization';
 
@@ -62,15 +62,15 @@ const initialState = {
   departmentsTree: {
     expanded: []
   },
-  openPanel: ''
+  openDrawer: ''
 };
 
 function app(state = initialState, action) {
   switch (action.type) {
-    case SET_OPEN_PANEL:
+    case SET_OPEN_DRAWER:
       return {
         ...state,
-        openPanel: action.payload
+        openDrawer: action.payload
       };
     case SET_CURRENT_DEPARTMENT:
       return {

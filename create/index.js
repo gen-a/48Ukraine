@@ -30,6 +30,9 @@ if(process.argv.includes('--help')){
   console.log(' - for building export index.js for all components in dir');
   console.log('node create/index-js --dir=SvgDepartments');
 
+  console.log(' - for building import to object with default export index.js for all components in dir');
+  console.log('node create/index-to-object --dir=SvgDepartments');
+
   process.exit();
 }
 

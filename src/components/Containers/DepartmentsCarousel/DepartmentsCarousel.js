@@ -16,8 +16,8 @@ import './DepartmentsCarousel.scss';
  * @type {object}
  */
 const propTypes = {
-  /** Text message of the toast. */
-  //prop: PropTypes.string,
+  /** Height in pixels. */
+  height: PropTypes.string,
 };
 
 /**
@@ -25,7 +25,7 @@ const propTypes = {
  * @type {object}
  */
 const defaultProps = {
-  //prop: '',
+    height:80
 };
 
 /**
@@ -53,6 +53,7 @@ class DepartmentsCarousel extends Component {
 
 
   render() {
+    const {height} = this.props;
     const current =1;
     const C = Icons['IconAlcohol'];
     return (
@@ -60,7 +61,7 @@ class DepartmentsCarousel extends Component {
       <Carousel
         onStartDrag={() => this.disableNavLink()}
         onEndDrag={() => this.enableNavLink()}
-        slotHeight={80}
+        slotHeight={height}
       >
         {[...Array(10)].map((v, i) => (
 
@@ -74,7 +75,7 @@ class DepartmentsCarousel extends Component {
               className={i === current
                 ? 'DepartmentsCarousel__entry DepartmentsCarousel__entry_current'
                 : 'DepartmentsCarousel__entry'}
-              style={{height:`${80}px`}}
+              style={{height:`${height}px`}}
             >
               <div className="DepartmentsCarousel__icon">
                 <C viewBox="0 0 64 64" width="32px" height="32px" style={{ display: 'block' }}/>

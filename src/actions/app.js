@@ -10,7 +10,7 @@ export const HIDE_LOADER = 'HIDE_LOADER';
 export const SET_LOCALE = 'SET_LOCALE';
 export const SET_CURRENT_DEPARTMENT = 'SET_CURRENT_DEPARTMENT';
 export const EXPAND_NODE_OF_DEPARTMENT_TREE = 'EXPAND_NODE_OF_DEPARTMENT_TREE';
-export const SET_OPEN_PANEL = 'SET_OPEN_PANEL';
+export const SET_OPEN_DRAWER = 'SET_OPEN_DRAWER';
 /**
  * Set selected id of the main departments navigator
  * @param value {string} id of the node to be set
@@ -120,8 +120,8 @@ export function setLocale(locale) {
  * @param name {string} - name of the panel to be open
  * @returns {function(*, *)}
  */
-export function setOpenPanel(name) {
+export function setOpenDrawer(name) {
   return (dispatch) => {
-    dispatch({ type: SET_OPEN_PANEL, payload: name });
+    dispatch({ type: SET_OPEN_DRAWER, payload: name });
   };
 }

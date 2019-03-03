@@ -20,6 +20,8 @@ const propTypes = {
   locale: PropTypes.string,
   /** Media query prefix. */
   mediaPrefix: PropTypes.string,
+  /** Height in pixels. */
+  height: PropTypes.number,
 };
 /**
  * Default props of the component
@@ -28,16 +30,17 @@ const propTypes = {
 const defaultProps = {
   locale: APP_DEFAULT_LOCALE,
   mediaPrefix: 'xs',
+  height: 48
 };
 
 /**
  * General component description in JSDoc format. Markdown is *supported*.
  */
-const Header = ({ locale, mediaPrefix }) => {
+const Header = ({ height, locale, mediaPrefix }) => {
 
   const logoWidth = 32 * ASPECT_RATIO;
   return (
-    <div className="Header">
+    <div className="Header" style={{height:`${height}px`}}>
       <div className="Header__toggleIconBox">
 
       </div>
