@@ -10,6 +10,7 @@ import NavLink from 'react-router-dom/es/NavLink';
 
 import Icons from '../../Svg/Departments';
 import './DepartmentsCarousel.scss';
+import Ripple from "../../UI/Ripple/Ripple";
 
 /**
  * PropTypes of the component
@@ -25,7 +26,7 @@ const propTypes = {
  * @type {object}
  */
 const defaultProps = {
-    height:80
+  height: 80
 };
 
 /**
@@ -53,8 +54,8 @@ class DepartmentsCarousel extends Component {
 
 
   render() {
-    const {height} = this.props;
-    const current =1;
+    const { height } = this.props;
+    const current = 1;
     const C = Icons['IconAlcohol'];
     return (
       <>
@@ -71,20 +72,25 @@ class DepartmentsCarousel extends Component {
             onClick={(e) => this.handleClick(e)}
             style={{ textDecoration: 'none', color: 'white' }}
           >
-            <div
-              className={i === current
-                ? 'DepartmentsCarousel__entry DepartmentsCarousel__entry_current'
-                : 'DepartmentsCarousel__entry'}
-              style={{height:`${height}px`}}
-            >
-              <div className="DepartmentsCarousel__icon">
-                <C viewBox="0 0 64 64" width="32px" height="32px" style={{ display: 'block' }}/>
+            <Ripple disabled={ i === current }>
+
+              <div
+                className={i === current
+                  ? 'DepartmentsCarousel__entry DepartmentsCarousel__entry_current'
+                  : 'DepartmentsCarousel__entry'}
+                style={{ height: `${height}px` }}
+              >
+                <div className="DepartmentsCarousel__icon">
+                  <C viewBox="0 0 64 64" width="32px" height="32px" style={{ display: 'block' }}/>
+                </div>
+                <div className="DepartmentsCarousel__label">
+                  Department name lllllllll
+                </div>
               </div>
-              <div className="DepartmentsCarousel__label">
-                Department name lllllllll
-              </div>
-            </div>
+
+            </Ripple>
           </NavLink>
+
 
         ))}
       </Carousel>

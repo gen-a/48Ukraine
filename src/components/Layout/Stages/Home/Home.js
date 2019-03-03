@@ -8,6 +8,7 @@ import PropTypes from 'prop-types';
 
 import './Home.scss';
 import AspectRatioBox from "../../../UI/AspectRatioBox/AspectRatioBox";
+import Ripple from "../../../UI/Ripple/Ripple";
 
 /**
  * PropTypes of the component
@@ -47,11 +48,29 @@ class Home extends Component {
     const { top, window: { width, height } } = this.props;
     return (
       <div className="Home">
-        <AspectRatioBox width={1364} height={300} className="Home__slideShow">
+
+        <div>
+        <Ripple color="white">
+          <button
+            style={{
+              background: 'red',
+              position: 'relative',
+              padding: '10px',
+              border:0 ,
+              overflow: 'hidden',
+              outline:'none'
+            }}
+            onClick={(e) => console.log}
+          >
+            button text
+          </button>
+        </Ripple>
+      </div>
+        {/* <AspectRatioBox width={1364} height={300} className="Home__slideShow">
 
             <img src="/images/home-slide-show/file_3.jpg" alt="" className="Home__slideShowImage"/>
 
-        </AspectRatioBox>
+        </AspectRatioBox>*/}
       </div>
     );
   }

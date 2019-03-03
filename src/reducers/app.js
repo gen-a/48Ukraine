@@ -18,6 +18,14 @@ const initialState = {
     message: '',
     isActive: false,
   },
+  flashMessages: [
+    {
+      id: '',
+      title: '',
+      body: '',
+      type: 'error',
+    }
+  ],
   flashMessage: {
     title: '',
     body: '',
