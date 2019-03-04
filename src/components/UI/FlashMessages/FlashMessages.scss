@@ -10,24 +10,12 @@
   user-select: none;
   transition: bottom 0s linear 0.2s;
 
-  &__scrim {
-    position: absolute;
-    background: rgba(255, 255, 255, 0.7);
-    z-index: 2;
-    left: 0;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    opacity: 0;
-    transition: opacity 0.2s linear 0s;
-  }
   &__container{
-    position: absolute;
+    position: relative;
     z-index: 3;
-    left: 0;
-    top: 0;
-    right: 0;
-    opacity: 0;
+    margin:3px auto;
+    width:300px;
+    opacity: 1;
     transition: opacity 0.2s linear 0s;
   }
 

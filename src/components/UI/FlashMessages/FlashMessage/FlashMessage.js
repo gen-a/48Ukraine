@@ -5,7 +5,7 @@
  */
 import React from 'react';
 import PropTypes from 'prop-types';
-
+import TouchSwipe from '../../Detect/TouchSwipe/TouchSwipe';
 import IconClose from '../../../Svg/IconClose';
 import Icon from '../../Icon/Icon';
 
@@ -59,26 +59,34 @@ const FlashMessage = ({ height, collapse, swipeOff, remove, id, body, title, typ
         height: `${collapse ? 0 : height + 1}px`
       }}
     >
-      <div
-        className="FlashMessage__window"
-        style={{
-          transform,
-          height: `${height}px` ,
-          opacity: swipeOff ? 0 : 1
+      <TouchSwipe
+        onSwipe={(e) => {
+          if (e.direction === 'right') {
+            remove(id);
+          }
         }}
       >
-        <div className="FlashMessage__content">
-          <div className="FlashMessage__title">
-            {title}
-          </div>
-          <button type="button" className="FlashMessage__closeButton" onClick={() => remove(id)}>
-            <Icon size={32} svg={<IconClose width="24px" height="24px" viewBox="0 0 64 64" />} />
-          </button>
-          <div className="FlashMessage__body">
-            {body}
+        <div
+          className="FlashMessage__window"
+          style={{
+            transform,
+            height: `${height}px`,
+            opacity: swipeOff ? 0 : 1
+          }}
+        >
+          <div className="FlashMessage__content">
+            <div className="FlashMessage__title">
+              {title}
+            </div>
+            <button type="button" className="FlashMessage__closeButton" onClick={() => remove(id)}>
+              <Icon size={32} svg={<IconClose width="24px" height="24px" viewBox="0 0 64 64"/>}/>
+            </button>
+            <div className="FlashMessage__body">
+              {body}
+            </div>
           </div>
         </div>
-      </div>
+      </TouchSwipe>
     </div>
   );
 };

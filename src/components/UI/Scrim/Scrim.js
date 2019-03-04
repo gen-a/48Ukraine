@@ -33,7 +33,7 @@ const defaultProps = {
 const Scrim = ({ isVisible, onClick, depth }) => (
   <div
     className={`Scrim ${isVisible ? 'Scrim_isVisible' : ''}`}
-    style={{ zIndex: depth }}
+    style={{ zIndex: depth, cursor: onClick !== defaultProps.onClick ? 'pointer' : 'default' }}
     onClick={e => onClick(e)}
   />
 );

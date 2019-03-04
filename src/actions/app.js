@@ -4,8 +4,8 @@ import { importDictionaryArticles } from './dictionary';
 export const SHOW_TOAST = 'SHOW_TOAST';
 export const HIDE_TOAST = 'HIDE_TOAST';
 
-export const BLUR_CONTENT = 'BLUR_CONTENT';
-export const FOCUS_CONTENT = 'FOCUS_CONTENT';
+export const ADD_OPEN_SCRIM = 'ADD_OPEN_SCRIM';
+export const REMOVE_OPEN_SCRIM = 'REMOVE_OPEN_SCRIM';
 
 export const ADD_FLASH_MESSAGE = 'ADD_FLASH_MESSAGE';
 export const REMOVE_FLASH_MESSAGE = 'REMOVE_FLASH_MESSAGE';
@@ -19,23 +19,25 @@ export const SET_CURRENT_DEPARTMENT = 'SET_CURRENT_DEPARTMENT';
 export const EXPAND_NODE_OF_DEPARTMENT_TREE = 'EXPAND_NODE_OF_DEPARTMENT_TREE';
 export const SET_OPEN_DRAWER = 'SET_OPEN_DRAWER';
 
+
+
 /**
- * Blur content of the main container
+ * Remove open screen from list
  * @returns {function(*)}
  */
-export function blurContent() {
+export function removeOpenScrim(id) {
   return (dispatch) => {
-    dispatch({ type: BLUR_CONTENT });
+    dispatch({ type: REMOVE_OPEN_SCRIM, payload: id });
   };
 }
 
 /**
- * Focus content of the main container
+ * Add open screen from list
  * @returns {function(*)}
  */
-export function focusContent() {
+export function addOpenScrim(id) {
   return (dispatch) => {
-    dispatch({ type: FOCUS_CONTENT });
+    dispatch({ type: ADD_OPEN_SCRIM, payload: id });
   };
 }
 

@@ -10,7 +10,8 @@ import FlashMessage from './FlashMessage';
 import { APP_ROOT } from '../../../config/app';
 
 import './FlashMessages.scss';
-import Scrim from '../Scrim';
+import Scrim from '../../Containers/Scrim';
+
 
 /**
  * PropTypes of the component
@@ -90,6 +91,7 @@ class FlashMessages extends Component {
             onClick={() => this.removeAllMessages()}
             isVisible={data.length > 0}
             depth={1}
+            id="FlashMessages"
           />
           <div className="FlashMessages__container">
             {data.map((message) => (

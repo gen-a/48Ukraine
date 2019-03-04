@@ -5,40 +5,59 @@
  */
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import DepartmentsNavigator from '../../Containers/DepartmentsNavigator';
 import ScrollBox from '../../UI/ScrollBox';
 import AuthenticationForm from '../../Forms/AuthenticationForm/AuthenticationForm';
 import Drawer from '../../UI/Drawer';
+import Scrim from '../../Containers/Scrim';
+import { setOpenDrawer } from '../../../actions/app';
 /**
  * PropTypes of the component
  * @type {object}
  */
 const propTypes = {
   /** Position on the screen. */
-  open: PropTypes.oneOf(['', 'top', 'right', 'bottom', 'left']),
+  openDrawer: PropTypes.oneOf(['', 'menu', 'user']),
+  /** Function to change open drawer. */
+  callSetOpenDrawer: PropTypes.func.isRequired
 };
 /**
  * Default settings for move detection.
  * @type {object}
  */
 const defaultProps = {
-  open: '',
+  openDrawer: '',
 };
 
-const DrawerLayer = ({ open }) => (
+const DrawerLayer = ({ callSetOpenDrawer, openDrawer }) => (
   <>
-    <Drawer position="left" depth={50} isOpen={ open === 'menu' } header="Departments">
+    <Scrim id="DrawerLayer" onClick={() => callSetOpenDrawer('')} isVisible={openDrawer !== ''} />
+    <Drawer position="left" depth={50} isOpen={openDrawer === 'menu'} header="Departments">
       <ScrollBox>
         <DepartmentsNavigator />
       </ScrollBox>
     </Drawer>
-    <Drawer position="right" depth={50} isOpen={ open === 'user' } header="User Data">
+    <Drawer position="right" depth={50} isOpen={openDrawer === 'user'} header="User Data">
       <AuthenticationForm />
     </Drawer>
   </>
 );
 
-Drawer.defaultProps = defaultProps;
-Drawer.propTypes = propTypes;
+DrawerLayer.defaultProps = defaultProps;
+DrawerLayer.propTypes = propTypes;
 
-export default DrawerLayer;
+const mapStateToProps = state => (
+  {
+    openDrawer: state.app.openDrawer,
+  }
+);
+
+const mapDispatchToProps = dispatch => (
+  {
+    callSetOpenDrawer: name => dispatch(setOpenDrawer(name)),
+  }
+);
+
+export default connect(mapStateToProps, mapDispatchToProps)(DrawerLayer);
+

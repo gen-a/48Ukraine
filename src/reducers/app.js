@@ -11,8 +11,8 @@ import {
   SET_CURRENT_DEPARTMENT,
   EXPAND_NODE_OF_DEPARTMENT_TREE,
   SET_OPEN_DRAWER,
-  BLUR_CONTENT,
-  FOCUS_CONTENT,
+  ADD_OPEN_SCRIM,
+  REMOVE_OPEN_SCRIM,
 } from '../actions/app';
 import { APP_DEFAULT_LOCALE } from '../localization';
 
@@ -61,28 +61,20 @@ const initialState = {
     expanded: []
   },
   openDrawer: '',
-  content: {
-    isBlurred: false
-  }
+  openScrims: []
 };
 
 function app(state = initialState, action) {
   switch (action.type) {
-    case BLUR_CONTENT:
+    case ADD_OPEN_SCRIM:
       return {
         ...state,
-        content: {
-          ...state.content,
-          isBlurred: true
-        }
+        openScrims: [...state.openScrims, action.payload]
       };
-    case FOCUS_CONTENT:
+    case REMOVE_OPEN_SCRIM:
       return {
         ...state,
-        content: {
-          ...state.content,
-          isBlurred: false
-        }
+        openScrims: state.openScrims.filter(id => action.payload !== id)
       };
     case SET_OPEN_DRAWER:
       return {

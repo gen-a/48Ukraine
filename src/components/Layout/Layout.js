@@ -16,9 +16,9 @@ import WindowResizeDetect from '../UI/Detect/WindowResize';
 import Toast from '../UI/Toast';
 import FlashMessages from '../Containers/FlashMessages';
 import Loader from '../UI/Loader';
-import Scrim from '../UI/Scrim';
 
-import { setWindowSize, setOpenDrawer } from '../../actions/app';
+
+import { setWindowSize } from '../../actions/app';
 import { localizePath } from '../../localization';
 import ToolBarLayer from './ToolBarLayer';
 import DrawerLayer from './DrawerLayer';
@@ -38,10 +38,6 @@ const propTypes = {
   locale: PropTypes.string.isRequired,
   /** On resize window to store data into redux store. */
   onWindowResize: PropTypes.func.isRequired,
-  /** Current open drawer name. */
-  openDrawer: PropTypes.string.isRequired,
-  /** Hide panels handler. */
-  onScrimClick: PropTypes.func.isRequired,
   /** Window dimensions data. */
   window: PropTypes.shape({
     /** Window height. */
@@ -56,19 +52,17 @@ const propTypes = {
 
 };
 
-const Layout = ({ isBlurredContent, window, locale, onWindowResize, openDrawer, onScrimClick }) => {
+const Layout = ({ openScrims, window, locale, onWindowResize }) => {
   return (
     <div className="Layout">
       <WindowResizeDetect onResize={onWindowResize}/>
-      <ToolBarLayer/>
-      <DrawerLayer open={openDrawer}/>
-
-      <Scrim onClick={() => onScrimClick()} isVisible={openDrawer !== ''}/>
-      <Toast/>
+      <ToolBarLayer />
+      <DrawerLayer />
+      <Toast />
       <FlashMessages/>
-      <Loader/>
+      <Loader />
 
-      <div className={isBlurredContent ? 'Layout__content Layout__content_blur' : 'Layout__content'}>
+      <div className={openScrims.length > 0 ? 'Layout__content Layout__content_blur' : 'Layout__content'}>
 
         <Header height={48}/>
         <DepartmentsCarousel height={80}/>
@@ -109,16 +103,14 @@ Layout.propTypes = propTypes;
 const mapStateToProps = state => (
   {
     locale: state.app.locale,
-    openDrawer: state.app.openDrawer,
     window: state.app.window,
-    isBlurredContent: state.app.content.isBlurred,
+    openScrims: state.app.openScrims,
   }
 );
 
 const mapDispatchToProps = dispatch => (
   {
     onWindowResize: data => dispatch(setWindowSize(data)),
-    onScrimClick: () => dispatch(setOpenDrawer('')),
   }
 );
 
