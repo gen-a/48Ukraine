@@ -1,9 +1,16 @@
-import {importDictionaryArticles} from './dictionary';
+import uuid from 'uuid/v4';
+import { importDictionaryArticles } from './dictionary';
 
 export const SHOW_TOAST = 'SHOW_TOAST';
 export const HIDE_TOAST = 'HIDE_TOAST';
-export const SHOW_FLASH_MESSAGE = 'SHOW_FLASH_MESSAGE';
-export const HIDE_FLASH_MESSAGE = 'HIDE_FLASH_MESSAGE';
+
+export const BLUR_CONTENT = 'BLUR_CONTENT';
+export const FOCUS_CONTENT = 'FOCUS_CONTENT';
+
+export const ADD_FLASH_MESSAGE = 'ADD_FLASH_MESSAGE';
+export const REMOVE_FLASH_MESSAGE = 'REMOVE_FLASH_MESSAGE';
+export const REMOVE_ALL_FLASH_MESSAGES = 'REMOVE_ALL_FLASH_MESSAGES';
+
 export const SET_WINDOW_SIZE = 'SET_WINDOW_SIZE';
 export const SHOW_LOADER = 'SHOW_LOADER';
 export const HIDE_LOADER = 'HIDE_LOADER';
@@ -11,6 +18,27 @@ export const SET_LOCALE = 'SET_LOCALE';
 export const SET_CURRENT_DEPARTMENT = 'SET_CURRENT_DEPARTMENT';
 export const EXPAND_NODE_OF_DEPARTMENT_TREE = 'EXPAND_NODE_OF_DEPARTMENT_TREE';
 export const SET_OPEN_DRAWER = 'SET_OPEN_DRAWER';
+
+/**
+ * Blur content of the main container
+ * @returns {function(*)}
+ */
+export function blurContent() {
+  return (dispatch) => {
+    dispatch({ type: BLUR_CONTENT });
+  };
+}
+
+/**
+ * Focus content of the main container
+ * @returns {function(*)}
+ */
+export function focusContent() {
+  return (dispatch) => {
+    dispatch({ type: FOCUS_CONTENT });
+  };
+}
+
 /**
  * Set selected id of the main departments navigator
  * @param value {string} id of the node to be set
@@ -33,6 +61,7 @@ export function expandNodeOfDepartmentTree(id, value) {
     dispatch({ type: EXPAND_NODE_OF_DEPARTMENT_TREE, payload: { id, value } });
   };
 }
+
 /**
  * Set window size
  * @returns {function(*, *)}
@@ -50,19 +79,30 @@ export function setWindowSize(data) {
  * @param type {string} - one of the error|info|success. It will be used for css style adjustment
  * @returns {function(*, *)}
  */
-export function showFlashMessage(body, title= 'System message', type= 'error') {
+export function addFlashMessage(body, title = 'System message', type = 'error') {
   return (dispatch) => {
-    dispatch({ type: SHOW_FLASH_MESSAGE, payload: {body, title, type} });
+    const id = uuid();
+    dispatch({ type: ADD_FLASH_MESSAGE, payload: { id, body, title, type } });
   };
 }
 
 /**
- * Hide system message
+ * Remove message by its id
+ * @param id {string} - id of the message for future removal
  * @returns {function(*, *)}
  */
-export function hideFlashMessage() {
+export function removeFlashMessage(id) {
   return (dispatch) => {
-    dispatch({ type: HIDE_FLASH_MESSAGE, payload: {} });
+    dispatch({ type: REMOVE_FLASH_MESSAGE, payload: id });
+  };
+}
+/**
+ * Remove all messages
+ * @returns {function(*, *)}
+ */
+export function removeAllFlashMessages() {
+  return (dispatch) => {
+    dispatch({ type: REMOVE_ALL_FLASH_MESSAGES});
   };
 }
 /**
@@ -74,6 +114,7 @@ export function hideLoader() {
     dispatch({ type: HIDE_LOADER, payload: {} });
   };
 }
+
 /**
  * Show loader
  * @returns {function(*, *)}
@@ -83,6 +124,7 @@ export function showLoader() {
     dispatch({ type: SHOW_LOADER, payload: {} });
   };
 }
+
 /**
  * Hide toast
  * @returns {function(*, *)}
@@ -92,6 +134,7 @@ export function hideToast() {
     dispatch({ type: HIDE_TOAST, payload: {} });
   };
 }
+
 /**
  * Show toast
  * @param message {string} - text message of the toast
@@ -115,6 +158,7 @@ export function setLocale(locale) {
     importDictionaryArticles(locale)(dispatch);
   };
 }
+
 /**
  * Set open panel  name
  * @param name {string} - name of the panel to be open

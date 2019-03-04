@@ -4,7 +4,7 @@
  */
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { showFlashMessage, showLoader, hideLoader } from '../../../actions/app';
+import { addFlashMessage, showLoader, hideLoader } from '../../../actions/app';
 
 /**
  * PropTypes of the component
@@ -40,7 +40,7 @@ const defaultProps = {
   error: null,
   timedOut: false,
   pastDelay: false,
-  onShowMessage: (body, title, type) => console.log(body, title, type),
+  onShowMessage: (id, body, title, type) => console.log(id, body, title, type),
   onShowLoader: () => console.log('onShowLoader'),
   onHideLoader: () => console.log('onHideLoader'),
 };
@@ -53,10 +53,10 @@ const Loading = ({
                  }) => {
   if (error) {
     onHideLoader();
-    onShowMessage(messageErrorLoading, titleError, 'error');
+    onShowMessage( new Date().getTime(), messageErrorLoading, titleError, 'error');
   } else if (timedOut) {
     onHideLoader();
-    onShowMessage(messageErrorTimeout, titleError, 'error');
+    onShowMessage( new Date().getTime(), messageErrorTimeout, titleError, 'error');
   } else if (pastDelay) {
     onShowLoader();
   } else {
@@ -98,7 +98,7 @@ const mapStateToProps = state => (
 
 const mapDispatchToProps = dispatch => (
   {
-    onShowMessage: (body, title, type) => dispatch(showFlashMessage(body, title, type)),
+    onShowMessage: (id, body, title, type) => dispatch(addFlashMessage(id, body, title, type)),
     onShowLoader: () => dispatch(showLoader()),
     onHideLoader: () => dispatch(hideLoader())
   }

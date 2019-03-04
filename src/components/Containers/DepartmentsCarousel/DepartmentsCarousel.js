@@ -18,7 +18,7 @@ import Ripple from "../../UI/Ripple/Ripple";
  */
 const propTypes = {
   /** Height in pixels. */
-  height: PropTypes.string,
+  height: PropTypes.number,
 };
 
 /**

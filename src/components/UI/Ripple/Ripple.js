@@ -15,8 +15,8 @@ import './Ripple.scss';
 const propTypes = {
   /** CSS color of the circle. */
   color: PropTypes.string,
-  /** Node for attaching effect. */
-  children: PropTypes.node.isRequired,
+  /** Element for attaching effect. */
+  children: PropTypes.element.isRequired,
   /** Disabled status of the ripple. */
   disabled: PropTypes.bool,
 };

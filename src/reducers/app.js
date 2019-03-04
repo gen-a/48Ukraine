@@ -1,15 +1,18 @@
 import {
   SHOW_TOAST,
   HIDE_TOAST,
-  SHOW_FLASH_MESSAGE,
-  HIDE_FLASH_MESSAGE,
+  ADD_FLASH_MESSAGE,
+  REMOVE_FLASH_MESSAGE,
+  REMOVE_ALL_FLASH_MESSAGES,
   SET_WINDOW_SIZE,
   SHOW_LOADER,
   HIDE_LOADER,
   SET_LOCALE,
   SET_CURRENT_DEPARTMENT,
   EXPAND_NODE_OF_DEPARTMENT_TREE,
-  SET_OPEN_DRAWER
+  SET_OPEN_DRAWER,
+  BLUR_CONTENT,
+  FOCUS_CONTENT,
 } from '../actions/app';
 import { APP_DEFAULT_LOCALE } from '../localization';
 
@@ -18,20 +21,7 @@ const initialState = {
     message: '',
     isActive: false,
   },
-  flashMessages: [
-    {
-      id: '',
-      title: '',
-      body: '',
-      type: 'error',
-    }
-  ],
-  flashMessage: {
-    title: '',
-    body: '',
-    type: 'error',
-    isActive: false,
-  },
+  flashMessages: [],
   window: {
     height: 0,
     width: 0,
@@ -70,11 +60,30 @@ const initialState = {
   departmentsTree: {
     expanded: []
   },
-  openDrawer: ''
+  openDrawer: '',
+  content: {
+    isBlurred: false
+  }
 };
 
 function app(state = initialState, action) {
   switch (action.type) {
+    case BLUR_CONTENT:
+      return {
+        ...state,
+        content: {
+          ...state.content,
+          isBlurred: true
+        }
+      };
+    case FOCUS_CONTENT:
+      return {
+        ...state,
+        content: {
+          ...state.content,
+          isBlurred: false
+        }
+      };
     case SET_OPEN_DRAWER:
       return {
         ...state,
@@ -117,21 +126,21 @@ function app(state = initialState, action) {
           isActive: false
         }
       };
-    case SHOW_FLASH_MESSAGE:
+
+    case ADD_FLASH_MESSAGE:
       return {
         ...state,
-        flashMessage: {
-          ...action.payload,
-          isActive: true
-        }
+        flashMessages: [...state.flashMessages, action.payload]
       };
-    case HIDE_FLASH_MESSAGE:
+    case REMOVE_FLASH_MESSAGE:
       return {
         ...state,
-        flashMessage: {
-          ...state.flashMessage,
-          isActive: false,
-        }
+        flashMessages: state.flashMessages.filter(message => message.id !== action.payload)
+      };
+    case REMOVE_ALL_FLASH_MESSAGES:
+      return {
+        ...state,
+        flashMessages: []
       };
     case SHOW_LOADER:
       return {

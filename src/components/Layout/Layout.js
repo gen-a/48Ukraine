@@ -14,7 +14,7 @@ import User from '../Loadables/User';
 import Login from '../Pages/Login';
 import WindowResizeDetect from '../UI/Detect/WindowResize';
 import Toast from '../UI/Toast';
-import FlashMessage from '../UI/FlashMessage';
+import FlashMessages from '../Containers/FlashMessages';
 import Loader from '../UI/Loader';
 import Scrim from '../UI/Scrim';
 
@@ -56,16 +56,19 @@ const propTypes = {
 
 };
 
-const Layout = ({ window, locale, onWindowResize, openDrawer, onScrimClick }) => {
-  const blur = openDrawer !== '';
+const Layout = ({ isBlurredContent, window, locale, onWindowResize, openDrawer, onScrimClick }) => {
   return (
     <div className="Layout">
       <WindowResizeDetect onResize={onWindowResize}/>
       <ToolBarLayer/>
       <DrawerLayer open={openDrawer}/>
-      <Scrim onClick={() => onScrimClick()} isVisible={openDrawer !== ''}/>
 
-      <div className={blur ? 'Layout__content Layout__content_blur' : 'Layout__content'}>
+      <Scrim onClick={() => onScrimClick()} isVisible={openDrawer !== ''}/>
+      <Toast/>
+      <FlashMessages/>
+      <Loader/>
+
+      <div className={isBlurredContent ? 'Layout__content Layout__content_blur' : 'Layout__content'}>
 
         <Header height={48}/>
         <DepartmentsCarousel height={80}/>
@@ -97,9 +100,6 @@ const Layout = ({ window, locale, onWindowResize, openDrawer, onScrimClick }) =>
         </div>
       </div>
 
-      <Toast/>
-      <FlashMessage/>
-      <Loader/>
     </div>
   );
 };
@@ -111,6 +111,7 @@ const mapStateToProps = state => (
     locale: state.app.locale,
     openDrawer: state.app.openDrawer,
     window: state.app.window,
+    isBlurredContent: state.app.content.isBlurred,
   }
 );
 

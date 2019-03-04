@@ -1,0 +1,87 @@
+@import '../../../../colors';
+
+.FlashMessage {
+  position: relative;
+  margin:0 auto;
+  width:100%;
+  max-width:300px;
+  padding:0;
+  transition: all 0.2s ease-out 0.1s;
+
+  &__window {
+    position: absolute;
+    width:100%;
+    box-sizing: border-box;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 1);
+    transition: all 0.2s ease-out;
+  }
+
+  &__title{
+    position:absolute;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    bottom:0;
+    left:1rem;
+    right:42px;
+    line-height: 32px;
+    font-size:0.75rem;
+  }
+  &__body {
+    box-sizing: border-box;
+    max-height:80px;
+    top:0.5rem;
+    position:absolute;
+    left:1rem;
+    right:2rem;
+    color: black;
+    text-align: left;
+    font-size: 1rem;
+    line-height:1.345em;
+    overflow:hidden;
+    text-overflow: ellipsis;
+  }
+
+  &__closeButton {
+    position: absolute;
+    right: 0;
+    top: 0;
+    padding: 0;
+    border: 0;
+    outline: none;
+    background: none;
+    cursor: pointer;
+  }
+
+  &_error {
+    .FlashMessage{
+      &__title{
+        color:$color-error-hb;
+      }
+      &__content {
+        border-top:3px solid $color-error-hb;
+      }
+    }
+  }
+  &_info {
+    .FlashMessage{
+      &__title{
+        color:$color-info-hb;
+      }
+      &__content {
+        border-top:3px solid $color-info-hb;
+      }
+    }
+  }
+  &_success {
+    .FlashMessage{
+      &__title{
+        color:$color-success-hb;
+      }
+      &__content {
+        border-top:3px solid $color-success-hb;
+      }
+    }
+  }
+}

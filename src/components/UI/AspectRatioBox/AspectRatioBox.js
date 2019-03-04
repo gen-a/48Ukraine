@@ -20,8 +20,6 @@ const propTypes = {
   children: PropTypes.node.isRequired,
   /** CSS style object. */
   style: stylePropType,
-  /** CSS className. */
-  className: stylePropType,
 };
 /**
  * Default props of the component
@@ -29,19 +27,18 @@ const propTypes = {
  */
 const defaultProps = {
   style: {},
-  className: ''
 };
 /**
  * General component description in JSDoc format. Markdown is *supported*.
  */
-const AspectRatioBox = ({ width, height, children, style, className }) => {
+const AspectRatioBox = ({ width, height, children, style }) => {
   return (
     <div
       style={{
         display: 'block',
         position: 'relative',
         width: '100%',
-        paddingBottom: `${width / height * 100}%`
+        paddingBottom: `${height / width  * 100}%`
       }}
     >
       <div
@@ -54,7 +51,6 @@ const AspectRatioBox = ({ width, height, children, style, className }) => {
           right: 0,
           bottom: 0
         }}
-        className={className}
       >
         {children}
       </div>

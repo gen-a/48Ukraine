@@ -27,7 +27,7 @@ files.forEach((file) => {
         svgCode,
         {
           icon: false,
-          dimensions: true,
+          dimensions: false,
           replaceAttrValues: { fill: 'new' },
           svgProps
         },

@@ -40,16 +40,18 @@ const Header = ({ height, locale, mediaPrefix }) => {
 
   const logoWidth = 32 * ASPECT_RATIO;
   return (
-    <div className="Header" style={{height:`${height}px`}}>
+    <div className="Header" style={{ height: `${height}px` }}>
       <div className="Header__toggleIconBox">
 
       </div>
       <div className="Header__logoBox">
-        <NavLink to={localizePath('/', locale)}>
-          <div className="Header__logo" style={{ width: logoWidth, margin: '0 auto' }}>
+
+        <div className="Header__logo" style={{ width: logoWidth, margin: '0 auto' }}>
+          <NavLink to={localizePath('/', locale)}>
             <CompanyLogo />
-          </div>
-        </NavLink>
+          </NavLink>
+        </div>
+
       </div>
       <div className="Header__toggleIconBox">
 
