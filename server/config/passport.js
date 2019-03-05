@@ -1,6 +1,6 @@
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
-const Customer = require('../models/customer-model');
+const User = require('../models/user-model');
 
 passport.use(new LocalStrategy(
   {
@@ -8,28 +8,28 @@ passport.use(new LocalStrategy(
     passwordField: 'password'
   },
   function (username, password, done) {
-    Customer.findOne({email: username})
-      .then((customer) => {
-        if (!customer) {
+    User.findOne({email: username})
+      .then((user) => {
+        if (!user) {
           return done(null, false, { message: 'Incorrect username.' });
         }
-        if (!customer.comparePassword(password)) {
+        if (!user.comparePassword(password)) {
           return done(null, false, { message: 'Incorrect password.' });
         }
-        return done(null, customer);
+        return done(null, user);
       })
       .catch(console.log);
   }
 ));
 
-passport.serializeUser((customer, cb) => {
-  cb(null, customer.id);
+passport.serializeUser((user, cb) => {
+  cb(null, user.id);
 });
 
 passport.deserializeUser((id, cb) => {
-  Customer.findById(id)
-    .then((customer) => {
-      cb(null, customer === null ? false : customer.toJSON());
+  User.findById(id)
+    .then((user) => {
+      cb(null, user === null ? false : user.toJSON());
     })
     .catch(console.log);
 });

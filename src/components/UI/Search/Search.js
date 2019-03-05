@@ -31,9 +31,7 @@ const defaultProps = {
 class Search extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-
-    };
+    this.state = {};
   }
 
   componentDidMount() {
@@ -43,17 +41,17 @@ class Search extends Component {
   render() {
 
     return (
-      <button className="Search">
-        <select type="button" >
+      <div className="Search">
+        <select type="button">
           <option>department</option>
           <option>department</option>
         </select>
 
-        <input value={} onChange={} />
+        <input value="" onChange=""/>
 
-        <button type="button" >
+        <button type="button">
 
-
+          asdasd
         </button>
       </div>
     );

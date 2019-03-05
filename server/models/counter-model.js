@@ -4,7 +4,7 @@ const counterSchema = mongoose.Schema({
   _id: mongoose.Types.ObjectId,
   subject: {
     type: String,
-    enum: ['customer', 'order'],
+    enum: ['user', 'order'],
     unique: true,
     required: [true, 'Subject is required'],
   },
