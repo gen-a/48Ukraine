@@ -51,7 +51,7 @@ const defaultProps = {
 };
 
 const FlashMessage = ({ height, collapse, swipeOff, remove, id, body, title, type }) => {
-  const transform = swipeOff ? `translateX(${window.innerWidth}px)` : 'translateX(0)';
+  const transform = swipeOff ? `translateX(350px)` : 'translateX(0)';
   return (
     <div
       className={`FlashMessage FlashMessage_${type}`}

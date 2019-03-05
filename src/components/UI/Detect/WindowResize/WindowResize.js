@@ -25,7 +25,7 @@ const propTypes = {
  */
 const defaultProps = {
   onResize: console.log,
-  delay: 30,
+  delay: 10,
   mediaPrefixes: {
     xs: [null, 200],
     sm: [201, 480],

@@ -72,6 +72,14 @@ class Carousel extends Component {
     this.buttonWidth = parseInt(styles.buttonWidth, 10);
   }
 
+
+  /**
+   * Call resize for initialise component
+   */
+  componentDidMount() {
+    this.onElementResize({ width: window.innerWidth});
+  }
+
   /**
    * Initialise dimensions on resize element
    * @param width
@@ -200,6 +208,21 @@ class Carousel extends Component {
   }
 
   /**
+   * On keydown left and right handler
+   * @param e {Event}
+   */
+  onKeyDown(e) {
+    switch (e.keyCode) {
+      case 37:
+        this.onPageDown();
+        break;
+      case 39:
+        this.onPageUp();
+        break;
+    }
+  }
+
+  /**
    * On right button click handler
    */
   traceMotion(x) {
@@ -276,7 +299,12 @@ class Carousel extends Component {
     )(container.translateX === scroll.min, 'Carousel__button_disabled');
 
     return (
-      <div className="Carousel" style={{height:`${slotHeight}px`}}>
+      <div
+        className="Carousel"
+        tabIndex="0"
+        style={{height:`${slotHeight}px`}}
+        onKeyDown={(e) => this.onKeyDown(e)}
+      >
         <ElementResize onResize={e => this.onElementResize(e)}/>
         <TouchMotion
           onStart={e => this.onStartTouchMotion(e)}
@@ -299,7 +327,6 @@ class Carousel extends Component {
                 {children.map((element, index) => (
                   <div
                     className="Carousel__slot"
-                    key={element.key}
                     style={{ width: `${slotWidth}px`, left: `${slotWidth * index}px` }}
                   >
                     {element}

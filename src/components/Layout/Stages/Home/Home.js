@@ -6,10 +6,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import SlideShow from '../../../UI/SlideShow';
 
 import './Home.scss';
-import AspectRatioBox from "../../../UI/AspectRatioBox/AspectRatioBox";
-import { addFlashMessage, removeFlashMessage } from "../../../../actions/app";
+import AspectRatioBox from '../../../UI/AspectRatioBox/AspectRatioBox';
+import { addFlashMessage, removeFlashMessage } from '../../../../actions/app';
+
+
 /**
  * PropTypes of the component
  * @type {object}
@@ -65,17 +68,31 @@ class Home extends Component {
     console.log(this.props);
     console.groupEnd();
 
-    const { top, window: { width, height }, callAddFlashMessage, callHideFlashMessage, callShowFlashMessage, callRemoveFlashMessage } = this.props;
 
+
+
+    const { top, window: { width, height }, callAddFlashMessage, callHideFlashMessage, callShowFlashMessage, callRemoveFlashMessage } = this.props;
+const imageStyle = {display:'block', width:'100%'};
 
     return (
       <div className="Home">
-
+<div style={{margin:'40px 0'}}>
         <AspectRatioBox width={1364} height={300}>
-
-          <img src="/images/home-slide-show/file_3.jpg" alt="" className="Home__slideShowImage"/>
-
+            <SlideShow autoPlay={true}>
+              <div>
+                <img src="/images/home-slide-show/file_2.jpg" alt="" style={imageStyle}/>
+              </div>
+              <div>
+                <img src="/images/home-slide-show/file_3.jpg" alt="" style={imageStyle}/>
+              </div>
+              <div>
+                <img src="/images/home-slide-show/file_4.jpg" alt="" style={imageStyle}/>
+              </div>
+            </SlideShow>
         </AspectRatioBox>
+
+</div>
+
 
         <button onClick={()=>this.onAddMessageButtonClick()}>add message</button>
 

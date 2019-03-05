@@ -10,7 +10,7 @@ import NavLink from 'react-router-dom/es/NavLink';
 
 import Icons from '../../Svg/Departments';
 import './DepartmentsCarousel.scss';
-import Ripple from "../../UI/Ripple/Ripple";
+import Ripple from '../../UI/Ripple/Ripple';
 
 /**
  * PropTypes of the component
@@ -36,18 +36,30 @@ class DepartmentsCarousel extends Component {
   constructor(props) {
     super(props);
     this.blockNavLink = false;
+    this.state = {
+      blockNavLink: false
+    }
   }
 
   disableNavLink() {
-    this.blockNavLink = true;
+    this.setState(prevState => ({
+      ...prevState,
+      blockNavLink: true,
+    }));
+    //this.blockNavLink = true;
   }
 
   enableNavLink() {
-    this.blockNavLink = false;
+    this.setState(prevState => ({
+      ...prevState,
+      blockNavLink: false,
+    }));
+    //this.blockNavLink = false;
   }
 
   handleClick(e) {
-    if (this.blockNavLink) {
+    const { blockNavLink } = this.state;
+    if (blockNavLink) {
       e.preventDefault();
     }
   }
@@ -55,6 +67,7 @@ class DepartmentsCarousel extends Component {
 
   render() {
     const { height } = this.props;
+    const { blockNavLink } = this.state;
     const current = 1;
     const C = Icons['IconAlcohol'];
     return (
@@ -67,12 +80,11 @@ class DepartmentsCarousel extends Component {
         {[...Array(10)].map((v, i) => (
 
           <NavLink
-            key={i}
             to={`/browse/${i}`}
             onClick={(e) => this.handleClick(e)}
             style={{ textDecoration: 'none', color: 'white' }}
           >
-            <Ripple disabled={ i === current }>
+            <Ripple disabled={ i === current || blockNavLink } >
 
               <div
                 className={i === current
