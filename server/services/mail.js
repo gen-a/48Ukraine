@@ -25,6 +25,6 @@ exports.mail = (from, to, subject, text, html) => {
     if (NODE_ENV !== 'production') {
       console.log(`Preview URL: ${nodemailer.getTestMessageUrl(info)}`);
     }
-    //return Promise.resolve(info);
+    return Promise.resolve(info);
   });
 };
