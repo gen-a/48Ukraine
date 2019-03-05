@@ -5,16 +5,16 @@ const User = require('../models/user-model');
 passport.use(new LocalStrategy(
   {
     usernameField: 'email',
-    passwordField: 'password'
+    passwordField: 'password',
   },
-  function (username, password, done) {
-    User.findOne({email: username})
+  (username, password, done) => {
+    User.findOne({ email: username })
       .then((user) => {
         if (!user) {
-          return done(null, false, { message: 'Incorrect username.' });
+          return done(null, false, { message: 'auth.error.incorrect_user_name' });
         }
         if (!user.comparePassword(password)) {
-          return done(null, false, { message: 'Incorrect password.' });
+          return done(null, false, { message: 'auth.error.incorrect_password' });
         }
         return done(null, user);
       })

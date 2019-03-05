@@ -55,3 +55,28 @@ exports.email = (req, res, next) => {
       next();
     });
 };
+/**
+ * Check if user exists and register new user if not
+ * @param req {object}
+ * @param res {object}
+ * @param next {Function}
+ */
+exports.login = (req, res, next) => {
+  if (!req.body.email) {
+    res.status(200).json(response({}, 'auth.error.missing_email', 1));
+    return next();
+  }
+  const { email } = req.body;
+  if (!validator.isEmail(email)) {
+    res.status(200).json(response({ email }, 'auth.error.invalid_email', 1));
+    return next();
+  }
+
+
+
+
+
+
+
+
+};
