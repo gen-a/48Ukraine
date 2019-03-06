@@ -1,15 +1,10 @@
 .Slide {
   position: absolute;
   z-index: 0;
-  opacity: 0;
   width: 100%;
   transform-origin: center;
-  transform: scale(2);
-  transition: opacity 0.4s ease-out, transform 0.4s ease-out;
 
   &.Slide_current {
-    opacity: 1;
-    transform: scale(1);
     z-index: 1;
   }
 }
