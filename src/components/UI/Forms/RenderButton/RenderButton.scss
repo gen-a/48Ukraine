@@ -15,7 +15,7 @@ $color-neutral-h: #bcbcbc !default;
 $color-error-hb: #ff3203!default;
 
 .RenderButton {
-
+  position: relative;
   &__input button {
     background: $color-primary-hb;
     color: white;

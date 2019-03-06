@@ -13,6 +13,7 @@ const urlFetchProfile = 'https://next.json-generator.com/api/json/get/NkO3JQZQ8'
 const urlUpdProfile = 'https://next.json-generator.com/api/json/get/NkO3JQZQ8';
 const urlAddCustomer = '/customers';
 
+
 /**
  * Fetching customer profile data from the server
  * @returns {function(*, *)}
