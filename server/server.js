@@ -13,13 +13,16 @@ const flash = require('connect-flash');
 
 const usersRoutes = require('./routes/users-routes');
 const authRoutes = require('./routes/auth-routes');
+const appRoutes = require('./routes/app-routes');
+const productsRoutes = require('./routes/products-routes');
 
 const app = express();
 const port = process.env.PORT || 5000;
 const hostname = '127.0.0.1';
 
-const { connect } = require( './config/mongoose' );
+const { connect } = require( './config/mongoose');
 
+process.on('unhandledRejection', () => {});
 // middlewares //
 
 app.use(morgan('combined'));
@@ -46,6 +49,8 @@ app.use((req, res, next) => {
 
 app.use('/data/users', usersRoutes);
 app.use('/data/auth', authRoutes);
+app.use('/data/app', appRoutes);
+app.use('/data/products', productsRoutes);
 
 // after all //
 

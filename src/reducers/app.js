@@ -8,13 +8,15 @@ import {
   SHOW_LOADER,
   HIDE_LOADER,
   SET_LOCALE,
-  SET_CURRENT_DEPARTMENT,
+  SET_ROUTE_MATCH,
   EXPAND_NODE_OF_DEPARTMENT_TREE,
   SET_OPEN_DRAWER,
   ADD_OPEN_SCRIM,
   REMOVE_OPEN_SCRIM,
+  FETCH_INITIAL_STATE_FULFILLED,
+  FETCH_INITIAL_STATE_REJECTED,
+  FETCH_INITIAL_STATE_PENDING,
 } from '../actions/app';
-import { APP_DEFAULT_LOCALE } from '../localization';
 
 const initialState = {
   toast: {
@@ -28,35 +30,18 @@ const initialState = {
     mediaPrefix: '',
     devicePixelRatio: 1,
   },
+  routeMatch: {
+    params: {},
+    isExact: false,
+    path: '/',
+    url: '/'
+  },
   loader: {
     isActive: false,
   },
-  locale: APP_DEFAULT_LOCALE,
-  departments: [
-    {
-      label: 'Name 1',
-      id: '1',
-      children:
-        [
-          { label: 'Name 1.1', id: '1.1', children: [] },
-          { label: 'Name 1.2', id: '1.2', children: [] },
-          { label: 'Name 1.3', id: '1.3', children: [] },
-        ]
-    },
-    { label: 'Name 2', id: '2', children: [] },
-    {
-      label: 'Name 3',
-      id: '3',
-      children: [
-        { label: 'Name 3.1', id: '3.1', children: [] },
-        { label: 'Name 3.2', id: '3.2', children: [] },
-        { label: 'Name 3.3', id: '3.3', children: [] },
-      ]
-    },
-    { label: 'Name 4', id: '4', children: [] },
-    { label: 'Name 5', id: '5', children: [] },
-  ],
-  currentDepartment: '',
+  locale: '',
+  departments: [],
+  rootDepartments: [],
   departmentsTree: {
     expanded: []
   },
@@ -66,6 +51,20 @@ const initialState = {
 
 function app(state = initialState, action) {
   switch (action.type) {
+    case FETCH_INITIAL_STATE_FULFILLED:
+      return {
+        ...state,
+        departments: action.payload.departments,
+        rootDepartments: action.payload.departments.filter(d => d.parent === '0')
+      };
+    case FETCH_INITIAL_STATE_REJECTED:
+      return {
+        ...state
+      };
+    case FETCH_INITIAL_STATE_PENDING:
+      return {
+        ...state
+      };
     case ADD_OPEN_SCRIM:
       return {
         ...state,
@@ -81,10 +80,10 @@ function app(state = initialState, action) {
         ...state,
         openDrawer: action.payload
       };
-    case SET_CURRENT_DEPARTMENT:
+    case SET_ROUTE_MATCH:
       return {
         ...state,
-        currentDepartment: action.payload
+        routeMatch: action.payload
       };
     case EXPAND_NODE_OF_DEPARTMENT_TREE:
       return {

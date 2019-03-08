@@ -5,8 +5,10 @@
  */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import Carousel from '../../UI/Carousel';
 import NavLink from 'react-router-dom/es/NavLink';
+import { localizePath } from '../../../localization/index';
 
 import Icons from '../../Svg/Departments';
 import './DepartmentsCarousel.scss';
@@ -19,6 +21,21 @@ import Ripple from '../../UI/Ripple/Ripple';
 const propTypes = {
   /** Height in pixels. */
   height: PropTypes.number,
+  /** Width in pixels. */
+  width: PropTypes.number,
+  /** Array of departments. */
+  departments: PropTypes.arrayOf(PropTypes.shape({
+    /** Icon of the department. */
+    icon: PropTypes.string,
+    /** Department name. */
+    name: PropTypes.string,
+    /** Name in url (slug). */
+    nameInUrl: PropTypes.string,
+  })),
+  /** Current locale. */
+  locale: PropTypes.string.isRequired,
+  /** Current department. */
+  currentDepartment: PropTypes.string.isRequired,
 };
 
 /**
@@ -26,7 +43,9 @@ const propTypes = {
  * @type {object}
  */
 const defaultProps = {
-  height: 80
+  height: 80,
+  width: 200,
+  departments:[],
 };
 
 /**
@@ -38,7 +57,7 @@ class DepartmentsCarousel extends Component {
     this.blockNavLink = false;
     this.state = {
       blockNavLink: false
-    }
+    };
   }
 
   disableNavLink() {
@@ -46,7 +65,6 @@ class DepartmentsCarousel extends Component {
       ...prevState,
       blockNavLink: true,
     }));
-    //this.blockNavLink = true;
   }
 
   enableNavLink() {
@@ -54,7 +72,6 @@ class DepartmentsCarousel extends Component {
       ...prevState,
       blockNavLink: false,
     }));
-    //this.blockNavLink = false;
   }
 
   handleClick(e) {
@@ -66,10 +83,9 @@ class DepartmentsCarousel extends Component {
 
 
   render() {
-    const { height } = this.props;
+    const { height, width, departments, locale, currentDepartment } = this.props;
     const { blockNavLink } = this.state;
-    const current = 1;
-    const C = Icons['IconAlcohol'];
+
     return (
       <>
       <Carousel
@@ -77,34 +93,36 @@ class DepartmentsCarousel extends Component {
         onEndDrag={() => this.enableNavLink()}
         slotHeight={height}
       >
-        {[...Array(10)].map((v, i) => (
+        {departments.map(({ icon, name, nameInUrl }) => {
+          if (!icon) {
+            return null;
+          }
+          const C = Icons[icon];
+          return (
+            <NavLink
+              to={localizePath(`/browse/${nameInUrl}`, locale)}
+              onClick={(e) => this.handleClick(e)}
+              style={{ textDecoration: 'none', color: 'white' }}
+            >
+              <Ripple disabled={nameInUrl === currentDepartment || blockNavLink}>
 
-          <NavLink
-            to={`/browse/${i}`}
-            onClick={(e) => this.handleClick(e)}
-            style={{ textDecoration: 'none', color: 'white' }}
-          >
-            <Ripple disabled={ i === current || blockNavLink } >
-
-              <div
-                className={i === current
-                  ? 'DepartmentsCarousel__entry DepartmentsCarousel__entry_current'
-                  : 'DepartmentsCarousel__entry'}
-                style={{ height: `${height}px` }}
-              >
-                <div className="DepartmentsCarousel__icon">
-                  <C viewBox="0 0 64 64" width="32px" height="32px" style={{ display: 'block' }}/>
+                <div
+                  className={nameInUrl === currentDepartment
+                    ? 'DepartmentsCarousel__entry DepartmentsCarousel__entry_current'
+                    : 'DepartmentsCarousel__entry'}
+                  style={{ height: `${height}px`, width: `${width}px` }}
+                >
+                  <div className="DepartmentsCarousel__icon">
+                    <C viewBox="0 0 64 64" width="32px" height="32px" style={{ display: 'block' }}/>
+                  </div>
+                  <div className="DepartmentsCarousel__label">
+                    {name}
+                  </div>
                 </div>
-                <div className="DepartmentsCarousel__label">
-                  Department name lllllllll
-                </div>
-              </div>
-
-            </Ripple>
-          </NavLink>
-
-
-        ))}
+              </Ripple>
+            </NavLink>
+          );
+        })}
       </Carousel>
       </>
     );
@@ -114,4 +132,12 @@ class DepartmentsCarousel extends Component {
 DepartmentsCarousel.propTypes = propTypes;
 DepartmentsCarousel.defaultProps = defaultProps;
 
-export default DepartmentsCarousel;
+const mapStateToProps = state => (
+  {
+    locale: state.app.locale,
+    departments: state.app.rootDepartments,
+    currentDepartment: state.app.routeMatch.params.department || '',
+  }
+);
+
+export default connect(mapStateToProps, null)(DepartmentsCarousel);

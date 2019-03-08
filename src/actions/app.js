@@ -1,5 +1,7 @@
 import uuid from 'uuid/v4';
+import axios from 'axios';
 import { importDictionaryArticles } from './dictionary';
+import { URL_FETCH_INITIAL_STATE } from '../config/api';
 
 export const SHOW_TOAST = 'SHOW_TOAST';
 export const HIDE_TOAST = 'HIDE_TOAST';
@@ -15,10 +17,31 @@ export const SET_WINDOW_SIZE = 'SET_WINDOW_SIZE';
 export const SHOW_LOADER = 'SHOW_LOADER';
 export const HIDE_LOADER = 'HIDE_LOADER';
 export const SET_LOCALE = 'SET_LOCALE';
-export const SET_CURRENT_DEPARTMENT = 'SET_CURRENT_DEPARTMENT';
+export const SET_ROUTE_MATCH = 'SET_ROUTE_MATCH';
 export const EXPAND_NODE_OF_DEPARTMENT_TREE = 'EXPAND_NODE_OF_DEPARTMENT_TREE';
 export const SET_OPEN_DRAWER = 'SET_OPEN_DRAWER';
 
+export const FETCH_INITIAL_STATE_FULFILLED = 'FETCH_INITIAL_STATE_FULFILLED';
+export const FETCH_INITIAL_STATE_REJECTED = 'FETCH_INITIAL_STATE_REJECTED';
+export const FETCH_INITIAL_STATE_PENDING = 'FETCH_INITIAL_STATE_PENDING';
+
+/**
+ * Load initial state from the server
+ * @param data {object} - request parameters
+ * @returns {function(*, *)}
+ */
+export function fetchInitialSate(data) {
+  return (dispatch, getState) => {
+    dispatch(
+      { type: FETCH_INITIAL_STATE_PENDING, payload: {} }
+    );
+    axios.get(URL_FETCH_INITIAL_STATE, data)
+      .then((result) => {
+        dispatch({ type: FETCH_INITIAL_STATE_FULFILLED, payload: result.data.data });
+      })
+      .catch(err => dispatch({ type: FETCH_INITIAL_STATE_REJECTED, payload: err }));
+  };
+}
 
 
 /**
@@ -42,13 +65,13 @@ export function addOpenScrim(id) {
 }
 
 /**
- * Set selected id of the main departments navigator
+ * Set route match
  * @param value {string} id of the node to be set
  * @returns {function(*)}
  */
-export function setDepartment(value) {
+export function setRouteMatch(value) {
   return (dispatch) => {
-    dispatch({ type: SET_CURRENT_DEPARTMENT, payload: value });
+    dispatch({ type: SET_ROUTE_MATCH, payload: value });
   };
 }
 
@@ -98,15 +121,17 @@ export function removeFlashMessage(id) {
     dispatch({ type: REMOVE_FLASH_MESSAGE, payload: id });
   };
 }
+
 /**
  * Remove all messages
  * @returns {function(*, *)}
  */
 export function removeAllFlashMessages() {
   return (dispatch) => {
-    dispatch({ type: REMOVE_ALL_FLASH_MESSAGES});
+    dispatch({ type: REMOVE_ALL_FLASH_MESSAGES });
   };
 }
+
 /**
  * Hide loader
  * @returns {function(*, *)}
@@ -155,9 +180,12 @@ export function showToast(message) {
  * @returns {function(*, *)}
  */
 export function setLocale(locale) {
-  return (dispatch) => {
-    dispatch({ type: SET_LOCALE, payload: locale });
-    importDictionaryArticles(locale)(dispatch);
+  return (dispatch, getState) => {
+    if (getState().app.locale !== locale) {
+      dispatch({ type: SET_LOCALE, payload: locale });
+      fetchInitialSate({ locale })(dispatch);
+      importDictionaryArticles(locale)(dispatch);
+    }
   };
 }
 

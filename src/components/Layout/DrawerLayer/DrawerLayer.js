@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import DepartmentsNavigator from '../../Containers/DepartmentsNavigator';
 import ScrollBox from '../../UI/ScrollBox';
-import AuthenticationForm from '../../Forms/AuthenticationForm/AuthenticationForm';
+import Authentication from '../../Widgets/Authentication';
 import Drawer from '../../UI/Drawer';
 import Scrim from '../../Containers/Scrim';
 import { setOpenDrawer } from '../../../actions/app';
@@ -39,7 +39,7 @@ const DrawerLayer = ({ callSetOpenDrawer, openDrawer }) => (
       </ScrollBox>
     </Drawer>
     <Drawer position="right" depth={50} isOpen={openDrawer === 'user'} header="User Data">
-      <AuthenticationForm />
+      <Authentication />
     </Drawer>
   </>
 );

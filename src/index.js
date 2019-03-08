@@ -3,14 +3,17 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import store from './store';
-import App from './App';
+import App from './app/App';
 //import * as serviceWorker from './serviceWorker';
 import { APP_ROOT } from './config/app';
+import Localize from './app/Localize';
 
 ReactDOM.render(
   <Provider store={store}>
     <BrowserRouter>
-      <App />
+      <Localize>
+        <App />
+      </Localize>
     </BrowserRouter>
   </Provider>, APP_ROOT
 );

@@ -144,7 +144,7 @@ class SlideShow extends Component {
           onKeyDown={(e) => this.onKeyDown(e)}
         >
           <div className="SlideShow__container">
-            {children.map((slide, index) => <Slide isCurrent={current === index}>{slide}</Slide>)}
+            {children.map((slide, index) => <Slide key={index} isCurrent={current === index}>{slide}</Slide>)}
           </div>
           <div className="SlideShow__keysIcon">
             <IconKeysLeftRight viewBox="0 0 64 42" width="64px" height="64px"/>
@@ -153,6 +153,7 @@ class SlideShow extends Component {
         <div className="SlideShow__controls">
           {[...Array(children.length)].map((n, index) => (
             <button
+              key={index}
               type="button"
               tabIndex="0"
               className={

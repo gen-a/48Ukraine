@@ -6,7 +6,7 @@ import Loadable from 'react-loadable';
 import Loading from '../Loading';
 
 const User = Loadable({
-  loader: () => import('../../Sections/User'),
+  loader: () => import('../../../pages/User'),
   loading:Loading,
   delay: 300,
   timeout: 10000

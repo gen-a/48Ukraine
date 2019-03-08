@@ -22,16 +22,26 @@ class DepartmentsNavigator extends Component {
 
   setLinks(departments) {
     const { locale } = this.props;
-    return departments.map(({ children, label, id }) => {
-      const to = `/browse/${id}`;
+    const numberStyle = {
+      fontSize: '0.75rem',
+      margin: '0 0 0 0.5rem',
+      fontWeight: '400',
+      position: 'inline-block'
+    };
+
+    return departments.map(({ children, name, nameInUrl, productsQuantity }) => {
+      const to = `/browse/${nameInUrl}`;
       return {
         children: this.setLinks(children),
         label: (
           <NavLink to={localizePath(to, locale)} style={{ textDecoration: 'none', display: 'block' }}>
-            {label}
+            {name}
+            <sup style={numberStyle}>
+              {productsQuantity}
+            </sup>
           </NavLink>
         ),
-        id
+        id: nameInUrl
       };
     });
   }
@@ -48,7 +58,7 @@ const mapStateToProps = state => (
   {
     locale: state.app.locale,
     departments: state.app.departments,
-    currentDepartment: state.app.currentDepartment,
+    currentDepartment: state.app.routeMatch.params.department || '',
   }
 );
 

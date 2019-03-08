@@ -1,43 +1,29 @@
 /**
- * Application layout Component
+ * Layout Component
  * Set page layout
  * @module Layout
  */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
-import Container from '../Dev/Container';
-import Browse from '../Sections/Browse';
-import PrivateRoute from '../PrivateRoute';
-import User from '../Loadables/User';
-import Login from '../Pages/Login';
-import WindowResizeDetect from '../UI/Detect/WindowResize';
-import Toast from '../UI/Toast';
-import FlashMessages from '../Containers/FlashMessages';
-import Loader from '../UI/Loader';
 
+import Toast from '../UI/Toast/Toast';
+import FlashMessages from '../Containers/FlashMessages/FlashMessages';
+import Loader from '../UI/Loader/Loader';
+import StoreWindowSize from '../Containers/StoreWindowSize';
 
-import { setWindowSize } from '../../actions/app';
-import { localizePath } from '../../localization';
 import ToolBarLayer from './ToolBarLayer';
 import DrawerLayer from './DrawerLayer';
-import Home from './Stages/Home';
-import Header from '../Header';
+import Header from './Header';
 
 import './Layout.scss';
-import DepartmentsCarousel from '../Containers/DepartmentsCarousel/DepartmentsCarousel';
-
+import DepartmentsCarousel from '../Containers/DepartmentsCarousel';
 
 /**
  * PropTypes of the component
  * @type {object}
  */
 const propTypes = {
-  /** Current locale string . */
-  locale: PropTypes.string.isRequired,
-  /** On resize window to store data into redux store. */
-  onWindowResize: PropTypes.func.isRequired,
   /** Window dimensions data. */
   window: PropTypes.shape({
     /** Window height. */
@@ -49,51 +35,32 @@ const propTypes = {
     /** Device Pixel Ratio. */
     devicePixelRatio: PropTypes.number.isRequired,
   }).isRequired,
-
+  /** Array of opened scrims */
+  openScrims: PropTypes.arrayOf(PropTypes.string).isRequired,
+  /** Render function */
+  render: PropTypes.func.isRequired,
 };
 
-const Layout = ({ openScrims, window, locale, onWindowResize }) => {
+const Layout = ({ render, ...otherProps }) => {
+  const { openScrims } = otherProps;
   return (
     <div className="Layout">
-      <WindowResizeDetect onResize={onWindowResize}/>
+      <StoreWindowSize />
+
       <ToolBarLayer />
       <DrawerLayer />
       <Toast />
-      <FlashMessages/>
+      <FlashMessages />
       <Loader />
 
       <div className={openScrims.length > 0 ? 'Layout__content Layout__content_blur' : 'Layout__content'}>
-
-        <Header height={48}/>
-        <DepartmentsCarousel height={80}/>
-
-        <Switch>
-          <Route
-            exact
-            path={localizePath('/', locale)}
-            render={
-              routeProps => <Home
-                {...routeProps}
-                window={window}
-                locale={locale}
-                top={48 + 80}
-              />
-            }
-          />
-
-
-          <Route exact path={localizePath('/dev', locale)} component={Container}/>
-          <Route exact path={localizePath('/browse/:department', locale)} component={Browse}/>
-          <Route exact path={localizePath('/login', locale)} component={Login}/>
-          <PrivateRoute path={localizePath('/user', locale)} component={User}/>
-        </Switch>
-
-
-        <div className="Layout__footer">
-          footer
-        </div>
+        <Header height={48} />
+        <DepartmentsCarousel height={80} />
+        { render(otherProps) }
       </div>
-
+      <div className="Layout__footer">
+        footer
+      </div>
     </div>
   );
 };
@@ -108,11 +75,4 @@ const mapStateToProps = state => (
   }
 );
 
-const mapDispatchToProps = dispatch => (
-  {
-    onWindowResize: data => dispatch(setWindowSize(data)),
-  }
-);
-
-const C = connect(mapStateToProps, mapDispatchToProps)(Layout);
-export default props => <Route render={routeProps => <C {...routeProps} {...props} />}/>;
+export default connect(mapStateToProps, null)(Layout);
