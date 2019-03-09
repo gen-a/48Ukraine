@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import update from 'react-addons-update';
 import { URL_FETCH_PRODUCTS } from '../../config/api';
 import { get } from '../../services/ajax';
-
+import ProductsList from '../../components/ProductsList';
 /**
  * PropTypes of the component
  * @type {object}
@@ -73,10 +74,14 @@ class Browse extends Component {
     if( products.length === 0 ){
       return (<div>browse.info.products_are_loading</div>);
     }
+    const { departments, currentDepartment} = this.props;
+    const currentDepartmentData = departments.filter((d)=> d.nameInUrl === currentDepartment);
+
     return (
-      products.map( product => (
-        <div>{product.name}</div>
-      ))
+      <>
+      <h1>{currentDepartmentData[0].name}</h1>
+        <ProductsList products={products} />
+      </>
     );
   }
 }
@@ -84,5 +89,12 @@ class Browse extends Component {
 Browse.propTypes = propTypes;
 Browse.defaultProps = defaultProps;
 
-export default Browse;
+const mapStateToProps = state => (
+  {
+    locale: state.app.locale,
+    departments: state.app.rootDepartments,
+    currentDepartment: state.app.routeMatch.params.department || '',
+  }
+);
 
+export default connect(mapStateToProps, null)(Browse);

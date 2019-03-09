@@ -1,0 +1,57 @@
+.Price {
+  font-size: 1.25em;
+  line-height: 1.375em;
+  font-weight: 700;
+  color: #f85032;
+  text-align: left;
+  position: relative;
+
+  &_sale {
+    background-color: #f85032;
+    padding: 0 3px;
+    border-radius: 5px;
+    color: white;
+  }
+  &_old {
+    margin-left: 5px;
+    position: relative;
+    color: #8c9fba;
+  }
+  &_old:after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 3px;
+    background-color: #8c9fba;
+    top: 50%;
+    right: 0;
+    margin-top: -1px;
+
+  }
+  &__integer {
+    font-weight: 700;
+    padding: 0 1px;
+  }
+  &__separator {
+    display: none;
+  }
+
+  &__fraction {
+    baseline-shift: sub;
+    font-size: .625em;
+    top: -.5em;
+    position: relative;
+  }
+
+  &__mark {
+    position: relative;
+    font-weight: 400;
+  }
+  &__mark_shifted {
+    baseline-shift: sub;
+    font-size: .625em;
+    top: -.5em;
+    position: relative;
+  }
+
+}

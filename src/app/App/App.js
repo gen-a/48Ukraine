@@ -41,7 +41,7 @@ const renderRoute = C => routeProps => (
         render={layoutProps => (
           <GUIConnect
             {...layoutProps}
-            render={guiProps => <C {...guiProps} />}
+            render={guiProps => <C key={routeProps.match.url} {...guiProps} />}
           />
         )}
       />

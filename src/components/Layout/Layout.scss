@@ -15,7 +15,12 @@ select,
 button{
   font-family: 'Roboto', sans-serif;
 }
-
+h1{
+  font-weight:400;
+  font-size:2rem;
+  font-family: 'Roboto Condensed', sans-serif;
+  color:$color-primary-2b;
+}
 .Layout{
   &__content{
     position:fixed;

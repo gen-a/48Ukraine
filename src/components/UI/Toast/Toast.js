@@ -18,7 +18,7 @@ import './Toast.scss';
  */
 const propTypes = {
   /** Text message of the toast. */
-  message: PropTypes.string.isRequired,
+  text: PropTypes.string.isRequired,
   /** Flag to switch show/hide state */
   isVisible: PropTypes.bool,
   /** Time of showing toast in milliseconds */
@@ -37,7 +37,7 @@ const defaultProps = {
 };
 
 
-const Toast = ({ message, isVisible, duration, onHideToast }) => {
+const Toast = ({ text, isVisible, duration, onHideToast }) => {
   if (isVisible) {
     setTimeout(() => {
       onHideToast();
@@ -47,7 +47,7 @@ const Toast = ({ message, isVisible, duration, onHideToast }) => {
     (
       <div className={isVisible ? 'Toast Toast_isVisible' : 'Toast'}>
         <div className="Toast__message">
-          {message}
+          {text}
         </div>
       </div>
     ),
@@ -61,7 +61,7 @@ Toast.defaultProps = defaultProps;
 const mapStateToProps = state => (
   {
     isVisible: state.app.toast.isActive,
-    message: state.app.toast.message
+    text: state.app.toast.text
   }
 );
 

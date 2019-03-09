@@ -35,7 +35,9 @@ const DrawerLayer = ({ callSetOpenDrawer, openDrawer }) => (
     <Scrim id="DrawerLayer" onClick={() => callSetOpenDrawer('')} isVisible={openDrawer !== ''} />
     <Drawer position="left" depth={50} isOpen={openDrawer === 'menu'} header="Departments">
       <ScrollBox>
-        <DepartmentsNavigator />
+        <div style={{paddingRight: '16px'}}>
+          <DepartmentsNavigator />
+        </div>
       </ScrollBox>
     </Drawer>
     <Drawer position="right" depth={50} isOpen={openDrawer === 'user'} header="User Data">

@@ -45,6 +45,7 @@ class ScrollBox extends Component {
     this.state = {
       slider: {
         isVisible: false,
+        isActive: false,
         value: 0,
         cursorHeight: 0,
         height: 0,
@@ -93,7 +94,7 @@ class ScrollBox extends Component {
   /**
    * Start watching and initialize scroll
    */
-  onMouseEnter(){
+  onMouseEnter() {
     this.startWatchClientHeight();
   }
 
@@ -204,21 +205,38 @@ class ScrollBox extends Component {
       }
     }));
   }
-
+  onSliderStartDrag(){
+    this.setState(prevState => ({
+      ...prevState,
+      slider: {
+        ...prevState.slider,
+        isActive: true
+      }
+    }));
+  }
+  onSliderStopDrag(){
+    this.setState(prevState => ({
+      ...prevState,
+      slider: {
+        ...prevState.slider,
+        isActive: false
+      }
+    }));
+  }
   /**
    * Render visual presentation
    * @returns {XML}
    */
   render() {
-    const { children, sliderSize, sliderMargin } = this.props;
-    const { slider: { isVisible, value, height, cursorHeight } } = this.state;
+    const { children } = this.props;
+    const { slider: { isActive, isVisible, value, height, cursorHeight } } = this.state;
     const boxStyle = {
       overflow: 'hidden',
       position: 'absolute',
       left: 0,
       top: 0,
       bottom: 0,
-      right: isVisible ? `${sliderSize + sliderMargin * 2}px` : 0
+      right: 0,
     };
     return (
       <div
@@ -239,7 +257,7 @@ class ScrollBox extends Component {
         >
           {children}
         </div>
-        {isVisible
+        {(isVisible || isActive)
         && (
           <VerticalSlider
             barHeight={height}
@@ -247,6 +265,8 @@ class ScrollBox extends Component {
             cursorTop={value * ( height - cursorHeight )}
             onChange={(newValue) => this.onChangeScrollValue(newValue)}
             onPageChange={(direction) => this.onChangePageScrollValue(direction)}
+            onStartDrag={() => this.onSliderStartDrag()}
+            onStopDrag={() => this.onSliderStopDrag()}
           />
         )}
       </div>

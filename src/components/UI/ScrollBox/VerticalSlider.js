@@ -20,12 +20,22 @@ const propTypes = {
   onChange: PropTypes.func.isRequired,
   /** On change by page up/down value. */
   onPageChange: PropTypes.func.isRequired,
+  /** Handle start drag. */
+  onStartDrag: PropTypes.func.isRequired,
+  /** Handle end drag. */
+  onStopDrag: PropTypes.func.isRequired,
 };
 
 /**
  * Main VerticalSlider component class
  */
 class VerticalSlider extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      value: 0,
+    }
+  }
   /**
    * Handle on bar click event
    * @param rect {object} - Bounding rectangle of the bar element
@@ -48,9 +58,9 @@ class VerticalSlider extends Component {
    * @param clientY {number} - cursor Y position
    */
   onCursorMouseDown(clientY) {
-    const { barHeight, cursorHeight, cursorTop } = this.props;
+    const { barHeight, cursorHeight, cursorTop, onStartDrag, onStopDrag } = this.props;
     const { onChange } = this.props;
-
+    onStartDrag();
     const delta = clientY - cursorTop;
     const distance = barHeight - cursorHeight;
     const move = (e) => {
@@ -64,6 +74,7 @@ class VerticalSlider extends Component {
       onChange(value);
     };
     const stop = (e) => {
+      onStopDrag();
       document.removeEventListener('mousemove', move);
       document.removeEventListener('mouseup', stop);
     };
@@ -78,7 +89,6 @@ class VerticalSlider extends Component {
 
   render() {
     const { barHeight, cursorHeight, cursorTop } = this.props;
-
     return (
       <div className="VerticalSlider">
         <div

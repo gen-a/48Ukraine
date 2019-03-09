@@ -35,14 +35,11 @@ const propTypes = {
     /** Device Pixel Ratio. */
     devicePixelRatio: PropTypes.number.isRequired,
   }).isRequired,
-  /** Array of opened scrims */
-  openScrims: PropTypes.arrayOf(PropTypes.string).isRequired,
   /** Render function */
   render: PropTypes.func.isRequired,
 };
 
 const Layout = ({ render, ...otherProps }) => {
-  const { openScrims } = otherProps;
   return (
     <div className="Layout">
       <StoreWindowSize />
@@ -53,7 +50,7 @@ const Layout = ({ render, ...otherProps }) => {
       <FlashMessages />
       <Loader />
 
-      <div className={openScrims.length > 0 ? 'Layout__content Layout__content_blur' : 'Layout__content'}>
+      <div className="Layout__content">
         <Header height={48} />
         <DepartmentsCarousel height={80} />
         { render(otherProps) }
@@ -71,7 +68,6 @@ const mapStateToProps = state => (
   {
     locale: state.app.locale,
     window: state.app.window,
-    openScrims: state.app.openScrims,
   }
 );
 
