@@ -1,4 +1,4 @@
-export const API_PREFIX = '/data';
+export const API_PREFIX = `${process.env.REACT_APP_SERVER_URL}/data`;
 export const URL_FETCH_USER = `${API_PREFIX}/fetch-user`;
 export const URL_FETCH_DICTIONARY_ARTICLES = `${API_PREFIX}/dictionary-articles`;
 export const URL_FETCH_INITIAL_STATE  = `${API_PREFIX}/app/initial-state`;

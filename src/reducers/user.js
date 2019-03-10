@@ -9,7 +9,7 @@ import {
 } from '../actions/user';
 
 const initialState = {
-  isAuthenticated: true,
+  isAuthenticated: false,
   isFetching: false,
   error: '',
   profile: {}

@@ -46,7 +46,7 @@ class RenderButton extends Component {
     this.setState(prevState => ({ ...prevState, focus: false }));
   }
 
-  decorateEvent(func) {
+  decorateHandler(func) {
     return newFunc => ((e) => {
       newFunc.call(this, e);
       if (func) {
@@ -70,8 +70,8 @@ class RenderButton extends Component {
       className += ' RenderButton_disabled';
     }
 
-    input.onFocus = this.decorateEvent(input.onFocus)(this.onInputFocus);
-    input.onBlur = this.decorateEvent(input.onBlur)(this.onInputBlur);
+    input.onFocus = this.decorateHandler(input.onFocus)(this.onInputFocus);
+    input.onBlur = this.decorateHandler(input.onBlur)(this.onInputBlur);
 
     return (
         <div className={className}>

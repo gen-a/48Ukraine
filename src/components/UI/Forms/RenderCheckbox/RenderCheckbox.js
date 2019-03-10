@@ -69,7 +69,7 @@ class RenderCheckbox extends Component {
     this.setState(prevState => ({ ...prevState, focus: false }));
   }
 
-  decorateEvent(func) {
+  decorateHandler(func) {
     return newFunc => ((e) => {
       newFunc.call(this, e);
       if (func) {
@@ -101,8 +101,8 @@ class RenderCheckbox extends Component {
       className += ' RenderCheckbox_withError';
     }
 
-    input.onFocus = this.decorateEvent(input.onFocus)(this.onInputFocus);
-    input.onBlur = this.decorateEvent(input.onBlur)(this.onInputBlur);
+    input.onFocus = this.decorateHandler(input.onFocus)(this.onInputFocus);
+    input.onBlur = this.decorateHandler(input.onBlur)(this.onInputBlur);
 
     return (
       <label>

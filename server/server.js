@@ -1,6 +1,7 @@
 require('./config/env');
 require('./config/passport');
 
+const cors = require('cors');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
@@ -25,6 +26,11 @@ const { connect } = require( './config/mongoose');
 process.on('unhandledRejection', () => {});
 // middlewares //
 
+app.use(cors({
+  origin:['http://localhost:3000'],
+  methods:['POST', 'PUT'],
+  credentials: true // enable set cookie
+}));
 app.use(morgan('combined'));
 app.use(flash());
 app.use(express.static(path.join(__dirname, 'dist')));

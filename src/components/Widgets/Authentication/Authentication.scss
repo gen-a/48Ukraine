@@ -14,6 +14,9 @@ $color-primary-b: #094f9f !default;
     text-transform: uppercase;
   }
   &__row{
-    margin-bottom:1rem;
+    position:relative;
+  }
+  &__hr{
+    position:relative;
   }
 }

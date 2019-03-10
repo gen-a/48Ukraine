@@ -11,9 +11,7 @@ import Localize from './app/Localize';
 ReactDOM.render(
   <Provider store={store}>
     <BrowserRouter>
-      <Localize>
-        <App />
-      </Localize>
+      <Localize render={props => <App {...props} />} />
     </BrowserRouter>
   </Provider>, APP_ROOT
 );

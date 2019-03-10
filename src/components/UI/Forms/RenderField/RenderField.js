@@ -79,7 +79,7 @@ class RenderField extends Component {
     this.setState(prevState => ({ ...prevState, focus: false }));
   }
 
-  decorateEvent(func) {
+  decorateHandler(func) {
     return newFunc => ((e) => {
       newFunc.call(this, e);
       if (func) {
@@ -117,8 +117,8 @@ class RenderField extends Component {
       className += ' RenderField_busy';
     }
 
-    input.onFocus = this.decorateEvent(input.onFocus)(this.onInputFocus);
-    input.onBlur = this.decorateEvent(input.onBlur)(this.onInputBlur);
+    input.onFocus = this.decorateHandler(input.onFocus)(this.onInputFocus);
+    input.onBlur = this.decorateHandler(input.onBlur)(this.onInputBlur);
 
     return (
       <div className={className}>

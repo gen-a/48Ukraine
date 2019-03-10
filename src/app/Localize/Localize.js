@@ -14,14 +14,14 @@ const propTypes = {
   /** Function to handle locale change */
   callSetLocale: PropTypes.func.isRequired,
   /** Anything that can be rendered.  */
-  children: PropTypes.node.isRequired,
+  render: PropTypes.func.isRequired,
 };
 
-const Localize = ({ callSetLocale, children }) => {
+const Localize = ({ render, callSetLocale, ...otherProps }) => {
 
   const r = (locale) => {
     callSetLocale(locale);
-    return children;
+    return render({locale, ...otherProps});
   };
 
   return (

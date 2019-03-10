@@ -6,15 +6,21 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import update from 'react-addons-update';
-import RenderField from '../../UI/Forms/RenderField/RenderField' ;
-import RenderCheckbox from '../../UI/Forms/RenderCheckbox/RenderCheckbox' ;
+
+import {
+  Divider,
+  Field,
+  CircularProgress,
+  Button,
+  Switch,
+  Checkbox
+} from '../../UI/MaterialUI' ;
+
 import { email as validateEmail, password as validatePassword } from '../../../validation/validations' ;
-import RenderButton from '../../UI/Forms/RenderButton/RenderButton';
 import { URL_AUTH_CHECK_EMAIL, URL_AUTH_CHECK_PASSWORD } from '../../../config/api';
 import { post } from '../../../services/ajax';
 
 import './Authentication.scss';
-import Ripple from '../../UI/Ripple/Ripple';
 
 /**
  * PropTypes of the component
@@ -57,7 +63,10 @@ class Authentication extends Component {
         },
         showPassword: {
           value: false,
-        }
+        },
+        rememberMe: {
+          value: false,
+        },
       },
     };
   }
@@ -153,6 +162,20 @@ class Authentication extends Component {
       fields: {
         password: {
           value: { $set: value }
+        }
+      }
+    }));
+  }
+
+  /**
+   * Handle on change remember me checkbox
+   */
+  onRememberMeChange() {
+    const { fields: { rememberMe: { value } } } = this.state;
+    this.setState(prevState => update(prevState, {
+      fields: {
+        rememberMe: {
+          value: { $set: !value }
         }
       }
     }));
@@ -286,83 +309,92 @@ class Authentication extends Component {
   }
 
   render() {
-    const { fields: { email, password, showPassword }, formAction } = this.state;
+    const { fields: { email, password, showPassword, rememberMe }, formAction } = this.state;
     return (
       <div className="Authentication">
+
         <h2 className="Authentication__title">Authentication</h2>
 
-        <div className="Authentication__row">
-          <RenderField
-            input={{
-              onBlur: () => this.onInputEmailBlur(),
-              onFocus: () => this.onInputEmailFocus(),
-              onChange: e => this.onInputEmailChange(e.currentTarget.value),
-              value: email.value,
-              readOnly: email.readOnly
-            }}
-            busy={email.busy}
-            meta={email}
-            label="E-mail"
-          />
-        </div>
-
-        {formAction === 'email' && (
-          <Ripple>
-            <RenderButton
-              label="next"
-              input={{
-                disabled: !email.valid || email.busy,
-                onClick: () => this.checkEmailForNextAction()
-              }}
-
-            />
-          </Ripple>
-        )}
-
-        {formAction === 'login' && (
-          <>
+        <form noValidate autoComplete="off">
           <div className="Authentication__row">
-            <div className="Authentication__handlerMessage">
-              {email.handlerMessage}
+            <Field
+              input={{
+                onBlur: () => this.onInputEmailBlur(),
+                onFocus: () => this.onInputEmailFocus(),
+                onChange: e => this.onInputEmailChange(e.currentTarget.value),
+                value: email.value,
+                readOnly: email.readOnly
+              }}
+              meta={email}
+              label="E-mail"
+            />
+          </div>
+
+          {formAction === 'email' && (
+
+            <div className="Authentication__row">
+              <Divider/>
+              <Button
+                label="next"
+                input={{
+                  disabled: !email.valid || email.busy,
+                  onClick: () => this.checkEmailForNextAction()
+                }}
+
+              />
+              {email.busy && <CircularProgress/>}
             </div>
-          </div>
-          <div className="Authentication__row">
-            <RenderField
-              input={{
-                onBlur: () => this.onInputPasswordBlur(),
-                onFocus: () => this.onInputPasswordFocus(),
+          )}
 
-                onChange: e => this.onInputPasswordChange(e.currentTarget.value),
-                value: password.value,
-                readOnly: password.readOnly
-              }}
-              busy={password.busy}
-              meta={password}
-              type={password.type}
-              label="Password"
-            />
-            <RenderCheckbox
-              input={{
-                onChange: () => this.onInputShowPasswordChange(),
-                checked: showPassword.value
-              }}
-              label="Show/hide password"
-            />
-          </div>
-          </>
-        )}
+          {formAction === 'login' && (
+            <>
+            <div className="Authentication__row">
+              <div className="Authentication__handlerMessage">
+                {email.handlerMessage}
+              </div>
+            </div>
+            <div className="Authentication__row">
+              <Field
+                input={{
+                  onBlur: () => this.onInputPasswordBlur(),
+                  onFocus: () => this.onInputPasswordFocus(),
 
-        {formAction === 'login' && (
-          <Ripple>
-            <RenderButton
-              label="login"
-              input={{
-                disabled: !password.valid || password.busy,
-                onClick: () => this.checkPasswordForNextAction()
-              }}
-            />
-          </Ripple>
-        )}
+                  onChange: e => this.onInputPasswordChange(e.currentTarget.value),
+                  value: password.value,
+                  readOnly: password.readOnly
+                }}
+                meta={password}
+                type={password.type}
+                label="Password"
+              />
+              <Switch
+                onChange={() => this.onInputShowPasswordChange()}
+                checked={showPassword.value}
+                label="Show/hide password"
+              />
+              <Checkbox
+                onChange={() => this.onRememberMeChange()}
+                checked={rememberMe.value}
+                label="Remember me on this device"
+              />
+            </div>
+            </>
+          )}
+
+          {formAction === 'login' && (
+            <div className="Authentication__row">
+              <Divider/>
+              <Button
+                label="login"
+                input={{
+                  disabled: !password.valid || password.busy,
+                  onClick: () => this.checkPasswordForNextAction()
+                }}
+              />
+              {password.busy && <CircularProgress/>}
+            </div>
+          )}
+        </form>
       </div>
     );
   }

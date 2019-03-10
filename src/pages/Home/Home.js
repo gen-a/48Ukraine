@@ -11,6 +11,7 @@ import SlideShow from '../../components/UI/SlideShow/SlideShow';
 import './Home.scss';
 import AspectRatioBox from '../../components/UI/AspectRatioBox/AspectRatioBox';
 import { addFlashMessage, removeFlashMessage } from '../../actions/app';
+import {NavLink} from 'react-router-dom';
 
 
 /**
@@ -95,7 +96,7 @@ const imageStyle = {display:'block', width:'100%'};
 
 
         <button onClick={()=>this.onAddMessageButtonClick()}>add message</button>
-
+        <NavLink to="/user">privte route</NavLink>
       </div>
     );
   }
