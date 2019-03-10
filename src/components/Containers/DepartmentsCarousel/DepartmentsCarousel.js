@@ -12,7 +12,6 @@ import { localizePath } from '../../../localization/index';
 
 import Icons from '../../Svg/Departments';
 import './DepartmentsCarousel.scss';
-import Ripple from '../../UI/Ripple/Ripple';
 
 /**
  * PropTypes of the component
@@ -45,7 +44,7 @@ const propTypes = {
 const defaultProps = {
   height: 80,
   width: 200,
-  departments:[],
+  departments: [],
 };
 
 /**
@@ -84,47 +83,48 @@ class DepartmentsCarousel extends Component {
 
   render() {
     const { height, width, departments, locale, currentDepartment } = this.props;
-    const { blockNavLink } = this.state;
 
-    return (
-      <>
-      <Carousel
-        onStartDrag={() => this.disableNavLink()}
-        onEndDrag={() => this.enableNavLink()}
-        slotHeight={height}
-      >
-        {departments.map(({ icon, name, nameInUrl }) => {
-          if (!icon) {
-            return null;
-          }
-          const C = Icons[icon];
-          return (
+    const nodes = departments.map(({ icon, name, nameInUrl }) => {
+      if (!icon) {
+        return null;
+      }
+      const C = Icons[icon];
+      return {
+        key: nameInUrl,
+        node:
+          (
             <NavLink
               to={localizePath(`/browse/${nameInUrl}`, locale)}
               onClick={(e) => this.handleClick(e)}
               style={{ textDecoration: 'none', color: 'white' }}
+              key={nameInUrl}
             >
-              <Ripple disabled={nameInUrl === currentDepartment || blockNavLink}>
-
-                <div
-                  className={nameInUrl === currentDepartment
-                    ? 'DepartmentsCarousel__entry DepartmentsCarousel__entry_current'
-                    : 'DepartmentsCarousel__entry'}
-                  style={{ height: `${height}px`, width: `${width}px` }}
-                >
-                  <div className="DepartmentsCarousel__icon">
-                    <C viewBox="0 0 64 64" width="32px" height="32px" style={{ display: 'block' }}/>
-                  </div>
-                  <div className="DepartmentsCarousel__label">
-                    {name}
-                  </div>
+              <div
+                className={nameInUrl === currentDepartment
+                  ? 'DepartmentsCarousel__entry DepartmentsCarousel__entry_current'
+                  : 'DepartmentsCarousel__entry'}
+                style={{ height: `${height}px`, width: `${width}px` }}
+              >
+                <div className="DepartmentsCarousel__icon">
+                  <C viewBox="0 0 64 64" width="32px" height="32px" style={{ display: 'block' }}/>
                 </div>
-              </Ripple>
+                <div className="DepartmentsCarousel__label">
+                  {name}
+                </div>
+              </div>
             </NavLink>
-          );
-        })}
-      </Carousel>
-      </>
+          )
+      };
+    }).filter(d => d !== null);
+
+    return (
+      <Carousel
+        onStartDrag={() => this.disableNavLink()}
+        onEndDrag={() => this.enableNavLink()}
+        slotHeight={height}
+        nodes={nodes}
+      />
+
     );
   }
 }

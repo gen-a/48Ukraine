@@ -17,11 +17,18 @@ import TouchMotion from '../Detect/TouchMotion/TouchMotion';
  * @type {object}
  */
 const propTypes = {
-  /** Renderable content  */
-  children: PropTypes.node.isRequired,
-  /** Width of the children node slot in pixels.  */
+  /** Array of nodes to be place in slots.  */
+  nodes: PropTypes.arrayOf(
+    PropTypes.shape({
+      /** Renderable content  */
+      node: PropTypes.node.isRequired,
+      /** Unique key */
+      key: PropTypes.string.isRequired,
+    })
+  ),
+  /** Width of the nodes node slot in pixels.  */
   slotWidth: PropTypes.number,
-  /** Height of the children node slot in pixels.  */
+  /** Height of the nodes node slot in pixels.  */
   slotHeight: PropTypes.number,
   /** Start drag handler for controlling events by parent container.  */
   onStartDrag: PropTypes.func,
@@ -34,6 +41,7 @@ const propTypes = {
  * @type {object}
  */
 const defaultProps = {
+  nodes: [],
   slotWidth: 200,
   slotHeight: 80,
   onStartDrag: () => {
@@ -77,7 +85,7 @@ class Carousel extends Component {
    * Call resize for initialise component
    */
   componentDidMount() {
-    this.onElementResize({ width: window.innerWidth});
+    this.onElementResize({ width: window.innerWidth });
   }
 
   /**
@@ -85,7 +93,7 @@ class Carousel extends Component {
    * @param width
    */
   onElementResize({ width }) {
-    const { children: { length }, slotWidth } = this.props;
+    const { nodes: { length }, slotWidth } = this.props;
     const contentWidth = slotWidth * length;
     const withButton = contentWidth > width;
     const frameWidth = withButton ? width - this.buttonWidth * 2 : width;
@@ -219,6 +227,7 @@ class Carousel extends Component {
       case 39:
         this.onPageUp();
         break;
+        default:
     }
   }
 
@@ -273,13 +282,18 @@ class Carousel extends Component {
     const { container: { width: contentWidth }, frame: { width: frameWidth } } = this.state;
     return Math.min(0, Math.max(value, frameWidth - contentWidth));
   }
+
   /**
    * Render visual presentation
    * @returns {XML}
    */
   render() {
-    const { slotWidth, slotHeight, children } = this.props;
+    const { slotWidth, slotHeight, nodes } = this.props;
     const { container, frame, scroll } = this.state;
+    if(nodes.length === 0){
+      return null;
+    }
+
     const containerStyle = {
       transform: `translateX(${container.translateX}px)`,
       transition: container.transition,
@@ -302,7 +316,7 @@ class Carousel extends Component {
       <div
         className="Carousel"
         tabIndex="0"
-        style={{height:`${slotHeight}px`}}
+        style={{ height: `${slotHeight}px` }}
         onKeyDown={(e) => this.onKeyDown(e)}
       >
         <ElementResize onResize={e => this.onElementResize(e)}/>
@@ -324,12 +338,13 @@ class Carousel extends Component {
                 className="Carousel__container"
                 style={containerStyle}
               >
-                {children.map((element, index) => (
+                {nodes.map((element, index) => (
                   <div
                     className="Carousel__slot"
+                    key={element.key}
                     style={{ width: `${slotWidth}px`, left: `${slotWidth * index}px` }}
                   >
-                    {element}
+                    {element.node}
                   </div>
                 ))}
               </div>
@@ -339,11 +354,11 @@ class Carousel extends Component {
         </TouchMotion>
 
         <button className={leftButtonStyle} onClick={() => this.onPageDown()}>
-          <CarouselIconChevronLeft viewBox="0 0 64 64" width="48px" height="48px" />
+          <CarouselIconChevronLeft viewBox="0 0 64 64" width="48px" height="48px"/>
         </button>
 
         <button className={rightButtonStyle} onClick={() => this.onPageUp()}>
-          <CarouselIconChevronLeft viewBox="0 0 64 64" width="48px" height="48px" />
+          <CarouselIconChevronLeft viewBox="0 0 64 64" width="48px" height="48px"/>
         </button>
 
       </div>

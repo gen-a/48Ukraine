@@ -51,7 +51,7 @@ const Price = ({ retail, sale, currency = '$' }) => {
           <span className="Price Price_sale">
               {format(sale)}
             </span>
-          <span className="Price_old">
+          <span className="Price Price_old">
               {format(retail)}
             </span>
           </>

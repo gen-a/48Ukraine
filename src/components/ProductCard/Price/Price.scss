@@ -1,30 +1,36 @@
+@import '../../../colors';
+
 .Price {
-  font-size: 1.25em;
+  font-size: 1.5rem;
   line-height: 1.375em;
   font-weight: 700;
-  color: #f85032;
+  color: $color-primary-2b;
   text-align: left;
   position: relative;
+  background-color: rgba(255,255,255,0.7);
+  padding: 2px 7px;
+  border-radius: 5px;
 
   &_sale {
-    background-color: #f85032;
-    padding: 0 3px;
-    border-radius: 5px;
+    background-color: $color-error-hb;
     color: white;
+    border-radius: 5px 0 0 5px;
   }
+
   &_old {
-    margin-left: 5px;
     position: relative;
-    color: #8c9fba;
+    color: $color-primary-hb;
+    border-radius: 0 5px 5px 0;
   }
+
   &_old:after {
     content: '';
     position: absolute;
-    width: 100%;
     height: 3px;
-    background-color: #8c9fba;
+    background-color: $color-primary-hb;
     top: 50%;
-    right: 0;
+    right: 5px;
+    left:5px;
     margin-top: -1px;
 
   }
@@ -32,6 +38,7 @@
     font-weight: 700;
     padding: 0 1px;
   }
+
   &__separator {
     display: none;
   }
@@ -53,5 +60,4 @@
     top: -.5em;
     position: relative;
   }
-
 }

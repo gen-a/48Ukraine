@@ -18,7 +18,7 @@ import './Toast.scss';
  */
 const propTypes = {
   /** Text message of the toast. */
-  text: PropTypes.string.isRequired,
+  text: PropTypes.string,
   /** Flag to switch show/hide state */
   isVisible: PropTypes.bool,
   /** Time of showing toast in milliseconds */
@@ -31,6 +31,7 @@ const propTypes = {
  * @type {object}
  */
 const defaultProps = {
+  text: '',
   isVisible: false,
   duration: 2000,
   onHideToast: () => console.log('onHideToast'),

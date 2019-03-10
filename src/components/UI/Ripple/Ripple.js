@@ -83,9 +83,13 @@ class Ripple extends Component {
       circle.style.left = `${e.clientX - rect.left - d / 2}px`;
       circle.style.top = `${e.clientY - rect.top - d / 2}px`;
       // attach circle
-      target.appendChild(circle);
+      setTimeout(() => target.appendChild(circle), 1);
       // remove on timeout
-      setTimeout(() => target.removeChild(circle), 1000);
+      setTimeout(() => {
+        if(circle.parentNode !== null){
+          circle.parentNode.removeChild(circle);
+        }
+      }, 1000);
     }
   }
 

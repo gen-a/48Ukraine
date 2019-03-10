@@ -1,0 +1,93 @@
+@import '../../../colors';
+
+.Button {
+  display: flex;
+  cursor: pointer;
+  align-items: center;
+
+  &__icon {
+    flex: 0 0 48px;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    color: white;
+    background-color: $color-primary-hb;
+    position: relative;
+    box-shadow: 0 0 4px #000;
+    transition: all 0.2s;
+  }
+  &__label {
+    flex: 1 1;
+    color: $color-primary-hb;
+    font-size: 0.875rem;
+    line-height: 1.375em;
+    font-weight: 400;
+
+    text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 2px 7px;
+    transition: all 0.2s;
+  }
+  &__inCart {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: red;
+    position: absolute;
+    text-align: center;
+    line-height: 24px;
+    right: -6px;
+    top: -6px;
+    font-weight: 700;
+    box-shadow: 0 0 2px #999;
+    transform-origin: 50% 50%;
+    animation-duration: 0.5s;
+    animation-name: animationInCart;
+  }
+
+  &:hover {
+    & .Button {
+      &__inCart {
+        animation-duration: 0.2s;
+        animation-name: animationInCartHover;
+      }
+      &__icon {
+        background-color: $color-secondary-hb;
+
+      }
+      &__label {
+        color: $color-secondary-hb;
+      }
+    }
+
+  }
+}
+
+@keyframes animationInCart {
+  0% {
+    transform: scale(1);
+  }
+  25% {
+    transform: scale(0.1);
+  }
+  75% {
+    transform: scale(1.25);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes animationInCartHover {
+  0% {
+    transform: scale(1);
+  }
+  75% {
+    transform: scale(1.25);
+  }
+  100% {
+    transform: scale(1);
+  }
+}

@@ -6,6 +6,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ProductCard from '../ProductCard';
+import Pagination from '../UI/Pagination';
 
 import './ProductsList.scss';
 
@@ -28,11 +29,22 @@ const defaultProps = {
 /**
  * General component description in JSDoc format. Markdown is *supported*.
  */
-const ProductsList = ({ products }) =>{
+const ProductsList = ({ products }) => {
   return (
+    <>
+    <Pagination
+      limit={5}
+      total={20}
+      current={11}
+      labelPrev="prev"
+      labelNext="next"
+      urlTemplate="/something/:page"
+    />
+
     <div className="ProductsList">
-      {products.map( product => <ProductCard {...product} />)}
+      {products.map(product => <ProductCard key={product.nameInUrl} {...product} />)}
     </div>
+    </>
   );
 };
 

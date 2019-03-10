@@ -5,6 +5,7 @@ import update from 'react-addons-update';
 import { URL_FETCH_PRODUCTS } from '../../config/api';
 import { get } from '../../services/ajax';
 import ProductsList from '../../components/ProductsList';
+
 /**
  * PropTypes of the component
  * @type {object}
@@ -69,18 +70,40 @@ class Browse extends Component {
   }
 
 
+  getDepartmentData(departments, nameInUrl){
+    for(let i = 0; i < departments.length; i++){
+      if(departments[i].nameInUrl === nameInUrl){
+        return departments[i];
+      } else {
+        const result = this.getDepartmentData(departments[i].children, nameInUrl);
+        if(result !== null){
+          return result;
+        }
+      }
+    }
+    return null;
+  }
+
+
   render() {
-    const {products} = this.state;
-    if( products.length === 0 ){
+    const { products } = this.state;
+    const { departments, currentDepartment } = this.props;
+
+    if (products.length === 0 || departments.length === 0) {
       return (<div>browse.info.products_are_loading</div>);
     }
-    const { departments, currentDepartment} = this.props;
-    const currentDepartmentData = departments.filter((d)=> d.nameInUrl === currentDepartment);
+
+    const currentDepartmentData = this.getDepartmentData(departments, currentDepartment);
+
+    if (currentDepartmentData.length === 0) {
+      console.error('Error loading department data');
+      return null;
+    }
 
     return (
       <>
-      <h1>{currentDepartmentData[0].name}</h1>
-        <ProductsList products={products} />
+      <h1>{currentDepartmentData.name}</h1>
+      <ProductsList products={products} />
       </>
     );
   }
@@ -92,7 +115,7 @@ Browse.defaultProps = defaultProps;
 const mapStateToProps = state => (
   {
     locale: state.app.locale,
-    departments: state.app.rootDepartments,
+    departments: state.app.departments,
     currentDepartment: state.app.routeMatch.params.department || '',
   }
 );
