@@ -32,7 +32,7 @@
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
     "prop-types": "^15.7.2",
-    "react": "^16.8.2",
+    "react": "^16.8.4",
     "react-addons-update": "^15.6.2",
     "react-dom": "^16.8.2",
     "react-icons": "^3.4.0",

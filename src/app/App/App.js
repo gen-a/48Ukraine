@@ -41,7 +41,7 @@ const renderRoute = C => routeProps => (
         render={layoutProps => (
           <GUIConnect
             {...layoutProps}
-            render={guiProps => <C key={routeProps.match.url} {...guiProps} />}
+            render={guiProps => <C {...guiProps} />}
           />
         )}
       />
@@ -54,7 +54,7 @@ const App = ({ locale }) => (
   <Switch>
     <Route exact path={localizePath('/', locale)} render={renderRoute(Home)} />
     <Route exact path={localizePath('/browse/:department', locale)} render={renderRoute(Browse)} />
-
+    <Route exact path={localizePath('/browse/:department/page/:page', locale)} render={renderRoute(Browse)} />
 
 
 

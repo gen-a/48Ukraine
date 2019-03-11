@@ -32,7 +32,7 @@ const defaultProps = {
 /**
  * General component description in JSDoc format. Markdown is *supported*.
  */
-const ProductCard = ({ minItemPrice, minItemSalePrice, name, image, itemPrice, attributesInfo, productInStoreQuantity, }) => {
+const ProductCard = ({ inCart, addToCart, minItemPrice, minItemSalePrice, name, image, itemPrice, attributesInfo, productInStoreQuantity, }) => {
 
 
   /*
@@ -63,7 +63,7 @@ const ProductCard = ({ minItemPrice, minItemSalePrice, name, image, itemPrice, a
   * */
 
   return (
-    <div className="ProductCard">
+    <div className= {inCart ? 'ProductCard ProductCard_isInCart' : 'ProductCard'}>
 
       <div className="ProductCard__imageBlock">
         <img className="ProductCard__image" src={`${IMG_PRODUCTS_DIR}/sm-${image}`} alt={name}/>
@@ -91,11 +91,9 @@ const ProductCard = ({ minItemPrice, minItemSalePrice, name, image, itemPrice, a
         <div className="ProductCard__button">
           <Button
             label="Додати до кошика"
-            numberInCart={Math.round(Math.random() * 10)}
+            numberInCart={inCart}
             numberInCartLabel="вже в кошику"
-            onClick={() => {
-              console.log('onClick');
-            }}
+            onClick={() => addToCart()}
           />
         </div>
 

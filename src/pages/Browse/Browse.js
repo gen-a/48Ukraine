@@ -5,6 +5,8 @@ import update from 'react-addons-update';
 import { URL_FETCH_PRODUCTS } from '../../config/api';
 import { get } from '../../services/ajax';
 import ProductsList from '../../components/ProductsList';
+import { replaceInRoute } from '../../utils/helpers';
+import { addProductToCart } from '../../actions/cart';
 
 /**
  * PropTypes of the component
@@ -20,26 +22,22 @@ const propTypes = {
   /** Show toast handler */
   callShowToast: PropTypes.func.isRequired,
   /** Match parameters */
-  match: PropTypes.shape({
+  routeMatch: PropTypes.shape({
     params: PropTypes.shape({
       department: PropTypes.string,
-      page: PropTypes.number
-    })
-  }),
+      page: PropTypes.string
+    }),
+    path: PropTypes.string,
+    url: PropTypes.string,
+  }).isRequired,
+  /** Current locale */
+  locale: PropTypes.string.isRequired,
 };
 /**
  * Default props of the component
  * @type {object}
  */
-const defaultProps = {
-  /** Match parameters */
-  match: {
-    params: {
-      department: '',
-      page: 1
-    }
-  },
-};
+const defaultProps = {};
 
 
 class Browse extends Component {
@@ -51,7 +49,7 @@ class Browse extends Component {
   }
 
   componentDidMount() {
-    const { callShowLoader, match: { params: { department, page } } } = this.props;
+    const { callShowLoader, routeMatch: { params: { department, page } } } = this.props;
     get(URL_FETCH_PRODUCTS, { department, page }, this.onLoadProducts.bind(this));
     callShowLoader();
   }
@@ -70,13 +68,13 @@ class Browse extends Component {
   }
 
 
-  getDepartmentData(departments, nameInUrl){
-    for(let i = 0; i < departments.length; i++){
-      if(departments[i].nameInUrl === nameInUrl){
+  getDepartmentData(departments, nameInUrl) {
+    for (let i = 0; i < departments.length; i++) {
+      if (departments[i].nameInUrl === nameInUrl) {
         return departments[i];
       } else {
         const result = this.getDepartmentData(departments[i].children, nameInUrl);
-        if(result !== null){
+        if (result !== null) {
           return result;
         }
       }
@@ -87,7 +85,7 @@ class Browse extends Component {
 
   render() {
     const { products } = this.state;
-    const { departments, currentDepartment } = this.props;
+    const { departments, currentDepartment, routeMatch, currentPage, callAddProductToCart, inCartQuantities } = this.props;
 
     if (products.length === 0 || departments.length === 0) {
       return (<div>browse.info.products_are_loading</div>);
@@ -103,7 +101,14 @@ class Browse extends Component {
     return (
       <>
       <h1>{currentDepartmentData.name}</h1>
-      <ProductsList products={products} />
+      <ProductsList
+        key= {routeMatch}
+        products={products}
+        currentPage={currentPage}
+        paginationUrl={replaceInRoute('/browse/:department/page/:page', { ...routeMatch.params, page: ':page' })}
+        addToCart={callAddProductToCart}
+        inCartQuantities={inCartQuantities}
+      />
       </>
     );
   }
@@ -117,7 +122,15 @@ const mapStateToProps = state => (
     locale: state.app.locale,
     departments: state.app.departments,
     currentDepartment: state.app.routeMatch.params.department || '',
+    currentPage: state.app.routeMatch.params.page || 1,
+    routeMatch: state.app.routeMatch,
+    inCartQuantities: state.cart.quantities
   }
 );
 
-export default connect(mapStateToProps, null)(Browse);
+const mapDispatchToProps = dispatch => (
+  {
+    callAddProductToCart: product => dispatch(addProductToCart(product)),
+  }
+);
+export default connect(mapStateToProps, mapDispatchToProps)(Browse);

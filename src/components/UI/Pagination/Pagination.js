@@ -6,7 +6,12 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import ChevronLeft from '../../Svg/ChevronLeft';
-import Ripple from '../../UI/Ripple';
+import { withStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
+import MuiTheme from '../MaterialUI/MuiTheme';
+import colors from '../../../_colors.scss';
+import classNames from 'classnames';
+import { Route } from 'react-router-dom';
 
 import './Pagination.scss';
 
@@ -15,48 +20,105 @@ import './Pagination.scss';
  * @type {object}
  */
 const propTypes = {
-  /** Text message of the toast. */
-  //prop: PropTypes.string,
+  /** Class object of material design MUI. */
+  classes: PropTypes.object.isRequired,
+  /** Limit of the pages to show. */
+  limit: PropTypes.number.isRequired,
+  /** Total number of pages. */
+  total: PropTypes.number.isRequired,
+  /** Current pages. */
+  current: PropTypes.number.isRequired,
+  /** Route history object. */
+  history: PropTypes.object.isRequired,
+  /** URL template as /something/:page. */
+  url: PropTypes.string.isRequired,
 };
-/**
- * Default props of the component
- * @type {object}
- */
-const defaultProps = {
-  //prop: '',
-};
+
+const styles = theme => ({
+  button: {
+    margin: theme.spacing.unit,
+    backgroundColor: 'white',
+    '&:hover': {
+      backgroundColor: colors.colorNeutral3H,
+    },
+    cursor: 'pointer',
+  },
+  normal: {
+    backgroundColor: colors.colorPrimary3H,
+    '&:hover': {
+      backgroundColor: colors.colorPrimary2H,
+    },
+    cursor: 'pointer',
+  },
+  current: {
+    backgroundColor: colors.colorSecondaryHB,
+    '&:hover': {
+      backgroundColor: colors.colorSecondaryHB,
+    },
+    color: 'white',
+    cursor: 'default',
+  }
+});
 
 /**
  * General component description in JSDoc format. Markdown is *supported*.
  */
-const Pagination = ({limit, total, current, segment, labelPrev, labelNext, urlTemplate}) =>{
+const Pagination = ({ classes, limit, total, current, history, url }) => {
 
   const length = Math.min(total, limit);
   const [offset, setOffset] = useState(Math.max(1, current - Math.floor(length / 2)));
+  const redirectTo = (page) => {
+    history.push(url.replace(/:page/, page));
+  };
 
   return (
+
     <div className="Pagination">
-      <button className="Pagination__page Pagination__prev" onClick = { () => setOffset(Math.max(1, offset - length))} >
-        <ChevronLeft />
-      </button>
+      <Button
+        className={classes.button}
+        onClick={() => setOffset(Math.max(1, offset - length))}
+      >
+        <ChevronLeft width="24px" height="24px"/>
+      </Button>
 
       {
-        [...new Array(length)].map((n, index) =>{
-          const className = index + offset === current ? 'Pagination__page Pagination__page_current':'Pagination__page';
+        [...new Array(length)].map((n, index) => {
           return (
-            <Ripple>
-              <button className={className}>{index + offset}</button>
-            </Ripple>
-        )})
+            <MuiTheme key={index + offset}>
+              {index + offset === current
+                ? (
+                  <Button
+                    disableRipple
+                    className={classNames(classes.button, classes.current)}
+                  >
+                    {index + offset}
+                  </Button>
+                )
+                : (
+                  <Button
+                    onClick={() => redirectTo(index + offset)}
+                    className={classNames(classes.button, classes.normal)}
+                  >
+                    {index + offset}
+                  </Button>
+                )
+              }
+            </MuiTheme>
+          );
+        })
       }
-      <button className="Pagination__page Pagination__next" onClick = { () => setOffset(Math.min(total - length + 1, offset + length))} >
-        <ChevronLeft />
-      </button>
+      <Button
+        className={classes.button}
+        onClick={() => setOffset(Math.min(total - length + 1, offset + length))}
+      >
+        <ChevronLeft width="24px" height="24px" style={{ transform: 'rotate(180deg)' }}/>
+      </Button>
     </div>
+
   );
 };
 
 Pagination.propTypes = propTypes;
-Pagination.defaultProps = defaultProps;
 
-export default Pagination;
+const C = withStyles(styles)(Pagination);
+export default props => <Route render={routeProps => <C {...routeProps} {...props} />} />;

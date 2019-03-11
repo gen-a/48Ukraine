@@ -18,6 +18,7 @@ import Header from './Header';
 
 import './Layout.scss';
 import DepartmentsCarousel from '../Containers/DepartmentsCarousel';
+import ShoppingCart from '../Containers/ShoppingCart/ShoppingCart';
 
 /**
  * PropTypes of the component
@@ -58,6 +59,7 @@ const Layout = ({ render, ...otherProps }) => {
       <div className="Layout__footer">
         footer
       </div>
+      <ShoppingCart />
     </div>
   );
 };

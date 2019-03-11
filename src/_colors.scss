@@ -46,3 +46,51 @@ $color-success-hb: #06be5e;
 $color-success-b: #0c9f5a;
 $color-success-2b: #096431;
 $color-success-3b: #024924;
+
+:export {
+  /* primary colors */
+  colorPrimary3H: $color-primary-3h;
+  colorPrimary2H: $color-primary-2h;
+  colorPrimarH: $color-primary-h;
+  colorPrimaryHB: $color-primary-hb;
+  colorPrimaryB: $color-primary-b;
+  colorPrimary2B: $color-primary-2b;
+  colorPrimary3B: $color-primary-3b;
+  /* secondary colors */
+  colorSecondary3H: $color-secondary-3h;
+  colorSecondary2H:$color-secondary-2h;
+  colorSecondaryH:$color-secondary-h;
+  colorSecondaryHB:$color-secondary-hb;
+  colorSecondaryB:$color-secondary-b;
+  colorSecondary2B:$color-secondary-2b;
+  /* neutral colors */
+  colorNeutral3H: $color-neutral-3h;
+  colorNeutral2H: $color-neutral-2h;
+  colorNeutralH: $color-neutral-h;
+  colorNeutralHB: $color-neutral-hb;
+  colorNeutralB: $color-neutral-b;
+  colorNeutral2B: $color-neutral-2b;
+  /* error colors */
+  colorError3H: $color-error-3h;
+  colorError2H: $color-error-2h;
+  colorErrorH: $color-error-h;
+  colorErrorHB: $color-error-hb;
+  colorErrorB: $color-error-b;
+  colorError2B: $color-error-2b;
+  /* info colors */
+  colorInfo3H: $color-info-3h;
+  colorInfo2H:$color-info-2h;
+  colorInfoH:$color-info-h;
+  colorInfoHB:$color-info-hb;
+  colorInfoB:$color-info-b;
+  colorInfo2B: $color-info-2b;
+  colorInfo3B:$color-info-3b;
+  /* success colors */
+  colorSuccess3H: $color-success-3h;
+  colorSuccess2H: $color-success-2h;
+  colorSuccessH: $color-success-h;
+  colorSuccessHB: $color-success-hb;
+  colorSuccessB:  $color-success-b;
+  colorSuccess2B: $color-success-2b;
+  colorSuccess3B: $color-success-3b;
+}

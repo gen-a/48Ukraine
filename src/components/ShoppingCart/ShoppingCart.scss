@@ -1,0 +1,73 @@
+@import '../../colors';
+@import '../../settings';
+
+.ShoppingCart {
+  position: fixed;
+  justify-content: center;
+  bottom: -$tool-bar-height;
+  left: 50%;
+  height: $tool-bar-height;
+  background: $color-neutral-3h;
+  border-radius: $tool-bar-border-radius $tool-bar-border-radius 0 0;
+  transform: translateX(-50%);
+  padding-left:64px;
+  transition:0.4s all;
+  border:none;
+  outline:none;
+  cursor:pointer;
+
+  &_isVisible{
+    bottom: 0;
+  }
+
+  &:hover{
+    background: $color-primary-hb;
+    & .ShoppingCart{
+      &__icon svg{
+        color:$color-neutral-3h;
+        transition:0.4s color;
+      }
+      &__count {
+        color : $color-neutral-3h;
+        transition:0.4s color, 0.4s background;
+      }
+      &__price{
+        transition:0.4s color;
+        color: $color-neutral-3h;
+      }
+    }
+  }
+
+
+  &__icon{
+    position:absolute;
+    left:0.25rem;
+    top:0;
+    width:$tool-bar-height;
+
+  }
+  &__icon svg{
+    color:$color-neutral-hb;
+  }
+  &__count{
+    box-sizing: border-box;
+    padding:0 5px;
+    color:$color-neutral-2b;
+    min-width: 20px;
+    height: 20px;
+    border-radius: 10px;
+    position: absolute;
+    text-align: center;
+    line-height: 20px;
+    left:40px;
+    top: 4px;
+    font-weight: 400;
+  }
+  &__price{
+    padding:0 0.5rem 0 1rem;
+    font-size:1.5rem;
+    line-height: $tool-bar-height;
+    color: $color-neutral-hb;
+  }
+}
+

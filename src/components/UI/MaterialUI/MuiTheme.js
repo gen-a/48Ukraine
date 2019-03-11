@@ -1,13 +1,22 @@
 import React from 'react';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import colors from '../../../_colors.scss';
+
 
 // All the following keys are optional.
 // We try our best to provide a great default value.
 const theme = createMuiTheme({
+
   palette: {
-    primary: { main: '#0477BE' },
-    secondary: { main: '#ff9103'},
-    error: { main: '#ff3203' },
+    primary: {
+      main: colors.colorPrimaryHB,
+    },
+    secondary: {
+      main: colors.colorSecondaryHB,
+    },
+    error: {
+      main: colors.colorErrorHB,
+    },
     // Used by `getContrastText()` to maximize the contrast between the background and
     // the text.
     contrastThreshold: 3,

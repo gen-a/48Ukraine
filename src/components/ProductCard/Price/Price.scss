@@ -32,32 +32,5 @@
     right: 5px;
     left:5px;
     margin-top: -1px;
-
-  }
-  &__integer {
-    font-weight: 700;
-    padding: 0 1px;
-  }
-
-  &__separator {
-    display: none;
-  }
-
-  &__fraction {
-    baseline-shift: sub;
-    font-size: .625em;
-    top: -.5em;
-    position: relative;
-  }
-
-  &__mark {
-    position: relative;
-    font-weight: 400;
-  }
-  &__mark_shifted {
-    baseline-shift: sub;
-    font-size: .625em;
-    top: -.5em;
-    position: relative;
   }
 }

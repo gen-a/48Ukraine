@@ -13,6 +13,11 @@
   flex:1 0 400px;
   margin:10px;
   overflow:hidden;
+  border-radius: 0.5rem;
+
+  &_isInCart{
+    opacity:0.3;
+  }
 
   &__imageBlock {
     position: relative;
@@ -56,6 +61,9 @@
 
   &:hover {
     border: 2px solid $color-secondary-hb;
+    &.ProductCard_isInCart{
+      opacity:1;
+    }
   }
   &:hover .ProductCard__image {
     /*transform: scale(1.2);*/

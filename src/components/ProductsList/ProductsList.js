@@ -7,6 +7,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ProductCard from '../ProductCard';
 import Pagination from '../UI/Pagination';
+import { IMG_PRODUCTS_DIR } from '../../config/app';
 
 import './ProductsList.scss';
 
@@ -16,33 +17,43 @@ import './ProductsList.scss';
  */
 const propTypes = {
   /** Text message of the toast. */
-  //prop: PropTypes.string,
+  addToCart: PropTypes.func,
 };
 /**
  * Default props of the component
  * @type {object}
  */
 const defaultProps = {
-  //prop: '',
+  addToCart: console.log,
 };
 
 /**
  * General component description in JSDoc format. Markdown is *supported*.
  */
-const ProductsList = ({ products }) => {
+const ProductsList = ({ paginationUrl, products, currentPage, inCartQuantities, addToCart }) => {
   return (
     <>
     <Pagination
+      key={paginationUrl}
       limit={5}
       total={20}
-      current={11}
-      labelPrev="prev"
-      labelNext="next"
-      urlTemplate="/something/:page"
+      current={parseInt(currentPage, 10)}
+      url={paginationUrl}
     />
-
     <div className="ProductsList">
-      {products.map(product => <ProductCard key={product.nameInUrl} {...product} />)}
+      {products.map(product => (
+        <ProductCard
+          key={product.id}
+          {...product}
+          inCart={inCartQuantities[product.id] || 0}
+          addToCart={() => addToCart({
+            id: product.id,
+            price: product.minItemPrice,
+            name: product.name,
+            thumbnail: `${IMG_PRODUCTS_DIR}/sm-${product.image}`,
+          })}
+        />
+      ))}
     </div>
     </>
   );

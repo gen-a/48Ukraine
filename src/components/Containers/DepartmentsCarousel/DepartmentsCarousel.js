@@ -7,6 +7,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Carousel from '../../UI/Carousel';
+import CarouselNode from '../../UI/Carousel/CarouselNode';
 import NavLink from 'react-router-dom/es/NavLink';
 import { localizePath } from '../../../localization/index';
 
@@ -80,24 +81,21 @@ class DepartmentsCarousel extends Component {
     }
   }
 
-
   render() {
     const { height, width, departments, locale, currentDepartment } = this.props;
 
-    const nodes = departments.map(({ icon, name, nameInUrl }) => {
-      if (!icon) {
-        return null;
-      }
-      const C = Icons[icon];
-      return {
-        key: nameInUrl,
-        node:
-          (
+    const nodes = departments.filter(d => d.icon)
+      .map(({ icon, name, nameInUrl }) => {
+        const C = Icons[icon];
+        return (
+          <CarouselNode
+            key={nameInUrl}
+            id={nameInUrl}
+          >
             <NavLink
               to={localizePath(`/browse/${nameInUrl}`, locale)}
               onClick={(e) => this.handleClick(e)}
               style={{ textDecoration: 'none', color: 'white' }}
-              key={nameInUrl}
             >
               <div
                 className={nameInUrl === currentDepartment
@@ -113,18 +111,18 @@ class DepartmentsCarousel extends Component {
                 </div>
               </div>
             </NavLink>
-          )
-      };
-    }).filter(d => d !== null);
+          </CarouselNode>
+        );
+      });
 
     return (
       <Carousel
         onStartDrag={() => this.disableNavLink()}
         onEndDrag={() => this.enableNavLink()}
         slotHeight={height}
-        nodes={nodes}
-      />
-
+      >
+        {nodes}
+      </Carousel>
     );
   }
 }

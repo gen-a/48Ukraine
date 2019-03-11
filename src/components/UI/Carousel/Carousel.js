@@ -17,18 +17,14 @@ import TouchMotion from '../Detect/TouchMotion/TouchMotion';
  * @type {object}
  */
 const propTypes = {
-  /** Array of nodes to be place in slots.  */
-  nodes: PropTypes.arrayOf(
-    PropTypes.shape({
-      /** Renderable content  */
-      node: PropTypes.node.isRequired,
-      /** Unique key */
-      key: PropTypes.string.isRequired,
-    })
+  /** Array of children to be place in slots.  */
+  children: PropTypes.arrayOf(
+    /** Renderable content  */
+    PropTypes.node
   ),
-  /** Width of the nodes node slot in pixels.  */
+  /** Width of the children node slot in pixels.  */
   slotWidth: PropTypes.number,
-  /** Height of the nodes node slot in pixels.  */
+  /** Height of the children node slot in pixels.  */
   slotHeight: PropTypes.number,
   /** Start drag handler for controlling events by parent container.  */
   onStartDrag: PropTypes.func,
@@ -41,7 +37,7 @@ const propTypes = {
  * @type {object}
  */
 const defaultProps = {
-  nodes: [],
+  children: [],
   slotWidth: 200,
   slotHeight: 80,
   onStartDrag: () => {
@@ -93,7 +89,7 @@ class Carousel extends Component {
    * @param width
    */
   onElementResize({ width }) {
-    const { nodes: { length }, slotWidth } = this.props;
+    const { children: { length }, slotWidth } = this.props;
     const contentWidth = slotWidth * length;
     const withButton = contentWidth > width;
     const frameWidth = withButton ? width - this.buttonWidth * 2 : width;
@@ -288,9 +284,9 @@ class Carousel extends Component {
    * @returns {XML}
    */
   render() {
-    const { slotWidth, slotHeight, nodes } = this.props;
+    const { slotWidth, slotHeight, children } = this.props;
     const { container, frame, scroll } = this.state;
-    if(nodes.length === 0){
+    if(children.length === 0){
       return null;
     }
 
@@ -338,13 +334,13 @@ class Carousel extends Component {
                 className="Carousel__container"
                 style={containerStyle}
               >
-                {nodes.map((element, index) => (
+                {children.map((element, index) => (
                   <div
                     className="Carousel__slot"
-                    key={element.key}
+                    key={element.props.id}
                     style={{ width: `${slotWidth}px`, left: `${slotWidth * index}px` }}
                   >
-                    {element.node}
+                    {element}
                   </div>
                 ))}
               </div>
