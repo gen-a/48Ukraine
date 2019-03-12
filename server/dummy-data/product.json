@@ -1,0 +1,174 @@
+{
+  "id": "523",
+  "status": "1",
+  "section_id": "30",
+  "record_added": "2017-04-13 09:29:52",
+  "record_status": "approved",
+  "description": "Це цікаве поєднання продуктів, які корисні і самі по собі, а разом-це просто «букет» корисних речовин. Соуси і закуски з хріном знайомі ще з давніх часів. Цей традиційний гострий соус з красивим рубіновим кольором не втратив свою актуальність і сьогодні, ідеально доповнюючи багато страв і закуски.",
+  "name": "Хрін Верес Український, 130г ",
+  "info": "",
+  "attributes": {
+    "__all__": {
+      "22": {
+        "name": "Країна",
+        "is_primary": "1",
+        "is_modifier": null,
+        "values": [
+          {
+            "value_position": "0",
+            "value_id": "4",
+            "value_image": null,
+            "value_color": null,
+            "value_info": null,
+            "value_href": null,
+            "value_name": "Ukraine",
+            "attribute_id": "22",
+            "attribute_unit": "",
+            "attribute_position": "0",
+            "attribute_is_primary": "1",
+            "attribute_type": "public",
+            "attribute_name": "Країна",
+            "set_name": "Загальні",
+            "set_position": "0",
+            "set_id": "34"
+          }
+        ]
+      },
+      "1": {
+        "name": "ТМ",
+        "is_primary": "1",
+        "is_modifier": null,
+        "values": [
+          {
+            "value_position": "0",
+            "value_id": "92",
+            "value_image": null,
+            "value_color": null,
+            "value_info": null,
+            "value_href": null,
+            "value_name": "Верес",
+            "attribute_id": "1",
+            "attribute_unit": "",
+            "attribute_position": "2",
+            "attribute_is_primary": "1",
+            "attribute_type": "public",
+            "attribute_name": "ТМ",
+            "set_name": "Загальні",
+            "set_position": "0",
+            "set_id": "34"
+          }
+        ]
+      }
+    },
+    "specifications": {
+      "34": {
+        "has_primaries": 2,
+        "name": "Загальні",
+        "attributes": {
+          "22": {
+            "name": "Країна",
+            "is_primary": "1",
+            "is_modifier": null,
+            "values": [
+              {
+                "value_position": "0",
+                "value_id": "4",
+                "value_image": null,
+                "value_color": null,
+                "value_info": null,
+                "value_href": null,
+                "value_name": "Ukraine",
+                "attribute_id": "22",
+                "attribute_unit": "",
+                "attribute_position": "0",
+                "attribute_is_primary": "1",
+                "attribute_type": "public",
+                "attribute_name": "Країна",
+                "set_name": "Загальні",
+                "set_position": "0",
+                "set_id": "34"
+              }
+            ]
+          },
+          "1": {
+            "name": "ТМ",
+            "is_primary": "1",
+            "is_modifier": null,
+            "values": [
+              {
+                "value_position": "0",
+                "value_id": "92",
+                "value_image": null,
+                "value_color": null,
+                "value_info": null,
+                "value_href": null,
+                "value_name": "Верес",
+                "attribute_id": "1",
+                "attribute_unit": "",
+                "attribute_position": "2",
+                "attribute_is_primary": "1",
+                "attribute_type": "public",
+                "attribute_name": "ТМ",
+                "set_name": "Загальні",
+                "set_position": "0",
+                "set_id": "34"
+              }
+            ]
+          }
+        }
+      }
+    }
+  },
+  "images": [
+    {
+      "image_file": "file_1093.jpeg",
+      "image_dir": "bajd",
+      "id": "1093",
+      "image:src": "\/files\/product\/bajd\/file_1093.jpeg",
+      "image-sm:src": "\/files\/product\/bajd\/sm-file_1093.jpeg"
+    },
+    {
+      "image_file": "file_1094.jpeg",
+      "image_dir": "baje",
+      "id": "1094",
+      "image:src": "\/files\/product\/baje\/file_1094.jpeg",
+      "image-sm:src": "\/files\/product\/baje\/sm-file_1094.jpeg"
+    },
+    {
+      "image_file": "file_4849.jpeg",
+      "image_dir": "eiej",
+      "id": "4849",
+      "image:src": "\/files\/product\/eiej\/file_4849.jpeg",
+      "image-sm:src": "\/files\/product\/eiej\/sm-file_4849.jpeg"
+    }
+  ],
+  "items": [
+    {
+      "id": "519",
+      "product_id": "523",
+      "is_manual_price": "0",
+      "price": "0.4438752929",
+      "sale_price": "0.0000000000",
+      "price_for": "1.00",
+      "price_for_unit": "ITEM",
+      "units_in_item": "1.00",
+      "customizable_units_in_item": "0",
+      "min_cart_limit": "1.00",
+      "max_cart_limit": "100.00",
+      "commission_percentage": "50.00",
+      "weight": "140.0000000000",
+      "size_x": "0.0000000000",
+      "size_y": "0.0000000000",
+      "size_z": "0.0000000000",
+      "position": "0",
+      "barcode": "4820008094391",
+      "quantity_in_store": "322",
+      "sale_percent": "100",
+      "item_options": null,
+      "item_options_stamp": null,
+      "wholesale_prices": null,
+      "wholesale_sale_prices": null
+    }
+  ],
+  "related_products": []
+}

@@ -1,7 +1,13 @@
+/**
+ * Replace placeholdres in route path with given data
+ * @param route {String}
+ * @param data {object}
+ * @returns {*}
+ */
 export const replaceInRoute = (route, data) => {
   let result = route;
-  Object.keys(data).forEach((key) =>{
-    result = result.replace(new RegExp(`:${key}`), data[key]);
+  Object.keys(data).forEach((k) => {
+    result = result.replace(new RegExp(`:${k}`), data[k]);
   });
   return result;
 };

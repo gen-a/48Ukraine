@@ -164,14 +164,14 @@ class TouchSwipe extends Component {
   render() {
     const { children } = this.props;
     return (
-      <div
+      <span
         style={{ width: 'fit-content', height: 'fit-content' }}
         onTouchStart={e => this.onTouchStart(e.touches)}
         onTouchEnd={e => this.onTouchEnd(e.touches)}
         onTouchMove={e => this.onTouchMove(e.touches)}
       >
         {children}
-      </div>
+      </span>
     );
   }
 }

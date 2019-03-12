@@ -16,27 +16,56 @@ import './ProductsList.scss';
  * @type {object}
  */
 const propTypes = {
-  /** Text message of the toast. */
+  /** Function for add to cart. */
   addToCart: PropTypes.func,
+  /** Current page number. */
+  currentPage: PropTypes.number,
+  /** Total number of pages. */
+  pagesTotal: PropTypes.number,
+  /** URL template for url links generation. */
+  paginationUrl: PropTypes.string,
+  /** Products list data. */
+  products: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string,
+      name: PropTypes.string,
+      price: PropTypes.shape({
+        retail: PropTypes.number,
+        sale: PropTypes.number,
+      }),
+      image: PropTypes.shape({
+        sm: PropTypes.string,
+        fs: PropTypes.string,
+      }),
+      attributesInfo: PropTypes.string,
+    })
+  ),
+  /** Object in cart quantities. */
+  inCartQuantities: PropTypes.shape({}),
 };
 /**
  * Default props of the component
  * @type {object}
  */
 const defaultProps = {
+  pagesTotal: 0,
+  currentPage: 0,
+  paginationUrl: '',
+  products: [],
+  inCartQuantities: {},
   addToCart: console.log,
 };
 
 /**
  * General component description in JSDoc format. Markdown is *supported*.
  */
-const ProductsList = ({ paginationUrl, products, currentPage, inCartQuantities, addToCart }) => {
+const ProductsList = ({ pagesTotal, paginationUrl, products, currentPage, inCartQuantities, addToCart }) => {
   return (
     <>
     <Pagination
       key={paginationUrl}
       limit={5}
-      total={20}
+      total={pagesTotal}
       current={parseInt(currentPage, 10)}
       url={paginationUrl}
     />

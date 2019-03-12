@@ -90,7 +90,6 @@ class Browse extends Component {
   render() {
     const { products, pagesTotal, page } = this.state;
     const { departments, match: { params, params: { department: currentDepartment } },  callAddProductToCart, inCartQuantities } = this.props;
-
     if (products.length === 0 || departments.length === 0) {
       return (<div/>);
     }

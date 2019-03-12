@@ -45,6 +45,7 @@
     "react-router-prop-types": "^1.0.4",
     "react-scripts": "2.1.5",
     "react-style-proptype": "^3.2.2",
+    "react-uid": "^2.2.0",
     "redux": "^4.0.1",
     "redux-form": "^8.1.0",
     "redux-logger": "^3.0.6",

@@ -21,12 +21,15 @@ const propTypes = {
   inCart: PropTypes.number.isRequired,
   addToCart: PropTypes.func.isRequired,
   priceRetail: PropTypes.number.isRequired,
-  priceSale: PropTypes.number.isRequired,
+  priceSale: PropTypes.number,
   name: PropTypes.string.isRequired,
   image: PropTypes.string.isRequired,
-  attributesInfo: PropTypes.string.isRequired
+  attributesInfo: PropTypes.string
 };
-
+const defaultProps = {
+  priceSale: 0,
+  attributesInfo: ''
+};
 /**
  * General component description in JSDoc format. Markdown is *supported*.
  */
@@ -70,5 +73,6 @@ const ProductCard = ({ inCart, addToCart, priceRetail, priceSale, name, image, a
 };
 
 ProductCard.propTypes = propTypes;
+ProductCard.defaultProps = defaultProps;
 
 export default ProductCard;

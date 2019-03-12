@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
 import CompanyLogo, { ASPECT_RATIO } from '../../Svg/CompanyLogo';
 import { localizePath, APP_DEFAULT_LOCALE } from '../../../localization/index';
-
+import Ripple from '../../UI/Ripple';
 import './Header.scss';
 
 /**
@@ -43,11 +43,13 @@ const Header = ({ height, locale, mediaPrefix }) => {
     <div className="Header" style={{ height: `${height}px` }}>
       <div className="Header__toggleIconBox"/>
       <div className="Header__logoBox">
-          <div className="Header__logo" style={{ height: `${height}px`, width: logoWidth, margin: '0 auto' }}>
+        <Ripple>
+          <div className="Header__logo" style={{position: 'relative', height: `${height}px`, width: logoWidth, margin: '0 auto' }}>
             <NavLink to={localizePath('/', locale)}>
               <CompanyLogo/>
             </NavLink>
           </div>
+        </Ripple>
       </div>
       <div className="Header__toggleIconBox"/>
     </div>

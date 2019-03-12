@@ -137,7 +137,7 @@ class MouseSwipe extends Component {
   render() {
     const { children } = this.props;
     return (
-      <div
+      <span
         style={{ width: 'fit-content', height: 'fit-content' }}
         onMouseDown={(e) => {
           e.preventDefault();
@@ -145,7 +145,7 @@ class MouseSwipe extends Component {
         }}
       >
         {children}
-      </div>
+      </span>
     );
   }
 }

@@ -1,0 +1,79 @@
+@mixin img-position() {
+  position: absolute;
+  max-width: 100%;
+  max-height: 100%;
+  display: block;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.ImageViewer {
+  &_landscape {
+    display: flex;
+    & .ImageViewer {
+      &__screen {
+        order: 2;
+        flex: 1 1;
+      }
+      &__buttons {
+        order: 1;
+        flex: 0 0 100px;
+        margin: 0 10px;
+        flex-direction: column;
+        justify-content: flex-start;
+      }
+    }
+  }
+  &__screen {
+    position: relative;
+    width: 100%;
+  }
+  &__image {
+    @include img-position();
+    transition: all 0.4s;
+    display: block;
+    opacity: 0;
+
+    &_current {
+      opacity: 1;
+    }
+  }
+  &__buttons {
+    display: flex;
+    justify-content: center;
+    margin: 10px;
+  }
+  &__buttonFrame {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    right: 5px;
+    bottom: 5px;
+  }
+  &__button {
+    flex: 0 0 100px;
+    width: 100px;
+    height: 100px;
+    margin: 2px;
+    border: none;
+    background: white;
+    outline: none;
+    box-shadow: 0 0 2px #777;
+    border-radius: 0.25rem;
+    padding: 5px;
+    box-sizing: border-box;
+    cursor: pointer;
+    transition: all 0.4s;
+    position: relative;
+
+    & img {
+      @include img-position();
+    }
+    &_current {
+      opacity: 0.3;
+      cursor: default;
+    }
+  }
+
+}

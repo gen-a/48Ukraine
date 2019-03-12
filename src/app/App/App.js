@@ -6,10 +6,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Route, Switch } from 'react-router-dom';
-import Browse from '../../pages/Browse/Browse';
-import PrivateRoute from '../../components/PrivateRoute/PrivateRoute';
-import User from '../../components/Loadables/User/User';
-import Login from '../../pages/Login/Login';
+import Browse from '../../pages/Browse';
+import Product from '../../pages/Product';
+
+import PrivateRoute from '../../components/PrivateRoute';
+import User from '../../components/Loadables/User';
+import Login from '../../pages/Login';
 import GUIConnect from '../../components/Containers/GUIConnect';
 import Layout from '../../components/Layout';
 import { localizePath } from '../../localization/index';
@@ -49,6 +51,7 @@ const App = ({ locale }) => (
     <Route exact path={localizePath('/browse/:department', locale)} render={renderRoute(Browse)} />
     <Route exact path={localizePath('/browse/:department/page/:page', locale)} render={renderRoute(Browse)} />
 
+    <Route exact path={localizePath('/product/:id', locale)} render={renderRoute(Product)} />
 
 
 

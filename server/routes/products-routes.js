@@ -4,6 +4,8 @@
  */
 const router = require('express').Router();
 const productsController = require('../controllers/products-controller');
+
+
 /**
  * @api {post} /data/products Load products
  * @apiVersion 1.0.0
@@ -27,5 +29,7 @@ const productsController = require('../controllers/products-controller');
  *    }
  */
 router.get('/', productsController.find);
+router.get('/product', productsController.findById);
+
 
 module.exports = router;
