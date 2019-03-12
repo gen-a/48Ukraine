@@ -7,6 +7,7 @@ import PropTypes from 'prop-types';
 import ElementResize from '../Detect/ElementResize';
 
 import CarouselIconChevronLeft from './CarouselIconChevronLeft';
+import CarouselButton from './CarouselButton';
 
 import styles from './Carousel.scss';
 import MouseMotion from '../Detect/MouseMotion/MouseMotion';
@@ -308,6 +309,7 @@ class Carousel extends Component {
       css('Carousel__button')(true, 'Carousel__button_right')
     )(container.translateX === scroll.min, 'Carousel__button_disabled');
 
+
     return (
       <div
         className="Carousel"
@@ -349,13 +351,27 @@ class Carousel extends Component {
           </MouseMotion>
         </TouchMotion>
 
-        <button className={leftButtonStyle} onClick={() => this.onPageDown()}>
+        <CarouselButton
+          disabled={container.translateX === scroll.max}
+          onClick={() => this.onPageDown()}
+          width={this.buttonWidth}
+          backgroundColor={styles.buttonBackgroundColor}
+        />
+        <CarouselButton
+          disabled={container.translateX === scroll.min}
+          onClick={() => this.onPageUp()}
+          width={this.buttonWidth}
+          backgroundColor={styles.buttonBackgroundColor}
+          type="right"
+        />
+
+{/*        <button className={leftButtonStyle} onClick={() => this.onPageDown()}>
           <CarouselIconChevronLeft viewBox="0 0 64 64" width="48px" height="48px"/>
         </button>
 
         <button className={rightButtonStyle} onClick={() => this.onPageUp()}>
           <CarouselIconChevronLeft viewBox="0 0 64 64" width="48px" height="48px"/>
-        </button>
+        </button>*/}
 
       </div>
     );

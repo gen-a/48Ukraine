@@ -47,6 +47,7 @@ class ElementResize extends Component {
 
   componentDidMount(){
     this.iframe.current.contentWindow.addEventListener('resize', this.onResize);
+    this.onResize();
   }
 
   componentWillUnmount(){

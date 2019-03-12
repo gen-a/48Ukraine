@@ -6,15 +6,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import './Price.scss';
-
 /**
  * PropTypes of the component
  * @type {object}
  */
 const propTypes = {
   /** Numeric value of the price. */
-  value: PropTypes.string,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]) ,
   /** Currency mark. */
   currency: PropTypes.string,
 };

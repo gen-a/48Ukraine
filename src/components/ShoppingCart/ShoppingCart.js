@@ -6,8 +6,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Cart from '@material-ui/icons/ShoppingBasket';
-import Price from '../Price';
-
+import Price from '../Formatters/Price';
+import {Motion, spring} from 'react-motion';
 import colors from '../../_colors.scss';
 
 import './ShoppingCart.scss';
@@ -66,7 +66,9 @@ const ShoppingCart = ({ count, total }) => {
       </div>
 
       <div className="ShoppingCart__price">
-        <Price value={total}/>
+        <Motion defaultStyle={{ x: 0 }} style={{ x: spring(total) }}>
+          {value => <Price value={value.x}/>}
+        </Motion>
       </div>
     </button>
   );

@@ -48,7 +48,7 @@ const ProductsList = ({ paginationUrl, products, currentPage, inCartQuantities, 
           inCart={inCartQuantities[product.id] || 0}
           addToCart={() => addToCart({
             id: product.id,
-            price: product.minItemPrice,
+            price: parseInt(product.minItemPrice, 10),
             name: product.name,
             thumbnail: `${IMG_PRODUCTS_DIR}/sm-${product.image}`,
           })}

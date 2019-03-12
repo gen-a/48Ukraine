@@ -3,7 +3,7 @@
  * Placeholder fot the description
  * @module StoreRouteMatch
  */
-import React from 'react';
+import React, {useEffect} from 'react';
 import PropTypes from 'prop-types';
 import ReactRouterPropTypes from 'react-router-prop-types';
 import { connect } from 'react-redux';
@@ -19,9 +19,13 @@ const propTypes = {
 };
 
 const StoreRouteMatch = ({ callSetRouteMatch, render, match, ...otherProps }) => {
-  callSetRouteMatch(match);
+  useEffect(() => {
+    callSetRouteMatch(match);
+  });
   return render(otherProps);
 };
+
+
 
 StoreRouteMatch.propTypes = propTypes;
 

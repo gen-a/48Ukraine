@@ -5,7 +5,7 @@
  */
 import React from 'react';
 import PropTypes from 'prop-types';
-import FormatPrice from '../../Price';
+import FormatPrice from '../../Formatters/Price';
 
 
 import './Price.scss';

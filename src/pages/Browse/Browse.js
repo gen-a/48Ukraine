@@ -88,7 +88,7 @@ class Browse extends Component {
     const { departments, currentDepartment, routeMatch, currentPage, callAddProductToCart, inCartQuantities } = this.props;
 
     if (products.length === 0 || departments.length === 0) {
-      return (<div>browse.info.products_are_loading</div>);
+      return (<div/>);
     }
 
     const currentDepartmentData = this.getDepartmentData(departments, currentDepartment);
