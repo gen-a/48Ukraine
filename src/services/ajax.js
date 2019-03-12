@@ -30,7 +30,7 @@ export const post = (url, data, cb) => {
  * @param cb {Function} - callback function
  */
 export const get = (url, data, cb) => {
-  sendRequest('get', url, data, cb);
+  sendRequest('get', url, { params: data }, cb);
 };
 
 /**

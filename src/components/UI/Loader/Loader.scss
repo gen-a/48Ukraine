@@ -1,19 +1,20 @@
 .Loader {
   position: fixed;
   bottom: -150px;
-  left: 50%;
-  transform: translateX(-50%);
+  left: 0;
+  right:0;
   transition: bottom 0.2s linear, opacity 0.2s linear;
   opacity: 0;
-
+  z-index:10;
   &_isVisible {
     bottom: 0;
     opacity: 1;
   }
   &__indicator {
     position: absolute;
-    bottom: 50px;
+    bottom: 60px;
     left: 50%;
+    transform: translateX(-50%);
     margin: -25px -25px 0 0;
     width: 50px;
   }

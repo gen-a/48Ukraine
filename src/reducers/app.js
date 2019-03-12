@@ -8,7 +8,6 @@ import {
   SHOW_LOADER,
   HIDE_LOADER,
   SET_LOCALE,
-  SET_ROUTE_MATCH,
   EXPAND_NODE_OF_DEPARTMENT_TREE,
   SET_OPEN_DRAWER,
   ADD_OPEN_SCRIM,
@@ -29,12 +28,6 @@ const initialState = {
     width: 0,
     mediaPrefix: '',
     devicePixelRatio: 1,
-  },
-  routeMatch: {
-    params: {},
-    isExact: false,
-    path: '/',
-    url: '/'
   },
   loader: {
     isActive: false,
@@ -79,11 +72,6 @@ function app(state = initialState, action) {
       return {
         ...state,
         openDrawer: action.payload
-      };
-    case SET_ROUTE_MATCH:
-      return {
-        ...state,
-        routeMatch: action.payload
       };
     case EXPAND_NODE_OF_DEPARTMENT_TREE:
       return {

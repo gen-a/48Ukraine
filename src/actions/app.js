@@ -17,7 +17,6 @@ export const SET_WINDOW_SIZE = 'SET_WINDOW_SIZE';
 export const SHOW_LOADER = 'SHOW_LOADER';
 export const HIDE_LOADER = 'HIDE_LOADER';
 export const SET_LOCALE = 'SET_LOCALE';
-export const SET_ROUTE_MATCH = 'SET_ROUTE_MATCH';
 export const EXPAND_NODE_OF_DEPARTMENT_TREE = 'EXPAND_NODE_OF_DEPARTMENT_TREE';
 export const SET_OPEN_DRAWER = 'SET_OPEN_DRAWER';
 
@@ -61,17 +60,6 @@ export function removeOpenScrim(id) {
 export function addOpenScrim(id) {
   return (dispatch) => {
     dispatch({ type: ADD_OPEN_SCRIM, payload: id });
-  };
-}
-
-/**
- * Set route match
- * @param value {string} id of the node to be set
- * @returns {function(*)}
- */
-export function setRouteMatch(value) {
-  return (dispatch) => {
-    dispatch({ type: SET_ROUTE_MATCH, payload: value });
   };
 }
 

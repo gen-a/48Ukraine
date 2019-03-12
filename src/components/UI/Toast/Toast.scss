@@ -3,7 +3,7 @@
   left: 50%;
   bottom: -100px;
   transform: translateX(-50%);
-  padding-bottom: 3em;
+  padding-bottom: 4rem;
   padding-top: 2px;
   transition: bottom 0.4s;
   z-index: 5;
@@ -24,6 +24,6 @@
   }
 
   &_isVisible {
-    bottom : 0;
+    bottom : 0px;
   }
 }

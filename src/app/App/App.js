@@ -11,7 +11,6 @@ import PrivateRoute from '../../components/PrivateRoute/PrivateRoute';
 import User from '../../components/Loadables/User/User';
 import Login from '../../pages/Login/Login';
 import GUIConnect from '../../components/Containers/GUIConnect';
-import StoreRouteMatch from '../../components/Containers/StoreRouteMatch';
 import Layout from '../../components/Layout';
 import { localizePath } from '../../localization/index';
 
@@ -32,18 +31,12 @@ const propTypes = {
  * @param C
  */
 const renderRoute = C => routeProps => (
-  <StoreRouteMatch
-    match={routeProps.match}
+  <Layout
     {...routeProps}
-    render={storeRouteMatch => (
-      <Layout
-        {...storeRouteMatch}
-        render={layoutProps => (
-          <GUIConnect
-            {...layoutProps}
-            render={guiProps => <C {...guiProps} />}
-          />
-        )}
+    render={layoutProps => (
+      <GUIConnect
+        {...layoutProps}
+        render={guiProps => <C {...guiProps} key={routeProps.match.url} />}
       />
     )}
   />

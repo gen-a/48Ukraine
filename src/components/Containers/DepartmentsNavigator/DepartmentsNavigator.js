@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import DepartmentsTree from '../DepartmentsTree';
 import { localizePath } from '../../../localization';
-
+import { Route } from 'react-router-dom';
 /**
  * PropTypes of the component
  * @type {object}
@@ -16,7 +16,37 @@ import { localizePath } from '../../../localization';
 const propTypes = {
   /** Current locale. */
   locale: PropTypes.string.isRequired,
+  /** Route match data object. */
+  match: PropTypes.shape({
+    /** Extracted from url params. */
+    params: PropTypes.shape({
+      department: PropTypes.string
+    }),
+    /** Url name. */
+    url: PropTypes.string,
+    /** Route path. */
+    path: PropTypes.string,
+  }).isRequired,
+  /** Array of departments. */
+  departments: PropTypes.arrayOf(PropTypes.shape({
+    /** Icon of the department. */
+    icon: PropTypes.string,
+    /** Department name. */
+    name: PropTypes.string,
+    /** Name in url (slug). */
+    nameInUrl: PropTypes.string,
+  })),
 };
+
+/**
+ * Default props of the component
+ * @type {object}
+ */
+const defaultProps = {
+  departments: []
+};
+
+
 
 class DepartmentsNavigator extends Component {
 
@@ -47,19 +77,21 @@ class DepartmentsNavigator extends Component {
   }
 
   render() {
-    const { props } = this;
-    return <DepartmentsTree {...{ ...props, departments: this.setLinks(props.departments)}} />;
+    const { match: { params: { department: currentDepartment } }, departments } = this.props;
+    return <DepartmentsTree {...{ currentDepartment, departments: this.setLinks(departments)}} />;
   }
 }
 
 DepartmentsNavigator.propTypes = propTypes;
+DepartmentsNavigator.defaultProps = defaultProps;
 
 const mapStateToProps = state => (
   {
     locale: state.app.locale,
-    departments: state.app.departments,
-    currentDepartment: state.app.routeMatch.params.department || '',
+    departments: state.app.departments
   }
 );
 
-export default connect(mapStateToProps, null)(DepartmentsNavigator);
+const C = connect(mapStateToProps, null)(DepartmentsNavigator);
+export default props => <Route render={routeProps => <C {...routeProps} {...props} />} />;
+

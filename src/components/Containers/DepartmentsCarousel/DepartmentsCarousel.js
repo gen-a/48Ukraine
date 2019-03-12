@@ -10,6 +10,7 @@ import Carousel from '../../UI/Carousel';
 import CarouselNode from '../../UI/Carousel/CarouselNode';
 import NavLink from 'react-router-dom/es/NavLink';
 import { localizePath } from '../../../localization/index';
+import { Route } from 'react-router-dom';
 
 import Icons from '../../Svg/Departments';
 import './DepartmentsCarousel.scss';
@@ -34,8 +35,17 @@ const propTypes = {
   })),
   /** Current locale. */
   locale: PropTypes.string.isRequired,
-  /** Current department. */
-  currentDepartment: PropTypes.string.isRequired,
+  /** Route match data object. */
+  match: PropTypes.shape({
+    /** Extracted from url params. */
+    params: PropTypes.shape({
+      department: PropTypes.string
+    }),
+    /** Url name. */
+    url: PropTypes.string,
+    /** Route path. */
+    path: PropTypes.string,
+  }).isRequired
 };
 
 /**
@@ -45,7 +55,7 @@ const propTypes = {
 const defaultProps = {
   height: 80,
   width: 200,
-  departments: [],
+  departments: []
 };
 
 /**
@@ -82,7 +92,8 @@ class DepartmentsCarousel extends Component {
   }
 
   render() {
-    const { height, width, departments, locale, currentDepartment } = this.props;
+
+    const { height, width, match: { params: { department: currentDepartment } }, departments, locale } = this.props;
 
     const nodes = departments.filter(d => d.icon)
       .map(({ icon, name, nameInUrl }) => {
@@ -134,8 +145,8 @@ const mapStateToProps = state => (
   {
     locale: state.app.locale,
     departments: state.app.rootDepartments,
-    currentDepartment: state.app.routeMatch.params.department || '',
   }
 );
 
-export default connect(mapStateToProps, null)(DepartmentsCarousel);
+const C = connect(mapStateToProps, null)(DepartmentsCarousel);
+export default props => <Route render={routeProps => <C {...routeProps} {...props} />}/>;

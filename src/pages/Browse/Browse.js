@@ -22,7 +22,7 @@ const propTypes = {
   /** Show toast handler */
   callShowToast: PropTypes.func.isRequired,
   /** Match parameters */
-  routeMatch: PropTypes.shape({
+  match: PropTypes.shape({
     params: PropTypes.shape({
       department: PropTypes.string,
       page: PropTypes.string
@@ -45,11 +45,12 @@ class Browse extends Component {
     super(props);
     this.state = {
       products: [],
+      pagination : {}
     };
   }
 
   componentDidMount() {
-    const { callShowLoader, routeMatch: { params: { department, page } } } = this.props;
+    const { callShowLoader, match: { params: { department, page } } } = this.props;
     get(URL_FETCH_PRODUCTS, { department, page }, this.onLoadProducts.bind(this));
     callShowLoader();
   }
@@ -59,14 +60,17 @@ class Browse extends Component {
     callHideLoader();
     if (error === 0) {
       this.setState(prevState => update(prevState, {
-        products: { $set: data.records }
+        products: { $set: data.records },
+        pagesTotal: { $set: data.pagesTotal },
+        perPage: { $set: data.perPage },
+        page: { $set: data.page },
+        count: { $set: data.count },
       }));
       callShowToast('browse.info.products_has_been_loaded');
     } else {
       callAddFlashMessage(message, 'server response', 'error');
     }
   }
-
 
   getDepartmentData(departments, nameInUrl) {
     for (let i = 0; i < departments.length; i++) {
@@ -84,8 +88,8 @@ class Browse extends Component {
 
 
   render() {
-    const { products } = this.state;
-    const { departments, currentDepartment, routeMatch, currentPage, callAddProductToCart, inCartQuantities } = this.props;
+    const { products, pagesTotal, page } = this.state;
+    const { departments, match: { params, params: { department: currentDepartment } },  callAddProductToCart, inCartQuantities } = this.props;
 
     if (products.length === 0 || departments.length === 0) {
       return (<div/>);
@@ -102,10 +106,10 @@ class Browse extends Component {
       <>
       <h1>{currentDepartmentData.name}</h1>
       <ProductsList
-        key= {routeMatch}
         products={products}
-        currentPage={currentPage}
-        paginationUrl={replaceInRoute('/browse/:department/page/:page', { ...routeMatch.params, page: ':page' })}
+        currentPage={page}
+        pagesTotal={pagesTotal}
+        paginationUrl={replaceInRoute('/browse/:department/page/:page', { ...params, page: ':page' })}
         addToCart={callAddProductToCart}
         inCartQuantities={inCartQuantities}
       />
@@ -121,9 +125,6 @@ const mapStateToProps = state => (
   {
     locale: state.app.locale,
     departments: state.app.departments,
-    currentDepartment: state.app.routeMatch.params.department || '',
-    currentPage: state.app.routeMatch.params.page || 1,
-    routeMatch: state.app.routeMatch,
     inCartQuantities: state.cart.quantities
   }
 );

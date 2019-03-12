@@ -44,13 +44,18 @@ const ProductsList = ({ paginationUrl, products, currentPage, inCartQuantities, 
       {products.map(product => (
         <ProductCard
           key={product.id}
-          {...product}
+          id={product.id}
+          name={product.name}
+          priceRetail={product.price.retail}
+          priceSale={product.price.sale}
           inCart={inCartQuantities[product.id] || 0}
+          image={`${IMG_PRODUCTS_DIR}/${product.image.sm}`}
+          attributesInfo={product.attributesInfo}
           addToCart={() => addToCart({
             id: product.id,
-            price: parseInt(product.minItemPrice, 10),
+            price: product.price.sale || product.price.retail,
             name: product.name,
-            thumbnail: `${IMG_PRODUCTS_DIR}/sm-${product.image}`,
+            thumbnail: `${IMG_PRODUCTS_DIR}/${product.image.sm}`,
           })}
         />
       ))}
