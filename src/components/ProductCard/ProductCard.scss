@@ -1,72 +1,69 @@
 @import '../../colors';
 
-.ProductCard{
+.ProductCard {
   box-sizing: border-box;
   border: 2px solid white;
-  max-width:500px;
+  max-width: 500px;
   position: relative;
   z-index: 1;
   transition: all 0.4s;
-  background:white;
+  background: white;
   box-shadow: 0 0 4px #999;
   display: flex;
-  flex:1 0 400px;
-  margin:10px;
-  overflow:hidden;
+  flex: 1 0 400px;
+  margin: 10px;
+  overflow: hidden;
   border-radius: 0.5rem;
 
-  &_isInCart{
-    opacity:0.3;
+  &_isInCart {
+    opacity: 0.3;
   }
 
   &__imageBlock {
     position: relative;
-    flex:0 0 200px;
-    height:200px;
+    flex: 0 0 200px;
+    height: 200px;
     overflow: hidden;
     box-sizing: border-box;
   }
-  &__infoBlock{
+  &__infoBlock {
     position: relative;
-    flex:1 1 200px;
+    flex: 1 1 200px;
     box-sizing: border-box;
-    height:200px;
+    height: 200px;
     overflow: hidden;
     padding: 0.5em 1em;
   }
 
-  &__image {
-    display: block;
-    transition: all 0.2s;
-    max-width: 100%;
-    max-height: 100%;
-    margin: 0 auto 0 auto;
+  &__price {
+    position: absolute;
+    left: 10px;
+    bottom: 16px;
   }
-
-  &__price{
-    position:absolute;
-    left:10px;
-    bottom:16px;
+  &__markSale {
+    position: absolute;
+    left: 0;
+    top: 0;
   }
-  &__markSale{
-    position:absolute;
-    left:0;
-    top:0;
-  }
-  &__button{
-    position:absolute;
-    left:10px;
-    bottom:10px;
+  &__button {
+    position: absolute;
+    left: 10px;
+    bottom: 10px;
   }
 
   &:hover {
     border: 2px solid $color-secondary-hb;
-    &.ProductCard_isInCart{
-      opacity:1;
+    &.ProductCard_isInCart {
+      opacity: 1;
     }
   }
   &:hover .ProductCard__image {
     /*transform: scale(1.2);*/
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
     animation-duration: 0.5s;
     animation-name: imageHover;
   }
@@ -78,9 +75,9 @@
     font-weight: 400;
     overflow: hidden;
     position: relative;
-    padding:0;
-    margin:0;
-    max-height:4.68rem;
+    padding: 0;
+    margin: 0;
+    max-height: 4.68rem;
   }
 
   &__name a {
@@ -105,9 +102,9 @@
   }
 
   &__info {
-    position:absolute;
-    left:10px;
-    top:4.8rem;
+    position: absolute;
+    left: 10px;
+    top: 4.8rem;
     font-family: 'Roboto Condensed', Arial, Helvetica, sans-serif;
     font-size: 0.875rem;
     line-height: 1.375em;
@@ -126,19 +123,20 @@
     background: linear-gradient(to left top, #fff, rgba(255, 255, 255, 0));
   }
 
-  &__saleMark{
-    position:absolute;
-    top:50px;
-    right:0;
+  &__saleMark {
+    position: absolute;
+    top: 50px;
+    right: 0;
     background: #ff2100;
-    color:white;
-    font-weight:bold;
-    padding:3px 5px;
-    border-radius:5px 0 0 5px;
-    z-index:3;
+    color: white;
+    font-weight: bold;
+    padding: 3px 5px;
+    border-radius: 5px 0 0 5px;
+    z-index: 3;
   }
 
 }
+
 @keyframes imageHover {
   0% {
     transform: scale(1);

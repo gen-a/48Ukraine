@@ -11,7 +11,7 @@ import PropTypes from 'prop-types';
  * @type {object}
  */
 const propTypes = {
-  /** Numeric value of the price. */
+  /** Numeric value of the price in coins. */
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]) ,
   /** Currency mark. */
   currency: PropTypes.string,
@@ -30,7 +30,7 @@ const defaultProps = {
  */
 const Price = ({ value , currency}) => {
 
-  const price = Math.ceil(value * 100).toString();
+  const price = value.toString();
 
   const classes = {
     integer: {

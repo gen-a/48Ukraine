@@ -8,6 +8,7 @@ import PropTypes from 'prop-types';
 import { Route, Switch } from 'react-router-dom';
 import Browse from '../../pages/Browse';
 import Product from '../../pages/Product';
+import Cart from '../../pages/Cart';
 
 import PrivateRoute from '../../components/PrivateRoute';
 import User from '../../components/Loadables/User';
@@ -50,8 +51,8 @@ const App = ({ locale }) => (
     <Route exact path={localizePath('/', locale)} render={renderRoute(Home)} />
     <Route exact path={localizePath('/browse/:department', locale)} render={renderRoute(Browse)} />
     <Route exact path={localizePath('/browse/:department/page/:page', locale)} render={renderRoute(Browse)} />
-
     <Route exact path={localizePath('/product/:id', locale)} render={renderRoute(Product)} />
+    <Route exact path={localizePath('/cart', locale)} render={renderRoute(Cart)} />
 
 
 

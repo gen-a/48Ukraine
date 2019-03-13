@@ -49,7 +49,7 @@ class Ripple extends Component {
   componentDidMount() {
     const { current: { childNodes } } = this.root;
     const target = childNodes[0];
-    target.addEventListener('mousedown', this.onMouseClick);
+    target.addEventListener('click', this.onMouseClick);
   }
 
   /**
@@ -58,7 +58,7 @@ class Ripple extends Component {
   componentWillUnmount() {
     const { current: { childNodes } } = this.root;
     const target = childNodes[0];
-    target.removeEventListener('mousedown', this.onMouseClick);
+    target.removeEventListener('click', this.onMouseClick);
   }
 
   /**
@@ -91,6 +91,7 @@ class Ripple extends Component {
         }
       }, 1000);
     }
+    return true;
   }
 
   render() {

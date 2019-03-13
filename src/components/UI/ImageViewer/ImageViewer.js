@@ -7,9 +7,11 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import AspectRatioBox from '../AspectRatioBox/AspectRatioBox';
 import { uid } from 'react-uid';
-import './ImageViewer.scss';
 import TouchSwipe from '../Detect/TouchSwipe';
+import Image from '../Image';
 import Ripple from '../Ripple';
+
+import './ImageViewer.scss';
 
 /**
  * PropTypes of the component
@@ -89,7 +91,7 @@ const ImageViewer = ({ images, orientation }) => {
               onClick={() => setState(i)}
             >
               <div className="ImageViewer__buttonFrame">
-                <img src={p.sm} alt={p.sm}/>
+                <Image src={p.sm} alt={p.sm} />
               </div>
             </button>
           </Ripple>

@@ -1,14 +1,14 @@
 /**
- * Button Component.
+ * AddToCartButton Component.
  * Placeholder fot the description
- * @module Button
+ * @module AddToCartButton
  */
 import React from 'react';
 import PropTypes from 'prop-types';
 import Cart from '@material-ui/icons/ShoppingBasket';
 import Tooltip from '@material-ui/core/Tooltip';
 
-import './Button.scss';
+import './AddToCartButton.scss';
 
 /**
  * PropTypes of the component
@@ -19,10 +19,17 @@ const propTypes = {
   label: PropTypes.string,
   /** Number in cart tooltip. */
   numberInCartLabel: PropTypes.string,
-  /** Number products in cart. */
-  numberInCart: PropTypes.number,
+  /** Object in cart quantities. */
+  inCartQuantities: PropTypes.shape({}),
   /** On button click handler. */
-  onClick: PropTypes.func,
+  callAddProductToCart: PropTypes.func,
+  /** Product object fro cart. */
+  product: PropTypes.shape({
+    id: PropTypes.string,
+    name: PropTypes.string,
+    thumbnail: PropTypes.string,
+    price: PropTypes.number,
+  }).isRequired
 };
 /**
  * Default props of the component
@@ -31,8 +38,8 @@ const propTypes = {
 const defaultProps = {
   label: '',
   numberInCartLabel: '',
-  numberInCart: 10,
-  onClick: () => {
+  inCartQuantities: {},
+  callAddProductToCart: () => {
   },
 };
 
@@ -40,11 +47,12 @@ const defaultProps = {
 /**
  * General component description in JSDoc format. Markdown is *supported*.
  */
-const Button = ({ label, numberInCart, numberInCartLabel, onClick }) => {
+const AddToCartButton = ({ product, label, inCartQuantities, numberInCartLabel, callAddProductToCart }) => {
+  const numberInCart = parseInt(inCartQuantities[product.id], 10);
   return (
-    <div className="Button" onClick={() => onClick()}>
+    <div className="AddToCartButton" onClick={() => callAddProductToCart(product)}>
 
-      <div className="Button__icon">
+      <div className="AddToCartButton__icon">
         <Cart
           style={{
             width: '24px',
@@ -61,20 +69,20 @@ const Button = ({ label, numberInCart, numberInCartLabel, onClick }) => {
             placement="left"
           >
 
-            <div className="Button__inCart">
+            <div className="AddToCartButton__inCart">
               {numberInCart}
             </div>
           </Tooltip>
         )}
       </div>
-      <div className="Button__label">
+      <div className="AddToCartButton__label">
         {label}
       </div>
     </div>
   );
 };
 
-Button.propTypes = propTypes;
-Button.defaultProps = defaultProps;
+AddToCartButton.propTypes = propTypes;
+AddToCartButton.defaultProps = defaultProps;
 
-export default Button;
+export default AddToCartButton;

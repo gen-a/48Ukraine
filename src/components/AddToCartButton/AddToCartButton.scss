@@ -1,9 +1,11 @@
-@import '../../../colors';
+@import '../../colors';
 
-.Button {
+.AddToCartButton {
   display: flex;
   cursor: pointer;
   align-items: center;
+user-select: none;
+
 
   &__icon {
     flex: 0 0 48px;
@@ -48,7 +50,7 @@
   }
 
   &:hover {
-    & .Button {
+    & .AddToCartButton {
       &__inCart {
         animation-duration: 0.2s;
         animation-name: animationInCartHover;

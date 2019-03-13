@@ -85,7 +85,7 @@ class Product extends Component {
 
     return (
       <ProductLeaflet
-        {...{ ...product, callAddProductToCart, inCartQuantities, mediaPrefix }}
+        {...{ ...product, mediaPrefix }}
       />
     );
   }
@@ -98,14 +98,13 @@ const mapStateToProps = state => (
   {
     locale: state.app.locale,
     departments: state.app.departments,
-    inCartQuantities: state.cart.quantities,
     mediaPrefix: state.app.window.mediaPrefix,
   }
 );
 
 const mapDispatchToProps = dispatch => (
   {
-    callAddProductToCart: product => dispatch(addProductToCart(product)),
+    //callAddProductToCart: product => dispatch(addProductToCart(product)),
   }
 );
 export default connect(mapStateToProps, mapDispatchToProps)(Product);

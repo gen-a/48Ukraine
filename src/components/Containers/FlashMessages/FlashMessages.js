@@ -3,7 +3,6 @@
  * Placeholder fot the description
  * @module FlashMessages
  */
-import React from 'react';
 import { connect } from 'react-redux';
 import FlashMessages from '../../UI/FlashMessages';
 import { removeFlashMessage, removeAllFlashMessages  } from '../../../actions/app';

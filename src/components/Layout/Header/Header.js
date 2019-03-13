@@ -44,12 +44,15 @@ const Header = ({ height, locale, mediaPrefix }) => {
       <div className="Header__toggleIconBox"/>
       <div className="Header__logoBox">
         <Ripple>
-          <div className="Header__logo" style={{position: 'relative', height: `${height}px`, width: logoWidth, margin: '0 auto' }}>
-            <NavLink to={localizePath('/', locale)}>
+          <div className="Header__logo"
+               style={{ position: 'relative', height: `${height}px`, width: logoWidth, margin: '0 auto' }}>
+
+              <NavLink to={localizePath('/', locale)}>
               <CompanyLogo/>
             </NavLink>
           </div>
         </Ripple>
+
       </div>
       <div className="Header__toggleIconBox"/>
     </div>

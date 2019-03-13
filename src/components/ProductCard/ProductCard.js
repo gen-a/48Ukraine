@@ -5,9 +5,9 @@
  */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { IMG_PRODUCTS_DIR } from '../../config/app';
-import Price from './Price';
-import Button from './Button';
+import PriceSticker from '../PriceSticker';
+import AddToCartButton from '../Containers/AddToCartButton';
+import Image from '../UI/Image';
 
 
 import markSale from './mark-sale.svg';
@@ -19,10 +19,12 @@ import './ProductCard.scss';
  */
 const propTypes = {
   inCart: PropTypes.number.isRequired,
-  addToCart: PropTypes.func.isRequired,
-  priceRetail: PropTypes.number.isRequired,
-  priceSale: PropTypes.number,
+  price: PropTypes.shape({
+    retail: PropTypes.number,
+    sale: PropTypes.number,
+  }).isRequired,
   name: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
   image: PropTypes.string.isRequired,
   attributesInfo: PropTypes.string
 };
@@ -33,18 +35,20 @@ const defaultProps = {
 /**
  * General component description in JSDoc format. Markdown is *supported*.
  */
-const ProductCard = ({ inCart, addToCart, priceRetail, priceSale, name, image, attributesInfo }) => {
+const ProductCard = ({ id, inCart, price, name, image, attributesInfo }) => {
 
   return (
     <div className={inCart ? 'ProductCard ProductCard_isInCart' : 'ProductCard'}>
 
       <div className="ProductCard__imageBlock">
-        <img className="ProductCard__image" src={image} alt={name}/>
 
-        <div className="ProductCard__price">
-          <Price retail={priceRetail} sale={priceSale}/>
+        <div className="ProductCard__image">
+          <Image src={image} alt={name}/>
         </div>
-        {priceSale
+        <div className="ProductCard__price">
+          <PriceSticker retail={price.retail} sale={price.sale}/>
+        </div>
+        {price.sale
         &&
         <img src={markSale} className="ProductCard__markSale" alt="sale"/>
         }
@@ -59,12 +63,18 @@ const ProductCard = ({ inCart, addToCart, priceRetail, priceSale, name, image, a
         <p className="ProductCard__info">{attributesInfo} </p>
 
         <div className="ProductCard__button">
-          <Button
+
+          <AddToCartButton
+            product={{
+              id,
+              price: price.sale > 0 ? price.sale : price.retail,
+              name,
+              thumbnail: image
+            }}
             label="Додати до кошика"
-            numberInCart={inCart}
             numberInCartLabel="вже в кошику"
-            onClick={() => addToCart()}
           />
+
         </div>
 
       </div>

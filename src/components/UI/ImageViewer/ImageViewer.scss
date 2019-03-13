@@ -67,13 +67,9 @@
     transition: all 0.4s;
     position: relative;
 
-    & img {
-      @include img-position();
-    }
     &_current {
       opacity: 0.3;
       cursor: default;
     }
   }
-
 }

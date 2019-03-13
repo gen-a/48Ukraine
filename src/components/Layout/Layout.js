@@ -19,6 +19,7 @@ import Header from './Header';
 import './Layout.scss';
 import DepartmentsCarousel from '../Containers/DepartmentsCarousel';
 import ShoppingCart from '../Containers/ShoppingCart/ShoppingCart';
+import { localizePath } from "../../localization/index";
 
 /**
  * PropTypes of the component
@@ -54,12 +55,14 @@ const Layout = ({ render, ...otherProps }) => {
       <div className="Layout__content">
         <Header height={48} />
         <DepartmentsCarousel height={80} />
-        { render(otherProps) }
+        <div className="Layout__contentBox">
+          { render(otherProps) }
+        </div>
       </div>
       <div className="Layout__footer">
         footer
       </div>
-      <ShoppingCart />
+      <ShoppingCart link={localizePath('/cart', otherProps.locale)}/>
     </div>
   );
 };

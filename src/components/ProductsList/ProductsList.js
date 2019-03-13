@@ -7,7 +7,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ProductCard from '../ProductCard';
 import Pagination from '../UI/Pagination';
-import { IMG_PRODUCTS_DIR } from '../../config/app';
 
 import './ProductsList.scss';
 
@@ -16,8 +15,6 @@ import './ProductsList.scss';
  * @type {object}
  */
 const propTypes = {
-  /** Function for add to cart. */
-  addToCart: PropTypes.func,
   /** Current page number. */
   currentPage: PropTypes.number,
   /** Total number of pages. */
@@ -53,13 +50,12 @@ const defaultProps = {
   paginationUrl: '',
   products: [],
   inCartQuantities: {},
-  addToCart: console.log,
 };
 
 /**
  * General component description in JSDoc format. Markdown is *supported*.
  */
-const ProductsList = ({ pagesTotal, paginationUrl, products, currentPage, inCartQuantities, addToCart }) => {
+const ProductsList = ({ pagesTotal, paginationUrl, products, currentPage, inCartQuantities }) => {
   return (
     <>
     <Pagination
@@ -75,17 +71,10 @@ const ProductsList = ({ pagesTotal, paginationUrl, products, currentPage, inCart
           key={product.id}
           id={product.id}
           name={product.name}
-          priceRetail={product.price.retail}
-          priceSale={product.price.sale}
+          price={product.price}
           inCart={inCartQuantities[product.id] || 0}
-          image={`${IMG_PRODUCTS_DIR}/${product.image.sm}`}
+          image={product.image.sm}
           attributesInfo={product.attributesInfo}
-          addToCart={() => addToCart({
-            id: product.id,
-            price: product.price.sale || product.price.retail,
-            name: product.name,
-            thumbnail: `${IMG_PRODUCTS_DIR}/${product.image.sm}`,
-          })}
         />
       ))}
     </div>

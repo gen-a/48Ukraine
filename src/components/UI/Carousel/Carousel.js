@@ -6,12 +6,11 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ElementResize from '../Detect/ElementResize';
 
-import CarouselIconChevronLeft from './CarouselIconChevronLeft';
 import CarouselButton from './CarouselButton';
 
 import styles from './Carousel.scss';
-import MouseMotion from '../Detect/MouseMotion/MouseMotion';
-import TouchMotion from '../Detect/TouchMotion/TouchMotion';
+import MouseMotion from '../Detect/MouseMotion';
+import TouchMotion from '../Detect/TouchMotion';
 
 /**
  * PropTypes of the component
@@ -300,16 +299,6 @@ class Carousel extends Component {
       width: `${frame.width}px`,
       left: `${frame.left}px`
     };
-    const css = this.cssClassName;
-    const leftButtonStyle = css(
-      css('Carousel__button')(true, 'Carousel__button_left')
-    )(container.translateX === scroll.max, 'Carousel__button_disabled');
-
-    const rightButtonStyle = css(
-      css('Carousel__button')(true, 'Carousel__button_right')
-    )(container.translateX === scroll.min, 'Carousel__button_disabled');
-
-
     return (
       <div
         className="Carousel"

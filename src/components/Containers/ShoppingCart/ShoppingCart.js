@@ -3,7 +3,6 @@
  * Placeholder fot the description
  * @module ShoppingCart
  */
-import React from 'react';
 import { connect } from 'react-redux';
 import ShoppingCart from '../../ShoppingCart';
 

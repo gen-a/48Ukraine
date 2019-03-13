@@ -33,6 +33,11 @@ h1{
     right:0;
     bottom:0;
     overflow: auto;
+    padding-bottom:48px;
+    &Box{
+      padding:0 1rem;
+      position:relative;
+    }
   }
   &__content_blur {
     filter: blur(1px);

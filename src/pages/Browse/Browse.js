@@ -6,7 +6,6 @@ import { URL_FETCH_PRODUCTS } from '../../config/api';
 import { get } from '../../services/ajax';
 import ProductsList from '../../components/ProductsList';
 import { replaceInRoute } from '../../utils/helpers';
-import { addProductToCart } from '../../actions/cart';
 
 /**
  * PropTypes of the component
@@ -32,6 +31,17 @@ const propTypes = {
   }).isRequired,
   /** Current locale */
   locale: PropTypes.string.isRequired,
+  /** Array of departments. */
+  departments: PropTypes.arrayOf(PropTypes.shape({
+    /** Icon of the department. */
+    icon: PropTypes.string,
+    /** Department name. */
+    name: PropTypes.string,
+    /** Name in url (slug). */
+    nameInUrl: PropTypes.string,
+  })).isRequired,
+  /** Object in cart quantities. */
+  inCartQuantities: PropTypes.shape({}).isRequired,
 };
 /**
  * Default props of the component
@@ -89,7 +99,7 @@ class Browse extends Component {
 
   render() {
     const { products, pagesTotal, page } = this.state;
-    const { departments, match: { params, params: { department: currentDepartment } },  callAddProductToCart, inCartQuantities } = this.props;
+    const { departments, match: { params, params: { department: currentDepartment } }, inCartQuantities } = this.props;
     if (products.length === 0 || departments.length === 0) {
       return (<div/>);
     }
@@ -109,7 +119,6 @@ class Browse extends Component {
         currentPage={page}
         pagesTotal={pagesTotal}
         paginationUrl={replaceInRoute('/browse/:department/page/:page', { ...params, page: ':page' })}
-        addToCart={callAddProductToCart}
         inCartQuantities={inCartQuantities}
       />
       </>
@@ -128,9 +137,4 @@ const mapStateToProps = state => (
   }
 );
 
-const mapDispatchToProps = dispatch => (
-  {
-    callAddProductToCart: product => dispatch(addProductToCart(product)),
-  }
-);
-export default connect(mapStateToProps, mapDispatchToProps)(Browse);
+export default connect(mapStateToProps, null)(Browse);

@@ -4,7 +4,6 @@
  * Connect as RenderProps
  * @module Interface
  */
-import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { addFlashMessage, showLoader, hideLoader, showToast } from '../../../actions/app';
