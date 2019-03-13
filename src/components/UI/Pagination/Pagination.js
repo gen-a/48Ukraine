@@ -5,6 +5,7 @@
  */
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { uid } from 'react-uid';
 import ChevronLeft from '../../Svg/ChevronLeft';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
@@ -66,7 +67,10 @@ const styles = theme => ({
 const Pagination = ({ classes, limit, total, current, history, url }) => {
 
   const length = Math.min(total, limit);
-  const [offset, setOffset] = useState(Math.max(1, current - Math.floor(length / 2)));
+  const getOffset = c => Math.min(total - length + 1, Math.max(1, c - Math.floor(length / 2)));
+
+
+  const [offset, setOffset] = useState(getOffset(current));
   const redirectTo = (page) => {
     history.push(url.replace(/:page/, page));
   };
@@ -84,7 +88,7 @@ const Pagination = ({ classes, limit, total, current, history, url }) => {
       {
         [...new Array(length)].map((n, index) => {
           return (
-            <MuiTheme key={index + offset}>
+            <MuiTheme key={uid(index + offset)}>
               {index + offset === current
                 ? (
                   <Button

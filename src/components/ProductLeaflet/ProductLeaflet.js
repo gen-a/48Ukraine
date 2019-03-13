@@ -9,6 +9,7 @@ import PropTypes from 'prop-types';
 import './ProductLeaflet.scss';
 
 import ImageViewer from "../UI/ImageViewer";
+import Price from "../Formatters/Price/Price";
 
 /**
  * PropTypes of the component
@@ -42,6 +43,11 @@ const ProductLeaflet = ({ name, info, description, images, specifications, media
           images={images}
           orientation={mediaPrefix == 'sm' ? 'portrait' : 'landscape'}
         />
+      </div>
+
+      <div className="ProductLeaflet__buyNow">
+
+        <Price />
       </div>
 
       <p>{description}</p>
