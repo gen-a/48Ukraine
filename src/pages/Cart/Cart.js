@@ -4,10 +4,10 @@ import { connect } from 'react-redux';
 import Counter from '../../components/UI/Counter';
 import { updateProductInCart } from '../../actions/cart';
 import PriceSticker from '../../components/PriceSticker';
+import Image from '../../components/UI/Image';
+import IconClose from '../../components/Svg/IconClose';
 
 import './Cart.scss';
-import Image from "../../components/UI/Image/Image";
-
 
 
 /**
@@ -44,31 +44,38 @@ const propTypes = {
       quantity: PropTypes.number,
     })
   ),
+  /** Number of products in the cart. */
+  count: PropTypes.number,
+  /** Total price of the cart. */
+  total: PropTypes.number,
+  /** Handler to change number of product in the cart. */
+  callUpdateProductInCart: PropTypes.func.isRequired,
 };
 /**
  * Default props of the component
  * @type {object}
  */
 const defaultProps = {
-  products: []
+  products: [],
+  count: 0,
+  total: 0,
 };
 
-const Cart = ({products, callUpdateProductInCart})=>{
-  if(products.length === 0){
+const Cart = ({ products, callUpdateProductInCart, count, total }) => {
+  if (products.length === 0) {
     return (<div>
       <h1>Your cart is empty</h1>
+
     </div>);
   }
-
 
 
   return (
     <>
     <h1>Shopping cart</h1>
 
-  {products.map( p => (
+    {products.map(p => (
       <div key={p.id} className="Cart__item">
-
         <div className="Cart__itemImage">
           <div className="Cart__itemThumbnail">
             <Image src={p.thumbnail} alt={p.name}/>
@@ -77,31 +84,40 @@ const Cart = ({products, callUpdateProductInCart})=>{
         <div className="Cart__itemName">
           <p>{p.name}</p>
           <div className="Cart__itemPrice">
-              <PriceSticker retail={p.price} currency="$" fontSize="1.25rem"/>
+            <PriceSticker retail={p.price} currency="$" fontSize="1.25rem"/>
           </div>
         </div>
         <div className="Cart__itemQuantity">
-          <Counter min={1} max={10} value={p.quantity} onChange={(value)=>callUpdateProductInCart(p.id, value)}/>
+          <Counter min={1} max={10} value={p.quantity} onChange={(value) => callUpdateProductInCart(p.id, value)}/>
         </div>
         <div className="Cart__itemTotal">
           <PriceSticker retail={p.quantity * p.price} currency="$" fontSize="1.25rem"/>
         </div>
-
-
+        <div className="Cart__remove">
+          <button
+            className="Cart__removeButton"
+            onClick = {() => callUpdateProductInCart(p.id, 0)}
+          >
+            <IconClose width="24px" height="24px"/>
+          </button>
+        </div>
 
       </div>
-
-
-
     ))}
+    <div className="Cart__summary">
+      <div className="Cart__count">{count}</div>
+      <div className="Cart__total">
+        <PriceSticker retail={total} currency="$" fontSize="1.25rem"/>
+      </div>
+    </div>
+
+
 
     </>
 
 
 
   );
-
-
 
 
 };

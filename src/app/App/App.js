@@ -33,7 +33,7 @@ const propTypes = {
  * Standard route render handler
  * @param C
  */
-const renderRoute = C => routeProps => (
+export const renderRoute = C => routeProps => (
   <Layout
     {...routeProps}
     render={layoutProps => (
@@ -56,8 +56,9 @@ const App = ({ locale }) => (
 
 
 
-
     <Route exact path={localizePath('/login', locale)} component={Login}/>
+
+
     <PrivateRoute path={localizePath('/user', locale)} component={User}/>
   </Switch>
 );

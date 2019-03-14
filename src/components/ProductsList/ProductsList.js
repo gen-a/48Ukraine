@@ -7,6 +7,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ProductCard from '../ProductCard';
 import Pagination from '../UI/Pagination';
+import { replaceInRoute } from '../../utils/helpers';
 
 import './ProductsList.scss';
 
@@ -19,8 +20,10 @@ const propTypes = {
   currentPage: PropTypes.number,
   /** Total number of pages. */
   pagesTotal: PropTypes.number,
-  /** URL template for url links generation. */
+  /** URL template for url pagination links generation. */
   paginationUrl: PropTypes.string,
+  /** URL template for url product links generation. */
+  productUrl: PropTypes.string,
   /** Products list data. */
   products: PropTypes.arrayOf(
     PropTypes.shape({
@@ -48,6 +51,7 @@ const defaultProps = {
   pagesTotal: 0,
   currentPage: 0,
   paginationUrl: '',
+  productUrl: '',
   products: [],
   inCartQuantities: {},
 };
@@ -55,7 +59,7 @@ const defaultProps = {
 /**
  * General component description in JSDoc format. Markdown is *supported*.
  */
-const ProductsList = ({ pagesTotal, paginationUrl, products, currentPage, inCartQuantities }) => {
+const ProductsList = ({ productUrl, pagesTotal, paginationUrl, products, currentPage, inCartQuantities }) => {
   return (
     <>
     <Pagination
@@ -68,6 +72,7 @@ const ProductsList = ({ pagesTotal, paginationUrl, products, currentPage, inCart
     <div className="ProductsList">
       {products.map(product => (
         <ProductCard
+          url={replaceInRoute(productUrl, { id: product.id })}
           key={product.id}
           id={product.id}
           name={product.name}

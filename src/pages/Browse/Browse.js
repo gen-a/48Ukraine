@@ -6,7 +6,7 @@ import { URL_FETCH_PRODUCTS } from '../../config/api';
 import { get } from '../../services/ajax';
 import ProductsList from '../../components/ProductsList';
 import { replaceInRoute } from '../../utils/helpers';
-
+import { localizePath } from '../../localization/index';
 /**
  * PropTypes of the component
  * @type {object}
@@ -99,7 +99,7 @@ class Browse extends Component {
 
   render() {
     const { products, pagesTotal, page } = this.state;
-    const { departments, match: { params, params: { department: currentDepartment } }, inCartQuantities } = this.props;
+    const { locale, departments, match: { params, params: { department: currentDepartment } }, inCartQuantities } = this.props;
     if (products.length === 0 || departments.length === 0) {
       return (<div/>);
     }
@@ -118,7 +118,8 @@ class Browse extends Component {
         products={products}
         currentPage={page}
         pagesTotal={pagesTotal}
-        paginationUrl={replaceInRoute('/browse/:department/page/:page', { ...params, page: ':page' })}
+        paginationUrl={localizePath(replaceInRoute('/browse/:department/page/:page', { ...params, page: ':page' }), locale)}
+        productUrl={localizePath('/product/:id', locale)}
         inCartQuantities={inCartQuantities}
       />
       </>

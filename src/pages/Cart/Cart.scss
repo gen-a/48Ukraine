@@ -1,11 +1,18 @@
 .Cart {
 
-  &__item {
+  &__item{
     max-width: 700px;
     width: 100%;
-    margin: 0 auto;
+    margin: 5px auto;
     display: flex;
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  }
+  &__summary{
+    max-width: 700px;
+    width: 100%;
+    margin: 5px auto;
+    display: flex;
+    justify-content: flex-end;
   }
   &__itemThumbnail {
     margin:10px 0;
@@ -51,5 +58,38 @@ position:absolute;
     width: 80px;
     text-align: right;
   }
+  &__remove{
+    flex: 0 0 32px;
+    padding-top:2px;
+  }
+  &__removeButton{
+    width:32px;
+    height:32px;
+    box-sizing: border-box;
+    padding:4px;
+    outline:none;
+    border:none;
+    background:transparent;
+    cursor:pointer;
+    transition: opacity .4s;
+    opacity: .3;
+  }
+  &__removeButton:hover{
+    opacity: 1;
+  }
+  &__count{
+    flex: 0 0 150px;
+    font-family: 'Roboto Condensed', Arial, Helvetica, sans-serif;
+    font-size: 1.25rem;
+    line-height: 1.25em;
+    text-align: center;
+  }
 
+  &__total{
+    flex: 0 0 80px;
+    padding: 0;
+    width: 80px;
+    text-align: right;
+    margin-right:32px;
+  }
 }

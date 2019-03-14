@@ -15,6 +15,7 @@ import {
   FETCH_INITIAL_STATE_FULFILLED,
   FETCH_INITIAL_STATE_REJECTED,
   FETCH_INITIAL_STATE_PENDING,
+  SET_AUTHENTICATED_USER,
 } from '../actions/app';
 
 const initialState = {

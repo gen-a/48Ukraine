@@ -1,15 +1,10 @@
 @import '../../../colors';
+@import '../../../styles';
 
 $node-height: 42px;
 $toggle-size: 38px;
 $toggle-margin: 2px;
 $node-border-height: 1px;
-
-$color-primary-2b: #083364 !default;
-$color-secondary-b: #ca7609 !default;
-$color-neutral-2h: #d7d7d6 !default;
-$color-neutral-3h: #eaeaea !default;
-$color-neutral-b: #656463 !default;
 
 :export {
   nodeHeight: $node-height;
@@ -25,16 +20,14 @@ $color-neutral-b: #656463 !default;
   &__node {
     display: block;
     position: relative;
-    &:last-child {
-
-    }
+    &:last-child {}
     /* -------------- */
     /* node with modifiers */
     /*-------------- */
     &_isSelected,
     &_isSelected:hover {
-      & .Tree__label {
-        border-left: 2px solid $color-neutral-b;
+      & .Tree__label{
+        @include navigator-entry-label-hover()
       }
       & .Tree__node .Tree__label {
         border-left: 2px solid $color-neutral-2h;
@@ -42,7 +35,7 @@ $color-neutral-b: #656463 !default;
     }
     &_isSelected{
       & .Tree .Tree__node:hover .Tree__label {
-        border-left: 2px solid $color-secondary-b;
+        @include navigator-entry-label-current();
       }
     }
     &_isExpanded .Tree__toggleIcon {
@@ -50,34 +43,9 @@ $color-neutral-b: #656463 !default;
     }
   }
   &__label {
-    position: relative;
-    display: block;
-    border: 0;
-    outline: none;
-    background: none;
-    padding: 0 $node-height 0 10px;
-    width: 100%;
-    box-sizing: border-box;
-    text-align: left;
-    height: $node-height;
-    font-size: 1rem;
-    line-height: $node-height;
-    cursor: pointer;
-    transition: border-left-color 0.5s;
-    font-weight: 700;
-
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    border-left: 2px solid $color-neutral-2h;
-    & a {
-      color: $color-primary-2b;
-    }
+    @include navigator-entry-label();
     &:hover {
-      border-left: 2px solid $color-secondary-b;
-      & a {
-        color: black;
-      }
+      @include navigator-entry-label-hover();
     }
   }
 

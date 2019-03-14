@@ -5,7 +5,8 @@ import {
   UPDATE_PROFILE_PENDING,
   UPDATE_PROFILE_FULFILLED,
   UPDATE_PROFILE_REJECTED,
-  SET_IS_AUTHENTICATED
+  SET_IS_AUTHENTICATED,
+  SET_AUTHENTICATED_DATA,
 } from '../actions/user';
 
 const initialState = {
@@ -17,6 +18,12 @@ const initialState = {
 
 function user(state = initialState, action) {
   switch (action.type) {
+    case SET_AUTHENTICATED_DATA:
+      return {
+        ...state,
+        profile: action.payload,
+        isAuthenticated: true,
+      };
     case SET_IS_AUTHENTICATED:
       return {
         ...state,

@@ -9,6 +9,18 @@ export const UPDATE_PROFILE_FULFILLED = 'UPDATE_PROFILE_FULFILLED';
 export const UPDATE_PROFILE_REJECTED = 'UPDATE_PROFILE_REJECTED';
 export const SET_IS_AUTHENTICATED = 'SET_IS_AUTHENTICATED';
 
+export const SET_AUTHENTICATED_DATA = 'SET_AUTHENTICATED_DATA';
+
+/**
+ * Remove open screen from list
+ * @returns {function(*)}
+ */
+export function setAuthenticatedUser(data) {
+  return (dispatch) => {
+    dispatch({ type: SET_AUTHENTICATED_DATA, payload: data });
+  };
+}
+
 const urlFetchProfile = 'https://next.json-generator.com/api/json/get/NkO3JQZQ8';
 const urlUpdProfile = 'https://next.json-generator.com/api/json/get/NkO3JQZQ8';
 const urlAddCustomer = '/customers';

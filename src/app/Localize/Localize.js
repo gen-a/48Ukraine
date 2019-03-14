@@ -20,8 +20,8 @@ const propTypes = {
 const Localize = ({ render, callSetLocale, ...otherProps }) => {
 
   const r = (locale) => {
-    callSetLocale(locale);
-    return render({locale, ...otherProps});
+    setTimeout(() => callSetLocale(locale), 0);
+    return render({ locale, ...otherProps });
   };
 
   return (

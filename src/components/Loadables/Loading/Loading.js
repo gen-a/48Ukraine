@@ -51,17 +51,22 @@ const Loading = ({
                    onShowLoader, onHideLoader, onShowMessage,
                    retry, error, pastDelay, timedOut
                  }) => {
+setTimeout( () => {
+
   if (error) {
     onHideLoader();
-    onShowMessage( new Date().getTime(), messageErrorLoading, titleError, 'error');
+    onShowMessage(new Date().getTime(), messageErrorLoading, titleError, 'error');
   } else if (timedOut) {
     onHideLoader();
-    onShowMessage( new Date().getTime(), messageErrorTimeout, titleError, 'error');
+    onShowMessage(new Date().getTime(), messageErrorTimeout, titleError, 'error');
   } else if (pastDelay) {
     onShowLoader();
   } else {
     onHideLoader();
   }
+
+}, 0);
+
   return null;
   /*
   if (error) {

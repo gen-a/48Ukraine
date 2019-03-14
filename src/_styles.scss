@@ -1,0 +1,42 @@
+@import 'colors';
+
+$node-height: 42px;
+
+@mixin navigator-entry-label(){
+  position: relative;
+  display: block;
+  border: 0;
+  outline: none;
+  background: none;
+  padding: 0 $node-height 0 10px;
+  width: 100%;
+  box-sizing: border-box;
+  text-align: left;
+  height: $node-height;
+  font-size: 1rem;
+  line-height: $node-height;
+  cursor: pointer;
+  transition: border-left-color 0.5s;
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  border-left: 2px solid $color-neutral-2h;
+  & a {
+    display:block;
+    color: $color-primary-2b;
+    text-decoration: none;
+  }
+
+}
+@mixin navigator-entry-label-hover(){
+  border-left: 2px solid $color-neutral-b;
+  & a {
+    display:block;
+    color: black;
+  }
+}
+@mixin navigator-entry-label-current(){
+  border-left: 2px solid $color-secondary-b;
+  color: $color-secondary-2b;
+}

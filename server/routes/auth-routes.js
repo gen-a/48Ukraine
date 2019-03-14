@@ -85,7 +85,7 @@ router.post('/login', (req, res, next) => {
         // Cookie expires at end of session
         req.session.cookie.expires = false;
       }
-      res.status(200).json(response({}, 'auth.info.you_have_been_logged_in', 0));
+      res.status(200).json(response(req.user, 'auth.info.you_have_been_logged_in', 0));
       return next();
     });
     return null;

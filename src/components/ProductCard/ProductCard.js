@@ -12,6 +12,7 @@ import Image from '../UI/Image';
 
 import markSale from './mark-sale.svg';
 import './ProductCard.scss';
+import NavLink from "react-router-dom/es/NavLink";
 
 /**
  * PropTypes of the component
@@ -26,24 +27,29 @@ const propTypes = {
   name: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
   image: PropTypes.string.isRequired,
-  attributesInfo: PropTypes.string
+  attributesInfo: PropTypes.string,
+  url: PropTypes.string,
 };
 const defaultProps = {
   priceSale: 0,
-  attributesInfo: ''
+  attributesInfo: '',
+  url: '',
 };
 /**
  * General component description in JSDoc format. Markdown is *supported*.
  */
-const ProductCard = ({ id, inCart, price, name, image, attributesInfo }) => {
+const ProductCard = ({ url, id, inCart, price, name, image, attributesInfo }) => {
 
   return (
+
     <div className={inCart ? 'ProductCard ProductCard_isInCart' : 'ProductCard'}>
 
       <div className="ProductCard__imageBlock">
 
         <div className="ProductCard__image">
+          <NavLink to={url}>
           <Image src={image} alt={name}/>
+          </NavLink>
         </div>
         <div className="ProductCard__price">
           <PriceSticker retail={price.retail} sale={price.sale}/>
@@ -57,7 +63,9 @@ const ProductCard = ({ id, inCart, price, name, image, attributesInfo }) => {
       <div className="ProductCard__infoBlock">
 
         <h3 className="ProductCard__name">
-          {name}
+          <NavLink to={url}>
+            {name}
+          </NavLink>
         </h3>
 
         <p className="ProductCard__info">{attributesInfo} </p>
@@ -78,7 +86,9 @@ const ProductCard = ({ id, inCart, price, name, image, attributesInfo }) => {
         </div>
 
       </div>
+
     </div>
+
   );
 };
 

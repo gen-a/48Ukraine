@@ -1,0 +1,29 @@
+@import '../../../colors';
+@import '../../../styles';
+
+.UserNavigator{
+  &__entries{
+    list-style: none;
+    margin:0;
+    padding: 0;
+  }
+
+  &__email{
+    margin:0 0 1rem 0;
+    font-weight: 700;
+  }
+
+  &__node{
+
+  }
+
+  &__label{
+    @include navigator-entry-label();
+    &:hover{
+      @include navigator-entry-label-hover();
+    }
+    &_isSelected{
+      @include navigator-entry-label-current();
+    }
+  }
+}
