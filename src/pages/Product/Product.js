@@ -5,8 +5,6 @@ import update from 'react-addons-update';
 import { URL_FETCH_PRODUCT } from '../../config/api';
 import { get } from '../../services/ajax';
 import ProductLeaflet from '../../components/ProductLeaflet';
-import { replaceInRoute } from '../../utils/helpers';
-import { addProductToCart } from '../../actions/cart';
 
 /**
  * PropTypes of the component
@@ -34,17 +32,13 @@ const propTypes = {
   locale: PropTypes.string.isRequired,
   /** Media query prefix. */
   mediaPrefix: PropTypes.string.isRequired,
-  /** Call add product to cart. */
-  callAddProductToCart: PropTypes.func.isRequired,
-  /** Object in cart quantities. */
-  inCartQuantities: PropTypes.shape({}),
 };
 /**
  * Default props of the component
  * @type {object}
  */
 const defaultProps = {
-  inCartQuantities: {}
+
 };
 
 
@@ -77,7 +71,7 @@ class Product extends Component {
 
   render() {
     const { product } = this.state;
-    const { callAddProductToCart, inCartQuantities, mediaPrefix } = this.props;
+    const { mediaPrefix } = this.props;
 
     if (Object.keys(product).length === 0) {
       return null;
@@ -102,9 +96,4 @@ const mapStateToProps = state => (
   }
 );
 
-const mapDispatchToProps = dispatch => (
-  {
-    //callAddProductToCart: product => dispatch(addProductToCart(product)),
-  }
-);
-export default connect(mapStateToProps, mapDispatchToProps)(Product);
+export default connect(mapStateToProps, null)(Product);
