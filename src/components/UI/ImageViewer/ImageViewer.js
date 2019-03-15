@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
 import AspectRatioBox from '../AspectRatioBox/AspectRatioBox';
 import { uid } from 'react-uid';
 import TouchSwipe from '../Detect/TouchSwipe';
-import Image from '../Image';
+import Image from '../FlexibleImage/FlexibleImage';
 import Ripple from '../Ripple';
 
 import './ImageViewer.scss';

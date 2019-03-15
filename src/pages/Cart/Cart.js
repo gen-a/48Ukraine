@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import Counter from '../../components/UI/Counter';
 import { updateProductInCart } from '../../actions/cart';
 import PriceSticker from '../../components/PriceSticker';
-import Image from '../../components/UI/Image';
+import Image from '../../components/UI/FlexibleImage/FlexibleImage';
 import IconClose from '../../components/Svg/IconClose';
 
 import './Cart.scss';

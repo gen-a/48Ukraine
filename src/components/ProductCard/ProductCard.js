@@ -7,7 +7,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import PriceSticker from '../PriceSticker';
 import AddToCartButton from '../Containers/AddToCartButton';
-import Image from '../UI/Image';
+import Image from '../UI/FlexibleImage/FlexibleImage';
 
 
 import markSale from './mark-sale.svg';

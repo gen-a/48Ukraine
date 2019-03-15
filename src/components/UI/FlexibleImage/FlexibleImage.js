@@ -1,5 +1,5 @@
 /**
- * Image Component.
+ * FlexibleImage Component.
  * Placeholder fot the description
  * @module Image
  */
@@ -28,7 +28,7 @@ const defaultProps = {
 /**
  * General component description in JSDoc format. Markdown is *supported*.
  */
-const Image = ({ src, alt }) => {
+const FlexibleImage = ({ src, alt }) => {
   const style = {
     position: 'absolute',
     maxWidth: '100%',
@@ -46,7 +46,7 @@ const Image = ({ src, alt }) => {
   );
 };
 
-Image.propTypes = propTypes;
-Image.defaultProps = defaultProps;
+FlexibleImage.propTypes = propTypes;
+FlexibleImage.defaultProps = defaultProps;
 
-export default Image;
+export default FlexibleImage;

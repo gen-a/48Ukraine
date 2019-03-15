@@ -4,12 +4,12 @@
  * @module Image.spec
  */
 import React from 'react';
-import Image from './Image';
+import Image from './FlexibleImage';
 
-describe('Test for Image component', () => {
+describe('Test for FlexibleImage component', () => {
   const props = {};
 
-  it ('Image from render', () => {
+  it ('FlexibleImage from render', () => {
     const wrapper = shallow(<Image {...props} />);
     expect(wrapper).toMatchSnapshot();
   });
