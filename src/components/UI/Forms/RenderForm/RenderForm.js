@@ -5,12 +5,14 @@
  */
 import React from 'react';
 import PropTypes from 'prop-types';
+import RenderButton from '../RenderButton';
+import './RenderForm.scss';
 
 /**
  * PropTypes of the component
  * @type {object}
  */
-const propTypes  = {
+const propTypes = {
   /** true if the form data is the same as its initialized values. Opposite of dirty */
   isPristine: PropTypes.bool.isRequired,
   /** Whether or not your form is currently submitting.  */
@@ -32,16 +34,32 @@ const defaultProps = {
   message: '',
 };
 
-const RenderForm = ({isPristine, isSubmitting, messageType, message, children, onSubmit, onReset}) =>{
+const RenderForm = ({ isPristine, isSubmitting, messageType, message, children, onSubmit, onReset }) => {
   return (
     <form onSubmit={onSubmit}>
       {message && <strong>{message}</strong>}
 
       {children}
 
-      <div>
-        <button type="submit" disabled={isPristine}>Submit</button>
-        <button type="button" disabled={isPristine || isSubmitting} onClick={onReset}>Clear Values</button>
+
+      <div className="RenderForm__buttons">
+        <div className="RenderForm__button">
+          <RenderButton
+            type="submit"
+            input={{ disabled: isPristine }}
+            label="Submit"
+          />
+        </div>
+        <div className="RenderForm__button">
+          <RenderButton
+            type="button"
+            input={{
+              disabled: isPristine || isSubmitting,
+              onClick: onReset
+            }}
+            label="Clear"
+          />
+        </div>
       </div>
     </form>
   );

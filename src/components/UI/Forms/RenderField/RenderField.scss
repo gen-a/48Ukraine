@@ -1,7 +1,7 @@
 @import '../../../../colors';
 
 @mixin input-underline{
-  height:3px;
+  height:2px;
   position:absolute;
   bottom:0;
 }
@@ -33,7 +33,7 @@ $color-error-hb: #ff3203!default;
     box-sizing: border-box;
     border:0;
     outline:none;
-    border-bottom:3px solid $color-neutral-h;
+    border-bottom:2px solid $color-neutral-h;
     background:transparent;
     z-index:2;
   }

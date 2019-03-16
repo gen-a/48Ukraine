@@ -1,0 +1,10 @@
+.RenderForm{
+  &__buttons{
+    display:flex;
+    justify-content: center;
+  }
+  &__button{
+    flex:0 0 ;
+    margin:0 0.5rem;
+  }
+}

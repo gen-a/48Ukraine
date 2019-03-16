@@ -4,7 +4,7 @@
     "class":"statefulComponent.js",
     "func":"functionalComponent.js",
     "cont":"containerComponent.js",
-    "form":"reduxFormComponent"
+    "form":"reduxFormComponent.js"
   },
   "default":"func",
   "conventions":{

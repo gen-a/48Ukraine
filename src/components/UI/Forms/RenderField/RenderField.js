@@ -110,7 +110,7 @@ class RenderField extends Component {
     if (focus) {
       className += ' RenderField_focus';
     }
-    if (error.length > 0) {
+    if (error && error.length > 0) {
       className += ' RenderField_withError';
     }
     if (busy > 0) {
