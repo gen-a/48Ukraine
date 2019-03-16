@@ -1,62 +1,43 @@
-/**
- * The component to detect outside click
- */
 import React, { Component, createRef } from 'react';
 import PropTypes from 'prop-types';
 
 const propTypes = {
   onClick: PropTypes.func.isRequired,
   children: PropTypes.node,
-  disabled: PropTypes.bool,
 };
 
 const defaultProps = {
   children: '',
-  disabled: false
 };
 
 class ClickOutside extends Component {
   constructor(props) {
     super(props);
     this.ref = createRef();
+    this.isBlocked = false;
   }
 
-  /**
-   * Control propagation
-   * @param e {Event} - original click event
-   */
-  stopPropagation(e) {
-    const { disabled } = this.props;
-    if (!disabled) {
-      e.stopPropagation();
-    }
-  }
-
-  /**
-   * Handle on click
-   * @param e {Event} - original click event
-   */
-  onClick(e) {
-    const { onClick, disabled } = this.props;
-    if (!disabled) {
-      onClick(e);
-    }
-  }
-
-  /**
-   * Add event listeners on mounting element
-   */
   componentDidMount() {
-    window.addEventListener('click', this.onClick.bind(this));
-    this.ref.current.addEventListener('click', this.stopPropagation.bind(this));
+    const {onClick} = this.props;
+    window.addEventListener('click', onClick);
+    this.ref.current.addEventListener( 'click', this.blockClick.bind(this));
   }
 
-  /**
-   * Remove event listeners on unmounting element
-   */
   componentWillUnmount() {
-    this.ref.current.removeEventListener('click', this.stopPropagation.bind(this));
-    window.removeEventListener('click', this.onClick.bind(this));
+    const {onClick} = this.props;
+    window.removeEventListener('click', onClick);
+    this.ref.current.removeEventListener( 'click', this.blockClick.bind(this));
+  }
+
+  onClick(){
+    const {onClick} = this.props;
+    if(!this.isBlocked){
+      onClick();
+    }
+    this.isBlocked = false;
+  }
+  blockClick(){
+    this.isBlocked = true;
   }
 
   render() {
@@ -66,7 +47,6 @@ class ClickOutside extends Component {
     );
   }
 }
-
 ClickOutside.propTypes = propTypes;
 ClickOutside.defaultProps = defaultProps;
 
