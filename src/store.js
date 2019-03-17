@@ -9,7 +9,7 @@ import { saveState, loadState } from './services/local-storage';
 const middleware = [promise, thunk, logger];
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-const persistedState = loadState();
+const persistedState = {}; //loadState();
 
 const store = createStore(
   rootReducer,

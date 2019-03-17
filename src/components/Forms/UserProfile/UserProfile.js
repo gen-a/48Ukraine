@@ -10,8 +10,9 @@ import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 import RenderField from '../../UI/Forms/RenderField';
 import RenderForm from '../../UI/Forms/RenderForm';
-import { updateProfile } from '../../../actions/user'
+import { updateProfile } from '../../../actions/user';
 
+import './UserProfile.scss';
 /**
  * Validate all form fields and return object with invalid entries error messages
  * @param values {object} - form values
@@ -105,10 +106,20 @@ const UserProfile = ({
       resetLabel="Reset form"
     >
 
-      <Field name="email" type="email" disabled component={RenderField} label="Email"/>
-      <Field name="firstName" type="text" component={RenderField} label="First Name"/>
-      <Field name="lastName" type="text" component={RenderField} label="Last Name"/>
-      <Field name="phone" type="text" component={RenderField} label="Phone"/>
+      <div className="UserProfile__fields">
+        <div className="UserProfile__field UserProfile__field_full">
+          <Field name="email" type="email" disabled component={RenderField} label="Email"/>
+        </div>
+        <div className="UserProfile__field UserProfile__field_half">
+          <Field name="firstName" type="text" component={RenderField} label="First Name"/>
+        </div>
+        <div className="UserProfile__field UserProfile__field_half">
+          <Field name="lastName" type="text" component={RenderField} label="Last Name"/>
+        </div>
+        <div className="UserProfile__field UserProfile__field_full">
+          <Field name="phone" type="text" component={RenderField} label="Phone"/>
+        </div>
+      </div>
 
     </RenderForm>
   );

@@ -22,15 +22,16 @@ $node-height: 42px;
   overflow: hidden;
   text-overflow: ellipsis;
   border-left: 2px solid $color-neutral-2h;
+  color: $color-primary-2b;
   & a {
     display:block;
     color: $color-primary-2b;
     text-decoration: none;
   }
-
 }
 @mixin navigator-entry-label-hover(){
   border-left: 2px solid $color-neutral-b;
+  color: black;
   & a {
     display:block;
     color: black;

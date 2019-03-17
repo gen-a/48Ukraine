@@ -6,6 +6,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import update from 'react-addons-update';
+import RestorePassword from '../RestorePassword';
 
 import {
   Divider,
@@ -395,6 +396,12 @@ class Authentication extends Component {
             </div>
           )}
         </form>
+
+        <RestorePassword email={email.value} />
+
+
+
+
       </div>
     );
   }

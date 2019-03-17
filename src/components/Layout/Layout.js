@@ -7,9 +7,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import Toast from '../UI/Toast/Toast';
-import FlashMessages from '../Containers/FlashMessages/FlashMessages';
-import Loader from '../UI/Loader/Loader';
+import Toast from '../UI/Toast';
+import FlashMessages from '../Containers/FlashMessages';
+import Loader from '../Containers/Loader';
 import StoreWindowSize from '../Containers/StoreWindowSize';
 
 import ToolBarLayer from './ToolBarLayer';

@@ -19,8 +19,6 @@ const propTypes = {
   input: PropTypes.shape({
     /** Required status of the input. */
     required: PropTypes.bool,
-    /** Disabled status of the input. */
-    disabled: PropTypes.bool,
     /** Readonly status of the input. */
     readOnly: PropTypes.bool,
     /** Value of the input */
@@ -41,6 +39,8 @@ const propTypes = {
   type: PropTypes.string,
   /** Show busy status bar. */
   busy: PropTypes.bool,
+  /** Disabled status of the input. */
+  disabled: PropTypes.bool,
 };
 
 const defaultProps = {
@@ -54,6 +54,7 @@ const defaultProps = {
     value: '',
     onChange: () => {},
   },
+  disabled:false,
   meta: {
     error: '',
     warning: '',
@@ -90,7 +91,7 @@ class RenderField extends Component {
 
   render() {
 
-    const { input, label, type, busy, meta: { error, warning } } = this.props;
+    const { disabled, input, label, type, busy, meta: { error, dirty } } = this.props;
     const { focus } = this.state;
 
     let className = 'RenderField';
@@ -104,13 +105,13 @@ class RenderField extends Component {
     if (input.required) {
       className += ' RenderField_required';
     }
-    if (input.disabled) {
+    if (disabled) {
       className += ' RenderField_disabled';
     }
     if (focus) {
       className += ' RenderField_focus';
     }
-    if (error && error.length > 0) {
+    if (dirty && error && error.length > 0) {
       className += ' RenderField_withError';
     }
     if (busy > 0) {
@@ -125,12 +126,11 @@ class RenderField extends Component {
         <label className="RenderField__label">{label}</label>
         <div>
           <div className="RenderField__input">
-            <input {...input} type={type} />
+            <input {...input} type={type} disabled={disabled}/>
             <div className="RenderField__underline" />
             { busy && <div className="RenderField__loader"><div className="RenderField__loaderIndicator" /></div> }
           </div>
-          {(error && <div className="RenderField__error">{error}</div>)
-            || (warning && <div className="RenderField__warning">{warning}</div>)}
+          {(dirty && error && <div className="RenderField__error">{error}</div>)}
         </div>
       </div>
     );

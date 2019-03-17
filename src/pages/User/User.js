@@ -7,6 +7,7 @@ import { localizePath } from '../../localization/index';
 import Logout from './Logout';
 import Profile from './Profile';
 import Orders from './Orders';
+import ResetPassword from './ResetPassword';
 
 import { renderRoute } from '../../app/App';
 
@@ -25,6 +26,7 @@ const User = ({ locale }) => {
     <Route exact path={localizePath('/user/logout', locale)} render={renderRoute(Logout)}/>
     <Route exact path={localizePath('/user/profile', locale)} component={renderRoute(Profile)}/>
     <Route exact path={localizePath('/user/orders', locale)} component={renderRoute(Orders)}/>
+    <Route exact path={localizePath('/user/reset-password', locale)} component={renderRoute(ResetPassword)}/>
   </Switch>
 )};
 

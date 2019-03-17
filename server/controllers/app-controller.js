@@ -10,8 +10,8 @@ const { arrayToTree } = require('../lib/data-tree');
  */
 exports.initialState = (req, res, next) => {
   const departments = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../dummy-data/departments.json'), 'utf8'));
-
   res.status(200).json(response({
+    user: req.user,
     departments: arrayToTree(departments)
   }, '', 0));
   return next();

@@ -15,7 +15,6 @@ import {
   FETCH_INITIAL_STATE_FULFILLED,
   FETCH_INITIAL_STATE_REJECTED,
   FETCH_INITIAL_STATE_PENDING,
-  SET_AUTHENTICATED_USER,
 } from '../actions/app';
 
 const initialState = {
@@ -40,7 +39,8 @@ const initialState = {
     expanded: []
   },
   openDrawer: '',
-  openScrims: []
+  openScrims: [],
+  isInitialized: false
 };
 
 function app(state = initialState, action) {
@@ -49,7 +49,8 @@ function app(state = initialState, action) {
       return {
         ...state,
         departments: action.payload.departments,
-        rootDepartments: action.payload.departments.filter(d => d.parent === '0')
+        rootDepartments: action.payload.departments.filter(d => d.parent === '0'),
+        isInitialized: true
       };
     case FETCH_INITIAL_STATE_REJECTED:
       return {

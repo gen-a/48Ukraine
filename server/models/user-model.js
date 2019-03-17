@@ -5,10 +5,10 @@ const Counter = require('./counter-model');
 
 const userSchema = mongoose.Schema({
   _id: mongoose.Types.ObjectId,
-  date_add: {
+  dateAdd: {
     type: Number
   },
-  date_update: {
+  dateUpdate: {
     type: Number
   },
   number: {
@@ -46,20 +46,23 @@ const userSchema = mongoose.Schema({
       message: 'Default error message'
     }
   },
-  first_name: {
+  firstName: {
     type: String,
     minlength: [2, 'First name has to be longer']
   },
-  last_name: {
+  lastName: {
     type: String,
     minlength: [2, 'Last name has to be longer']
+  },
+  phone: {
+    type: String,
   }
 });
 
 userSchema.options.toJSON = {
   transform: (doc, ret, options) => {
     ret.id = ret._id + '';
-    ret.date_add = new Date(new Date().setTime(ret.date_add)).toUTCString();
+    ret.dateAdd = new Date(new Date().setTime(ret.dateAdd)).toUTCString();
     delete ret.password;
     delete ret._id;
     delete ret.__v;
@@ -77,14 +80,14 @@ function hashPassword(next) {
 
 function addDateUpdate(next) {
   const user = this;
-  user.date_update = new Date().getTime();
+  user.dateUpdate = new Date().getTime();
   next();
 }
 
 function addDateAdd(next) {
   const user = this;
-  if (!user.date_add) {
-    user.date_add = new Date().getTime();
+  if (!user.dateAdd) {
+    user.dateAdd = new Date().getTime();
   }
   next();
 }

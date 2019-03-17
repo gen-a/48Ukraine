@@ -1,7 +1,11 @@
 import uuid from 'uuid/v4';
 import axios from 'axios';
+
 import { importDictionaryArticles } from './dictionary';
 import { URL_FETCH_INITIAL_STATE } from '../config/api';
+import { SET_AUTHENTICATED_DATA } from './user';
+
+axios.defaults.withCredentials = true;
 
 export const SHOW_TOAST = 'SHOW_TOAST';
 export const HIDE_TOAST = 'HIDE_TOAST';
@@ -35,8 +39,12 @@ export function fetchInitialSate(data) {
       { type: FETCH_INITIAL_STATE_PENDING, payload: {} }
     );
     axios.get(URL_FETCH_INITIAL_STATE, data)
+      .then(result => result.data)
       .then((result) => {
-        dispatch({ type: FETCH_INITIAL_STATE_FULFILLED, payload: result.data.data });
+        if (result.data.user) {
+          dispatch({ type: SET_AUTHENTICATED_DATA, payload: result.data.user });
+        }
+        dispatch({ type: FETCH_INITIAL_STATE_FULFILLED, payload: result.data });
       })
       .catch(err => dispatch({ type: FETCH_INITIAL_STATE_REJECTED, payload: err }));
   };
@@ -171,7 +179,6 @@ export function setLocale(locale) {
   return (dispatch, getState) => {
     if (getState().app.locale !== locale) {
       dispatch({ type: SET_LOCALE, payload: locale });
-      fetchInitialSate({ locale })(dispatch);
       importDictionaryArticles(locale)(dispatch);
     }
   };

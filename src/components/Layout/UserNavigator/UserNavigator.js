@@ -16,6 +16,8 @@ import NavLink from "react-router-dom/es/NavLink";
 const propTypes = {
   /** User email. */
   email: PropTypes.string.isRequired,
+  /** Log out handler. */
+  callLogOut: PropTypes.func.isRequired,
 };
 /**
  * Default props of the component
@@ -28,11 +30,11 @@ const defaultProps = {
 /**
  * General component description in JSDoc format. Markdown is *supported*.
  */
-const UserNavigator = ({match:{path:currentRoute}, email}) => {
+const UserNavigator = ({ match: { path: currentRoute }, email, callLogOut }) => {
   const routes = [
     { route: '/user/profile', name: 'Profile' },
     { route: '/user/orders', name: 'Orders History' },
-    { route: '/user/logout', name: 'LogOut' },
+    { route: '/user/reset-password', name: 'Reset Password' },
   ];
 
   return (
@@ -66,6 +68,17 @@ const UserNavigator = ({match:{path:currentRoute}, email}) => {
             </li>
           );
         })}
+        <li className="UserNavigator__node">
+          <button
+            className="UserNavigator__label"
+            type="button"
+            onClick={() => {
+              callLogOut()
+            }}
+          >
+            LogOut
+          </button>
+        </li>
       </ul>
     </div>
   );

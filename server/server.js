@@ -12,7 +12,7 @@ const FileStore = require('session-file-store')(session);
 const path = require('path');
 const flash = require('connect-flash');
 
-const usersRoutes = require('./routes/users-routes');
+const userRoutes = require('./routes/user-routes');
 const authRoutes = require('./routes/auth-routes');
 const appRoutes = require('./routes/app-routes');
 const productsRoutes = require('./routes/products-routes');
@@ -41,7 +41,11 @@ app.use(session({
   store: new FileStore({retries: 0}),
   secret: process.env.SESSION_SECRET_KEY,
   resave: true,
-  saveUninitialized: false
+  saveUninitialized: false,
+  cookie:{
+    secure: false,
+    httpOnly: false
+  }
 }));
 app.use(passport.initialize());
 app.use(passport.session());
@@ -53,7 +57,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use('/data/users', usersRoutes);
+app.use('/data/user', userRoutes);
 app.use('/data/auth', authRoutes);
 app.use('/data/app', appRoutes);
 app.use('/data/products', productsRoutes);

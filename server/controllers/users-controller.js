@@ -1,25 +1,9 @@
 const mongoose = require('mongoose');
 const uniqid = require('uniqid');
-const { response } = require('../lib/response');
+const { response, mongooseErrorToResponse } = require('../lib/response');
 const User = require('../models/user-model');
 const { mail } = require('../services/mail');
-
-/**
- * Convert mongoose error message to expected by front end
- * @param src
- */
-function mongooseErrorToResponse(src) {
-  const data = {};
-  if (src.errors) {
-    const keys = Object.keys(src.errors);
-    if (keys.length > 0) {
-      keys.forEach((v) => {
-        data[v] = src.errors[v].message;
-      });
-    }
-  }
-  return response(data, src.message, 1);
-}
+const { filterByKeys } = require('../lib/filter-by-keys');
 
 /**
  * Add new user to database
@@ -85,6 +69,40 @@ exports.find = function getAllUsers(req, res, next) {
       next();
     });
 };
+
+
+/**
+ * Update password for current user by email stored in session
+ * @param req
+ * @param res
+ * @param next
+ * @returns {*}
+ */
+exports.updatePassword = function updateCurrentUserPassword(req, res, next){
+  if (!req.user || !req.user.email || !req.body.password) {
+    res.status(200).json(response({}, 'Required data is missing', 1));
+    return next();
+  }
+  const { email } = req.user;
+  User.find({ email })
+    .then((found) => {
+      if (found.length === 0) {
+        res.status(200).json(response({}, 'No valid entry found', 1));
+        return next();
+      }
+      const user = new User(found[0]);
+      user.password = req.body.password;
+      return user.save()
+        .then(() => {
+          res.status(200).json(response({}, 'New password has been saved', 0));
+          next();
+        });
+    })
+    .catch((err) => {
+      res.status(500).json({ error: err });
+      next();
+    });
+};
 /**
  * Update user data
  * @param req {object}
@@ -92,17 +110,15 @@ exports.find = function getAllUsers(req, res, next) {
  * @param next {Function}
  */
 exports.update = function updateUserData(req, res, next) {
-  User.updateOne({ _id: req.body.id },
-    {
-      $set: {
-        email: req.body.email,
-        first_name: req.body.first_name,
-        last_name: req.body.last_name
-      }
-    })
+
+  const data = filterByKeys(
+    req.body,
+    ['firstName', 'lastName', 'city', 'zip', 'address', 'phone']
+  );
+  User.updateOne({ _id: req.user.id }, { $set: data })
     .then((result) => {
       if (result) {
-        res.status(200).json(response(result));
+        res.status(200).json(response(data));
       } else {
         res.status(404).json(response({}, 'No valid entry found', 1));
       }

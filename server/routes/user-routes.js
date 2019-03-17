@@ -2,14 +2,20 @@ const router = require('express').Router();
 const passport = require('passport');
 
 const {response} = require('../lib/response');
-const userController = require('../controllers/users-controller');
-
+const usersController = require('../controllers/users-controller');
+/*
 router.get('/', userController.find);
 
 router.post('/', userController.add);
+*/
+router.put('/profile', usersController.update);
+router.put('/password', usersController.updatePassword);
 
-router.put('/:id', userController.update);
+router.get('/profile',
+  require('connect-ensure-login').ensureLoggedIn('/users/auth'),
+  usersController.profile);
 
+/*
 router.post('/auth', (req, res, next) => {
   passport.authenticate('local', (err, user, info) => {
     if (err) {
@@ -34,9 +40,7 @@ router.post('/auth', (req, res, next) => {
   })(req, res, next);
 });
 
-router.get('/profile',
-  require('connect-ensure-login').ensureLoggedIn('/users/auth'),
-  userController.profile);
+
 
 router.get('/logout', (req, res) => {
   req.logout();
@@ -46,5 +50,5 @@ router.get('/logout', (req, res) => {
 router.post('/is-authenticated',  (req, res) => {
   res.status(200).json(response({ isAuthenticated: !!req.user }, '', 0));
 });
-
+*/
 module.exports = router;

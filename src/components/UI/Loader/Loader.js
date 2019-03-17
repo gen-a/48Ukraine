@@ -6,7 +6,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import { APP_ROOT } from '../../../config/app';
 
 import './Loader.scss';
@@ -55,10 +54,5 @@ const Loader = ({ isVisible }) => {
 Loader.propTypes = propTypes;
 Loader.defaultProps = defaultProps;
 
-const mapStateToProps = state => (
-  {
-    isVisible: state.app.loader.isActive
-  }
-);
 
-export default connect(mapStateToProps, null)(Loader);
+export default Loader;
