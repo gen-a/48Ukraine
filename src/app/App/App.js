@@ -3,7 +3,7 @@
  * Set page layout
  * @module App
  */
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Route, Switch } from 'react-router-dom';
@@ -14,7 +14,10 @@ import Cart from '../../pages/Cart';
 import PrivateRoute from '../../components/PrivateRoute';
 import User from '../../components/Loadables/User';
 import Login from '../../pages/Login';
+import EnterAccount from '../../pages/EnterAccount';
 import GUIConnect from '../../components/Containers/GUIConnect';
+import DictionaryConnect from '../../components/Containers/DictionaryConnect';
+
 import Layout from '../../components/Layout';
 import { localizePath } from '../../localization/index';
 import { fetchInitialSate } from '../../actions/app';
@@ -36,38 +39,46 @@ const propTypes = {
  * @param C
  */
 export const renderRoute = C => routeProps => (
-  <Layout
+  <DictionaryConnect
     {...routeProps}
-    render={layoutProps => (
-      <GUIConnect
-        {...layoutProps}
-        render={guiProps => <C {...guiProps} key={routeProps.match.url} />}
+    render={dictionaryProps => (
+      <Layout
+        {...dictionaryProps}
+        render={layoutProps => (
+          <GUIConnect
+            {...layoutProps}
+            render={guiProps => <C {...guiProps} key={routeProps.match.url}/>}
+          />
+        )}
       />
-    )}
-  />
+    )}/>
 );
-
 
 const App = ({ locale, callFetchInitialSate, isInitialized }) => {
 
-  if(locale){
-    setTimeout(()=> callFetchInitialSate({ locale }), 0);
-  }
+  useEffect(()=>{
+    if (locale && !isInitialized) {
+      callFetchInitialSate({ locale });
+    }
+  });
 
-  if(!isInitialized){
-    return <SplashScreen />;
+  if (!isInitialized) {
+    return <SplashScreen/>;
   }
 
   return (
-  <Switch>
-    <Route exact path={localizePath('/', locale)} render={renderRoute(Home)} />
-    <Route exact path={localizePath('/browse/:department', locale)} render={renderRoute(Browse)} />
-    <Route exact path={localizePath('/browse/:department/page/:page', locale)} render={renderRoute(Browse)} />
-    <Route exact path={localizePath('/product/:id', locale)} render={renderRoute(Product)} />
-    <Route exact path={localizePath('/cart', locale)} render={renderRoute(Cart)} />
-    <Route exact path={localizePath('/login', locale)} component={Login}/>
-    <PrivateRoute path={localizePath('/user', locale)} component={User}/>
-  </Switch>
+    <Switch>
+      <Route exact path={localizePath('/', locale)} render={renderRoute(Home)}/>
+      <Route exact path={localizePath('/browse/:department', locale)} render={renderRoute(Browse)}/>
+      <Route exact path={localizePath('/browse/:department/page/:page', locale)} render={renderRoute(Browse)}/>
+      <Route exact path={localizePath('/product/:id', locale)} render={renderRoute(Product)}/>
+      <Route exact path={localizePath('/cart', locale)} render={renderRoute(Cart)}/>
+      <Route exact path={localizePath('/enter-account/:visa', locale)} component={renderRoute(EnterAccount)}/>
+
+
+      <Route exact path={localizePath('/login', locale)} component={Login}/>
+      <PrivateRoute path={localizePath('/user', locale)} component={User}/>
+    </Switch>
   )
 
 
@@ -77,16 +88,15 @@ const App = ({ locale, callFetchInitialSate, isInitialized }) => {
 App.propTypes = propTypes;
 
 
-
 const mapStateToProps = state => (
   {
-    isInitialized: state.app.isInitialized
+    isInitialized: state.app.isInitialized,
   }
 );
 
 const mapDispatchToProps = dispatch => (
   {
-    callFetchInitialSate: (data) => dispatch(fetchInitialSate(data))
+    callFetchInitialSate: (data) => dispatch(fetchInitialSate(data)),
   }
 );
 

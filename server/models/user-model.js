@@ -11,6 +11,12 @@ const userSchema = mongoose.Schema({
   dateUpdate: {
     type: Number
   },
+  visa: {
+    type: String
+  },
+  visaExpirationDate: {
+    type: Number
+  },
   number: {
     type: String
   },
@@ -56,6 +62,15 @@ const userSchema = mongoose.Schema({
   },
   phone: {
     type: String,
+  },
+  address: {
+    type: String,
+  },
+  city: {
+    type: String,
+  },
+  zip: {
+    type: String,
   }
 });
 
@@ -63,6 +78,7 @@ userSchema.options.toJSON = {
   transform: (doc, ret, options) => {
     ret.id = ret._id + '';
     ret.dateAdd = new Date(new Date().setTime(ret.dateAdd)).toUTCString();
+    ret.dateUpdate = new Date(new Date().setTime(ret.dateUpdate)).toUTCString();
     delete ret.password;
     delete ret._id;
     delete ret.__v;

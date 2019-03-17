@@ -7,6 +7,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import update from 'react-addons-update';
 import RestorePassword from '../RestorePassword';
+import GUIConnect from '../../Containers/GUIConnect';
+import { translate } from '../../../localization';
 
 import {
   Divider,
@@ -30,6 +32,8 @@ import './Authentication.scss';
 const propTypes = {
   /** On successful login handler. */
   onLogIn: PropTypes.func,
+  /** Render function */
+  dictionary: PropTypes.shape({}).isRequired,
 };
 /**
  * Default props of the component
@@ -46,6 +50,7 @@ class Authentication extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      isNew: false,
       formAction: 'email',
       fields: {
         email: {
@@ -76,12 +81,13 @@ class Authentication extends Component {
    * Handle input password blur event
    */
   onInputPasswordBlur() {
+    const { dictionary } = this.props;
     const { fields: { password: { value } } } = this.state;
     const valid = validatePassword(value);
     this.setState(prevState => update(prevState, {
       fields: {
         password: {
-          error: { $set: value.length === 0 || valid ? '' : 'Invalid password' },
+          error: { $set: value.length === 0 || valid ? '' : translate(dictionary, 'error.invalidPassword') },
           valid: { $set: valid },
         }
       }
@@ -92,12 +98,13 @@ class Authentication extends Component {
    * Handle input email blur event
    */
   onInputEmailBlur() {
+    const { dictionary } = this.props;
     const { fields: { email: { value } } } = this.state;
     const valid = validateEmail(value);
     this.setState(prevState => update(prevState, {
       fields: {
         email: {
-          error: { $set: value.length === 0 || valid ? '' : 'Invalid e-mail address' },
+          error: { $set: value.length === 0 || valid ? '' : translate(dictionary, 'error.invalidEmail') },
           valid: { $set: valid },
         }
       }
@@ -151,7 +158,8 @@ class Authentication extends Component {
           value: { $set: value }
         }
       },
-      formAction: { $set: 'email' }
+      formAction: { $set: 'email' },
+      isNew: { $set: false },
     }));
   }
 
@@ -203,15 +211,19 @@ class Authentication extends Component {
    * Handle server after checking email response
    */
   handleCheckEmailResult(result) {
-    if (result.error === 0) {
+    const { dictionary } = this.props;
+    const { error, message, data } = result;
+
+    if (error === 0) {
       this.setState(prevState => update(prevState, {
+        isNew: { $set: result.data.isNew },
         formAction: { $set: 'login' },
         fields: {
           email: {
             busy: { $set: false },
             readOnly: { $set: false },
             error: { $set: '' },
-            handlerMessage: { $set: result.message },
+            handlerMessage: { $set: translate(dictionary, message, { email: data.email }) },
           }
         }
       }));
@@ -222,7 +234,7 @@ class Authentication extends Component {
           email: {
             busy: { $set: false },
             readOnly: { $set: false },
-            error: { $set: result.message },
+            error: { $set: translate(dictionary, message, { email: data.email }) },
             handlerMessage: { $set: '' },
           }
         }
@@ -234,7 +246,10 @@ class Authentication extends Component {
    * Handle server after checking password response
    */
   handleCheckPasswordResult(result) {
-    if (result.error === 0) {
+    const { dictionary } = this.props;
+    const { error, message, data } = result;
+
+    if (error === 0) {
       this.setState(prevState => update(prevState, {
         formAction: { $set: 'login' },
         fields: {
@@ -259,7 +274,7 @@ class Authentication extends Component {
           password: {
             busy: { $set: false },
             readOnly: { $set: false },
-            error: { $set: result.message },
+            error: { $set: translate(dictionary, message) },
           }
         }
       }));
@@ -310,11 +325,12 @@ class Authentication extends Component {
   }
 
   render() {
-    const { fields: { email, password, showPassword, rememberMe }, formAction } = this.state;
+    const { fields: { email, password, showPassword, rememberMe }, formAction, isNew } = this.state;
+    const { dictionary } = this.props;
     return (
       <div className="Authentication">
 
-        <h2 className="Authentication__title">Authentication</h2>
+        <h2 className="Authentication__title">{translate(dictionary, 'authentication.title')}</h2>
 
         <form noValidate autoComplete="off">
           <div className="Authentication__row">
@@ -327,7 +343,7 @@ class Authentication extends Component {
                 readOnly: email.readOnly
               }}
               meta={email}
-              label="E-mail"
+              label={translate(dictionary, 'label.email')}
             />
           </div>
 
@@ -336,7 +352,7 @@ class Authentication extends Component {
             <div className="Authentication__row">
               <Divider/>
               <Button
-                label="next"
+                label={translate(dictionary, 'label.next')}
                 input={{
                   disabled: !email.valid || email.busy,
                   onClick: () => this.checkEmailForNextAction()
@@ -366,17 +382,17 @@ class Authentication extends Component {
                 }}
                 meta={password}
                 type={password.type}
-                label="Password"
+                label={translate(dictionary, 'label.password')}
               />
               <Switch
                 onChange={() => this.onInputShowPasswordChange()}
                 checked={showPassword.value}
-                label="Show/hide password"
+                label={translate(dictionary, 'label.showHidePassword')}
               />
               <Checkbox
                 onChange={() => this.onRememberMeChange()}
                 checked={rememberMe.value}
-                label="Remember me on this device"
+                label={translate(dictionary, 'label.rememberMe')}
               />
             </div>
             </>
@@ -386,21 +402,26 @@ class Authentication extends Component {
             <div className="Authentication__row">
               <Divider/>
               <Button
-                label="login"
+                label={translate(dictionary, 'label.login')}
                 input={{
                   disabled: !password.valid || password.busy,
                   onClick: () => this.checkPasswordForNextAction()
                 }}
               />
               {password.busy && <CircularProgress/>}
+              {!isNew && (
+                <div style={{paddingTop:'5px'}}>
+                <Divider/>
+                  <GUIConnect
+                    email={email.valid ? email.value : ''}
+                    dictionary={dictionary}
+                    render={guiProps => <RestorePassword {...guiProps} />}
+                  />
+                </div>
+              )}
             </div>
           )}
         </form>
-
-        <RestorePassword email={email.value} />
-
-
-
 
       </div>
     );

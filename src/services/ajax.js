@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+axios.defaults.withCredentials = true;
+
 /**
  * Send request to he server
  * @param type {String} - request type

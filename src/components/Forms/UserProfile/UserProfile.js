@@ -71,10 +71,7 @@ const UserProfile = ({
                        submitting,
                        invalid,
                        submitSucceeded
-                     }, props) => {
-
-  console.log(props);
-
+                     }) => {
 
   let messageType = '';
   let message = '';

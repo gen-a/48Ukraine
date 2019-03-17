@@ -19,6 +19,37 @@ export const localizePath = (path, locale) => {
 };
 
 /**
+ * Read object value by keys path array
+ * @param src {object}
+ * @param keys {Array}
+ * @returns {*}
+ */
+const readEntryByKeys = (src, keys)=>{
+  const key = keys.shift();
+  if(!src[key]){
+    return undefined;
+  }
+  if(keys.length === 0){
+    return src[key];
+  }
+  return readEntryByKeys(src[key], keys);
+};
+/**
+ * Read dictionary article
+ * @param dictionary {object} - source object of articles
+ * @param path {string} - path string as key.key.key
+ * @param data {object} - data replacement as {placeholder:value}
+ * @returns {*}
+ */
+
+export const translate = (dictionary, path, data = {}) =>{
+  let value = readEntryByKeys(dictionary, path.split('.'));
+  Object.keys(data).forEach( k => value = value.replace(new RegExp(`:${k}`, 'gi'), data[k]));
+  return value;
+};
+
+
+/**
  *
  * @param locale {string} - name of the localization
  * @returns {Promise}

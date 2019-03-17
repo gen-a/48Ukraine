@@ -20,11 +20,11 @@ const propTypes = {
   /** A boolean prop passed to LoadingComponent after a set delay. */
   pastDelay: PropTypes.bool,
   /** Function to show system message */
-  onShowMessage: PropTypes.func,
+  callAddFlashMessage: PropTypes.func,
   /** Function to show loader */
-  onShowLoader: PropTypes.func,
+  callShowLoader: PropTypes.func,
   /** Function to hide loader */
-  onHideLoader: PropTypes.func,
+  callHideLoader: PropTypes.func,
   /** Message on error loading */
   messageErrorLoading: PropTypes.string.isRequired,
   /** Message on error timeout */
@@ -40,32 +40,30 @@ const defaultProps = {
   error: null,
   timedOut: false,
   pastDelay: false,
-  onShowMessage: (id, body, title, type) => console.log(id, body, title, type),
-  onShowLoader: () => console.log('onShowLoader'),
-  onHideLoader: () => console.log('onHideLoader'),
+  callAddFlashMessage: (body, title, type) => console.log(body, title, type),
+  callShowLoader: () => console.log('callShowLoader'),
+  callHideLoader: () => console.log('callHideLoader'),
 };
 
 
 const Loading = ({
                    titleError, messageErrorLoading, messageErrorTimeout,
-                   onShowLoader, onHideLoader, onShowMessage,
+                   callShowLoader, callHideLoader, callAddFlashMessage,
                    retry, error, pastDelay, timedOut
                  }) => {
-setTimeout( () => {
 
-  if (error) {
-    onHideLoader();
-    onShowMessage(new Date().getTime(), messageErrorLoading, titleError, 'error');
-  } else if (timedOut) {
-    onHideLoader();
-    onShowMessage(new Date().getTime(), messageErrorTimeout, titleError, 'error');
-  } else if (pastDelay) {
-    onShowLoader();
-  } else {
-    onHideLoader();
-  }
 
-}, 0);
+    if (error) {
+      callHideLoader();
+      callAddFlashMessage(messageErrorLoading, titleError, 'error');
+    } else if (timedOut) {
+      callHideLoader();
+      callAddFlashMessage(messageErrorTimeout, titleError, 'error');
+    } else if (pastDelay) {
+      callShowLoader();
+    } else {
+      callHideLoader();
+    }
 
   return null;
   /*
@@ -97,15 +95,15 @@ const mapStateToProps = state => (
   {
     messageErrorLoading: state.dictionary.loading.message.error.loading,
     messageErrorTimeout: state.dictionary.loading.message.error.timeout,
-    titleError: state.dictionary.systemMessage.title.error,
+    titleError: state.dictionary.flashMessage.title.error,
   }
 );
 
 const mapDispatchToProps = dispatch => (
   {
-    onShowMessage: (id, body, title, type) => dispatch(addFlashMessage(id, body, title, type)),
-    onShowLoader: () => dispatch(showLoader()),
-    onHideLoader: () => dispatch(hideLoader())
+    callAddFlashMessage: (body, title, type) => dispatch(addFlashMessage(body, title, type)),
+    callShowLoader: () => dispatch(showLoader()),
+    callHideLoader: () => dispatch(hideLoader())
   }
 );
 

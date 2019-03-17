@@ -18,5 +18,12 @@
   &__hr{
     position:relative;
   }
+  &__handlerMessage{
+    font-size:0.875rem;
+    line-height:1.345em;
+    border-left:3px solid $color-primary-hb;
+    padding: 0 0 0 10px;
+    margin-bottom:10px;
+  }
 
 }

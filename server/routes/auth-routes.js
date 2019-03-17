@@ -5,6 +5,7 @@
 const router = require('express').Router();
 const passport = require('passport');
 const { response } = require('../lib/response');
+const { checkRequiredInBody } = require('../lib/middlewares/check-required-in-body');
 const authController = require('../controllers/auth-controller');
 
 /**
@@ -34,7 +35,40 @@ const authController = require('../controllers/auth-controller');
  *      "error": 1
  *    }
  */
-router.post('/email', authController.email);
+router.post('/email', checkRequiredInBody(['email']), authController.email);
+
+
+
+/**
+ * @api {post} /data/auth/restore-password Set new temporary password
+ * @apiVersion 1.0.0
+ * @apiName RestorePassword
+ * @apiGroup Auth
+ * @apiPermission anyone
+ *
+ * @apiParam (Request body) {String} Object {email}
+ *
+ * @apiExample {js} Example usage:
+ * const data = {
+ *   "email": "email@examles.com"
+ * }
+ *
+ * @apiSuccess (Success 200) {String} message auth.error.missing_email
+ * @apiSuccess (Success 200) {String} message auth.error.invalid_email
+ * @apiSuccess (Success 200) {String} message auth.info.password_has_been_set
+ *
+ * @apiSuccessExample {json} Success response:
+ *     HTTPS 200 OK
+ *     {
+ *      "message": "auth.error.missing_email",
+ *      "data": "{email}"
+ *      "error": 1
+ *    }
+ */
+router.post('/request-access', checkRequiredInBody(['email']), authController.requestAccess);
+
+router.get('/request-access/:visa', authController.requestAccessWithVisa);
+
 
 /**
  * @api {post} /data/auth/login Enter login and password
@@ -93,6 +127,8 @@ router.post('/login', (req, res, next) => {
   return null;
 });
 
+
+
 /**
  * @api {get} /data/auth/logout Logout function
  * @apiVersion 1.0.0
@@ -114,5 +150,8 @@ router.get('/logout', (req, res) => {
   req.logout();
   res.status(200).json(response({}, 'auth.info.you_have_been_logged_out', 0));
 });
+
+
+
 
 module.exports = router;

@@ -2,7 +2,7 @@
  * Filter object by keys
  * @param src
  * @param keys
- * @returns {{}}
+ * @returns {Promise}
  */
 exports.filterByKeys = (src, keys) => {
   const result = {};
@@ -11,5 +11,5 @@ exports.filterByKeys = (src, keys) => {
       result[key] = src[key];
     }
   });
-  return result;
+  return Promise.resolve(result);
 };

@@ -11,7 +11,7 @@
 
 /~source
 /tmp
-
+/sessions
 # dependencies
 /node_modules
 /.pnp

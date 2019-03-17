@@ -4,7 +4,7 @@
   position: relative;
   margin:0 auto;
   width:100%;
-  max-width:300px;
+  max-width:400px;
   padding:0;
   transition: all 0.2s ease-out 0.1s;
 
@@ -12,6 +12,7 @@
     position: absolute;
     width:100%;
     box-sizing: border-box;
+    border-radius:0.5rem;
     overflow: hidden;
     background: rgba(255, 255, 255, 1);
     transition: all 0.2s ease-out;
@@ -22,11 +23,12 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    font-weight: 400;
     bottom:0;
     left:1rem;
     right:42px;
     line-height: 32px;
-    font-size:0.75rem;
+    font-size:0.875rem;
   }
   &__body {
     box-sizing: border-box;
@@ -59,9 +61,6 @@
       &__title{
         color:$color-error-hb;
       }
-      &__content {
-        border-top:3px solid $color-error-hb;
-      }
     }
   }
   &_info {
@@ -69,18 +68,12 @@
       &__title{
         color:$color-info-hb;
       }
-      &__content {
-        border-top:3px solid $color-info-hb;
-      }
     }
   }
   &_success {
     .FlashMessage{
       &__title{
         color:$color-success-hb;
-      }
-      &__content {
-        border-top:3px solid $color-success-hb;
       }
     }
   }

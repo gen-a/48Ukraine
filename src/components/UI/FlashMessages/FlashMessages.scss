@@ -1,7 +1,7 @@
 
 .FlashMessages {
   position: fixed;
-  z-index: 200;
+  z-index: 4000;
   left: 0;
   top: 0;
   right: 0;
@@ -14,7 +14,7 @@
     position: relative;
     z-index: 3;
     margin:3px auto;
-    width:300px;
+    width:400px;
     opacity: 1;
     transition: opacity 0.2s linear 0s;
   }

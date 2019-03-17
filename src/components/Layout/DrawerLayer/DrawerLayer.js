@@ -8,6 +8,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import DepartmentsNavigator from '../../Containers/DepartmentsNavigator';
 import UserNavigator from '../../Containers/UserNavigator';
+import DictionaryConnect from '../../Containers/DictionaryConnect';
 import ScrollBox from '../../UI/ScrollBox';
 import Authentication from '../../Widgets/Authentication';
 import Drawer from '../../UI/Drawer';
@@ -40,21 +41,25 @@ const defaultProps = {
 
 const DrawerLayer = ({ callSetOpenDrawer, callSetAuthenticatedUser, isAuthenticated, openDrawer }) => (
   <>
-    <Scrim id="DrawerLayer" onClick={() => callSetOpenDrawer('')} isVisible={openDrawer !== ''} />
-    <Drawer position="left" depth={50} isOpen={openDrawer === 'menu'} header="Departments">
-      <ScrollBox>
-        <div style={{paddingRight: '16px'}}>
-          <DepartmentsNavigator />
-        </div>
-      </ScrollBox>
-    </Drawer>
-    <Drawer position="right" depth={50} isOpen={openDrawer === 'user'} header="User Data">
-      {isAuthenticated
-        ? <UserNavigator />
-        : <Authentication onLogIn={e => callSetAuthenticatedUser(e)} />
-      }
+  <Scrim id="DrawerLayer" onClick={() => callSetOpenDrawer('')} isVisible={openDrawer !== ''}/>
+  <Drawer position="left" depth={50} isOpen={openDrawer === 'menu'} header="Departments">
+    <ScrollBox>
+      <div style={{ paddingRight: '16px' }}>
+        <DepartmentsNavigator/>
+      </div>
+    </ScrollBox>
+  </Drawer>
+  <Drawer position="right" depth={50} isOpen={openDrawer === 'user'} header="User Data">
+    {isAuthenticated
+      ? <UserNavigator/>
+      : (
+        <DictionaryConnect
+          render={props => <Authentication {...props} onLogIn={e => callSetAuthenticatedUser(e)} />}
+        />
+      )
+    }
 
-    </Drawer>
+  </Drawer>
   </>
 );
 

@@ -7,6 +7,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import CompanyLogoWhite from '../Svg/CompanyLogoWhite';
 import Loader from '../UI/Loader';
+import ReactDOM from 'react-dom';
+import { APP_ROOT } from '../../config/app';
 
 import './SplashScreen.scss';
 
@@ -30,13 +32,17 @@ const defaultProps = {
  * General component description in JSDoc format. Markdown is *supported*.
  */
 const SplashScreen = ({ ...props }) =>{
-  return (
-    <div className="SplashScreen">
-      <div style={{maxWidth: '300px', padding: '1rem', margin: '30px auto'}}>
-        <CompanyLogoWhite/>
+
+  return ReactDOM.createPortal(
+    (
+      <div className="SplashScreen">
+        <div style={{maxWidth: '300px', padding: '1rem', margin: '30px auto'}}>
+          <CompanyLogoWhite />
+        </div>
+        <Loader isVisible />
       </div>
-      <Loader isVisible />
-    </div>
+    ),
+    APP_ROOT
   );
 };
 
