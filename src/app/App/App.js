@@ -3,7 +3,7 @@
  * Set page layout
  * @module App
  */
-import React, { useEffect } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Route, Switch } from 'react-router-dom';
@@ -11,19 +11,20 @@ import Browse from '../../pages/Browse';
 import Product from '../../pages/Product';
 import Cart from '../../pages/Cart';
 
-import PrivateRoute from '../../components/PrivateRoute';
-import User from '../../components/Loadables/User';
-import Login from '../../pages/Login';
+import PrivateRoute from '../../components/Router/PrivateRoute';
+import Checkout from '../../pages/Checkout';
 import EnterAccount from '../../pages/EnterAccount';
 import GUIConnect from '../../components/Containers/GUIConnect';
 import DictionaryConnect from '../../components/Containers/DictionaryConnect';
 
 import Layout from '../../components/Layout';
 import { localizePath } from '../../localization/index';
-import { fetchInitialSate } from '../../actions/app';
+import { fetchInitialSate, setOpenDrawer } from '../../actions/app';
 import Home from '../../pages/Home';
-import SplashScreen from '../../components/SplashScreen';
+import SplashScreen from '../../pages/SplashScreen';
+import NotFound from '../../pages/NotFound';
 
+import AsyncComponent from '../../components/Async/AsyncComponent';
 
 /**
  * PropTypes of the component
@@ -51,39 +52,62 @@ export const renderRoute = C => routeProps => (
           />
         )}
       />
-    )}/>
+    )}
+  />
 );
 
-const App = ({ locale, callFetchInitialSate, isInitialized }) => {
 
-  useEffect(()=>{
-    if (locale && !isInitialized) {
-      callFetchInitialSate({ locale });
-    }
-  });
+class App extends Component{
 
-  if (!isInitialized) {
-    return <SplashScreen/>;
+  constructor(props){
+    super(props);
+    this.location = '';
   }
 
-  return (
-    <Switch>
-      <Route exact path={localizePath('/', locale)} render={renderRoute(Home)}/>
-      <Route exact path={localizePath('/browse/:department', locale)} render={renderRoute(Browse)}/>
-      <Route exact path={localizePath('/browse/:department/page/:page', locale)} render={renderRoute(Browse)}/>
-      <Route exact path={localizePath('/product/:id', locale)} render={renderRoute(Product)}/>
-      <Route exact path={localizePath('/cart', locale)} render={renderRoute(Cart)}/>
-      <Route exact path={localizePath('/enter-account/:visa', locale)} component={renderRoute(EnterAccount)}/>
+  componentDidMount(){
+    const {locale, callFetchInitialSate, location} = this.props;
+    callFetchInitialSate({ locale });
+    this.location = location;
+  }
 
+  componentDidUpdate(){
+    const { location, callSetOpenDrawer} = this.props;
+    if(location !== this.location){
+      callSetOpenDrawer('');
+    }
+  }
 
-      <Route exact path={localizePath('/login', locale)} component={Login}/>
-      <PrivateRoute path={localizePath('/user', locale)} component={User}/>
-    </Switch>
-  )
+  render(){
+    const { locale, isInitialized } = this.props;
 
+    if (!isInitialized) {
+      return <SplashScreen/>;
+    }
 
-};
-
+    return (
+      <Switch>
+        <Route exact path={localizePath('/', locale)} render={renderRoute(Home)}/>
+        <Route exact path={localizePath('/browse/:department', locale)} render={renderRoute(Browse)}/>
+        <Route exact path={localizePath('/browse/:department/page/:page', locale)} render={renderRoute(Browse)}/>
+        <Route exact path={localizePath('/product/:id', locale)} render={renderRoute(Product)}/>
+        <Route exact path={localizePath('/cart', locale)} render={renderRoute(Cart)}/>
+        <Route exact path={localizePath('/checkout', locale)} render={renderRoute(Checkout)}/>
+        <Route exact path={localizePath('/enter-account/:visa', locale)} component={renderRoute(EnterAccount)}/>
+        <PrivateRoute
+          exact
+          path={localizePath('/user/:section', locale)}
+          component={()=>(
+            <AsyncComponent
+              component={()=> import('../../pages/User')}
+              placeholder={<SplashScreen/>}
+            />
+          )}
+        />
+        <Route path="*" component={NotFound} />
+      </Switch>
+    )
+  }
+}
 
 App.propTypes = propTypes;
 
@@ -97,6 +121,7 @@ const mapStateToProps = state => (
 const mapDispatchToProps = dispatch => (
   {
     callFetchInitialSate: (data) => dispatch(fetchInitialSate(data)),
+    callSetOpenDrawer: (data) => dispatch(setOpenDrawer(data)),
   }
 );
 

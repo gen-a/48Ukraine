@@ -12,3 +12,5 @@ export const URL_AUTH_CHECK_PASSWORD = `${API_PREFIX}/auth/login`;
 export const URL_AUTH_RESTORE_PASSWORD = `${API_PREFIX}/auth/request-access`;
 export const URL_FETCH_PRODUCTS = `${API_PREFIX}/products`;
 export const URL_FETCH_PRODUCT = `${API_PREFIX}/products/product`;
+export const URL_CHECKOUT = `${API_PREFIX}/orders/add`;
+export const URL_FETCH_USER_ORDERS = `${API_PREFIX}/orders/history`;

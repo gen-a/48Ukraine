@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import SplashScreen from '../../components/SplashScreen';
+import SplashScreen from '../SplashScreen';
 import { URL_REQUEST_ACCESS_WITH_VISA } from '../../config/api';
 import { get } from '../../services/ajax';
 import { translate, localizePath } from '../../localization';

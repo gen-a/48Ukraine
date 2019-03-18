@@ -1,5 +1,9 @@
 import {
-  UPDATE_PRODUCTS_IN_CART
+  UPDATE_PRODUCTS_IN_CART,
+  CHECKOUT_FULFILLED,
+  CHECKOUT_PENDING,
+  CHECKOUT_REJECTED,
+  CLEAR_CART,
 } from '../actions/cart';
 
 
@@ -48,6 +52,14 @@ const getQuantities = (products) => {
 
 const cart = (state = initialState, action) => {
   switch (action.type) {
+    case CLEAR_CART:
+      return {
+        ...state,
+        products: [],
+        total: 0,
+        count: 0,
+        quantities: {}
+      };
     case UPDATE_PRODUCTS_IN_CART:
       return {
         ...state,
@@ -56,6 +68,9 @@ const cart = (state = initialState, action) => {
         count: getCount(action.payload),
         quantities: getQuantities(action.payload),
       };
+    case CHECKOUT_FULFILLED:
+    case CHECKOUT_PENDING:
+    case CHECKOUT_REJECTED:
     default:
       return state;
   }

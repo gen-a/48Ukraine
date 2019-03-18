@@ -6,8 +6,10 @@ import { updateProductInCart } from '../../actions/cart';
 import PriceSticker from '../../components/PriceSticker';
 import Image from '../../components/UI/FlexibleImage/FlexibleImage';
 import IconClose from '../../components/Svg/IconClose';
+import { localizePath } from '../../localization/index';
+import { NavLink } from 'react-router-dom';
 
-import './Cart.scss';
+import './Cart.scss'
 
 
 /**
@@ -61,7 +63,7 @@ const defaultProps = {
   total: 0,
 };
 
-const Cart = ({ products, callUpdateProductInCart, count, total }) => {
+const Cart = ({ products, callUpdateProductInCart, count, total, locale }) => {
   if (products.length === 0) {
     return (<div>
       <h1>Your cart is empty</h1>
@@ -96,12 +98,11 @@ const Cart = ({ products, callUpdateProductInCart, count, total }) => {
         <div className="Cart__remove">
           <button
             className="Cart__removeButton"
-            onClick = {() => callUpdateProductInCart(p.id, 0)}
+            onClick={() => callUpdateProductInCart(p.id, 0)}
           >
             <IconClose width="24px" height="24px"/>
           </button>
         </div>
-
       </div>
     ))}
     <div className="Cart__summary">
@@ -110,8 +111,14 @@ const Cart = ({ products, callUpdateProductInCart, count, total }) => {
         <PriceSticker retail={total} currency="$" fontSize="1.25rem"/>
       </div>
     </div>
-
-
+    <div style={{textAlign: 'center'}}>
+    <NavLink
+      to={localizePath('/checkout', locale)}
+      className="Cart__checkoutButton"
+    >
+      Check out
+    </NavLink>
+    </div>
 
     </>
 

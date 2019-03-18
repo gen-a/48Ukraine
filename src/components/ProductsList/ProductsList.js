@@ -62,13 +62,15 @@ const defaultProps = {
 const ProductsList = ({ productUrl, pagesTotal, paginationUrl, products, currentPage, inCartQuantities }) => {
   return (
     <>
-    <Pagination
-      key={paginationUrl}
-      limit={5}
-      total={pagesTotal}
-      current={parseInt(currentPage, 10)}
-      url={paginationUrl}
-    />
+    {pagesTotal > 1 && (
+      <Pagination
+        key={paginationUrl}
+        limit={5}
+        total={pagesTotal}
+        current={parseInt(currentPage, 10)}
+        url={paginationUrl}
+      />
+    )}
     <div className="ProductsList">
       {products.map(product => (
         <ProductCard

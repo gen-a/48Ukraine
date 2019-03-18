@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { SubmissionError, reset, formValueSelector } from 'redux-form';
+import { SubmissionError } from 'redux-form';
 import { URL_UPDATE_USER_PROFILE, URL_UPDATE_USER_PASSWORD, URL_LOG_OUT } from '../config/api';
 
 axios.defaults.withCredentials = true;

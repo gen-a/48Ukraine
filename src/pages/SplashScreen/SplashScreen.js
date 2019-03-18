@@ -5,8 +5,8 @@
  */
 import React from 'react';
 import PropTypes from 'prop-types';
-import CompanyLogoWhite from '../Svg/CompanyLogoWhite';
-import Loader from '../UI/Loader';
+import CompanyLogoWhite from '../../components/Svg/CompanyLogoWhite';
+import Loader from '../../components/UI/Loader/Loader';
 import ReactDOM from 'react-dom';
 import { APP_ROOT } from '../../config/app';
 

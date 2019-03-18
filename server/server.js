@@ -16,6 +16,7 @@ const userRoutes = require('./routes/user-routes');
 const authRoutes = require('./routes/auth-routes');
 const appRoutes = require('./routes/app-routes');
 const productsRoutes = require('./routes/products-routes');
+const ordersRoutes = require('./routes/orders-routes');
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -61,6 +62,7 @@ app.use('/data/user', userRoutes);
 app.use('/data/auth', authRoutes);
 app.use('/data/app', appRoutes);
 app.use('/data/products', productsRoutes);
+app.use('/data/orders', ordersRoutes);
 
 // after all //
 

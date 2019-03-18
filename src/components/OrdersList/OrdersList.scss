@@ -1,0 +1,38 @@
+.OrdersList {
+
+  &__entry {
+    display: flex;
+    font-size: 1rem;
+    line-height:1.5em;
+
+    &Number {
+      flex:0 0 100px;
+      font-weight:700;
+      padding-right:0.5rem;
+    }
+    &Date {
+      flex:0 0 210px;
+      font-size:0.875rem;
+      padding-right:0.5rem;
+    }
+    &Name {
+
+    }
+    &Address {
+      flex:1 1;
+    }
+    &Phone {
+
+    }
+    &Count {
+      flex:0 0 40px;
+      text-align:center;
+    }
+    &Total {
+      flex:0 0 40px;
+      font-weight:700;
+      text-align:right;
+    }
+
+  }
+}

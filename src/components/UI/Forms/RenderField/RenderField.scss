@@ -112,7 +112,7 @@ $color-error-hb: #ff3203!default;
 
   &_withError{
     & .RenderField__input input{
-      border-bottom:3px solid $color-error-hb;
+      border-bottom:2px solid $color-error-hb;
     }
   }
   &_notEmpty{

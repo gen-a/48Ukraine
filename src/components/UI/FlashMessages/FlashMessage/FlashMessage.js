@@ -56,7 +56,7 @@ const FlashMessage = ({ height, collapse, swipeOff, remove, id, body, title, typ
     <div
       className={`FlashMessage FlashMessage_${type}`}
       style={{
-        height: `${collapse ? 0 : height + 1}px`
+        height: `${collapse ? 0 : height + 5}px`
       }}
     >
       <TouchSwipe

@@ -16,7 +16,7 @@ const initialState = {
   isAuthenticated: false,
   isFetching: false,
   error: '',
-  profile: {}
+  profile: {},
 };
 
 function user(state = initialState, action) {

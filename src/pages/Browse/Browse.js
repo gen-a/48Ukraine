@@ -55,7 +55,6 @@ class Browse extends Component {
     super(props);
     this.state = {
       products: [],
-      pagination : {}
     };
   }
 
@@ -101,7 +100,7 @@ class Browse extends Component {
     const { products, pagesTotal, page } = this.state;
     const { locale, departments, match: { params, params: { department: currentDepartment } }, inCartQuantities } = this.props;
     if (products.length === 0 || departments.length === 0) {
-      return (<div/>);
+      return null;
     }
 
     const currentDepartmentData = this.getDepartmentData(departments, currentDepartment);

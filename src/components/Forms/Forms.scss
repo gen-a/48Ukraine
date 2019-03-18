@@ -1,0 +1,41 @@
+@import '../../colors';
+
+.Forms {
+  &__fields {
+    max-width: 700px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    position:relative;
+
+    &_outlined{
+      border:1px solid $color-neutral-h;
+      border-radius:0.5rem;
+      padding:1rem 0.5rem 0.5rem 0.5rem;
+      margin-bottom:3rem;
+
+      & .Forms__sectionTitle{
+        position:absolute;
+        top:-0.875rem;
+        background:white;
+        padding:0 10px;
+        left:50%;
+        transform:translateX(-50%);
+
+      }
+    }
+  }
+  &__field {
+    box-sizing: border-box;
+    padding: 0 0.5rem;
+  }
+  &__sectionTitle{
+    color:$color-primary-h;
+    text-align:center;
+    font-weight:400;
+    line-height:1.25em;
+    font-size:1.25rem;
+    padding:0;
+    margin:0;
+  }
+}

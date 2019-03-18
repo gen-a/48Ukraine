@@ -1,0 +1,31 @@
+@import '../../colors';
+
+.NotFound{
+  position:fixed;
+  top:0;
+  left:0;
+  bottom:0;
+  right:0;
+  background: $color-primary-hb;
+  z-index:2000;
+
+  &__code{
+    color: $color-primary-h;
+    font-size:10rem;
+    text-align:center;
+    line-height:1em;
+    padding:0 1rem;
+    margin:0;
+    letter-spacing: -7px;
+  }
+  &__message{
+    color:white;
+    text-align:center;
+    font-size:1rem;
+    line-height:1.345em;
+    padding:0 1rem;
+    margin:40px 0 0 0;
+    transform:rotate(-90deg);
+    transform-origin: 50% 50% ;
+  }
+}

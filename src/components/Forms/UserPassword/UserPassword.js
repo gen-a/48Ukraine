@@ -14,8 +14,8 @@ import { updatePassword } from '../../../actions/user';
 import { Switch } from '../../UI/MaterialUI';
 import { password } from '../../../validation/validations';
 
-
-import './UserPassword.scss';
+import '../../../_grid.scss';
+import '../Forms.scss';
 
 /**
  * Validate all form fields and return object with invalid entries error messages
@@ -126,8 +126,8 @@ class UserPassword extends Component {
         resetLabel="Reset form"
       >
 
-        <div className="UserPassword__fields">
-          <div className="UserPassword__field UserPassword__field_half">
+        <div className="Forms__fields">
+          <div className="Forms__field xs-flex_100 md-flex_50">
             <Field
               name="password"
               type={isVisible ? 'text' : 'password'}
@@ -135,7 +135,7 @@ class UserPassword extends Component {
               label="Password"
             />
           </div>
-          <div className="UserPassword__field UserPassword__field_half">
+          <div className="Forms__field xs-flex_100 md-flex_50">
             <Field
               name="passwordAgain"
               type={isVisible ? 'text' : 'password'}
@@ -143,7 +143,7 @@ class UserPassword extends Component {
               label="Password again"
             />
           </div>
-          <div className="UserPassword__field UserPassword__field_full">
+          <div className="Forms__field xs-flex_100">
           <Switch
             onChange={() => this.setState({ ...this.state, isVisible: !isVisible })}
             checked={isVisible}

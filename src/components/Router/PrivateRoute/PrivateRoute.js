@@ -5,8 +5,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Route, Redirect } from 'react-router-dom';
-import { localizePath } from '../../localization';
+import { Route } from 'react-router-dom';
+import Redirect from '../Redirect';
+
+import { localizePath } from '../../../localization/index';
 
 /**
  * PropTypes of the component
@@ -45,7 +47,16 @@ const PrivateRoute = ({ component: Component, isAuthenticated, locale, ...rest }
     render={props => (
       isAuthenticated === true
         ? <Component {...props} />
-        : <Redirect to={localizePath('/login', locale)}/>
+        : (
+          <Redirect
+            to={localizePath('/', locale)}
+            message={{
+              body: `You have to log in to enter the page ${props.location.pathname}`,
+              type: 'error',
+              title: 'access denied'
+            }}
+          />
+        )
     )}
   />
 );

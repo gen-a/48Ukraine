@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { Route, Switch } from 'react-router-dom';
 import { localizePath } from '../../localization/index';
 
-import Logout from './Logout';
 import Profile from './Profile';
 import Orders from './Orders';
 import ResetPassword from './ResetPassword';
@@ -23,9 +22,9 @@ const propTypes = {
 const User = ({ locale }) => {
   return (
   <Switch>
-    <Route exact path={localizePath('/user/logout', locale)} render={renderRoute(Logout)}/>
     <Route exact path={localizePath('/user/profile', locale)} component={renderRoute(Profile)}/>
     <Route exact path={localizePath('/user/orders', locale)} component={renderRoute(Orders)}/>
+    <Route exact path={localizePath('/user/orders/page/:page', locale)} component={renderRoute(Orders)}/>
     <Route exact path={localizePath('/user/reset-password', locale)} component={renderRoute(ResetPassword)}/>
   </Switch>
 )};

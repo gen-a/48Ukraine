@@ -32,6 +32,8 @@ const propTypes = {
     warning: PropTypes.string,
     /** Error message text. */
     error: PropTypes.string,
+    /** Is input touched. */
+    touched: PropTypes.bool,
   }),
   /** Label of the field.  */
   label: PropTypes.string,
@@ -91,7 +93,7 @@ class RenderField extends Component {
 
   render() {
 
-    const { disabled, input, label, type, busy, meta: { error, dirty } } = this.props;
+    const { disabled, input, label, type, busy, meta: { error, touched } } = this.props;
     const { focus } = this.state;
 
     let className = 'RenderField';
@@ -111,7 +113,7 @@ class RenderField extends Component {
     if (focus) {
       className += ' RenderField_focus';
     }
-    if (dirty && error && error.length > 0) {
+    if (touched && error && error.length > 0) {
       className += ' RenderField_withError';
     }
     if (busy > 0) {
@@ -130,7 +132,7 @@ class RenderField extends Component {
             <div className="RenderField__underline" />
             { busy && <div className="RenderField__loader"><div className="RenderField__loaderIndicator" /></div> }
           </div>
-          {(dirty && error && <div className="RenderField__error">{error}</div>)}
+          {(touched && error && <div className="RenderField__error">{error}</div>)}
         </div>
       </div>
     );

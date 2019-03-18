@@ -12,7 +12,9 @@ import RenderField from '../../UI/Forms/RenderField';
 import RenderForm from '../../UI/Forms/RenderForm';
 import { updateProfile } from '../../../actions/user';
 
-import './UserProfile.scss';
+import '../../../_grid.scss';
+import '../Forms.scss';
+
 /**
  * Validate all form fields and return object with invalid entries error messages
  * @param values {object} - form values
@@ -103,17 +105,17 @@ const UserProfile = ({
       resetLabel="Reset form"
     >
 
-      <div className="UserProfile__fields">
-        <div className="UserProfile__field UserProfile__field_full">
+      <div className="Forms__fields">
+        <div className="Forms__field xs-flex_100 md-flex_50 md-marginRight_50">
           <Field name="email" type="email" disabled component={RenderField} label="Email"/>
         </div>
-        <div className="UserProfile__field UserProfile__field_half">
+        <div className="Forms__field xs-flex_100 md-flex_50">
           <Field name="firstName" type="text" component={RenderField} label="First Name"/>
         </div>
-        <div className="UserProfile__field UserProfile__field_half">
+        <div className="Forms__field xs-flex_100 md-flex_50">
           <Field name="lastName" type="text" component={RenderField} label="Last Name"/>
         </div>
-        <div className="UserProfile__field UserProfile__field_full">
+        <div className="Forms__field xs-flex_100 md-flex_50 md-marginRight_50">
           <Field name="phone" type="text" component={RenderField} label="Phone"/>
         </div>
       </div>
