@@ -9,7 +9,7 @@ import Loader from '../../UI/Loader';
 
 const mapStateToProps = state => (
   {
-    isVisible: state.app.loader.isActive
+    isVisible: state.app.loader.isActive || state.user.isBusy || state.cart.isBusy
   }
 );
 

@@ -9,7 +9,6 @@ import Orders from './Orders';
 import ResetPassword from './ResetPassword';
 import NotFound from '../../pages/NotFound';
 
-import { renderRoute } from '../../app/App';
 
 /**
  * PropTypes of the component
@@ -20,16 +19,37 @@ const propTypes = {
   locale: PropTypes.string.isRequired,
 };
 
-const User = ({ locale }) => {
+const User = (props) => {
+  const { locale } = props;
   return (
-  <Switch>
-    <Route exact path={localizePath('/user/profile', locale)} component={renderRoute(Profile)}/>
-    <Route exact path={localizePath('/user/orders', locale)} component={renderRoute(Orders)}/>
-    <Route exact path={localizePath('/user/orders/page/:page', locale)} component={renderRoute(Orders)}/>
-    <Route exact path={localizePath('/user/reset-password', locale)} component={renderRoute(ResetPassword)}/>
-    <Route path="/user/*" component={NotFound} />
-  </Switch>
-)};
+    <Switch>
+      <Route
+        exact
+        path={localizePath('/user/reset-password', locale)}
+        render={routeProps => <ResetPassword {...props} {...routeProps} />}
+      />
+      <Route
+        exact
+        path={localizePath('/user/profile', locale)}
+        render={routeProps => <Profile {...props} {...routeProps} />}
+      />
+      <Route
+        exact
+        path={localizePath('/user/orders', locale)}
+        render={routeProps => <Orders {...props} {...routeProps} />}
+      />
+      <Route
+        exact
+        path={localizePath('/user/orders/page/:page', locale)}
+        render={routeProps => <Orders {...props} {...routeProps} />}
+      />
+      <Route
+        path="/user/*"
+        render={routeProps => <NotFound {...props} {...routeProps} />}
+      />
+    </Switch>
+  );
+};
 
 const mapStateToProps = state => (
   {

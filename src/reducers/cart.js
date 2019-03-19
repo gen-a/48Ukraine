@@ -11,7 +11,8 @@ const initialState = {
   quantities: {},
   products: [],
   total: 0,
-  count: 0
+  count: 0,
+  isBusy: false
 };
 
 /**
@@ -68,9 +69,17 @@ const cart = (state = initialState, action) => {
         count: getCount(action.payload),
         quantities: getQuantities(action.payload),
       };
-    case CHECKOUT_FULFILLED:
     case CHECKOUT_PENDING:
+      return {
+        ...state,
+        isBusy: true
+      };
+    case CHECKOUT_FULFILLED:
     case CHECKOUT_REJECTED:
+      return {
+        ...state,
+        isBusy: false
+      };
     default:
       return state;
   }

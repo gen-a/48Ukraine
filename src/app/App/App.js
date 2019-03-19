@@ -21,6 +21,7 @@ import Layout from '../../components/Layout';
 import { localizePath } from '../../localization/index';
 import { fetchInitialSate, setOpenDrawer } from '../../actions/app';
 import Home from '../../pages/Home';
+import Loader from '../../components/UI/Loader';
 import SplashScreen from '../../pages/SplashScreen';
 import NotFound from '../../pages/NotFound';
 
@@ -96,14 +97,30 @@ class App extends Component{
         <PrivateRoute
           path={localizePath('/user/:section', locale)}
           render={(routeProps)=>(
-            <AsyncComponent
-              key={routeProps.match.params.section}
-              component={()=> import('../../pages/User')}
-              placeholder={<SplashScreen/>}
+            <DictionaryConnect
+              {...routeProps}
+              render={dictionaryProps => (
+                <Layout
+                  {...dictionaryProps}
+                  render={layoutProps => (
+                    <GUIConnect
+                      {...layoutProps}
+                      render={guiProps => (
+                        <AsyncComponent
+                          {...guiProps}
+                          key={routeProps.match.url}
+                          component={()=> import('../../pages/User')}
+                          placeholder={<Loader isVisible/>}
+                        />
+                      )}
+                    />
+                  )}
+                />
+              )}
             />
           )}
         />
-        <Route path="*" component={NotFound} />
+        <Route path="*" render={renderRoute(NotFound)} />
       </Switch>
     )
   }

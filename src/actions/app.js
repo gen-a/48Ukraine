@@ -1,5 +1,6 @@
 import uuid from 'uuid/v4';
 import axios from 'axios';
+import { SubmissionError } from 'redux-form';
 
 import { importDictionaryArticles } from './dictionary';
 import { URL_FETCH_INITIAL_STATE } from '../config/api';
@@ -27,6 +28,11 @@ export const SET_OPEN_DRAWER = 'SET_OPEN_DRAWER';
 export const FETCH_INITIAL_STATE_FULFILLED = 'FETCH_INITIAL_STATE_FULFILLED';
 export const FETCH_INITIAL_STATE_REJECTED = 'FETCH_INITIAL_STATE_REJECTED';
 export const FETCH_INITIAL_STATE_PENDING = 'FETCH_INITIAL_STATE_PENDING';
+
+
+
+
+
 
 /**
  * Load initial state from the server
@@ -192,5 +198,43 @@ export function setLocale(locale) {
 export function setOpenDrawer(name) {
   return (dispatch) => {
     dispatch({ type: SET_OPEN_DRAWER, payload: name });
+  };
+}
+/**
+ * Handle success on form submission
+ * @param type {string} - name of dispatch
+ * @param response {*} - server response
+ * @returns {function(*=)}
+ */
+export function handleFormSubmissionSuccess(type, response) {
+  return (dispatch) => {
+    const { error, data: payload, message } = response;
+    if (error === 0) {
+      dispatch({ type, payload });
+      addFlashMessage(message, 'submission succeed', 'success')(dispatch);
+    } else {
+      throw new SubmissionError({ ...payload, _error: message });
+    }
+    return true;
+  };
+}
+
+/**
+ * Handle error on form submission
+ * @param type {string} - name of dispatch
+ * @param payload {*} - payload of dispatch
+ * @returns {function(*=)}
+ */
+export function handleFormSubmissionError(type, payload) {
+  return (dispatch) => {
+    dispatch({ type, payload });
+    const { errors: { _error }, message } = payload;
+    if (payload instanceof SubmissionError) {
+      addFlashMessage(_error, 'submission error', 'error')(dispatch);
+      throw payload;
+    } else {
+      addFlashMessage(message, 'submission error', 'error')(dispatch);
+      throw new SubmissionError({ _error: message });
+    }
   };
 }

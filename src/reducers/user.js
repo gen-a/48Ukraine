@@ -14,7 +14,7 @@ import {
 
 const initialState = {
   isAuthenticated: false,
-  isFetching: false,
+  isBusy: false,
   error: '',
   profile: {},
 };
@@ -39,19 +39,24 @@ function user(state = initialState, action) {
         profile: {
           ...state.profile,
           ...action.payload,
-        }
+        },
+        isBusy: false
       };
-
-
-
-
     case LOG_OUT_PENDING:
-    case LOG_OUT_REJECTED:
-    case UPDATE_PROFILE_PENDING:
-    case UPDATE_PROFILE_REJECTED:
     case UPDATE_PASSWORD_PENDING:
-    case UPDATE_PASSWORD_FULFILLED:
+    case UPDATE_PROFILE_PENDING:
+      return {
+        ...state,
+        isBusy: true
+      };
+    case LOG_OUT_REJECTED:
+    case UPDATE_PROFILE_REJECTED:
     case UPDATE_PASSWORD_REJECTED:
+    case UPDATE_PASSWORD_FULFILLED:
+      return {
+        ...state,
+        isBusy: false
+      };
     default:
       return { ...state };
   }

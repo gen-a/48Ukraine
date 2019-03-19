@@ -22,11 +22,6 @@ import '../Forms.scss';
  * @param values {object} - form values
  * @returns {{}}
  */
-/**
- * Validate all form fields and return object with invalid entries error messages
- * @param values {object} - form values
- * @returns {{}}
- */
 const validate = (values) => {
   const errors = {};
 
@@ -96,19 +91,20 @@ class UserPassword extends Component {
     const { isVisible } = this.state;
 
 
-    let messageType = '';
-    let message = '';
+    const message = {};
+    /*
+        if (error) {
+          message.type = 'error';
+          message.text = error;
+        } else if (submitSucceeded) {
+          message.type = 'success';
+          message.text = 'Saved!!';
+        } else if (submitting) {
+          message.type = 'info';
+          message.text = 'Submitting...';
+        }
+    */
 
-    if (error) {
-      messageType = 'error';
-      message = error;
-    } else if (submitSucceeded) {
-      messageType = 'success';
-      message = 'Saved!!';
-    } else if (submitting) {
-      messageType = 'info';
-      message = 'Submitting...';
-    }
 
     return (
       <RenderForm
@@ -120,8 +116,8 @@ class UserPassword extends Component {
         onSubmit={handleSubmit(callUpdatePassword)}
         onReset={reset}
         title="Has to be form title"
-        message={message}
-        messageType={messageType}
+        message={message.text}
+        messageType={message.type}
         submitLabel="Submit data"
         resetLabel="Reset form"
       >

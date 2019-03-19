@@ -74,20 +74,19 @@ const UserProfile = ({
                        invalid,
                        submitSucceeded
                      }) => {
-
-  let messageType = '';
-  let message = '';
-
-  if (error) {
-    messageType = 'error';
-    message = error;
-  } else if (submitSucceeded) {
-    messageType = 'success';
-    message = 'Saved!!';
-  } else if (submitting) {
-    messageType = 'info';
-    message = 'Submitting...';
-  }
+  const message = {};
+  /*
+      if (error) {
+        message.type = 'error';
+        message.text = error;
+      } else if (submitSucceeded) {
+        message.type = 'success';
+        message.text = 'Saved!!';
+      } else if (submitting) {
+        message.type = 'info';
+        message.text = 'Submitting...';
+      }
+  */
 
   return (
     <RenderForm
@@ -99,8 +98,8 @@ const UserProfile = ({
       onSubmit={handleSubmit(callUpdateProfile)}
       onReset={reset}
       title="Has to be form title"
-      message={message}
-      messageType={messageType}
+      message={message.text}
+      messageType={message.type}
       submitLabel="Submit data"
       resetLabel="Reset form"
     >

@@ -60,7 +60,7 @@ exports.updateProfile = (req, res, next) => {
     })
     .then((result) => {
       const { n, nModified } = result;
-      res.status(200).json(response({ n, nModified, data }));
+      res.status(200).json(response({ n, nModified, data }, 'user.info.theProfileHasBeenUpdated'));
       next();
     })
     .catch((err) => {

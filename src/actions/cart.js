@@ -2,7 +2,7 @@ import axios from 'axios';
 
 import { SubmissionError, reset } from 'redux-form';
 import { URL_CHECKOUT } from '../config/api';
-import { addFlashMessage } from './app';
+import { addFlashMessage, handleFormSubmissionError, handleFormSubmissionSuccess } from './app';
 
 axios.defaults.withCredentials = true;
 
@@ -87,28 +87,11 @@ export function checkout(data) {
       { type: CHECKOUT_PENDING, payload: {} }
     );
     return axios.post(URL_CHECKOUT, { ...data, products: getState().cart.products })
-      .then(result => result.data)
-      .then((result) => {
-        if (result.error === 0) {
-          addFlashMessage('order.info.theOrderHasBeenPlaced', 'submission succeed', 'success')(dispatch);
-          clearCart()(dispatch);
-          dispatch(reset('formCheckout'));
-          dispatch({ type: CHECKOUT_FULFILLED, payload: data });
-        } else {
-          throw new SubmissionError({ ...result.data, _error: result.message });
-        }
+      .then(result => handleFormSubmissionSuccess( CHECKOUT_FULFILLED, result.data )(dispatch))
+      .then(() => {
+        clearCart()(dispatch);
+        dispatch(reset('formCheckout'));
       })
-      .catch((err) => {
-        dispatch({ type: CHECKOUT_REJECTED, payload: err });
-        const { errors: { _error }, message } = err;
-        if (err instanceof SubmissionError) {
-          addFlashMessage(_error, 'submission error', 'error')(dispatch);
-          clearCart()(dispatch);
-          throw err;
-        } else {
-          addFlashMessage(message, 'submission error', 'error')(dispatch);
-          throw new SubmissionError({ _error: message });
-        }
-      });
+      .catch(error => handleFormSubmissionError(CHECKOUT_REJECTED, error));
   };
 }

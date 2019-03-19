@@ -2,6 +2,7 @@ import axios from 'axios';
 
 import { SubmissionError } from 'redux-form';
 import { URL_UPDATE_USER_PROFILE, URL_UPDATE_USER_PASSWORD, URL_LOG_OUT } from '../config/api';
+import { addFlashMessage, handleFormSubmissionError, handleFormSubmissionSuccess } from './app';
 
 axios.defaults.withCredentials = true;
 
@@ -30,12 +31,11 @@ export function setAuthenticatedUser(data) {
 }
 
 
-
 /**
  * Logout current user
  * @returns {function(*, *)}
  */
-export function logOut(){
+export function logOut() {
   return (dispatch, getState) => {
     dispatch(
       { type: LOG_OUT_PENDING, payload: {} }
@@ -43,7 +43,7 @@ export function logOut(){
     return axios.get(URL_LOG_OUT)
       .then(result => result.data)
       .then((result) => {
-        if (result.error === 0){
+        if (result.error === 0) {
           dispatch({ type: LOG_OUT_FULFILLED, payload: {} });
         }
       })
@@ -55,38 +55,23 @@ export function logOut(){
 }
 
 
-
 /**
  * Update current user password
  * @param data
  * @returns {function(*, *)}
  */
-export function updatePassword(data){
+export function updatePassword(data) {
   return (dispatch, getState) => {
     dispatch(
-      { type: UPDATE_PASSWORD_PENDING, payload: { } }
+      { type: UPDATE_PASSWORD_PENDING, payload: {} }
     );
     return axios.put(URL_UPDATE_USER_PASSWORD, data)
-      .then((result) => {
-        const res = result.data;
-        if (result.error === 0){
-          dispatch({ type: UPDATE_PASSWORD_FULFILLED, payload: data });
-
-        } else {
-          throw new SubmissionError({ ...res.data, _error: res.message });
-        }
-      })
-      .catch((err) => {
-        dispatch({ type: UPDATE_PASSWORD_REJECTED, payload: err });
-        if( err instanceof SubmissionError ){
-          throw err;
-        }else{
-          throw new SubmissionError({ _error: err.message });
-        }
-      });
+      .then(result => handleFormSubmissionSuccess( UPDATE_PASSWORD_FULFILLED, result.data )(dispatch))
+      .catch(error => handleFormSubmissionError(UPDATE_PASSWORD_REJECTED, error)(dispatch));
   };
 
 }
+
 /**
  * Update customer profile data
  * @param data {object}
@@ -95,25 +80,10 @@ export function updatePassword(data){
 export function updateProfile(data) {
   return (dispatch, getState) => {
     dispatch(
-      { type: UPDATE_PROFILE_PENDING, payload: { } }
+      { type: UPDATE_PROFILE_PENDING, payload: {} }
     );
     return axios.put(URL_UPDATE_USER_PROFILE, data)
-      .then((result) => {
-        const res = result.data;
-        if (result.error === 0){
-          dispatch({ type: UPDATE_PROFILE_FULFILLED, payload: data });
-
-        } else {
-          throw new SubmissionError({ ...res.data, _error: res.message });
-        }
-      })
-      .catch((err) => {
-        dispatch({ type: UPDATE_PROFILE_REJECTED, payload: err });
-        if( err instanceof SubmissionError ){
-          throw err;
-        }else{
-          throw new SubmissionError({ _error: err.message });
-        }
-      });
+      .then(result => handleFormSubmissionSuccess( UPDATE_PROFILE_FULFILLED, result.data )(dispatch))
+      .catch(error => handleFormSubmissionError(UPDATE_PROFILE_REJECTED, error)(dispatch));
   };
 }

@@ -75,7 +75,7 @@ exports.add = (req, res, next) => {
   order.save()
     .then((result) => {
       sendNewOrderLetter(req.body.email, result.number).then(console.log).catch(console.error);
-      res.status(200).json(response(result, 'The order has been placed', 0));
+      res.status(200).json(response(result, 'order.info.theOrderHasBeenPlaced', 0));
       return next();
     })
     .catch((err) => {

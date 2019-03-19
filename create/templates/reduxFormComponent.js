@@ -61,20 +61,26 @@ const defaultProps = {
  * __componentName__ form container Component
  */
 const __componentName__ = ({
-                             error, onSubmitAction, handleSubmit, pristine, reset, submitting, invalid, submitSucceeded
+                             error,
+                             onSubmitAction,
+                             handleSubmit,
+                             pristine,
+                             reset,
+                             submitting,
+                             invalid,
+                             submitSucceeded
                            }) => {
-  let messageType = '';
-  let message = '';
+  const message = {};
 
   if (error) {
-    messageType = 'error';
-    message = error;
+    message.type = 'error';
+    message.text = error;
   } else if (submitSucceeded) {
-    messageType = 'success';
-    message = 'Saved!!';
+    message.type = 'success';
+    message.text = 'Saved!!';
   } else if (submitting) {
-    messageType = 'info';
-    message = 'Submitting...';
+    message.type = 'info';
+    message.text = 'Submitting...';
   }
 
   return (
@@ -87,8 +93,8 @@ const __componentName__ = ({
       onSubmit={handleSubmit(onSubmitAction)}
       onReset={reset}
       title="Has to be form title"
-      message={message}
-      messageType={messageType}
+      message={message.text}
+      messageType={message.type}
       submitLabel="Submit data"
       resetLabel="Reset form"
     >
