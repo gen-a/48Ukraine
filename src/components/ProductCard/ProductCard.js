@@ -9,8 +9,9 @@ import PriceSticker from '../PriceSticker';
 import AddToCartButton from '../Containers/AddToCartButton';
 import Image from '../UI/FlexibleImage/FlexibleImage';
 
-
 import markSale from './mark-sale.svg';
+import markPromo from './mark-promo.svg';
+
 import './ProductCard.scss';
 import NavLink from "react-router-dom/es/NavLink";
 
@@ -29,26 +30,39 @@ const propTypes = {
   image: PropTypes.string.isRequired,
   attributesInfo: PropTypes.string,
   url: PropTypes.string,
+  type: PropTypes.oneOf(['vertical', 'horizontal']),
+  isOnSale: PropTypes.bool,
 };
 const defaultProps = {
   priceSale: 0,
   attributesInfo: '',
   url: '',
+  type: 'horizontal',
+  isOnSale: false
 };
 /**
  * General component description in JSDoc format. Markdown is *supported*.
  */
-const ProductCard = ({ url, id, inCart, price, name, image, attributesInfo }) => {
+const ProductCard = ({ url, id, inCart, price, name, image, attributesInfo, type, isOnSale }) => {
+
+  const rootClassName = type === 'vertical'
+    ? 'ProductCard ProductCard_vertical'
+    : 'ProductCard';
 
   return (
 
-    <div className={inCart ? 'ProductCard ProductCard_isInCart' : 'ProductCard'}>
+    <div className={inCart ? `${rootClassName} ProductCard_isInCart` : rootClassName}>
+
+      {isOnSale && (
+          <img src={markPromo} className="ProductCard__markPromo" alt="sale"/>
+      )}
+
 
       <div className="ProductCard__imageBlock">
 
         <div className="ProductCard__image">
           <NavLink to={url}>
-          <Image src={image} alt={name}/>
+            <Image src={image} alt={name}/>
           </NavLink>
         </div>
         <div className="ProductCard__price">

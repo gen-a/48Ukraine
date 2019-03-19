@@ -6,13 +6,14 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import SlideShow from '../../components/UI/SlideShow/SlideShow';
+
 
 import './Home.scss';
-import AspectRatioBox from '../../components/UI/AspectRatioBox/AspectRatioBox';
 import { addFlashMessage, removeFlashMessage } from '../../actions/app';
 import { NavLink } from 'react-router-dom';
 
+
+import ProductsPromo from '../../components/ProductsPromo';
 import ResponsiveSlideShow from '../../components/UI/ResponsiveSlideShow';
 import ResponsiveSlideShowGroup from '../../components/UI/ResponsiveSlideShow/Group';
 
@@ -46,45 +47,32 @@ class Home extends Component {
 
   }
 
-  onAddMessageButtonClick() {
-    const { callAddFlashMessage } = this.props;
-    callAddFlashMessage(
-      'Test message',
-      'Test message title',
-      'error'
-    );
-    callAddFlashMessage(
-      'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolor, itaque!',
-      'Test message title',
-      'error'
-    );
-    callAddFlashMessage(
-      'Test message',
-      'Test message title',
-      'error'
-    );
-  }
-
-
   render() {
     console.group('Props received by Home')
     console.log(this.props);
     console.groupEnd();
 
 
-    const { top, window: { width, height }, callAddFlashMessage, callHideFlashMessage, callShowFlashMessage, callRemoveFlashMessage } = this.props;
+    const { window: { width, height } } = this.props;
     const imageStyle = { display: 'block', width: '100%' };
+
+    const slideShowVariant = width / height > 1 ? 'h' : 'v';
+    const slideShowBoxStyle = slideShowVariant == 'h'
+      ? { margin: '40px auto 60px auto' }
+      : { maxWidth: '500px', margin: '40px auto 60px auto' };
+
 
     return (
       <div className="Home">
-        <div style={{ margin: '40px 0' }}>
-          <ResponsiveSlideShow variant={width/height > 1 ? 'h' : 'v'}>
+        <div style={slideShowBoxStyle}>
+          <ResponsiveSlideShow variant={slideShowVariant}>
             <ResponsiveSlideShowGroup name="v" width={500} height={500}>
               <div key="111">
                 <img src="/images/home-slide-show/banner-facebook-flowers-624x624.jpg" alt="" style={imageStyle}/>
               </div>
               <div key="222">
-                <img src="/images/home-slide-show/banner-facebook-free-st.niklas-624x624.jpg" alt="" style={imageStyle}/>
+                <img src="/images/home-slide-show/banner-facebook-free-st.niklas-624x624.jpg" alt=""
+                     style={imageStyle}/>
               </div>
               <div key="333">
                 <img src="/images/home-slide-show/banner-facebook-free-caviar-624x624.jpg" alt="" style={imageStyle}/>
@@ -103,10 +91,7 @@ class Home extends Component {
             </ResponsiveSlideShowGroup>
           </ResponsiveSlideShow>
         </div>
-
-
-        <button onClick={() => this.onAddMessageButtonClick()}>add message</button>
-        <NavLink to="/user">privte route</NavLink>
+        <ProductsPromo/>
       </div>
     );
   }
