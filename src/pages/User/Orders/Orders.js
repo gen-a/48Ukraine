@@ -83,7 +83,7 @@ class Orders extends Component {
   render() {
     const { orders, pagesTotal, page } = this.state;
     const { locale } = this.props;
-    if (orders.length === 0 ) {
+    if (orders.length === 0 && !page ) {
       return null;
     }
 

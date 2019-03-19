@@ -55,6 +55,8 @@ const OrdersList = ({ pagesTotal, paginationUrl, orders, currentPage }) => {
         url={paginationUrl}
       />
     )}
+    {orders.length === 0 && <div className="OrdersList__intro">You have no orders yet...</div>}
+
     <div className="OrdersList">
       <ul>
       {orders.map(order => (

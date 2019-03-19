@@ -21,7 +21,9 @@ const propTypes = {
   component: PropTypes.oneOfType([
     PropTypes.element,
     PropTypes.func,
-  ]).isRequired,
+  ]),
+  /** REnder function. */
+  render: PropTypes.func,
   /** Current application localization */
   locale: PropTypes.string.isRequired,
 };
@@ -30,7 +32,9 @@ const propTypes = {
  * @type {object}
  */
 const defaultProps = {
-  isAuthenticated: false
+  isAuthenticated: false,
+  component: null,
+  render: null
 };
 
 /**
@@ -41,25 +45,30 @@ const defaultProps = {
  * @param rest
  * @constructor
  */
-const PrivateRoute = ({ component: Component, isAuthenticated, locale, ...rest }) => (
-  <Route
-    {...rest}
-    render={props => (
-      isAuthenticated === true
-        ? <Component {...props} />
-        : (
-          <Redirect
-            to={localizePath('/', locale)}
-            message={{
-              body: `You have to log in to enter the page ${props.location.pathname}`,
-              type: 'error',
-              title: 'access denied'
-            }}
-          />
-        )
-    )}
-  />
-);
+const PrivateRoute = ({ render, component, isAuthenticated, locale, ...rest }) => {
+  return (
+    <Route
+      {...rest}
+      render={(props) => {
+        const { location: { pathname } } = props;
+        if (isAuthenticated === true) {
+          return component ? React.createElement(component, props) : render(props);
+        } else {
+          return (
+            <Redirect
+              to={localizePath('/', locale)}
+              message={{
+                body: `You have to log in to enter the page ${pathname}`,
+                type: 'error',
+                title: 'access denied'
+              }}
+            />
+          );
+        }
+      }}
+    />
+  )
+};
 
 PrivateRoute.propTypes = propTypes;
 PrivateRoute.defaultProps = defaultProps;

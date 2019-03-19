@@ -7,6 +7,7 @@ import { localizePath } from '../../localization/index';
 import Profile from './Profile';
 import Orders from './Orders';
 import ResetPassword from './ResetPassword';
+import NotFound from '../../pages/NotFound';
 
 import { renderRoute } from '../../app/App';
 
@@ -26,6 +27,7 @@ const User = ({ locale }) => {
     <Route exact path={localizePath('/user/orders', locale)} component={renderRoute(Orders)}/>
     <Route exact path={localizePath('/user/orders/page/:page', locale)} component={renderRoute(Orders)}/>
     <Route exact path={localizePath('/user/reset-password', locale)} component={renderRoute(ResetPassword)}/>
+    <Route path="/user/*" component={NotFound} />
   </Switch>
 )};
 

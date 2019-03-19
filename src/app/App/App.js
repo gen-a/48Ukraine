@@ -92,12 +92,12 @@ class App extends Component{
         <Route exact path={localizePath('/product/:id', locale)} render={renderRoute(Product)}/>
         <Route exact path={localizePath('/cart', locale)} render={renderRoute(Cart)}/>
         <Route exact path={localizePath('/checkout', locale)} render={renderRoute(Checkout)}/>
-        <Route exact path={localizePath('/enter-account/:visa', locale)} component={renderRoute(EnterAccount)}/>
+        <Route exact path={localizePath('/enter-account/:visa', locale)} render={renderRoute(EnterAccount)}/>
         <PrivateRoute
-          exact
           path={localizePath('/user/:section', locale)}
-          component={()=>(
+          render={(routeProps)=>(
             <AsyncComponent
+              key={routeProps.match.params.section}
               component={()=> import('../../pages/User')}
               placeholder={<SplashScreen/>}
             />
