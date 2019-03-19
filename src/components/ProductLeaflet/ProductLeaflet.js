@@ -93,7 +93,7 @@ const ProductLeaflet = ({ images, id, price, name, info, description, attributes
             <h2>Інформація</h2>
             <div className="ProductLeaflet__info">
               {attributes.map(a => (
-                <div className="ProductLeaflet__infoRow">
+                <div className="ProductLeaflet__infoRow" key={a.attribute}>
                   <div className="ProductLeaflet__infoAttribute">{a.attribute}</div>
                   <div className="ProductLeaflet__infoValue">{a.value}</div>
                 </div>

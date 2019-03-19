@@ -81,9 +81,8 @@ const ImageViewer = ({ images, orientation }) => {
 
       <div className="ImageViewer__buttons">
         {images.map((p, i) => (
-          <Ripple>
+          <Ripple key={uid(p.fs)}>
             <button
-              key={uid(p.fs)}
               className={current === i
                 ? 'ImageViewer__button ImageViewer__button_current'
                 : 'ImageViewer__button'

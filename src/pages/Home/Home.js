@@ -11,8 +11,10 @@ import SlideShow from '../../components/UI/SlideShow/SlideShow';
 import './Home.scss';
 import AspectRatioBox from '../../components/UI/AspectRatioBox/AspectRatioBox';
 import { addFlashMessage, removeFlashMessage } from '../../actions/app';
-import {NavLink} from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
+import ResponsiveSlideShow from '../../components/UI/ResponsiveSlideShow';
+import ResponsiveSlideShowGroup from '../../components/UI/ResponsiveSlideShow/Group';
 
 /**
  * PropTypes of the component
@@ -44,15 +46,15 @@ class Home extends Component {
 
   }
 
-  onAddMessageButtonClick(){
-    const { callAddFlashMessage  } = this.props;
+  onAddMessageButtonClick() {
+    const { callAddFlashMessage } = this.props;
     callAddFlashMessage(
       'Test message',
       'Test message title',
       'error'
     );
     callAddFlashMessage(
-'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolor, itaque!',
+      'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolor, itaque!',
       'Test message title',
       'error'
     );
@@ -70,32 +72,40 @@ class Home extends Component {
     console.groupEnd();
 
 
-
-
     const { top, window: { width, height }, callAddFlashMessage, callHideFlashMessage, callShowFlashMessage, callRemoveFlashMessage } = this.props;
-const imageStyle = {display:'block', width:'100%'};
+    const imageStyle = { display: 'block', width: '100%' };
 
     return (
       <div className="Home">
-<div style={{margin:'40px 0'}}>
-        <AspectRatioBox width={1364} height={300}>
-            <SlideShow autoPlay={true}>
-              <div>
+        <div style={{ margin: '40px 0' }}>
+          <ResponsiveSlideShow variant={width/height > 1 ? 'h' : 'v'}>
+            <ResponsiveSlideShowGroup name="v" width={500} height={500}>
+              <div key="111">
+                <img src="/images/home-slide-show/banner-facebook-flowers-624x624.jpg" alt="" style={imageStyle}/>
+              </div>
+              <div key="222">
+                <img src="/images/home-slide-show/banner-facebook-free-st.niklas-624x624.jpg" alt="" style={imageStyle}/>
+              </div>
+              <div key="333">
+                <img src="/images/home-slide-show/banner-facebook-free-caviar-624x624.jpg" alt="" style={imageStyle}/>
+              </div>
+            </ResponsiveSlideShowGroup>
+            <ResponsiveSlideShowGroup name="h" width={1364} height={300}>
+              <div key="111">
                 <img src="/images/home-slide-show/file_2.jpg" alt="" style={imageStyle}/>
               </div>
-              <div>
+              <div key="222">
                 <img src="/images/home-slide-show/file_3.jpg" alt="" style={imageStyle}/>
               </div>
-              <div>
+              <div key="333">
                 <img src="/images/home-slide-show/file_4.jpg" alt="" style={imageStyle}/>
               </div>
-            </SlideShow>
-        </AspectRatioBox>
+            </ResponsiveSlideShowGroup>
+          </ResponsiveSlideShow>
+        </div>
 
-</div>
 
-
-        <button onClick={()=>this.onAddMessageButtonClick()}>add message</button>
+        <button onClick={() => this.onAddMessageButtonClick()}>add message</button>
         <NavLink to="/user">privte route</NavLink>
       </div>
     );
