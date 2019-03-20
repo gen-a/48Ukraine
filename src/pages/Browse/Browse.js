@@ -7,6 +7,8 @@ import { get } from '../../services/ajax';
 import ProductsList from '../../components/ProductsList';
 import { replaceInRoute } from '../../utils/helpers';
 import { localizePath } from '../../localization/index';
+import InfinityScroll from '../../components/InfinityScroll';
+
 /**
  * PropTypes of the component
  * @type {object}
@@ -113,13 +115,21 @@ class Browse extends Component {
     return (
       <>
       <h1>{currentDepartmentData.name}</h1>
-      <ProductsList
-        products={products}
+
+      <InfinityScroll
+        url={URL_FETCH_PRODUCTS}
+        offset={10}
+
         currentPage={page}
         pagesTotal={pagesTotal}
-        paginationUrl={localizePath(replaceInRoute('/browse/:department/page/:page', { ...params, page: ':page' }), locale)}
+        paginationUrl={localizePath(replaceInRoute('/browse/:department/page/:page', {
+          ...params,
+          page: ':page'
+        }), locale)}
         productUrl={localizePath('/product/:id', locale)}
         inCartQuantities={inCartQuantities}
+
+        render={props => <ProductsList {...props} />}
       />
       </>
     );

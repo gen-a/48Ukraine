@@ -10,7 +10,7 @@ import { connect } from 'react-redux';
 
 import './Home.scss';
 import { addFlashMessage, removeFlashMessage } from '../../actions/app';
-import { NavLink } from 'react-router-dom';
+import Pagination from '../../components/UI/Pagination';
 
 
 import ProductsPromo from '../../components/ProductsPromo';
@@ -64,6 +64,20 @@ class Home extends Component {
 
     return (
       <div className="Home">
+        {
+          [...new Array(6)].map((n, x) => (
+            [...new Array(6-x)].map((g, y) => (
+            <Pagination
+              limit={5}
+              total={6}
+              current={x + 1}
+              url={'/:page'}
+              infinityLoads={y + 1}
+            />
+            ))
+
+          ))
+        }
         <div style={slideShowBoxStyle}>
           <ResponsiveSlideShow variant={slideShowVariant}>
             <ResponsiveSlideShowGroup name="v" width={500} height={500}>

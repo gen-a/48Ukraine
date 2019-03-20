@@ -59,8 +59,8 @@ exports.find = function getAllProducts(req, res, next) {
         name: p.name,
         attributesInfo: p.attributesInfo,
         image: {
-          fs: `http://127.0.0.1:3000/images/products/${p.image}`,
-          sm: `http://127.0.0.1:3000/images/products/sm-${p.image}`,
+          fs: `http://${process.env.HOST}:${process.env.PORT}/images/products/${p.image}`,
+          sm: `http://${process.env.HOST}:${process.env.PORT}/images/products/sm-${p.image}`,
         }
       }
     ));

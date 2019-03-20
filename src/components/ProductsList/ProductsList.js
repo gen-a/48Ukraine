@@ -25,7 +25,7 @@ const propTypes = {
   /** URL template for url product links generation. */
   productUrl: PropTypes.string,
   /** Products list data. */
-  products: PropTypes.arrayOf(
+  records: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string,
       name: PropTypes.string,
@@ -42,6 +42,8 @@ const propTypes = {
   ),
   /** Object in cart quantities. */
   inCartQuantities: PropTypes.shape({}),
+  /** Number of steps load by infinity scroll. */
+  infinityLoads: PropTypes.number,
 };
 /**
  * Default props of the component
@@ -52,14 +54,15 @@ const defaultProps = {
   currentPage: 0,
   paginationUrl: '',
   productUrl: '',
-  products: [],
+  records: [],
   inCartQuantities: {},
+  infinityLoads: 0
 };
 
 /**
  * General component description in JSDoc format. Markdown is *supported*.
  */
-const ProductsList = ({ productUrl, pagesTotal, paginationUrl, products, currentPage, inCartQuantities }) => {
+const ProductsList = ({ productUrl, pagesTotal, paginationUrl, records, currentPage, inCartQuantities, infinityLoads }) => {
   return (
     <>
     {pagesTotal > 1 && (
@@ -69,10 +72,11 @@ const ProductsList = ({ productUrl, pagesTotal, paginationUrl, products, current
         total={pagesTotal}
         current={parseInt(currentPage, 10)}
         url={paginationUrl}
+        infinityLoads={infinityLoads}
       />
     )}
     <div className="ProductsList">
-      {products.map(product => (
+      {records.map(product => (
         <ProductCard
           url={replaceInRoute(productUrl, { id: product.id })}
           key={product.id}

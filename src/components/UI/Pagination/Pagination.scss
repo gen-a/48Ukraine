@@ -1,4 +1,46 @@
-.Pagination{
+@import '../../../colors';
+
+.Pagination {
   display: flex;
   justify-content: center;
+  max-width:600px;
+  margin:0 auto;
+
+  &__button {
+    margin: 5px;
+    flex: 1 1 48px;
+    display:block;
+    background-color: white;
+    cursor: pointer;
+    outline:none;
+    border:0;
+    padding:5px 10px;
+    border-radius:0.25rem;
+    transition: all 0.4s;
+    font-size:1rem;
+    text-align:center;
+    &:hover {
+      background-color: $color-cool-grey-3h;
+    }
+    &[disabled] {
+      opacity: 0.2;
+      cursor: default;
+    }
+  }
+  &__page {
+    background-color: $color-cool-grey-5h;
+    &:hover {
+      background-color: $color-cool-grey-h;
+    }
+    &_current {
+      background-color: $color-secondary-hb;
+      color: white;
+      cursor: default;
+      &:hover {
+        background-color: $color-secondary-hb;
+        color: white;
+        cursor: default;
+      }
+    }
+  }
 }

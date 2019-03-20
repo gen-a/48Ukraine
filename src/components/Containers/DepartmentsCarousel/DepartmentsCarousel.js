@@ -92,9 +92,7 @@ class DepartmentsCarousel extends Component {
   }
 
   render() {
-
     const { height, width, match: { params: { department: currentDepartment } }, departments, locale } = this.props;
-
     const nodes = departments.filter(d => d.icon)
       .map(({ icon, name, nameInUrl }) => {
         const C = Icons[icon];

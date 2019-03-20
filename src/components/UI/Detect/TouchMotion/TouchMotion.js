@@ -78,9 +78,6 @@ class TouchMotion extends Component {
   onTouchEnd(touches) {
     const { onEnd } = this.props;
     onEnd({ ...this.lastData, timer: new Date().getTime() });
-    if (touches.length === 1) {
-      this.onTouchStart(touches);
-    }
   }
 
   /**

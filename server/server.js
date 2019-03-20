@@ -19,8 +19,8 @@ const productsRoutes = require('./routes/products-routes');
 const ordersRoutes = require('./routes/orders-routes');
 
 const app = express();
-const port = process.env.PORT || 5000;
-const hostname = '127.0.0.1';
+const port = process.env.SERVER_PORT || 5000;
+const hostname = process.env.SERVER_HOSTNAME || '127.0.0.1';
 
 const { connect } = require( './config/mongoose');
 
@@ -28,7 +28,7 @@ process.on('unhandledRejection', () => {});
 // middlewares //
 
 app.use(cors({
-  origin:['http://localhost:3000'],
+  origin:[`http://${process.env.HOST}:${process.env.PORT}`],
   methods:['POST', 'PUT'],
   credentials: true // enable set cookie
 }));

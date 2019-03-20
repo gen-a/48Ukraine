@@ -89,9 +89,6 @@ class TouchSwipe extends Component {
    */
   onTouchEnd(touches) {
     this.onEnd();
-    if (touches.length === 1) {
-      this.onStart(touches[0].clientX, touches[0].clientY);
-    }
   }
 
   /**

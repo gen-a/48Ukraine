@@ -15,7 +15,7 @@ import StoreWindowSize from '../Containers/StoreWindowSize';
 import ToolBarLayer from './ToolBarLayer';
 import DrawerLayer from './DrawerLayer';
 import Header from './Header';
-
+import { storeScrollData } from '../../actions/app';
 import './Layout.scss';
 import DepartmentsCarousel from '../Containers/DepartmentsCarousel';
 import ShoppingCart from '../Containers/ShoppingCart/ShoppingCart';
@@ -26,6 +26,8 @@ import { localizePath } from "../../localization/index";
  * @type {object}
  */
 const propTypes = {
+  /** Scroll data by event collector. */
+  callStoreScrollData: PropTypes.func.isRequired,
   /** Window dimensions data. */
   window: PropTypes.shape({
     /** Window height. */
@@ -52,13 +54,14 @@ const Layout = ({ render, ...otherProps }) => {
       <FlashMessages />
       <Loader />
 
-      <div className="Layout__content">
+      <div className="Layout__content" onScroll={otherProps.callStoreScrollData}>
         <Header height={48} />
         <DepartmentsCarousel height={80} />
         <div className="Layout__contentBox">
           { render(otherProps) }
         </div>
       </div>
+
       <div className="Layout__footer">
         footer
       </div>
@@ -76,4 +79,10 @@ const mapStateToProps = state => (
   }
 );
 
-export default connect(mapStateToProps, null)(Layout);
+const mapDispatchToProps = dispatch => (
+  {
+    callStoreScrollData: message => dispatch(storeScrollData(message)),
+  }
+);
+
+export default connect(mapStateToProps, mapDispatchToProps)(Layout);
