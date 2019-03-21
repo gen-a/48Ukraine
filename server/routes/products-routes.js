@@ -5,7 +5,6 @@
 const router = require('express').Router();
 const productsController = require('../controllers/products-controller');
 
-
 /**
  * @api {post} /data/products Load products
  * @apiVersion 1.0.0
@@ -30,6 +29,7 @@ const productsController = require('../controllers/products-controller');
  */
 router.get('/', productsController.find);
 router.get('/product', productsController.findById);
-
+router.post('/search/hint', productsController.searchHint);
+router.post('/search', productsController.search);
 
 module.exports = router;

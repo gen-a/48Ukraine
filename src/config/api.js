@@ -15,3 +15,5 @@ export const URL_FETCH_PRODUCT = `${API_PREFIX}/products/product`;
 export const URL_FETCH_PROMO_PRODUCTS= `${API_PREFIX}/products`;
 export const URL_CHECKOUT = `${API_PREFIX}/orders/add`;
 export const URL_FETCH_USER_ORDERS = `${API_PREFIX}/orders/history`;
+export const URL_SEARCH_HINT = `${API_PREFIX}/products/search/hint`;
+export const URL_SEARCH_SUBMIT = `${API_PREFIX}/products/search`;

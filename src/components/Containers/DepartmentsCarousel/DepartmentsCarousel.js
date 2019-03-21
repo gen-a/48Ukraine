@@ -94,7 +94,7 @@ class DepartmentsCarousel extends Component {
   render() {
     const { height, width, match: { params: { department: currentDepartment } }, departments, locale } = this.props;
     const nodes = departments.filter(d => d.icon)
-      .map(({ icon, name, nameInUrl }) => {
+      .map(({ icon, name, nameInUrl }, i) => {
         const C = Icons[icon];
         return (
           <CarouselNode
@@ -109,7 +109,7 @@ class DepartmentsCarousel extends Component {
               <div
                 className={nameInUrl === currentDepartment
                   ? 'DepartmentsCarousel__entry DepartmentsCarousel__entry_current'
-                  : 'DepartmentsCarousel__entry'}
+                  : `DepartmentsCarousel__entry DepartmentsCarousel__entry_${i%2 ? 'odd' : 'even'}`}
                 style={{ height: `${height}px`, width: `${width}px` }}
               >
                 <div className="DepartmentsCarousel__icon">

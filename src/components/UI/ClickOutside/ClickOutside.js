@@ -19,14 +19,15 @@ class ClickOutside extends Component {
 
   componentDidMount() {
     const {onClick} = this.props;
-    window.addEventListener('click', onClick);
+
     this.ref.current.addEventListener( 'click', this.blockClick.bind(this));
+    window.addEventListener('click', onClick);
   }
 
   componentWillUnmount() {
     const {onClick} = this.props;
-    window.removeEventListener('click', onClick);
     this.ref.current.removeEventListener( 'click', this.blockClick.bind(this));
+    window.removeEventListener('click', onClick);
   }
 
   onClick(){
@@ -34,9 +35,11 @@ class ClickOutside extends Component {
     if(!this.isBlocked){
       onClick();
     }
+    console.log('unИlockClick');
     this.isBlocked = false;
   }
   blockClick(){
+    console.log('blockClick');
     this.isBlocked = true;
   }
 

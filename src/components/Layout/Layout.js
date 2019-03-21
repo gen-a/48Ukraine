@@ -44,6 +44,7 @@ const propTypes = {
 };
 
 const Layout = ({ render, ...otherProps }) => {
+  const { window } = otherProps;
   return (
     <div className="Layout">
       <StoreWindowSize />
@@ -55,8 +56,8 @@ const Layout = ({ render, ...otherProps }) => {
       <Loader />
 
       <div className="Layout__content" onScroll={otherProps.callStoreScrollData}>
-        <Header height={48} />
-        <DepartmentsCarousel height={80} />
+        <Header height={['xs', 'sm', 'md'].includes(window.mediaPrefix) ? 48 : 64} />
+        <DepartmentsCarousel height={['xs', 'sm', 'md'].includes(window.mediaPrefix) ? 80 : 64} />
         <div className="Layout__contentBox">
           { render(otherProps) }
         </div>

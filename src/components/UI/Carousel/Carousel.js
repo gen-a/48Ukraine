@@ -132,6 +132,7 @@ class Carousel extends Component {
    */
   onStartTouchMotion(e) {
     if (e.points.length === 1) {
+      this.startMotion();
       this.touchMotionInProgress = true;
       this.startX = e.points[0].x;
     }
@@ -141,12 +142,8 @@ class Carousel extends Component {
    * End touch motion handler
    */
   onEndTouchMotion(e) {
-    if (e.points.length === 2) {
-      this.touchMotionInProgress = true;
-      this.startX = e.points[0].x;
-    } else {
-      this.onEndMotion();
-    }
+    this.touchMotionInProgress = false;
+    this.onEndMotion();
   }
 
   /**

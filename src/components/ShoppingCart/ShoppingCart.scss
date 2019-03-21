@@ -4,9 +4,9 @@
 .ShoppingCart {
   position: fixed;
   justify-content: center;
-  bottom: -$tool-bar-height;
+  bottom: -$tool-bar-size-sm;
   left: 50%;
-  height: $tool-bar-height;
+  height: $tool-bar-size-sm;
   background: $color-neutral-3h;
   border-radius: $tool-bar-border-radius $tool-bar-border-radius 0 0;
   transform: translateX(-50%);
@@ -43,7 +43,7 @@
     position:absolute;
     left:0.25rem;
     top:0;
-    width:$tool-bar-height;
+    width:$tool-bar-size-sm;
 
   }
   &__icon svg{
@@ -66,7 +66,7 @@
   &__price{
     padding:0 0.5rem 0 1rem;
     font-size:1.5rem;
-    line-height: $tool-bar-height;
+    line-height: $tool-bar-size-sm;
     color: $color-neutral-hb;
   }
 }

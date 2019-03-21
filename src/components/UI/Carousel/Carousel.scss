@@ -1,18 +1,16 @@
 @import '../../../colors';
 
-$background-color: $color-primary-hb;
-$button-background-color: $color-primary-b ;
 $button-width: 48px;
 
 :export {
   buttonWidth: $button-width;
-  buttonBackgroundColor: $color-primary-b ;
+  buttonBackgroundColor: $color-cool-grey-h ;
 }
 
 .Carousel{
   width:100%;
   position:relative;
-  background: $background-color;
+  background: $color-cool-grey-h;
 
   &__slot{
     position:absolute;
@@ -48,7 +46,7 @@ $button-width: 48px;
     top:0;
     bottom:0;
     width:$button-width;
-    background:$button-background-color;
+    background:$color-cool-grey-h;
     outline:none;
     border:none;
     display:block;

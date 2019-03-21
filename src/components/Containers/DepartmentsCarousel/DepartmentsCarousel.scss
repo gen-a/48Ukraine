@@ -4,18 +4,24 @@
 .DepartmentsCarousel{
   &__entry{
     position:relative;
-    background: $color-primary-2b ;
-    color: $color-primary-h;
+    color: $color-cool-grey-4h;
     box-sizing: border-box;
     padding:0.5rem;
     font-size: 1rem;
-    border-bottom: 3px solid $color-primary-hb ;
+    border-bottom: 3px solid $color-cool-grey-h ;
     transition:  border-color 0.2s, color 0.2s;
     font-family: "Roboto Condensed", sans-serif;
     display:flex;
     align-items:flex-end;
     overflow: hidden;
+    &_even{
+      background: $color-cool-grey-2b;
+    }
+    &_odd{
+      background: $color-cool-grey-b;
+    }
   }
+
   &__entry:hover{
     border-bottom: 3px solid $color-primary-2h ;
     color:white;
@@ -29,7 +35,7 @@
     overflow:hidden;
     & *{
       transition:  fill 0.2s;
-      fill:$color-primary-h;
+      fill:$color-cool-grey-4h;
     }
   }
   &__label{
@@ -43,8 +49,8 @@
   &__entry_current:hover,
   &__entry_current{
     color:black;
-    border-bottom: 3px solid $color-secondary-h;
-    background: $color-secondary-b ;
+    border-bottom: 3px solid $color-secondary-2h;
+    background: $color-secondary-hb ;
     cursor:default;
     & .DepartmentsCarousel__icon *{
         fill:black;

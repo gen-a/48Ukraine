@@ -6,7 +6,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-
+import Search from '../../components/Widgets/Search';
 
 import './Home.scss';
 import { addFlashMessage, removeFlashMessage } from '../../actions/app';
@@ -16,6 +16,7 @@ import Pagination from '../../components/UI/Pagination';
 import ProductsPromo from '../../components/ProductsPromo';
 import ResponsiveSlideShow from '../../components/UI/ResponsiveSlideShow';
 import ResponsiveSlideShowGroup from '../../components/UI/ResponsiveSlideShow/Group';
+import { URL_SEARCH_HINT, URL_SEARCH_SUBMIT } from '../../config/api';
 
 /**
  * PropTypes of the component
@@ -64,7 +65,17 @@ class Home extends Component {
 
     return (
       <div className="Home">
-        {
+        <Search
+          urlHint={URL_SEARCH_HINT}
+          urlSubmit={URL_SEARCH_SUBMIT}
+          minlength={3}
+          onError={console.log}
+          onSuccess={console.log}
+        />
+
+
+
+  {/*      {
           [...new Array(6)].map((n, x) => (
             [...new Array(6-x)].map((g, y) => (
             <Pagination
@@ -77,7 +88,7 @@ class Home extends Component {
             ))
 
           ))
-        }
+        }*/}
         <div style={slideShowBoxStyle}>
           <ResponsiveSlideShow variant={slideShowVariant}>
             <ResponsiveSlideShowGroup name="v" width={500} height={500}>

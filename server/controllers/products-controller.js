@@ -10,11 +10,11 @@ exports.findById = function getProductById(req, res, next) {
   const product = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../dummy-data/product.json'), 'utf8'));
   const data = {
     ...product,
-    images: product.images.map( img =>
+    images: product.images.map(img =>
       ({
-        fs:`https://48ukraine.com${img['image:src']}`,
-        md:`https://48ukraine.com${img['image-sm:src']}`,
-        sm:`https://48ukraine.com${img['image-sm:src']}`,
+        fs: `https://48ukraine.com${img['image:src']}`,
+        md: `https://48ukraine.com${img['image-sm:src']}`,
+        sm: `https://48ukraine.com${img['image-sm:src']}`,
       })
     ),
     price: {
@@ -22,13 +22,58 @@ exports.findById = function getProductById(req, res, next) {
       sale: toCoins(product.items[0].sale_price),
     },
     attributes: Object.keys(product.attributes.__all__).map(k => ({
-        attribute:product.attributes.__all__[k].name,
-        value: product.attributes.__all__[k].values.map( v => v.value_name).join(', ')
-      }))
+      attribute: product.attributes.__all__[k].name,
+      value: product.attributes.__all__[k].values.map(v => v.value_name).join(', ')
+    }))
   };
-  res.status(200).json(response( data, '', 0));
+  res.status(200).json(response(data, '', 0));
   return next();
 
+};
+
+
+exports.searchHint = function getAllProducts(req, res, next) {
+  const products = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../dummy-data/products.json'), 'utf8'));
+  const search = new RegExp(req.body.query, 'gi');
+  const records = products.filter(product => product.name.match(search)).map(product => product.name);
+  res.status(200).json(response({ records }, '', 0));
+  return next();
+};
+
+exports.search = function getAllProducts(req, res, next) {
+  const products = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../dummy-data/products.json'), 'utf8'));
+  const search = new RegExp(req.body.query, 'gi');
+  const records = products.filter(product => product.name.match(search));
+
+  const data = {
+    perPage: parseInt(req.query.perPage, 10) || 12,
+    page: parseInt(req.query.page, 10) || 1,
+    records: [],
+    count: records.length,
+    pagesTotal: Math.ceil(records.length / (parseInt(req.query.perPage, 10) || 12)),
+    filters: {}
+  };
+  const from = ( data.page - 1 ) * data.perPage;
+  data.records = records.slice(from, from + data.perPage)
+    .map(p => (
+      {
+        id: p.itemId,
+        price: {
+          retail: toCoins(p.minItemPrice),
+          sale: toCoins(p.minItemSalePrice)
+        },
+        inStore: 24,
+        name: p.name,
+        attributesInfo: p.attributesInfo,
+        image: {
+          fs: `http://${process.env.HOST}:${process.env.PORT}/images/products/${p.image}`,
+          sm: `http://${process.env.HOST}:${process.env.PORT}/images/products/sm-${p.image}`,
+        }
+      }
+    ));
+
+  res.status(200).json(response(data, '', 0));
+  return next();
 };
 /**
  * Get all users
@@ -46,9 +91,9 @@ exports.find = function getAllProducts(req, res, next) {
     pagesTotal: Math.ceil(products.length / (parseInt(req.query.perPage, 10) || 12)),
     filters: {}
   };
-  const from = ( data.page-1 ) * data.perPage;
+  const from = ( data.page - 1 ) * data.perPage;
   data.records = products.slice(from, from + data.perPage)
-    .map( p => (
+    .map(p => (
       {
         id: p.itemId,
         price: {
@@ -65,6 +110,6 @@ exports.find = function getAllProducts(req, res, next) {
       }
     ));
 
-  res.status(200).json(response( data, '', 0));
+  res.status(200).json(response(data, '', 0));
   return next();
 };

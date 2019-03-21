@@ -2,8 +2,12 @@
 
 .Header{
   width:100%;
-  background:$color-primary-2h;
+  background:$color-cool-grey-4h;
   display:flex;
+  box-shadow: 0 0 4px #000;
+  position:relative;
+  z-index:2;
+
   &__logoBox{
     flex: 1 1 200px;
     text-align:center;
