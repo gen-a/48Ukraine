@@ -8,6 +8,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import WindowResizeDetect from '../../UI/Detect/WindowResize/WindowResize';
 import { setWindowSize } from '../../../actions/app';
+import { mediaPrefixes } from '../../../_settings';
+
 
 /**
  * PropTypes of the component
@@ -18,7 +20,9 @@ const propTypes = {
   callSetWindowSize: PropTypes.func.isRequired,
 };
 
-const StoreWindowSize = ({ callSetWindowSize }) => <WindowResizeDetect onResize={callSetWindowSize} />;
+const StoreWindowSize = ({ callSetWindowSize }) => (
+  <WindowResizeDetect mediaPrefixes={mediaPrefixes} onResize={callSetWindowSize} />
+);
 
 StoreWindowSize.propTypes = propTypes;
 

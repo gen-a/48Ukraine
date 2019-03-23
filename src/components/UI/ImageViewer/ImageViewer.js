@@ -7,9 +7,9 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import AspectRatioBox from '../AspectRatioBox/AspectRatioBox';
 import { uid } from 'react-uid';
-import TouchSwipe from '../Detect/TouchSwipe';
 import Image from '../FlexibleImage/FlexibleImage';
 import Ripple from '../Ripple';
+import SwipeDetect from '../../../utils/events/swipe-detect';
 
 import './ImageViewer.scss';
 
@@ -44,39 +44,48 @@ const defaultProps = {
 const ImageViewer = ({ images, orientation }) => {
 
   const [current, setState] = useState(0);
+
+  const swipeDetect = new SwipeDetect();
+  swipeDetect.onSwipe = (e) => {
+    switch (e.direction) {
+      case 'right':
+        setState(current === 0 ? images.length - 1 : current - 1);
+        break;
+      case 'left':
+        setState(current === images.length - 1 ? 0 : current + 1);
+        break;
+      default:
+    }
+  };
+
+
   return (
     <div className={
       orientation === 'portrait'
         ? 'ImageViewer'
         : 'ImageViewer ImageViewer_landscape'
     }>
-      <div className="ImageViewer__screen">
-        <TouchSwipe onSwipe={(e) => {
-          switch (e.direction) {
-            case 'right':
-              setState(current === 0 ? images.length - 1 : current - 1);
-              break;
-            case 'left':
-              setState(current === images.length - 1 ? 0 : current + 1);
-              break;
-            default:
-          }
-        }}>
-          <AspectRatioBox width={1} height={1}>
-            {images.map((p, i) => (
-              <img
-                key={uid(p.fs)}
-                src={p.fs}
-                alt={p.fs}
-                className={
-                  current === i
-                    ? 'ImageViewer__image ImageViewer__image_current'
-                    : 'ImageViewer__image'
-                }
-              />
-            ))}
-          </AspectRatioBox>
-        </TouchSwipe>
+      <div
+        className="ImageViewer__screen"
+        onTouchStart={e => swipeDetect.start(e.touches[0].clientX, e.touches[0].clientY)}
+        onTouchMove={e => swipeDetect.move(e.touches[0].clientX, e.touches[0].clientY)}
+        onTouchEnd={e => swipeDetect.end(e)}
+      >
+
+        <AspectRatioBox width={1} height={1}>
+          {images.map((p, i) => (
+            <img
+              key={uid(p.fs)}
+              src={p.fs}
+              alt={p.fs}
+              className={
+                current === i
+                  ? 'ImageViewer__image ImageViewer__image_current'
+                  : 'ImageViewer__image'
+              }
+            />
+          ))}
+        </AspectRatioBox>
       </div>
 
       <div className="ImageViewer__buttons">
@@ -90,7 +99,7 @@ const ImageViewer = ({ images, orientation }) => {
               onClick={() => setState(i)}
             >
               <div className="ImageViewer__buttonFrame">
-                <Image src={p.sm} alt={p.sm} />
+                <Image src={p.sm} alt={p.sm}/>
               </div>
             </button>
           </Ripple>

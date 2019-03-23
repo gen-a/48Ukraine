@@ -48,11 +48,15 @@ class Search extends Component {
     this.hints = {};
   }
 
-  displayHints() {
+  key(value){
     const { minlength } = this.props;
+    return value.substr(0, minlength).toLowerCase();
+  }
+
+  displayHints() {
     const { value, filters } = this.state;
     const filtersKey = JSON.stringify(filters);
-    const key = value.substr(0, minlength);
+    const key = this.key(value);
     if (this.hints[filtersKey]) {
       if (this.hints[filtersKey][key].length > 0) {
         const re = new RegExp(value, 'gi');
@@ -88,7 +92,7 @@ class Search extends Component {
         if (!hints[filtersKey]) {
           hints[filtersKey] = {};
         }
-        const key = value.substr(0, minlength);
+        const key = this.key(value);
         if (!hints[filtersKey][key]) {
 
           post(urlHint, { key, filters }, ({ error, message, data }) => {

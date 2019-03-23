@@ -4,13 +4,14 @@ $button-width: 48px;
 
 :export {
   buttonWidth: $button-width;
-  buttonBackgroundColor: $color-cool-grey-h ;
+  buttonBackgroundColor: rgba(255,255,255,0.2);/*$color-cool-grey-h ;*/
+  buttonColor: $color-cool-grey-b ;
 }
 
 .Carousel{
   width:100%;
   position:relative;
-  background: $color-cool-grey-h;
+  /*background: $color-cool-grey-h;*/
 
   &__slot{
     position:absolute;

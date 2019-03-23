@@ -17,14 +17,15 @@ body {
   flex-shrink: 0;
 }
 */
-
+html, body, #root {
+  height: 100%;
+}
 body{
   font-family: 'Roboto', sans-serif;
   font-size:0.75rem;
   line-height:1.345em;
   margin:0;
   padding:0;
-  overflow:hidden;
 }
 input,
 textarea,
@@ -42,13 +43,12 @@ h1{
   margin: 3rem 1rem;
 }
 .Layout{
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
   &__content{
-    position:fixed;
-    top:0;
-    left:0;
-    right:0;
-    bottom:0;
-    overflow: auto;
+    flex: 1 0 auto;
     padding-bottom:64px;
     &Box{
       box-sizing: border-box;
@@ -61,5 +61,10 @@ h1{
   &__content_blur {
     filter: blur(1px);
   }
+  &__footer{
+    background: $color-cool-grey-3h;
+    flex-shrink: 0;
+  }
+
 }
 

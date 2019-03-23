@@ -32,12 +32,6 @@ const propTypes = {
   currentPage: PropTypes.number,
   /** Render children function. */
   render: PropTypes.func.isRequired,
-  /** ScrollTop of the listened scroll box. */
-  scrollTop: PropTypes.number,
-  /** scrollHeight of the listened scroll box. */
-  scrollHeight: PropTypes.number,
-  /** clientHeight of the listened scroll box. */
-  clientHeight: PropTypes.number,
   /** Zone of start scrolling in pixels. */
   offset: PropTypes.number,
 };
@@ -48,9 +42,6 @@ const propTypes = {
 const defaultProps = {
   params: {},
   currentPage: 1,
-  scrollTop: 0,
-  scrollHeight: 0,
-  clientHeight: 0,
   offset: 200
 };
 
@@ -58,6 +49,10 @@ const defaultProps = {
  * General component description in JSDoc format. Markdown is *supported*.
  */
 class InfinityScroll extends Component {
+  static scrollTop(){
+    return (window.pageYOffset || document.documentElement.scrollTop) - (document.documentElement.clientTop || 0);
+  }
+
   constructor(props) {
     super(props);
     this.state = {
@@ -67,32 +62,35 @@ class InfinityScroll extends Component {
     this.isComplete = false;
     this.isBusy = false;
     this.scroll = 0;
+    this.handleScroll = this.handleScroll.bind(this)
   }
 
   componentDidMount() {
+    window.addEventListener('scroll', this.handleScroll);
     this.loadNext();
   }
 
-  componentDidUpdate() {
-    if (!this.isComplete && !this.busy) {
-      const { scrollTop, scrollHeight, clientHeight, offset } = this.props;
-      const newScroll = scrollHeight - clientHeight - scrollTop;
-      if (newScroll !== this.scroll && newScroll < offset) {
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this.handleScroll);
+  }
+
+  handleScroll(e) {
+    const { offset } = this.props;
+    if (!this.isComplete && !this.isBusy) {
+      if (e.target.body.scrollHeight - (window.innerHeight + InfinityScroll.scrollTop()) < offset) {
         this.loadNext();
       }
-      this.scroll = newScroll;
     }
   }
 
   loadNext() {
     const { url, params, currentPage, callShowLoader, callHideLoader, callShowToast, callAddFlashMessage } = this.props;
     const { i } = this.state;
-
-    this.busy = true;
-
+    this.isBusy = true;
     callShowLoader();
-
     get(url, { ...params, page: currentPage + i }, (response) => {
+
+
       callHideLoader();
       const { error, message, data } = response;
       if (error === 0) {
@@ -106,27 +104,19 @@ class InfinityScroll extends Component {
       } else {
         callAddFlashMessage(message, 'server response', 'error');
       }
-      this.busy = false;
+      this.isBusy = false;
     });
   }
 
   render() {
     const { render, ...otherProps } = this.props;
     const { records, i } = this.state;
-    return render({ ...otherProps, records, infinityLoads: i  });
+    return render({ ...otherProps, records, infinityLoads: i });
   }
 }
 
 InfinityScroll.propTypes = propTypes;
 InfinityScroll.defaultProps = defaultProps;
-
-const mapStateToProps = state => (
-  {
-    scrollTop: state.app.scrollData.scrollTop,
-    scrollHeight: state.app.scrollData.scrollHeight,
-    clientHeight: state.app.scrollData.clientHeight
-  }
-);
 
 const mapDispatchToProps = dispatch => (
   {
@@ -137,4 +127,4 @@ const mapDispatchToProps = dispatch => (
   }
 );
 
-export default connect(mapStateToProps, mapDispatchToProps)(InfinityScroll);
+export default connect(null, mapDispatchToProps)(InfinityScroll);

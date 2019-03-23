@@ -1,3 +1,33 @@
+@import '__pathToRoot__../colors';
+@import '__pathToRoot__../settings';
+
 .__className__{
 
+}
+/* Extra Small Devices, Phones */
+@media only screen and (min-width : $sm-media-step-min ) {
+  .__className__{
+
+  }
+}
+
+/* Small Devices, Tablets */
+@media only screen and (min-width : $md-media-step-min) {
+  .__className__{
+
+  }
+}
+
+/* Medium Devices, Desktops */
+@media only screen and (min-width : $lg-media-step-min) {
+  .__className__{
+
+  }
+}
+
+/* Large Devices, Wide Screens */
+@media only screen and (min-width : $xl-media-step-min) {
+  .__className__{
+
+  }
 }

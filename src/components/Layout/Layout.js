@@ -26,8 +26,6 @@ import { localizePath } from "../../localization/index";
  * @type {object}
  */
 const propTypes = {
-  /** Scroll data by event collector. */
-  callStoreScrollData: PropTypes.func.isRequired,
   /** Window dimensions data. */
   window: PropTypes.shape({
     /** Window height. */
@@ -55,9 +53,11 @@ const Layout = ({ render, ...otherProps }) => {
       <FlashMessages />
       <Loader />
 
-      <div className="Layout__content" onScroll={otherProps.callStoreScrollData}>
+      <div className="Layout__content">
         <Header height={['xs', 'sm', 'md'].includes(window.mediaPrefix) ? 48 : 64} />
+        <div style={{marginTop: '1rem'}}>
         <DepartmentsCarousel height={['xs', 'sm', 'md'].includes(window.mediaPrefix) ? 80 : 64} />
+      </div>
         <div className="Layout__contentBox">
           { render(otherProps) }
         </div>
@@ -80,10 +80,6 @@ const mapStateToProps = state => (
   }
 );
 
-const mapDispatchToProps = dispatch => (
-  {
-    callStoreScrollData: message => dispatch(storeScrollData(message)),
-  }
-);
 
-export default connect(mapStateToProps, mapDispatchToProps)(Layout);
+
+export default connect(mapStateToProps, null)(Layout);

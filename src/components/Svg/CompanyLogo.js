@@ -1,8 +1,8 @@
 import React from 'react';
 export const ASPECT_RATIO = 272.75/51.25;
 
-const CompanyLogo = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 272.75 51.25">
+const CompanyLogo = ( props ) => (
+  <svg {...props} preserveAspectRatio="xMinYMin slice" overflow="visible" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 272.75 51.25">
     <g>
       <path fill="#0477BE" d="M14.935,33.205H3.428l1.5-7.182l11.471-13.947h12.133l-3.138,14.783h2.999l-1.325,6.346h-2.999
 l-0.872,4.045h-9.135L14.935,33.205z M16.468,26.859l1.848-8.646h-0.07l-6.555,8.646H16.468z"/>

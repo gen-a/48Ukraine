@@ -20,6 +20,7 @@ const propTypes = {
   width: PropTypes.number,
   disabled: PropTypes.bool,
   backgroundColor: PropTypes.string,
+  color: PropTypes.string,
   onClick: PropTypes.func.isRequired,
 };
 /**
@@ -28,6 +29,7 @@ const propTypes = {
  */
 const defaultProps = {
   type: 'left',
+  color: 'white',
   width: 0,
   disabled: false,
   backgroundColor: 'transparent',
@@ -77,7 +79,7 @@ const styles = {
 /**
  * General component description in JSDoc format. Markdown is *supported*.
  */
-const CarouselButton = ({classes, type, width, disabled, backgroundColor, onClick }) => {
+const CarouselButton = ({classes, type, width, disabled, backgroundColor, color, onClick }) => {
   return (
     <button
       className={classNames( classes.button, classes[type], disabled && classes.disabled )}
@@ -87,7 +89,7 @@ const CarouselButton = ({classes, type, width, disabled, backgroundColor, onClic
       <CarouselIconChevronLeft
         width="48px"
         height="48px"
-        fill="white"
+        fill={color}
         className={classes.icon}
       />
     </button>

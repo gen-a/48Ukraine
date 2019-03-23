@@ -29,7 +29,6 @@ export const FETCH_INITIAL_STATE_FULFILLED = 'FETCH_INITIAL_STATE_FULFILLED';
 export const FETCH_INITIAL_STATE_REJECTED = 'FETCH_INITIAL_STATE_REJECTED';
 export const FETCH_INITIAL_STATE_PENDING = 'FETCH_INITIAL_STATE_PENDING';
 
-export const SET_SCROLL_DATA = 'SET_SCROLL_DATA';
 
 /**
  * Load initial state from the server
@@ -93,17 +92,6 @@ export function expandNodeOfDepartmentTree(id, value) {
 export function setWindowSize(data) {
   return (dispatch) => {
     dispatch({ type: SET_WINDOW_SIZE, payload: data });
-  };
-}
-
-/**
- * Set scroll data
- * @returns {function(*, *)}
- */
-export function storeScrollData(event) {
-  return (dispatch) => {
-    const { scrollTop, scrollHeight, clientHeight } = event.currentTarget;
-    dispatch({ type: SET_SCROLL_DATA, payload: { scrollTop, scrollHeight, clientHeight } });
   };
 }
 

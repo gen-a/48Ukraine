@@ -5,9 +5,9 @@
  */
 import React from 'react';
 import PropTypes from 'prop-types';
-import TouchSwipe from '../../Detect/TouchSwipe/TouchSwipe';
 import IconClose from '../../../Svg/IconClose';
 import Icon from '../../Icon/Icon';
+import SwipeDetect from '../../../../utils/events/swipe-detect';
 
 import './FlashMessage.scss';
 
@@ -52,6 +52,14 @@ const defaultProps = {
 
 const FlashMessage = ({ height, collapse, swipeOff, remove, id, body, title, type }) => {
   const transform = swipeOff ? 'translateX(350px)' : 'translateX(0)';
+
+  const swipeDetect = new SwipeDetect();
+  swipeDetect.onSwipe = (e) => {
+    if (e.direction === 'right') {
+      remove(id);
+    }
+  };
+
   return (
     <div
       className={`FlashMessage FlashMessage_${type}`}
@@ -59,13 +67,6 @@ const FlashMessage = ({ height, collapse, swipeOff, remove, id, body, title, typ
         height: `${collapse ? 0 : height + 5}px`
       }}
     >
-      <TouchSwipe
-        onSwipe={(e) => {
-          if (e.direction === 'right') {
-            remove(id);
-          }
-        }}
-      >
         <div
           className="FlashMessage__window"
           style={{
@@ -73,6 +74,10 @@ const FlashMessage = ({ height, collapse, swipeOff, remove, id, body, title, typ
             height: `${height}px`,
             opacity: swipeOff ? 0 : 1
           }}
+
+          onTouchStart={e => swipeDetect.start(e.touches[0].clientX, e.touches[0].clientY)}
+          onTouchMove={e => swipeDetect.move(e.touches[0].clientX, e.touches[0].clientY)}
+          onTouchEnd={e => swipeDetect.end(e)}
         >
           <div className="FlashMessage__content">
             <div className="FlashMessage__title">
@@ -86,7 +91,6 @@ const FlashMessage = ({ height, collapse, swipeOff, remove, id, body, title, typ
             </div>
           </div>
         </div>
-      </TouchSwipe>
     </div>
   );
 };

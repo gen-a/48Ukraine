@@ -11,6 +11,8 @@ import { URL_FETCH_PROMO_PRODUCTS } from '../../config/api';
 import { get } from '../../services/ajax';
 import { localizePath } from '../../localization/index';
 import { replaceInRoute } from '../../utils/helpers';
+import Slider from '../UI/Slider';
+
 
 import './ProductsPromo.scss';
 
@@ -59,6 +61,7 @@ class ProductsPromo extends Component {
       <>
       <h2 className="ProductsPromo__title">Promo products</h2>
       <div className="ProductsPromo">
+        <Slider>
           {products.map(product => (
             <ProductCard
               type="vertical"
@@ -73,7 +76,8 @@ class ProductsPromo extends Component {
               isOnSale
             />
           ))}
-        </div>
+        </Slider>
+      </div>
       </>
     );
   }

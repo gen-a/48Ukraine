@@ -342,12 +342,14 @@ class Carousel extends Component {
           onClick={() => this.onPageDown()}
           width={this.buttonWidth}
           backgroundColor={styles.buttonBackgroundColor}
+          color={styles.buttonColor}
         />
         <CarouselButton
           disabled={container.translateX === scroll.min}
           onClick={() => this.onPageUp()}
           width={this.buttonWidth}
           backgroundColor={styles.buttonBackgroundColor}
+          color={styles.buttonColor}
           type="right"
         />
 

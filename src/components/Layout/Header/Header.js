@@ -9,6 +9,8 @@ import { NavLink } from 'react-router-dom';
 import CompanyLogo, { ASPECT_RATIO } from '../../Svg/CompanyLogo';
 import { localizePath, APP_DEFAULT_LOCALE } from '../../../localization/index';
 import Ripple from '../../UI/Ripple';
+import Search from '../../Widgets/Search';
+import { URL_SEARCH_HINT, URL_SEARCH_SUBMIT } from '../../../config/api';
 import './Header.scss';
 
 /**
@@ -40,21 +42,27 @@ const Header = ({ height, locale, mediaPrefix }) => {
 
   const logoWidth = 32 * ASPECT_RATIO;
   return (
-    <div className="Header" style={{ height: `${height}px` }}>
-      <div className="Header__toggleIconBox"/>
-      <div className="Header__logoBox">
+    <div className="Header">
+      <div className="Header__logo">
         <Ripple>
-          <div className="Header__logo"
-               style={{ position: 'relative', height: `${height}px`, width: logoWidth, margin: '0 auto' }}>
-
-              <NavLink to={localizePath('/', locale)}>
-              <CompanyLogo/>
+          <div className="Header__logoBox">
+            <NavLink to={localizePath('/', locale)}>
+              <CompanyLogo height="100%"/>
             </NavLink>
           </div>
         </Ripple>
-
       </div>
-      <div className="Header__toggleIconBox"/>
+      <div className="Header__search">
+        <div className="Header__searchBox">
+          <Search
+            urlHint={URL_SEARCH_HINT}
+            urlSubmit={URL_SEARCH_SUBMIT}
+            minlength={3}
+            onError={console.log}
+            onSuccess={console.log}
+          />
+        </div>
+      </div>
     </div>
   );
 };

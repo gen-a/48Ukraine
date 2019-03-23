@@ -1,4 +1,24 @@
 $tool-bar-border-radius: 1rem;
+
+$tool-bar-size-xs: 3rem;
 $tool-bar-size-sm: 3rem;
+$tool-bar-size-md: 3rem;
 $tool-bar-size-lg: 64px;
+$tool-bar-size-xl: 64px;
+
+$xs-media-step-min: 0;
+$sm-media-step-min: 480px;
+$md-media-step-min: 768px;
+$lg-media-step-min: 992px;
+$xl-media-step-min: 1200px;
+
+:export {
+  xsMin: $xs-media-step-min;
+  smMin: $sm-media-step-min;
+  mdMin: $md-media-step-min;
+  lgMin: $lg-media-step-min;
+  xlMin: $xl-media-step-min;
+}
+
+
 

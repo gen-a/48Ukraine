@@ -1,4 +1,5 @@
 @import '../../../colors';
+@import '../../../settings';
 
 .Header{
   width:100%;
@@ -8,15 +9,61 @@
   position:relative;
   z-index:2;
 
-  &__logoBox{
-    flex: 1 1 200px;
-    text-align:center;
-    padding:8px;
+  &__logo{
+    flex: 1 1 50%;
+    text-align:left;
+    padding:8px 0 8px 64px;
+    &Box{
+      position:relative;
+      height:32px;
+      width:min-content;
+    }
   }
-  &__toggleIconBox{
-    flex: 0 0 48px;
-    padding:5px;
+  &__search{
+    flex: 1 1 50%;
     box-sizing: border-box;
+    position:relative;
+    &Box{
+      position:absolute;
+      top:4px;
+      right:64px;
+    }
   }
+}
+/* Extra Small Devices, Phones */
+@media only screen and (min-width : $sm-media-step-min ) {
+  .Header{
+    height:$tool-bar-size-sm;
+  }
+}
 
+/* Small Devices, Tablets */
+@media only screen and (min-width : $md-media-step-min) {
+  .Header{
+    height:$tool-bar-size-md;
+  }
+}
+
+/* Medium Devices, Desktops */
+@media only screen and (min-width : $lg-media-step-min) {
+  .Header{
+    height:$tool-bar-size-lg;
+    &__logo{
+      &Box{
+        height:48px;
+      }
+    }
+    &__search{
+      &Box{
+        top:12px;
+      }
+    }
+  }
+}
+
+/* Large Devices, Wide Screens */
+@media only screen and (min-width : $xl-media-step-min) {
+  .Header{
+    height:$tool-bar-size-xl;
+  }
 }

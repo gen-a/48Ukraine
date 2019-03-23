@@ -7,7 +7,7 @@
   padding:0.25rem;
   background: $color-cool-grey-2h;
   box-sizing: border-box;
-  height:$tool-bar-size-lg;
+  height:$tool-bar-size-xs;
 
   &_topLeft{
     top:0;
@@ -40,5 +40,32 @@
     bottom:0;
     right:0;
     border-radius:  $tool-bar-border-radius 0 0 0;
+  }
+}
+/* Extra Small Devices, Phones */
+@media only screen and (min-width : $sm-media-step-min ) {
+  .ToolBar{
+    height:$tool-bar-size-sm;
+  }
+}
+
+/* Small Devices, Tablets */
+@media only screen and (min-width : $md-media-step-min) {
+  .ToolBar{
+    height:$tool-bar-size-md;
+  }
+}
+
+/* Medium Devices, Desktops */
+@media only screen and (min-width : $lg-media-step-min) {
+  .ToolBar{
+    height:$tool-bar-size-lg;
+  }
+}
+
+/* Large Devices, Wide Screens */
+@media only screen and (min-width : $xl-media-step-min) {
+  .ToolBar{
+    height:$tool-bar-size-xl;
   }
 }

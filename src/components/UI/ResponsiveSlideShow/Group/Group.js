@@ -18,13 +18,13 @@ const propTypes = {
   /** Width for AspectRatio box. */
   width: PropTypes.number.isRequired,
   /** Height for AspectRatio box. */
-  hieght: PropTypes.number.isRequired,
+  height: PropTypes.number.isRequired,
 };
 
 /**
  * General component description in JSDoc format. Markdown is *supported*.
  */
-const Group = ({ children, name, width, hieght }) => children;
+const Group = ({ children, name, width, height }) => children;
 
 Group.propTypes = propTypes;
 

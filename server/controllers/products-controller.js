@@ -51,7 +51,8 @@ exports.search = function getAllProducts(req, res, next) {
     records: [],
     count: records.length,
     pagesTotal: Math.ceil(records.length / (parseInt(req.query.perPage, 10) || 12)),
-    filters: {}
+    filters: {},
+    search: req.body.query
   };
   const from = ( data.page - 1 ) * data.perPage;
   data.records = records.slice(from, from + data.perPage)

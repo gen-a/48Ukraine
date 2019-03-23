@@ -15,7 +15,6 @@ import {
   FETCH_INITIAL_STATE_FULFILLED,
   FETCH_INITIAL_STATE_REJECTED,
   FETCH_INITIAL_STATE_PENDING,
-  SET_SCROLL_DATA
 } from '../actions/app';
 
 const initialState = {
@@ -42,16 +41,10 @@ const initialState = {
   openDrawer: '',
   openScrims: [],
   isInitialized: false,
-  scrollData:{},
 };
 
 function app(state = initialState, action) {
   switch (action.type) {
-    case SET_SCROLL_DATA:
-      return {
-        ...state,
-        scrollData: action.payload
-      };
     case FETCH_INITIAL_STATE_FULFILLED:
       return {
         ...state,

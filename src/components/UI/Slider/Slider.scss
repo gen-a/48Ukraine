@@ -1,0 +1,86 @@
+@import '../../../colors';
+@import '../../../settings';
+
+$slot-width: 220px;
+$slots-in-viewer: 3;
+
+:export {
+  slotWidth: $slot-width;
+  slotsInViewer: $slots-in-viewer;
+}
+
+.Slider {
+  display: flex;
+  justify-content: center;
+  max-width:100%;
+  margin: 0 auto;
+
+  &__button {
+    flex: 0 0 48px;
+    border: none;
+    background: none;
+    outline: none;
+    cursor: pointer;
+    opacity: .3;
+    transition: opacity 0.2s;
+    &_right {
+      transform: rotate(180deg);
+    }
+    &[disabled] {
+      opacity: .1;
+      cursor: default;
+      &:hover {
+        opacity: .1;
+        cursor: default;
+      }
+    }
+    &:hover {
+      opacity: 1;
+    }
+
+  }
+  &__viewer {
+    flex: 0 1 $slot-width * $slots-in-viewer;
+    overflow: hidden;
+    display:block;
+  }
+  &__slots {
+    display: flex;
+    transition: transform 0.2s ease-out;
+  }
+  &__slot {
+    flex: 0 0 $slot-width;
+  }
+
+}
+
+/* Extra Small Devices, Phones */
+@media only screen and (min-width: $sm-media-step-min) {
+  .Slider {
+
+  }
+}
+
+/* Small Devices, Tablets */
+@media only screen and (min-width: $md-media-step-min) {
+  .Slider {
+
+  }
+}
+
+/* Medium Devices, Desktops */
+@media only screen and (min-width: $lg-media-step-min) {
+  .Slider {
+    &__viewer {
+      flex: 0 0 $slot-width * $slots-in-viewer;
+      width: $slot-width * $slots-in-viewer;
+    }
+  }
+}
+
+/* Large Devices, Wide Screens */
+@media only screen and (min-width: $xl-media-step-min) {
+  .Slider {
+
+  }
+}
