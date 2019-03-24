@@ -1,3 +1,7 @@
+@import '../../colors';
+@import '../../grid';
+@import '../../settings';
+
 .ProductLeaflet{
   display: flex;
   flex-wrap: wrap;
@@ -6,24 +10,60 @@
   &__title{
     flex:1 0 100%;
   }
+  &__titleInfo{
+    text-align:center;
+    font-size:0.875rem;
+    margin-top:-2.5rem;
+    margin-bottom:2.5rem;
+  }
+
+  &__imageArea{
+    text-align:center;
+  }
+  &__infoArea{
+    text-align:center;
+  }
+
 
   &__imageViewer{
-    flex:0 1 500px;
+    display:inline-block;
     position:relative;
     width:100%;
     max-width:500px;
     margin:0.5rem auto;
-  }
-  &__buyNow{
-    flex:0 1 500px;
+    padding:0 1rem;
+    box-sizing: border-box;
   }
   &__info{
+    display:inline-block;
+    padding:0 1rem;
+    box-sizing: border-box;
+    max-width:500px;
+    width:100%;
+    text-align:left;
+  }
+  &__details{
     width: 100%;
   }
-  &__infoRow{
-    display:flex;
+  &__detailsTitle{
+    font-weight: 400;
+    color:$color-cool-grey-2h;
+    font-size:1.5rem;
+    line-height:1.25em;
   }
-  &__infoAttribute{
+  &__detailsRow{
+    display:flex;
+    padding:5px 10px;
+    font-size:0.875rem;
+
+    &_odd{
+      background: $color-cool-grey-5h;
+    }
+    &_even{
+      background: $color-cool-grey-4h;
+    }
+  }
+  &__detailsAttribute{
     font-weight:400;
     font-size:1rem;
     margin-right:0.5rem;
@@ -32,7 +72,7 @@
       content:':'
     }
   }
-  &__infoValue{
+  &__detailsValue{
     font-weight:700;
     font-size:1rem;
     line-height:1.375em;
@@ -48,8 +88,6 @@
     line-height:1.375em;
 
   }
-
-
   &__divider{
     width:100%;
     height:1px;
@@ -58,4 +96,42 @@
   }
 
 
+}
+/* Extra Small Devices, Phones */
+@media only screen and (min-width : $sm-media-step-min ) {
+  .ProductLeaflet{
+
+  }
+}
+
+/* Small Devices, Tablets */
+@media only screen and (min-width : $md-media-step-min) {
+  .ProductLeaflet{
+
+  }
+}
+
+/* Medium Devices, Desktops */
+@media only screen and (min-width : $lg-media-step-min) {
+  .ProductLeaflet{
+    &__imageArea{
+      text-align:right;
+    }
+    &__infoArea{
+      text-align:left;
+    }
+    &__imageViewer{
+      max-width:700px;
+    }
+    &__info{
+      max-width:700px;
+    }
+  }
+}
+
+/* Large Devices, Wide Screens */
+@media only screen and (min-width : $xl-media-step-min) {
+  .ProductLeaflet{
+
+  }
 }

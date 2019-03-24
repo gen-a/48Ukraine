@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import update from 'react-addons-update';
+import queryString from 'query-string';
 import { URL_FETCH_PRODUCTS } from '../../config/api';
 import { get } from '../../services/ajax';
 import ProductsList from '../../components/ProductsList';
@@ -44,6 +45,11 @@ const propTypes = {
   })).isRequired,
   /** Object in cart quantities. */
   inCartQuantities: PropTypes.shape({}).isRequired,
+  /** Location object of Route. */
+  location: PropTypes.shape({
+    pathname: PropTypes.string.isRequired,
+    search: PropTypes.string.isRequired
+  }).isRequired
 };
 /**
  * Default props of the component
@@ -61,8 +67,9 @@ class Browse extends Component {
   }
 
   componentDidMount() {
-    const { callShowLoader, match: { params: { department, page } } } = this.props;
-    get(URL_FETCH_PRODUCTS, { department, page }, this.onLoadProducts.bind(this));
+    const { callShowLoader, location: { search }, match: { params } } = this.props;
+    const values = queryString.parse(search);
+    get(URL_FETCH_PRODUCTS, { ...params, ...values }, this.onLoadProducts.bind(this));
     callShowLoader();
   }
 
@@ -77,7 +84,7 @@ class Browse extends Component {
         page: { $set: data.page },
         count: { $set: data.count },
       }));
-      callShowToast('browse.info.products_has_been_loaded');
+      //callShowToast('browse.info.products_has_been_loaded');
     } else {
       callAddFlashMessage(message, 'server response', 'error');
     }
@@ -100,36 +107,37 @@ class Browse extends Component {
 
   render() {
     const { products, pagesTotal, page } = this.state;
-    const { locale, departments, match: { params, params: { department: currentDepartment } }, inCartQuantities } = this.props;
+    const { location: { search }, locale, departments, match: { params, params: { department: currentDepartment } }, inCartQuantities } = this.props;
     if (products.length === 0 || departments.length === 0) {
       return null;
     }
-
     const currentDepartmentData = this.getDepartmentData(departments, currentDepartment);
-
     if (currentDepartmentData.length === 0) {
       console.error('Error loading department data');
       return null;
     }
-
     return (
       <>
       <h1>{currentDepartmentData.name}</h1>
 
       <InfinityScroll
         url={URL_FETCH_PRODUCTS}
+        params={{ ...params, ...queryString.parse(search) }}
         offset={10}
-
         currentPage={page}
-        pagesTotal={pagesTotal}
-        paginationUrl={localizePath(replaceInRoute('/browse/:department/page/:page', {
-          ...params,
-          page: ':page'
-        }), locale)}
-        productUrl={localizePath('/product/:id', locale)}
-        inCartQuantities={inCartQuantities}
 
-        render={props => <ProductsList {...props} />}
+        render={props => (
+          <ProductsList
+            {...props}
+            pagesTotal={pagesTotal}
+            paginationUrl={localizePath(replaceInRoute('/browse/:department/page/:page', {
+              ...params,
+              page: ':page'
+            }), locale)}
+            productUrl={localizePath('/product/:id', locale)}
+            inCartQuantities={inCartQuantities}
+          />
+        )}
       />
       </>
     );

@@ -5,8 +5,9 @@
  */
 import React from 'react';
 import { MdMenu, MdPerson } from 'react-icons/md';
-import ToolBar from '../../UI/ToolBar/ToolBar';
+import ToolBar from '../../UI/ToolBar';
 import ToggleDrawer from '../../Containers/ToggleDrawer';
+import ToolToTheTop from '../ToolToTheTop';
 import WindowSize from '../../Containers/WindowSize';
 
 const ToolBarLayer = () => (
@@ -21,8 +22,17 @@ const ToolBarLayer = () => (
         />
       </ToolBar>
       <ToolBar position="topRight" depth={100}>
-        <ToggleDrawer name="user" size={38} svg={<MdPerson size="100%" />} />
+        <ToggleDrawer
+          name="user"
+          size={38}
+          svg={<MdPerson size="100%" />}
+        />
       </ToolBar>
+      <ToolBar position="bottomRight" depth={100}>
+        <ToolToTheTop size={38} />
+      </ToolBar>
+
+
       </>
     )}
   />

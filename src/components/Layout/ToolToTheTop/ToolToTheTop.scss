@@ -1,0 +1,33 @@
+@import '../../../colors';
+@import '../../../settings';
+
+.ToolToTheTop{
+
+}
+/* Extra Small Devices, Phones */
+@media only screen and (min-width : $sm-media-step-min ) {
+  .ToolToTheTop{
+
+  }
+}
+
+/* Small Devices, Tablets */
+@media only screen and (min-width : $md-media-step-min) {
+  .ToolToTheTop{
+
+  }
+}
+
+/* Medium Devices, Desktops */
+@media only screen and (min-width : $lg-media-step-min) {
+  .ToolToTheTop{
+
+  }
+}
+
+/* Large Devices, Wide Screens */
+@media only screen and (min-width : $xl-media-step-min) {
+  .ToolToTheTop{
+
+  }
+}

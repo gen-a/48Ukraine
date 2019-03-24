@@ -67,7 +67,7 @@ class InfinityScroll extends Component {
 
   componentDidMount() {
     window.addEventListener('scroll', this.handleScroll);
-    this.loadNext();
+    this.fetchNext();
   }
 
   componentWillUnmount() {
@@ -78,19 +78,17 @@ class InfinityScroll extends Component {
     const { offset } = this.props;
     if (!this.isComplete && !this.isBusy) {
       if (e.target.body.scrollHeight - (window.innerHeight + InfinityScroll.scrollTop()) < offset) {
-        this.loadNext();
+        this.fetchNext();
       }
     }
   }
 
-  loadNext() {
+  fetchNext() {
     const { url, params, currentPage, callShowLoader, callHideLoader, callShowToast, callAddFlashMessage } = this.props;
     const { i } = this.state;
     this.isBusy = true;
     callShowLoader();
     get(url, { ...params, page: currentPage + i }, (response) => {
-
-
       callHideLoader();
       const { error, message, data } = response;
       if (error === 0) {
@@ -100,7 +98,7 @@ class InfinityScroll extends Component {
           records: [...prevState.records, ...data.records],
           i: prevState.i + 1
         }));
-        callShowToast('browse.info.productsHasBeenLoaded');
+        //callShowToast('browse.info.productsHasBeenLoaded');
       } else {
         callAddFlashMessage(message, 'server response', 'error');
       }

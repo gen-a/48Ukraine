@@ -46,67 +46,74 @@ const defaultProps = {
  * General component description in JSDoc format. Markdown is *supported*.
  */
 const ProductLeaflet = ({ images, id, price, name, info, description, attributes, mediaPrefix }) => {
-
   return (
     <div className="ProductLeaflet">
 
 
       <div className="ProductLeaflet__title">
         <h1>{name}</h1>
-        {info && <p>{info}</p>}
+        {info && <p className="ProductLeaflet__titleInfo">{info}</p>}
       </div>
 
-      <div className="ProductLeaflet__imageViewer">
-        <ImageViewer
-          images={images}
-          orientation={mediaPrefix === 'sm' ? 'portrait' : 'landscape'}
-        />
-      </div>
+      <div className="ProductLeaflet__imageArea xs-flex_100 lg-flex_50">
+        <div className="ProductLeaflet__imageViewer">
+          <ImageViewer
+            images={images}
+            orientation={['xs', 'sm'].includes(mediaPrefix) ? 'portrait' : 'landscape'}
 
-      <div className="ProductLeaflet__buyNow">
-
-        <PriceSticker
-          retail={price.retail}
-          sale={price.sale}
-          currency="$"
-          fontSize="2rem"
-        />
-        <div className="ProductLeaflet__divider" style={{ marginBottom: '1rem' }}/>
-        <AddToCartButton
-          product={{
-            id,
-            price: price.sale > 0 ? price.sale : price.retail,
-            name,
-            thumbnail: images[0].sm
-          }}
-          label="Додати до кошика"
-          numberInCartLabel="вже в кошику"
-        />
-        <div className="ProductLeaflet__divider" style={{ marginTop: '1rem' }}/>
-
-        <div className="ProductLeaflet__description">
-          <p>{description}</p>
+          />
         </div>
+      </div>
 
-        {attributes.length > 0 && (
-          <>
-            <h2>Інформація</h2>
-            <div className="ProductLeaflet__info">
-              {attributes.map(a => (
-                <div className="ProductLeaflet__infoRow" key={a.attribute}>
-                  <div className="ProductLeaflet__infoAttribute">{a.attribute}</div>
-                  <div className="ProductLeaflet__infoValue">{a.value}</div>
+      <div className="ProductLeaflet__infoArea xs-flex_100 lg-flex_50">
+        <div className="ProductLeaflet__info">
+
+          <PriceSticker
+            retail={price.retail}
+            sale={price.sale}
+            currency="$"
+            fontSize="2rem"
+          />
+          <div className="ProductLeaflet__divider" style={{ marginBottom: '1rem' }}/>
+          <AddToCartButton
+            product={{
+              id,
+              price: price.sale > 0 ? price.sale : price.retail,
+              name,
+              thumbnail: images[0].sm
+            }}
+            label="Додати до кошика"
+            numberInCartLabel="вже в кошику"
+          />
+          <div className="ProductLeaflet__divider" style={{ marginTop: '1rem' }}/>
+
+          <div className="ProductLeaflet__description">
+            <p>{description}</p>
+          </div>
+
+          {attributes.length > 0 && (
+            <>
+            <h2 className="ProductLeaflet__detailsTitle">Інформація</h2>
+            <div className="ProductLeaflet__details">
+              {attributes.map((a, i) => (
+                <div
+                  className={`ProductLeaflet__detailsRow ProductLeaflet__detailsRow_${i % 2 ? 'odd' : 'even'}`}
+                  key={`${a.attribute}${a.value}`}
+                >
+                  <div className="ProductLeaflet__detailsAttribute">{a.attribute}</div>
+                  <div className="ProductLeaflet__detailsValue">{a.value}</div>
                 </div>
               ))}
             </div>
-          </>
-        )}
+            </>
+          )}
+        </div>
       </div>
-    </div>
-  );
-};
+      </div>
+      );
+      };
 
-ProductLeaflet.propTypes = propTypes;
-ProductLeaflet.defaultProps = defaultProps;
+      ProductLeaflet.propTypes = propTypes;
+      ProductLeaflet.defaultProps = defaultProps;
 
-export default ProductLeaflet;
+      export default ProductLeaflet;

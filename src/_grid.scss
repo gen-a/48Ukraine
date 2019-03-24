@@ -20,13 +20,13 @@
 /* Extra Small Devices, Phones */
 @media only screen and (min-width : 480px) {
   .sm-flex_25{
-    flex: 1 0 25%;
+    flex: 0 0 25%;
   }
   .sm-flex_50{
-    flex: 1 0 50%;
+    flex: 0 0 50%;
   }
   .sm-flex_100{
-    flex: 1 0 100%;
+    flex: 0 0 100%;
   }
   .sm-marginRight_0{
     margin-right:0;
@@ -42,13 +42,13 @@
 /* Small Devices, Tablets */
 @media only screen and (min-width : 768px) {
   .md-flex_25{
-    flex: 1 0 25%;
+    flex: 0 0 25%;
   }
   .md-flex_50{
-    flex: 1 0 50%;
+    flex: 0 0 50%;
   }
   .md-flex_100{
-    flex: 1 0 100%;
+    flex: 0 0 100%;
   }
   .md-marginRight_0{
     margin-right:0;
@@ -64,13 +64,13 @@
 /* Medium Devices, Desktops */
 @media only screen and (min-width : 992px) {
   .lg-flex_25{
-    flex: 1 0 25%;
+    flex: 0 0 25%;
   }
   .lg-flex_50{
-    flex: 1 0 50%;
+    flex: 0 0 50%;
   }
   .lg-flex_100{
-    flex: 1 0 100%;
+    flex: 0 0 100%;
   }
   .lg-marginRight_0{
     margin-right:0;
@@ -86,13 +86,13 @@
 /* Large Devices, Wide Screens */
 @media only screen and (min-width : 1200px) {
   .xl-flex_25{
-    flex: 1 0 25%;
+    flex: 0 0 25%;
   }
   .xl-flex_50{
-    flex: 1 0 50%;
+    flex: 0 0 50%;
   }
   .xl-flex_100{
-    flex: 1 0 100%;
+    flex: 0 0 100%;
   }
   .xl-marginRight_0{
     margin-right:0;

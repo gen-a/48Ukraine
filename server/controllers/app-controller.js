@@ -55,11 +55,11 @@ exports.initialState = (req, res, next) => {
     data: {}
   })
     .then(result => result.data)
-    .then((data) => {
+    .then(({data, message, error}) => {
       res.status(200).json(response({
         user: req.user,
         departments: arrayToTree(mapListedSections(data))
-      }, '', 0));
+      }, message, error));
       return next();
     })
     .catch((err) => {
