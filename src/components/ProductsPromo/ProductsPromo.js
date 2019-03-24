@@ -7,10 +7,10 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ProductCard from '../ProductCard';
 import { connect } from 'react-redux';
-import { URL_FETCH_PROMO_PRODUCTS } from '../../config/api';
 import { get } from '../../services/ajax';
 import { localizePath } from '../../localization/index';
 import { replaceInRoute } from '../../utils/helpers';
+import { NavLink } from 'react-router-dom';
 import Slider from '../UI/Slider';
 
 
@@ -21,6 +21,15 @@ const propTypes = {
   inCartQuantities: PropTypes.shape({}),
   /** Current locale. */
   locale: PropTypes.string.isRequired,
+  /** URL to load products. */
+  url: PropTypes.string.isRequired,
+  /** Title of the list. */
+  title: PropTypes.string,
+  /** Data for more info link. */
+  more: PropTypes.shape({
+    url: PropTypes.string,
+    label: PropTypes.string,
+  }),
 };
 /**
  * Default props of the component
@@ -28,6 +37,8 @@ const propTypes = {
  */
 const defaultProps = {
   inCartQuantities: {},
+  title: '',
+  more: { url: '', label: '' }
 };
 
 /**
@@ -42,7 +53,8 @@ class ProductsPromo extends Component {
   }
 
   componentDidMount() {
-    get(URL_FETCH_PROMO_PRODUCTS, {}, ({ data: { records } }) => {
+    const { url } = this.props;
+    get(url, {}, ({ data: { records } }) => {
       this.setState((prevSate) => ({
         ...prevSate,
         products: records
@@ -55,16 +67,15 @@ class ProductsPromo extends Component {
     if (products.length === 0) {
       return null;
     }
-    const { inCartQuantities, locale } = this.props;
-
+    const { inCartQuantities, locale, title, more } = this.props;
     return (
       <>
-      <h2 className="ProductsPromo__title">Promo products</h2>
-      <div className="ProductsPromo">
+      {title !== "" && <h2 className="ProductsPromo__title">{title}</h2>}
+      <div className="ProductsPromo__entries">
         <Slider>
           {products.map(product => (
             <ProductCard
-              type="vertical"
+              type="verticalCompressed"
               url={replaceInRoute(localizePath('/product/:product', locale), { product: product.id })}
               key={product.id}
               id={product.id}
@@ -73,11 +84,18 @@ class ProductsPromo extends Component {
               inCart={inCartQuantities[product.id] || 0}
               image={product.image.sm}
               attributesInfo={product.attributesInfo}
-              isOnSale
+              isOnSale={product.isOnSale}
+              isPopular={product.isPopular}
+              isBrandNew={product.isBrandNew}
             />
           ))}
         </Slider>
       </div>
+      {
+        more.url !== ''
+        && more.label !== ''
+        && <NavLink to={more.url} className="ProductsPromo__more">{more.label}</NavLink>
+      }
       </>
     );
   }

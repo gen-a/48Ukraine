@@ -7,13 +7,12 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-
+import { URL_FETCH_PRODUCTS_POPULAR, URL_FETCH_PRODUCTS_NEW, URL_FETCH_PRODUCTS_ON_SALE } from '../../config/api';
 import './Home.scss';
 import { addFlashMessage, removeFlashMessage } from '../../actions/app';
 import HomeSlideShow from '../../components/HomeSlideShow';
 import WindowSize from '../../components/Containers/WindowSize';
 import ProductsPromo from '../../components/ProductsPromo';
-
 
 /**
  * PropTypes of the component
@@ -61,7 +60,24 @@ class Home extends Component {
 
         <WindowSize render={props => <HomeSlideShow {...props} />} />
 
-        <ProductsPromo />
+        <ProductsPromo
+          url={URL_FETCH_PRODUCTS_POPULAR}
+          title="Popular products"
+          more={{ url: '', label: ''}}
+        />
+
+        <ProductsPromo
+          url={URL_FETCH_PRODUCTS_NEW}
+          title="New products"
+          more={{ url: '', label: ''}}
+        />
+
+        <ProductsPromo
+          url={URL_FETCH_PRODUCTS_ON_SALE}
+          title="Sale products"
+          more={{ url: '', label: ''}}
+        />
+
       </div>
     );
   }

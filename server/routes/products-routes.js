@@ -29,6 +29,11 @@ const productsController = require('../controllers/products-controller');
  */
 router.get('/', productsController.find);
 router.get('/product', productsController.findById);
+
+router.get('/popular', productsController.findPopular);
+router.get('/new', productsController.findNew);
+router.get('/on-sale', productsController.findOnSale);
+
 router.post('/search/hint', productsController.searchHint);
 router.post('/search', productsController.search);
 

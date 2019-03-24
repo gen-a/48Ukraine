@@ -8,12 +8,14 @@ import PropTypes from 'prop-types';
 import PriceSticker from '../PriceSticker';
 import AddToCartButton from '../Containers/AddToCartButton';
 import Image from '../UI/FlexibleImage/FlexibleImage';
-
+import {NavLink} from 'react-router-dom';
 import markSale from './mark-sale.svg';
-import markPromo from './mark-promo.svg';
+import markPopular from './product-mark-popular.svg';
+import markNew from './product-mark-new.svg';
+
 
 import './ProductCard.scss';
-import NavLink from "react-router-dom/es/NavLink";
+
 
 /**
  * PropTypes of the component
@@ -30,33 +32,36 @@ const propTypes = {
   image: PropTypes.string.isRequired,
   attributesInfo: PropTypes.string,
   url: PropTypes.string,
-  type: PropTypes.oneOf(['vertical', 'horizontal']),
+  type: PropTypes.oneOf(['vertical', 'verticalCompressed', 'horizontal']),
   isOnSale: PropTypes.bool,
+  isPopular: PropTypes.bool,
+  isBrandNew: PropTypes.bool,
 };
 const defaultProps = {
-  priceSale: 0,
   attributesInfo: '',
   url: '',
   type: 'horizontal',
-  isOnSale: false
+  isOnSale: false,
+  isBrandNew: false,
+  isPopular: false,
 };
 /**
  * General component description in JSDoc format. Markdown is *supported*.
  */
-const ProductCard = ({ url, id, inCart, price, name, image, attributesInfo, type, isOnSale }) => {
+const ProductCard = ({ url, id, inCart, price, name, image, attributesInfo, type, isOnSale, isPopular, isBrandNew }) => {
 
-  const rootClassName = type === 'vertical'
-    ? 'ProductCard ProductCard_vertical'
-    : 'ProductCard';
+  const rootClassName = `ProductCard ProductCard_${type}`;
 
   return (
 
     <div className={inCart ? `${rootClassName} ProductCard_isInCart` : rootClassName}>
 
-      {isOnSale && (
-          <img src={markPromo} className="ProductCard__markPromo" alt="sale"/>
+      {isPopular && (
+          <img src={markPopular} className="ProductCard__mark ProductCard__mark_popular" alt="popular"/>
       )}
-
+      {isBrandNew && (
+        <img src={markNew} className="ProductCard__mark ProductCard__mark_brandNew" alt="new"/>
+      )}
 
       <div className="ProductCard__imageBlock">
 
@@ -68,9 +73,9 @@ const ProductCard = ({ url, id, inCart, price, name, image, attributesInfo, type
         <div className="ProductCard__price">
           <PriceSticker retail={price.retail} sale={price.sale}/>
         </div>
-        {price.sale
+        {isOnSale
         &&
-        <img src={markSale} className="ProductCard__markSale" alt="sale"/>
+        <img src={markSale} className="ProductCard__mark" alt="sale"/>
         }
       </div>
 

@@ -86,6 +86,9 @@ const ProductsList = ({ productUrl, pagesTotal, paginationUrl, records, currentP
           inCart={inCartQuantities[product.id] || 0}
           image={product.image.sm}
           attributesInfo={product.attributesInfo}
+          isOnSale={product.isOnSale}
+          isPopular={product.isPopular}
+          isBrandNew={product.isBrandNew}
         />
       ))}
     </div>

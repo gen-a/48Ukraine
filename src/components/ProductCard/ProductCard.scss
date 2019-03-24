@@ -20,11 +20,34 @@
     width:200px;
     flex-direction:column;
   }
-
+  &_verticalCompressed{
+    flex: 0 0 200px;
+    width:200px;
+    flex-direction:column;
+    & .ProductCard{
+      &__infoBlock {
+        position: relative;
+        flex: 1 1 140px;
+        box-sizing: border-box;
+        height: 140px;
+        overflow: hidden;
+        padding: 0.5em 1em;
+      }
+      &__name {
+        font-size: 1rem;
+        line-height: 1.25em;
+        font-weight: 400;
+        overflow: hidden;
+        position: relative;
+        padding: 0;
+        margin: 0;
+        max-height: 2.68rem;
+      }
+    }
+  }
   &_isInCart {
     opacity: 0.3;
   }
-
   &__imageBlock {
     position: relative;
     flex: 0 0 200px;
@@ -46,20 +69,22 @@
     left: 10px;
     bottom: 16px;
   }
-  &__markSale {
+
+  &__mark{
     position: absolute;
     left: 0;
     top: 0;
+    &_popular,
+    &_brandNew{
+      left: auto;
+      right: -50px;
+      top: 10px;
+      z-index:2;
+      transition: right 0.2s ease-out;
+    }
 
   }
-  &__markPromo{
-    position: absolute;
-    right: -60px;
-    top: 90px;
-    z-index:2;
-    transform:rotate(-90deg);
-    transform-origin: 0 0 ;
-  }
+
   &__button {
     position: absolute;
     left: 10px;
@@ -70,6 +95,12 @@
     border: 2px solid $color-secondary-hb;
     &.ProductCard_isInCart {
       opacity: 1;
+    }
+    & .ProductCard__mark{
+      &_popular,
+      &_brandNew{
+        right: -0px;
+      }
     }
   }
   &:hover .ProductCard__image {
