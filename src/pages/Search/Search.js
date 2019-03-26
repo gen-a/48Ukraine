@@ -6,10 +6,12 @@ import queryString from 'query-string';
 import { URL_FETCH_PRODUCTS } from '../../config/api';
 import { get } from '../../services/ajax';
 import ProductsList from '../../components/ProductsList';
+import PageTitle from '../../components/PageTitle';
+
 import { replaceInRoute } from '../../utils/helpers';
 import { localizePath } from '../../localization/index';
 import InfinityScroll from '../../components/InfinityScroll';
-import PageTitle from '../../components/PageTitle';
+
 /**
  * PropTypes of the component
  * @type {object}
@@ -58,7 +60,7 @@ const propTypes = {
 const defaultProps = {};
 
 
-class Browse extends Component {
+class Search extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -108,19 +110,17 @@ class Browse extends Component {
   render() {
     const { products, pagesTotal, page, count } = this.state;
     const { location: { search }, locale, departments, match: { params, params: { department: currentDepartment } }, inCartQuantities } = this.props;
+    const values = queryString.parse(search);
+
     if (products.length === 0 || departments.length === 0) {
       return null;
     }
-    const currentDepartmentData = this.getDepartmentData(departments, currentDepartment);
-    if (currentDepartmentData.length === 0) {
-      console.error('Error loading department data');
-      return null;
-    }
+
     return (
       <>
       <PageTitle
-        title={currentDepartmentData.name}
-        description={`знайдено продуктів: ${count}`}
+        title="Результати пошуку"
+        description={`за запитом "${values.query}" знайдено продуктів: ${count}`}
       />
       <InfinityScroll
         url={URL_FETCH_PRODUCTS}
@@ -146,8 +146,8 @@ class Browse extends Component {
   }
 }
 
-Browse.propTypes = propTypes;
-Browse.defaultProps = defaultProps;
+Search.propTypes = propTypes;
+Search.defaultProps = defaultProps;
 
 const mapStateToProps = state => (
   {
@@ -157,4 +157,4 @@ const mapStateToProps = state => (
   }
 );
 
-export default connect(mapStateToProps, null)(Browse);
+export default connect(mapStateToProps, null)(Search);

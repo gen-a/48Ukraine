@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import CheckoutForm from '../../components/Forms/Checkout';
+import PageTitle from '../../components/PageTitle';
 import { localizePath } from '../../localization/index';
 import { Redirect } from 'react-router-dom';
 
@@ -63,7 +64,9 @@ const Checkout = ({ products, locale }) => {
   }
   return (
     <>
-      <h1>Checkout</h1>
+      <PageTitle
+        title="Checkout"
+      />
       <CheckoutForm />
     </>
   );

@@ -21,12 +21,13 @@ const propTypes = {
   /** On change handler. */
   onChange: PropTypes.func.isRequired,
 };
+
 /**
  * Default settings for move detection.
  * @type {object}
  */
 const defaultProps = {
-  size: 32,
+  size: 32
 };
 const ToggleIcon = ({ svg, size, onChange, isOn }) => {
   const style = { width: `${size}px`, height: `${size}px` };

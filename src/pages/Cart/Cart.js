@@ -6,6 +6,8 @@ import { updateProductInCart } from '../../actions/cart';
 import PriceSticker from '../../components/PriceSticker';
 import Image from '../../components/UI/FlexibleImage/FlexibleImage';
 import IconClose from '../../components/Svg/IconClose';
+import PageTitle from '../../components/PageTitle';
+
 import { localizePath } from '../../localization/index';
 import { NavLink } from 'react-router-dom';
 
@@ -66,16 +68,17 @@ const defaultProps = {
 const Cart = ({ products, callUpdateProductInCart, count, total, locale }) => {
   if (products.length === 0) {
     return (<div>
-      <h1>Your cart is empty</h1>
-
+      <PageTitle
+        title="Shopping cart"
+        description="Your cart is empty"
+      />
     </div>);
   }
-
-
   return (
     <>
-    <h1>Shopping cart</h1>
-
+    <PageTitle
+      title="Shopping cart"
+    />
     {products.map(p => (
       <div key={p.id} className="Cart__item">
         <div className="Cart__itemImage">

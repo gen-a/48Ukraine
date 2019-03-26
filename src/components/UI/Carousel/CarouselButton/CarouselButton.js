@@ -5,7 +5,7 @@
  */
 import React from 'react';
 import PropTypes from 'prop-types';
-import CarouselIconChevronLeft from '../CarouselIconChevronLeft';
+import ChevronLeft from '../../../Svg/ChevronLeft';
 import withStyles from 'react-jss';
 import classNames from 'classnames';
 import './CarouselButton.scss';
@@ -86,7 +86,7 @@ const CarouselButton = ({classes, type, width, disabled, backgroundColor, color,
       style={{ width: `${width}px`, background: backgroundColor }}
       onClick={() => onClick()}
     >
-      <CarouselIconChevronLeft
+      <ChevronLeft
         width="48px"
         height="48px"
         fill={color}

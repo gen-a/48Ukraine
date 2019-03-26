@@ -4,7 +4,66 @@ const { mongooseErrorToResponse } = require('../lib/mongoose-error-to-response')
 const Order = require('../models/order-model');
 //const Product = require('../models/product-model');
 const { sendNewOrderLetter } = require('../letters/send-new-order-letter');
-
+/**
+ * Get all orders
+ * @param req {object}
+ * @param res {object}
+ * @param next {Function}
+ */
+exports.addresses = function getAllAddresses(req, res, next) {
+  if (!req.user) {
+    //res.status(400).json(response({}, 'Not found', 1));
+    //return next();
+  }
+  //const { email } = req.user;
+  const email = "pugachevsky@gmail.com";
+  Order.find({ email })
+    .then((records) => {
+      if (records.length === 0) {
+        res.status(500).json({ error: err });
+        return next();
+      }
+      return records.map(
+        ({ toFirstName, toLastName, toAddress, toZip, toCity, toPhone }) => ({
+          toFirstName,
+          toLastName,
+          toAddress,
+          toZip,
+          toCity,
+          toPhone,
+          fullAddress: `${toFirstName} ${toLastName}, ${toAddress}, ${toCity}, ${toZip}, ${toPhone}`
+        })
+      );
+    })
+    .then((records) => {
+      const existing = [];
+      return records.filter(d => {
+        if (existing.includes(d.fullAddress)) {
+          return false;
+        } else {
+          existing.push(d.fullAddress);
+          return true;
+        }
+      });
+    })
+    .then((records) => {
+      records.sort((a, b)=>{
+        if (a.fullAddress < b.fullAddress) {
+          return -1;
+        }
+        if (a.fullAddress > b.fullAddress) {
+          return 1;
+        }
+        return 0;
+      });
+      res.status(200).json(response({ records }));
+      return next();
+    })
+    .catch((err) => {
+      res.status(500).json({ error: err });
+      next();
+    });
+};
 /**
  * Get all orders
  * @param req {object}

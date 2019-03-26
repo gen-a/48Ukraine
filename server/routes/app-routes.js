@@ -30,5 +30,9 @@ const appController = require('../controllers/app-controller');
  */
 router.get('/initial-state', appController.initialState);
 
+router.post('/store-cart', appController.storeCart);
+
+
+
 
 module.exports = router;

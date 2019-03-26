@@ -6,6 +6,7 @@ import { URL_FETCH_USER_ORDERS } from '../../../config/api';
 import { get } from '../../../services/ajax';
 import OrdersList from '../../../components/OrdersList';
 import { localizePath } from '../../../localization/index';
+import PageTitle from '../../../components/PageTitle';
 /**
  * PropTypes of the component
  * @type {object}
@@ -89,7 +90,9 @@ class Orders extends Component {
 
     return (
       <>
-      <h1>Orders History</h1>
+      <PageTitle
+        title="Orders History"
+      />
       <OrdersList
         orders={orders}
         currentPage={page}

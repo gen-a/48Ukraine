@@ -8,8 +8,10 @@ import PropTypes from 'prop-types';
 import AddToCartButton from '../Containers/AddToCartButton';
 import ImageViewer from '../UI/ImageViewer';
 import PriceSticker from '../PriceSticker';
+import PageTitle from '../PageTitle';
 
 import './ProductLeaflet.scss';
+
 
 /**
  * PropTypes of the component
@@ -49,11 +51,10 @@ const ProductLeaflet = ({ images, id, price, name, info, description, attributes
   return (
     <div className="ProductLeaflet">
 
-
-      <div className="ProductLeaflet__title">
-        <h1>{name}</h1>
-        {info && <p className="ProductLeaflet__titleInfo">{info}</p>}
-      </div>
+      <PageTitle
+        title={name}
+        description={info}
+      />
 
       <div className="ProductLeaflet__imageArea xs-flex_100 lg-flex_50">
         <div className="ProductLeaflet__imageViewer">

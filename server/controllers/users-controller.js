@@ -2,6 +2,7 @@ const { response } = require('../lib/response');
 const User = require('../models/user-model');
 const { filterByKeys } = require('../lib/filter-by-keys');
 const { ResourceNotFoundError } = require('../lib/errors');
+
 /**
  * Find user by query
  * @param where

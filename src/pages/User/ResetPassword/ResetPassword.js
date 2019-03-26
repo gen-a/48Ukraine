@@ -1,10 +1,13 @@
 import React from 'react';
 import UserPassword from '../../../components/Forms/UserPassword';
+import PageTitle from '../../../components/PageTitle';
 
 const ResetPassword = () => {
   return (
     <>
-      <h1>Reset Password</h1>
+    <PageTitle
+      title="Reset Password"
+    />
       <UserPassword/>
     </>
   )

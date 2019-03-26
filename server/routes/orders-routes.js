@@ -6,4 +6,6 @@ router.post('/add', orderController.add);
 
 router.get('/history', orderController.history);
 
+router.get('/addresses', orderController.addresses);
+
 module.exports = router;

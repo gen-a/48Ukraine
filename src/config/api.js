@@ -17,7 +17,10 @@ export const URL_FETCH_PRODUCTS_POPULAR= `${API_PREFIX}/products/popular`;
 export const URL_FETCH_PRODUCTS_NEW= `${API_PREFIX}/products/new`;
 export const URL_FETCH_PRODUCTS_ON_SALE= `${API_PREFIX}/products/on-sale`;
 
+export const URL_STORE_CART= `${API_PREFIX}/app/store-cart`;
 export const URL_CHECKOUT = `${API_PREFIX}/orders/add`;
 export const URL_FETCH_USER_ORDERS = `${API_PREFIX}/orders/history`;
 export const URL_SEARCH_HINT = `${API_PREFIX}/products/search/hint`;
 export const URL_SEARCH_SUBMIT = `${API_PREFIX}/products/search`;
+
+export const URL_USER_ADDRESS_BOOK = `${API_PREFIX}/orders/addresses`;

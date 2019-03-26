@@ -1,0 +1,44 @@
+@import '../../../colors';
+@import '../../../settings';
+
+.AddressBook {
+  display: flex;
+  justify-items: center;
+  align-items: flex-end;
+  margin-bottom: 1rem;
+  &__select {
+    flex: 1 1 auto;
+    position: relative;
+  }
+  &__icon {
+    flex: 0 0 32px;
+  }
+}
+
+/* Extra Small Devices, Phones */
+@media only screen and (min-width: $sm-media-step-min) {
+  .AddressBook {
+
+  }
+}
+
+/* Small Devices, Tablets */
+@media only screen and (min-width: $md-media-step-min) {
+  .AddressBook {
+
+  }
+}
+
+/* Medium Devices, Desktops */
+@media only screen and (min-width: $lg-media-step-min) {
+  .AddressBook {
+
+  }
+}
+
+/* Large Devices, Wide Screens */
+@media only screen and (min-width: $xl-media-step-min) {
+  .AddressBook {
+
+  }
+}

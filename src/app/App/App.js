@@ -10,7 +10,7 @@ import { Route, Switch } from 'react-router-dom';
 import Browse from '../../pages/Browse';
 import Product from '../../pages/Product';
 import Cart from '../../pages/Cart';
-
+import Search from '../../pages/Search';
 import PrivateRoute from '../../components/Router/PrivateRoute';
 import Checkout from '../../pages/Checkout';
 import EnterAccount from '../../pages/EnterAccount';
@@ -94,6 +94,8 @@ class App extends Component{
         <Route exact path={localizePath('/cart', locale)} render={renderRoute(Cart)}/>
         <Route exact path={localizePath('/checkout', locale)} render={renderRoute(Checkout)}/>
         <Route exact path={localizePath('/enter-account/:visa', locale)} render={renderRoute(EnterAccount)}/>
+        <Route exact path={localizePath('/search', locale)} render={renderRoute(Search)}/>
+        <Route exact path={localizePath('/search/page/:page', locale)} render={renderRoute(Search)}/>
         <PrivateRoute
           path={localizePath('/user/:section', locale)}
           render={(routeProps)=>(

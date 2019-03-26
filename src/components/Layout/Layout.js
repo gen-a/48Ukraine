@@ -55,8 +55,8 @@ const Layout = ({ render, ...otherProps }) => {
 
       <div className="Layout__content">
         <Header height={['xs', 'sm', 'md'].includes(window.mediaPrefix) ? 48 : 64} />
-        <div style={{marginTop: '1rem'}}>
-        <DepartmentsCarousel height={['xs', 'sm', 'md'].includes(window.mediaPrefix) ? 80 : 64} />
+        <div style={{marginTop: '2rem'}}>
+        <DepartmentsCarousel height={['xs', 'sm', 'md'].includes(window.mediaPrefix) ? 64 : 52} />
       </div>
         <div className="Layout__contentBox">
           { render(otherProps) }

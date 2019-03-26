@@ -17,7 +17,7 @@ const propTypes = {
   /** Size of the icon in pixels. */
   size: PropTypes.number,
   /** Status of the toggle. */
-  isOn: PropTypes.bool.isRequired,
+  isOn: PropTypes.bool,
   /** On change handler. */
   onClick: PropTypes.func.isRequired,
 };
@@ -27,6 +27,7 @@ const propTypes = {
  */
 const defaultProps = {
   size: 32,
+  isOn: false
 };
 const ToolIcon = ({ svg, size, onClick, isOn }) => {
   const style = { width: `${size}px`, height: `${size}px` };

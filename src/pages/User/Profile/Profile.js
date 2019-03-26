@@ -1,10 +1,13 @@
 import React from 'react';
 import UserProfile from '../../../components/Forms/UserProfile';
+import PageTitle from '../../../components/PageTitle';
 
 const Profile = () => {
   return (
     <>
-      <h1>Your Profile</h1>
+    <PageTitle
+      title="Your Profile"
+    />
       <UserProfile />
     </>
   )

@@ -5,6 +5,7 @@ import { SubmissionError } from 'redux-form';
 import { importDictionaryArticles } from './dictionary';
 import { URL_FETCH_INITIAL_STATE } from '../config/api';
 import { SET_AUTHENTICATED_DATA } from './user';
+import { INITIALIZE_CART } from './cart';
 
 axios.defaults.withCredentials = true;
 
@@ -43,10 +44,14 @@ export function fetchInitialSate(data) {
     axios.get(URL_FETCH_INITIAL_STATE, data)
       .then(result => result.data)
       .then((result) => {
-        if (result.data.user) {
-          dispatch({ type: SET_AUTHENTICATED_DATA, payload: result.data.user });
+        const { user, cart, ...otherDate } = result.data;
+        if (user) {
+          dispatch({ type: SET_AUTHENTICATED_DATA, payload: user });
         }
-        dispatch({ type: FETCH_INITIAL_STATE_FULFILLED, payload: result.data });
+        if (cart) {
+          dispatch({ type: INITIALIZE_CART, payload: cart });
+        }
+        dispatch({ type: FETCH_INITIAL_STATE_FULFILLED, payload: otherDate });
       })
       .catch(err => dispatch({ type: FETCH_INITIAL_STATE_REJECTED, payload: err }));
   };

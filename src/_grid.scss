@@ -1,11 +1,11 @@
 .xs-flex_25{
-  flex: 1 0 25%;
+  flex: 0 0 25%;
 }
 .xs-flex_50{
-  flex: 1 0 50%;
+  flex: 0 0 50%;
 }
 .xs-flex_100{
-  flex: 1 0 100%;
+  flex: 0 0 100%;
 }
 .xs-marginRight_0{
   margin-right:0;
@@ -17,6 +17,15 @@
   margin-right:50%;
 }
 
+.xs-marginLeft_0{
+  margin-left:0;
+}
+.xs-marginLeft_25{
+  margin-left:25%;
+}
+.xs-marginLeft_50{
+  margin-left:50%;
+}
 /* Extra Small Devices, Phones */
 @media only screen and (min-width : 480px) {
   .sm-flex_25{
@@ -36,6 +45,15 @@
   }
   .sm-marginRight_50{
     margin-right:50%;
+  }
+  .sm-marginLeft_0{
+    margin-left:0;
+  }
+  .sm-marginLeft_25{
+    margin-left:25%;
+  }
+  .sm-marginLeft_50{
+    margin-left:50%;
   }
 }
 
@@ -59,6 +77,15 @@
   .md-marginRight_50{
     margin-right:50%;
   }
+  .md-marginLeft_0{
+    margin-left:0;
+  }
+  .md-marginLeft_25{
+    margin-left:25%;
+  }
+  .md-marginLeft_50{
+    margin-left:50%;
+  }
 }
 
 /* Medium Devices, Desktops */
@@ -81,6 +108,15 @@
   .lg-marginRight_50{
     margin-right:50%;
   }
+  .lg-marginLeft_0{
+    margin-left:0;
+  }
+  .lg-marginLeft_25{
+    margin-left:25%;
+  }
+  .lg-marginLeft_50{
+    margin-left:50%;
+  }
 }
 
 /* Large Devices, Wide Screens */
@@ -102,5 +138,14 @@
   }
   .xl-marginRight_50{
     margin-right:50%;
+  }
+  .xl-marginLeft_0{
+    margin-left:0;
+  }
+  .xl-marginLeft_25{
+    margin-left:25%;
+  }
+  .xl-marginLeft_50{
+    margin-left:50%;
   }
 }

@@ -124,11 +124,12 @@ exports.searchHint = function getAllProducts(req, res, next) {
   axios.get('http://48ukraine.co/data/products-search-hint', { params: req.query })
     .then(result => result.data)
     .then(({data, message, error}) => {
-
-      const key = req.body.key.toLowerCase();
-      data.records.sort((a, b)=>{
-        return a.toLowerCase().indexOf(key) - b.toLowerCase().indexOf(key);
-      });
+      if(data.records.length > 0){
+        const key = req.body.key.toLowerCase();
+        data.records.sort((a, b)=>{
+          return a.toLowerCase().indexOf(key) - b.toLowerCase().indexOf(key);
+        });
+      }
 
       res.status(200).json(response(data, message, error));
       return next();

@@ -6,12 +6,18 @@
  */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Field, reduxForm } from 'redux-form';
+import { Field, reduxForm, formValueSelector, change } from 'redux-form';
 import { connect } from 'react-redux';
+import Cards from 'react-credit-cards';
+import 'react-credit-cards/lib/styles.scss';
+import validator from 'validator';
+import AddressBook from '../../Widgets/AddressBook';
+import GUIConnect from '../../Containers/GUIConnect';
+
 import RenderField from '../../UI/Forms/RenderField';
 import RenderForm from '../../UI/Forms/RenderForm';
-import {email} from '../../../validation/validations';
-import {checkout} from '../../../actions/cart';
+import { email, expiryDate, cvc } from '../../../validation/validations';
+import { checkout } from '../../../actions/cart';
 
 
 import '../../../_grid.scss';
@@ -25,7 +31,8 @@ import '../Forms.scss';
 const validate = (values) => {
   const errors = {};
   const required =
-    { email: 'E-mail is required',
+    {
+      email: 'E-mail is required',
       firstName: 'First Name is required',
       lastName: 'Last Name is required',
       phone: 'Phone is required',
@@ -36,16 +43,29 @@ const validate = (values) => {
       toCity: 'to City is required',
       toPhone: 'to Phone is required',
       cardCvs: 'card Cvs is required',
-      cardExp: 'card Exp is required',
+      cardExpiry: 'card Exp is required',
       cardNumber: 'card Number is required'
     };
-  Object.keys(required).forEach( k =>{
-    if( !values[k] ){
+  Object.keys(required).forEach(k => {
+    if (!values[k]) {
       errors[k] = required[k];
     }
   });
-  if(!email(values.email)){
+  if (!email(values.email)) {
     errors.email = 'Not valid E-mail address';
+  }
+  if (!validator.isCreditCard(values.cardNumber || '')) {
+    errors.cardNumber = 'Not valid Credit Card number address';
+  }
+
+  if (values.cardExpiry ) {
+    const exp = values.cardExpiry.replace(/[^\d]/g, '');
+    if(!expiryDate(exp.substr(0, 2), exp.substr(2))){
+      errors.cardExpiry = 'Not valid Expiry date';
+    }
+  }
+  if (!cvc(values.cardCvc)) {
+    errors.cardCvc = 'Not valid CVC number';
   }
   return errors;
 };
@@ -89,7 +109,16 @@ const defaultProps = {
  * Checkout form container Component
  */
 class Checkout extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      cardFocused: ''
+    }
+  }
 
+  setCardFocus(name) {
+    this.setState({ cardFocused: name });
+  }
 
   render() {
     const {
@@ -100,22 +129,27 @@ class Checkout extends Component {
       reset,
       submitting,
       invalid,
-      submitSucceeded
+      submitSucceeded,
+      cardNumber,
+      cardName,
+      cardExpiry,
+      cardCvc,
+      changeFieldValue
     } = this.props;
-
+    const { cardFocused } = this.state;
     const message = {};
-/*
-    if (error) {
-      message.type = 'error';
-      message.text = error;
-    } else if (submitSucceeded) {
-      message.type = 'success';
-      message.text = 'Saved!!';
-    } else if (submitting) {
-      message.type = 'info';
-      message.text = 'Submitting...';
-    }
-*/
+    /*
+        if (error) {
+          message.type = 'error';
+          message.text = error;
+        } else if (submitSucceeded) {
+          message.type = 'success';
+          message.text = 'Saved!!';
+        } else if (submitting) {
+          message.type = 'info';
+          message.text = 'Submitting...';
+        }
+    */
 
     return (
       <RenderForm
@@ -154,6 +188,29 @@ class Checkout extends Component {
         <div className="Forms__fields Forms__fields_outlined">
           <h2 className="Forms__sectionTitle">Addressee data</h2>
 
+          <div className="Forms__field xs-flex_100 md-flex_50 md-marginLeft_25">
+            {
+              <GUIConnect render={(guiProps) => (
+                <AddressBook
+                  {...guiProps}
+                  onChange={
+                    (address) => {
+                      changeFieldValue('toFirstName', address.toFirstName);
+                      changeFieldValue('toLastName', address.toLastName);
+                      changeFieldValue('toAddress', address.toAddress);
+                      changeFieldValue('toZip', address.toZip);
+                      changeFieldValue('toCity', address.toCity);
+                      changeFieldValue('toPhone', address.toPhone);
+                    }
+                  }
+                />
+              )}/>
+            }
+          </div>
+
+
+
+
           <div className="Forms__field xs-flex_100 md-flex_50">
             <Field name="toFirstName" type="text" component={RenderField} label="To First Name"/>
           </div>
@@ -176,20 +233,56 @@ class Checkout extends Component {
           <div className="Forms__field xs-flex_100 md-flex_50 md-marginRight_50">
             <Field name="toPhone" type="text" component={RenderField} label="toPhone"/>
           </div>
-        </div>
 
+        </div>
 
         <div className="Forms__fields Forms__fields_outlined">
           <h2 className="Forms__sectionTitle">Payment details</h2>
+
           <div className="Forms__field xs-flex_100 md-flex_50">
-            <Field name="cardNumber" type="text" component={RenderField} label="cardNumber"/>
+            <Cards
+              number={cardNumber || ''}
+              name={cardName || ''}
+              expiry={cardExpiry || ''}
+              cvc={cardCvc || ''}
+              focused={cardFocused || ''}
+            />
           </div>
-          <div className="Forms__field xs-flex_50 md-flex_25">
-            <Field name="cardExp" type="text" component={RenderField} label="cardExp"/>
+
+          <div className="Forms__field xs-flex_100 md-flex_50">
+            <div className="Forms__field xs-flex_100">
+              <Field
+                name="cardNumber"
+                type="text"
+                component={RenderField}
+                label="cardNumber"
+                onFocus={() => this.setCardFocus('number')}
+
+              />
+            </div>
+
+            <div className="Forms__field xs-flex_50 md-flex_50">
+              <Field
+                name="cardExpiry"
+                type="text"
+                component={RenderField}
+                label="cardExp"
+                onFocus={() => this.setCardFocus('expiry')}
+
+              />
+            </div>
+            <div className="Forms__field xs-flex_50 md-flex_50">
+              <Field
+                name="cardCvc"
+                type="password"
+                component={RenderField}
+                label="cardCvc"
+                onFocus={() => this.setCardFocus('cvc')}
+              />
+            </div>
+
           </div>
-          <div className="Forms__field xs-flex_50 md-flex_25">
-            <Field name="cardCvs" type="password" component={RenderField} label="cardCvs"/>
-          </div>
+
         </div>
       </RenderForm>
     );
@@ -200,18 +293,25 @@ Checkout.propTypes = propTypes;
 Checkout.defaultProps = defaultProps;
 
 
+const selector = formValueSelector('formCheckout');
 const mapStateToProps = state => (
   {
-    initialValues: state.user.profile
+    initialValues: state.user.profile,
+    cardNumber: selector(state, 'cardNumber'),
+    cardName: selector(state, 'cardName'),
+    cardExpiry: selector(state, 'cardExpiry'),
+    cardCvc: selector(state, 'cardCvc'),
   }
 );
 
 const mapDispatchToProps = dispatch => (
   {
-    callCheckout: data => dispatch(checkout(data))
+    callCheckout: data => dispatch(checkout(data)),
+    changeFieldValue: (field, value) => {
+      dispatch(change('formCheckout', field, value))
+    }
   }
 );
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(reduxForm({
   form: 'formCheckout', validate

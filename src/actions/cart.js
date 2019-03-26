@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 import { SubmissionError, reset } from 'redux-form';
-import { URL_CHECKOUT } from '../config/api';
+import { URL_CHECKOUT, URL_STORE_CART } from '../config/api';
 import { addFlashMessage, handleFormSubmissionError, handleFormSubmissionSuccess } from './app';
 
 axios.defaults.withCredentials = true;
@@ -11,7 +11,7 @@ export const UPDATE_PRODUCTS_IN_CART = 'UPDATE_PRODUCTS_IN_CART';
 export const CHECKOUT_PENDING = 'CHECKOUT_PENDING';
 export const CHECKOUT_FULFILLED = 'CHECKOUT_FULFILLED';
 export const CHECKOUT_REJECTED = 'CHECKOUT_REJECTED';
-
+export const INITIALIZE_CART = 'INITIALIZE_CART';
 /**
  * Clear cart
  * @returns {function(*, *)}
@@ -20,6 +20,14 @@ export function clearCart() {
   return (dispatch) => {
     dispatch({ type: CLEAR_CART });
   };
+}
+
+
+export function sendToServer(data){
+  return (dispatch, getState) => {
+    return axios.post(URL_STORE_CART, getState().cart)
+      .catch(console.log);
+  }
 }
 /**
  * Add product to cart. Check if already exits increment number else add new object.
@@ -46,6 +54,7 @@ export function addProductToCart(product) {
         payload: [...storedProducts, { ...product, quantity: 1 }]
       });
     }
+    sendToServer()(dispatch, getState);
   };
 }
 
@@ -74,6 +83,7 @@ export function updateProductInCart(id, quantity = 0) {
         payload: storedProducts.filter(p => id !== p.id)
       });
     }
+    sendToServer()(dispatch, getState);
   };
 }
 /**
@@ -90,6 +100,7 @@ export function checkout(data) {
       .then(result => handleFormSubmissionSuccess( CHECKOUT_FULFILLED, result.data )(dispatch))
       .then(() => {
         clearCart()(dispatch);
+        sendToServer()(dispatch, getState);
         dispatch(reset('formCheckout'));
       })
       .catch(error => handleFormSubmissionError(CHECKOUT_REJECTED, error));

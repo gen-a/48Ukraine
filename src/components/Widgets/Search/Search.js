@@ -5,6 +5,7 @@
  */
 import React, { Component, createRef } from 'react';
 import PropTypes from 'prop-types';
+import { Route } from 'react-router-dom';
 import { post } from '../../../services/ajax';
 import Magnify from '../../Svg/Magnify';
 import {
@@ -19,7 +20,7 @@ import './Search.scss';
  */
 const propTypes = {
   /** Text message of the toast. */
-  //prop: PropTypes.string,
+  history: PropTypes.shape({}).isRequired,
 };
 
 /**
@@ -76,6 +77,14 @@ class Search extends Component {
     }
   }
 
+  onChangeByHint(value){
+    this.setState(prevState => ({
+      ...prevState,
+      value,
+      isVisibleHints: false
+    }));
+  }
+
   onChange(value) {
     const { minlength, urlHint } = this.props;
     const { filters } = this.state;
@@ -125,6 +134,13 @@ class Search extends Component {
   }
 
   onSubmit() {
+    const { history } = this.props;
+    const { filters, value: query } = this.state;
+    const source = { ...filters, query };
+    const search = Object.keys(source).map(key => `${key}=${encodeURIComponent(source[key])}`).join('&');
+
+    history.push(`/search?${search}`);
+    /*
     this.setState((prevState) => ({
       ...prevState,
       hints: [],
@@ -151,6 +167,9 @@ class Search extends Component {
         onError( message );
       }
     });
+    */
+
+
   }
 
   render() {
@@ -203,7 +222,7 @@ class Search extends Component {
                 {hints.map(hint => (
                   <li
                     key={hint}
-                    onClick={(e) => this.onChange(hint)}
+                    onClick={(e) => this.onChangeByHint(hint)}
                   >
                     {hint}
                   </li>
@@ -220,4 +239,5 @@ class Search extends Component {
 Search.propTypes = propTypes;
 Search.defaultProps = defaultProps;
 
-export default Search;
+export default props => <Route render={routeProps => <Search {...routeProps} {...props} />}/>;
+

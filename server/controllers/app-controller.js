@@ -42,6 +42,20 @@ const mapListedSections = (data) => {
   }));
 };
 
+
+
+/**
+ * Store cart data
+ * @param req {object}
+ * @param res {object}
+ * @param next {Function}
+ */
+exports.storeCart = (req, res, next) => {
+  req.session.cart = req.body;
+  res.status(200).json(response(req.body));
+  return next();
+};
+
 /**
  * Collect and send initial state data
  * @param req {object}
@@ -57,6 +71,7 @@ exports.initialState = (req, res, next) => {
     .then(result => result.data)
     .then(({data, message, error}) => {
       res.status(200).json(response({
+        cart: req.session.cart || {},
         user: req.user,
         departments: arrayToTree(mapListedSections(data))
       }, message, error));

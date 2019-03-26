@@ -4,6 +4,7 @@ import {
   CHECKOUT_PENDING,
   CHECKOUT_REJECTED,
   CLEAR_CART,
+  INITIALIZE_CART,
 } from '../actions/cart';
 
 
@@ -53,6 +54,11 @@ const getQuantities = (products) => {
 
 const cart = (state = initialState, action) => {
   switch (action.type) {
+    case INITIALIZE_CART:
+      return {
+        ...state,
+        ...action.payload
+      };
     case CLEAR_CART:
       return {
         ...state,
