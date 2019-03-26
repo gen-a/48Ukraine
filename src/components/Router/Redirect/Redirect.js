@@ -5,7 +5,7 @@ import { Redirect } from 'react-router-dom';
 import { addFlashMessage } from '../../../actions/app';
 
 
-const C = ({ to, message, callAddFlashMessage }) => {
+const C = ({ to, message, callAddFlashMessage}) => {
 
   useEffect(() => {
     const { body, title, type } = message;

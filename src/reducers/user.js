@@ -26,6 +26,7 @@ function user(state = initialState, action) {
         ...state,
         profile: {},
         isAuthenticated: false,
+        isBusy: false
       };
     case SET_AUTHENTICATED_DATA:
       return {
