@@ -22,7 +22,7 @@ const propTypes = {
     PropTypes.element,
     PropTypes.func,
   ]),
-  /** REnder function. */
+  /** Render function. */
   render: PropTypes.func,
   /** Current application localization */
   locale: PropTypes.string.isRequired,

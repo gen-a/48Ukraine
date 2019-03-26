@@ -42,8 +42,7 @@ const styles = theme => ({
   root: {
     display: 'flex',
     flexWrap: 'wrap',
-    width: '100%',
-
+    width: '100%'
   },
   formControl: {
     margin: 0,
@@ -94,6 +93,10 @@ class AddressBook extends Component {
     });
   }
 
+  trimLabel(value) {
+    return value.length > 30 ? `${value.substr(0, 30)}...` : value;
+  }
+
   render() {
     const { addresses, isBusy, selectedAddress } = this.state;
     const { classes } = this.props;
@@ -105,8 +108,13 @@ class AddressBook extends Component {
       return null;
     }
 
-    const menuItems = addresses.map(a => <MenuItem key={a.fullAddress}
-                                                   value={a.fullAddress}>{a.fullAddress}</MenuItem>);
+    const menuItems = addresses.map(a => (
+      <MenuItem
+        key={a.fullAddress}
+        value={a.fullAddress}>
+        {this.trimLabel(a.fullAddress)}
+      </MenuItem>
+    ));
 
     return (
       <div className="AddressBook">
