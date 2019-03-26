@@ -10,7 +10,6 @@ import { Field, reduxForm, formValueSelector, change } from 'redux-form';
 import { connect } from 'react-redux';
 import Cards from 'react-credit-cards';
 import 'react-credit-cards/lib/styles.scss';
-import validator from 'validator';
 import AddressBook from '../../Widgets/AddressBook';
 import GUIConnect from '../../Containers/GUIConnect';
 
@@ -18,7 +17,7 @@ import RenderField from '../../UI/Forms/RenderField';
 import RenderForm from '../../UI/Forms/RenderForm';
 import { email, expiryDate, cvc } from '../../../validation/validations';
 import { checkout } from '../../../actions/cart';
-
+import cardValidator from 'card-validator';
 
 import '../../../_grid.scss';
 import '../Forms.scss';
@@ -54,7 +53,7 @@ const validate = (values) => {
   if (!email(values.email)) {
     errors.email = 'Not valid E-mail address';
   }
-  if (!validator.isCreditCard(values.cardNumber || '')) {
+  if (!cardValidator.number(values.cardNumber).isValid) {
     errors.cardNumber = 'Not valid Credit Card number address';
   }
 

@@ -1,0 +1,58 @@
+@import '../../colors';
+@import '../../settings';
+
+.IntroPromo{
+  display:flex;
+  flex-wrap: wrap;
+  max-width:900px;
+  margin:0 auto;
+  flex-direction: column;
+
+  &__title{
+    flex: 0 0 100%;
+    font-size: 1.5rem;
+    line-height:1.25em;
+    color:white;
+    text-align:center;
+    padding:0.5rem;
+    margin:1rem 0 2rem 0;
+    background:$color-secondary-hb;
+  }
+  &__card{
+    flex: 0 0 100%;
+  }
+
+
+
+
+}
+/* Extra Small Devices, Phones */
+@media only screen and (min-width : $sm-media-step-min ) {
+  .IntroPromo{
+
+  }
+}
+
+/* Small Devices, Tablets */
+@media only screen and (min-width : $md-media-step-min) {
+  .IntroPromo{
+    flex-direction: row;
+    &__card{
+      flex: 0 0 33.33%;
+    }
+  }
+}
+
+/* Medium Devices, Desktops */
+@media only screen and (min-width : $lg-media-step-min) {
+  .IntroPromo{
+
+  }
+}
+
+/* Large Devices, Wide Screens */
+@media only screen and (min-width : $xl-media-step-min) {
+  .IntroPromo{
+
+  }
+}

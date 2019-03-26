@@ -63,9 +63,7 @@ const Layout = ({ render, ...otherProps }) => {
         </div>
       </div>
 
-      <div className="Layout__footer">
-        footer
-      </div>
+      <div className="Layout__footer"> </div>
       <ShoppingCart link={localizePath('/cart', otherProps.locale)}/>
     </div>
   );

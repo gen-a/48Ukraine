@@ -77,10 +77,10 @@ exports.findOnSale = function getProductById(req, res, next) {
 
 
 exports.findById = function getProductById(req, res, next) {
+
   axios.get('http://48ukraine.co/data/product', { params: req.query })
     .then(result => result.data)
     .then(({data, message, error}) => {
-
       const product = {
         ...data,
         images: data.images.map(img =>

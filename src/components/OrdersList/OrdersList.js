@@ -7,7 +7,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import PriceSticker from '../PriceSticker';
 import Pagination from '../UI/Pagination';
-import { replaceInRoute } from '../../utils/helpers';
 
 import './OrdersList.scss';
 

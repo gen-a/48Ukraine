@@ -1,0 +1,62 @@
+@import '../../../colors';
+@import '../../../settings';
+
+.IntroPromoCard{
+  display: flex;
+  margin-bottom:1rem;
+flex-direction: column;
+
+  &__image{
+  flex:0 0 100%;
+
+  }
+  &__info{
+    flex:0 0 100%;
+    padding:0 1rem;
+  }
+  &__title{
+    flex:1 1 auto;
+    font-size:1rem;
+    margin: 0 0 1rem 0;
+  }
+  &__text{
+    font-size:0.75rem;
+    line-height:1.4em;
+  }
+
+}
+/* Extra Small Devices, Phones */
+@media only screen and (min-width : $sm-media-step-min ) {
+  .IntroPromoCard{
+    flex-direction: row;
+    &__image{
+      flex:0 0 96px;
+
+    }
+    &__info{
+      flex:1 1 auto;
+      padding:0 1rem;
+    }
+  }
+}
+
+/* Small Devices, Tablets */
+@media only screen and (min-width : $md-media-step-min) {
+  .IntroPromoCard{
+
+  }
+}
+
+/* Medium Devices, Desktops */
+@media only screen and (min-width : $lg-media-step-min) {
+  .IntroPromoCard{
+
+  }
+}
+
+/* Large Devices, Wide Screens */
+@media only screen and (min-width : $xl-media-step-min) {
+  .IntroPromoCard{
+
+  }
+}

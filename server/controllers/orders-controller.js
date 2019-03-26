@@ -12,11 +12,10 @@ const { sendNewOrderLetter } = require('../letters/send-new-order-letter');
  */
 exports.addresses = function getAllAddresses(req, res, next) {
   if (!req.user) {
-    //res.status(400).json(response({}, 'Not found', 1));
-    //return next();
+    res.status(200).json(response({records:[]}));
+    return next();
   }
-  //const { email } = req.user;
-  const email = "pugachevsky@gmail.com";
+  const { email } = req.user;
   Order.find({ email })
     .then((records) => {
       if (records.length === 0) {

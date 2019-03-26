@@ -4,28 +4,25 @@
 .DepartmentsCarousel{
   &__entry{
     position:relative;
-    color: $color-cool-grey-4h;
+    color: black;
     box-sizing: border-box;
     padding:0.5rem;
     font-size: 1rem;
-    border-bottom: 3px solid $color-cool-grey-h ;
     transition:  border-color 0.2s, color 0.2s;
     font-family: "Roboto Condensed", sans-serif;
     display:flex;
     align-items:flex-end;
     overflow: hidden;
     &_even{
-      background: $color-cool-grey-2b;
+      background: $color-primary-h;
     }
     &_odd{
-      background: $color-cool-grey-b;
+      background: $color-primary-2h;
     }
   }
 
   &__entry:hover{
-    border-bottom: 3px solid $color-primary-2h ;
     color:white;
-    border-bottom: 3px solid $color-secondary-2h;
     & .DepartmentsCarousel__icon *{
       fill:white;
     }
@@ -35,7 +32,7 @@
     overflow:hidden;
     & *{
       transition:  fill 0.2s;
-      fill:$color-cool-grey-4h;
+      fill:black;
     }
   }
   &__label{
@@ -45,11 +42,11 @@
     white-space: nowrap;
     line-height:32px;
     padding:0 0.25rem;
+    margin-top:-2px;
   }
   &__entry_current:hover,
   &__entry_current{
     color:black;
-    border-bottom: 3px solid $color-secondary-2h;
     background: $color-secondary-hb ;
     cursor:default;
     & .DepartmentsCarousel__icon *{
