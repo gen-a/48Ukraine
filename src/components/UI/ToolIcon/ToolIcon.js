@@ -19,7 +19,7 @@ const propTypes = {
   /** Status of the toggle. */
   isOn: PropTypes.bool,
   /** On change handler. */
-  onClick: PropTypes.func.isRequired,
+  onClick: PropTypes.func,
 };
 /**
  * Default settings for move detection.
@@ -27,7 +27,8 @@ const propTypes = {
  */
 const defaultProps = {
   size: 32,
-  isOn: false
+  isOn: false,
+  onClick:()=>{}
 };
 const ToolIcon = ({ svg, size, onClick, isOn }) => {
   const style = { width: `${size}px`, height: `${size}px` };

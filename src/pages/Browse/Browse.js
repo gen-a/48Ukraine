@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import update from 'react-addons-update';
 import queryString from 'query-string';
 import { URL_FETCH_PRODUCTS } from '../../config/api';
-import { get } from '../../services/ajax';
 import ProductsList from '../../components/ProductsList';
-import { replaceInRoute } from '../../utils/helpers';
+import { buildUrl } from '../../utils/helpers';
 import { localizePath } from '../../localization/index';
 import InfinityScroll from '../../components/InfinityScroll';
 import PageTitle from '../../components/PageTitle';
+
 /**
  * PropTypes of the component
  * @type {object}
@@ -49,7 +48,16 @@ const propTypes = {
   location: PropTypes.shape({
     pathname: PropTypes.string.isRequired,
     search: PropTypes.string.isRequired
-  }).isRequired
+  }).isRequired,
+  /** Current department data. */
+  currentDepartment: PropTypes.shape({
+    /** Icon of the department. */
+    icon: PropTypes.string,
+    /** Department name. */
+    name: PropTypes.string,
+    /** Name in url (slug). */
+    nameInUrl: PropTypes.string,
+  }).isRequired,
 };
 /**
  * Default props of the component
@@ -59,89 +67,65 @@ const defaultProps = {};
 
 
 class Browse extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      products: [],
-    };
-  }
-
-  componentDidMount() {
-    const { callShowLoader, location: { search }, match: { params } } = this.props;
-    const values = queryString.parse(search);
-    get(URL_FETCH_PRODUCTS, { ...params, ...values }, this.onLoadProducts.bind(this));
-    callShowLoader();
-  }
-
-  onLoadProducts({ error, message, data }) {
-    const { callAddFlashMessage, callHideLoader, callShowToast } = this.props;
-    callHideLoader();
-    if (error === 0) {
-      this.setState(prevState => update(prevState, {
-        products: { $set: data.records },
-        pagesTotal: { $set: data.pagesTotal },
-        perPage: { $set: data.perPage },
-        page: { $set: data.page },
-        count: { $set: data.count },
-      }));
-      //callShowToast('browse.info.products_has_been_loaded');
-    } else {
-      callAddFlashMessage(message, 'server response', 'error');
-    }
-  }
-
-  getDepartmentData(departments, nameInUrl) {
-    for (let i = 0; i < departments.length; i++) {
-      if (departments[i].nameInUrl === nameInUrl) {
-        return departments[i];
-      } else {
-        const result = this.getDepartmentData(departments[i].children, nameInUrl);
-        if (result !== null) {
-          return result;
-        }
-      }
-    }
-    return null;
-  }
-
 
   render() {
-    const { products, pagesTotal, page, count } = this.state;
-    const { location: { search }, locale, departments, match: { params, params: { department: currentDepartment } }, inCartQuantities } = this.props;
-    if (products.length === 0 || departments.length === 0) {
-      return null;
-    }
-    const currentDepartmentData = this.getDepartmentData(departments, currentDepartment);
-    if (currentDepartmentData.length === 0) {
-      console.error('Error loading department data');
-      return null;
-    }
-    return (
-      <>
-      <PageTitle
-        title={currentDepartmentData.name}
-        description={`знайдено продуктів: ${count}`}
-      />
-      <InfinityScroll
-        url={URL_FETCH_PRODUCTS}
-        params={{ ...params, ...queryString.parse(search) }}
-        offset={10}
-        currentPage={page}
+    const { location: { search, key }, locale, match: { params }, inCartQuantities, currentDepartment } = this.props;
+    const values = queryString.parse(search);
+    const currentPage = params.page ? parseInt(params.page, 10) : 1;
 
-        render={props => (
-          <ProductsList
-            {...props}
-            pagesTotal={pagesTotal}
-            paginationUrl={localizePath(replaceInRoute('/browse/:department/page/:page', {
-              ...params,
-              page: ':page'
-            }), locale)}
-            productUrl={localizePath('/product/:id', locale)}
-            inCartQuantities={inCartQuantities}
-          />
-        )}
+
+
+
+    return (
+      <InfinityScroll
+
+        key={`${key}`}
+        url={URL_FETCH_PRODUCTS}
+        params={{ ...params, ...values }}
+        offset={200}
+        currentPage={currentPage}
+        render={(props) => {
+          const pageTitle = {};
+          const paths = {};
+
+          if (values.query && values.query.length > 0) {
+            pageTitle.title = currentDepartment && currentDepartment.name
+              ? `Результати пошуку в розділі ${currentDepartment.name}`
+              : "Результати пошуку";
+            pageTitle.description = `за запитом "${values.query}" знайдено продуктів: ${props.count}`;
+            paths.pagination = `/browse/page/:page${search}`;
+            paths.product = `/product/:id${search}`;
+          } else {
+            pageTitle.title = currentDepartment && currentDepartment.name
+              ? currentDepartment.name
+              : "Всі продукти";
+            pageTitle.description = props.count > 0
+              ? `знайдено продуктів: ${props.count}`
+              : '';
+            paths.pagination = '/browse/:department/page/:page';
+            paths.product = '/product/:id';
+          }
+
+          return (
+            <>
+            <PageTitle
+              title={pageTitle.title}
+              description={pageTitle.description}
+            />
+            <ProductsList
+              {...props}
+              pagesTotal={props.pagesTotal}
+              paginationUrl={localizePath(buildUrl(paths.pagination, {
+                ...params,
+                page: ':page'
+              }), locale)}
+              productUrl={localizePath(paths.product, locale)}
+              inCartQuantities={inCartQuantities}
+            />
+            </>
+          )
+        }}
       />
-      </>
     );
   }
 }
@@ -153,6 +137,7 @@ const mapStateToProps = state => (
   {
     locale: state.app.locale,
     departments: state.app.departments,
+    currentDepartment: state.app.currentDepartment,
     inCartQuantities: state.cart.quantities
   }
 );

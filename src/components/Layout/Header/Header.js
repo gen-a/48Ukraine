@@ -9,8 +9,7 @@ import { NavLink } from 'react-router-dom';
 import CompanyLogo, { ASPECT_RATIO } from '../../Svg/CompanyLogo';
 import { localizePath, APP_DEFAULT_LOCALE } from '../../../localization/index';
 import Ripple from '../../UI/Ripple';
-import Search from '../../Widgets/Search';
-import { URL_SEARCH_HINT, URL_SEARCH_SUBMIT } from '../../../config/api';
+import Search from '../../Containers/Search';
 import './Header.scss';
 
 /**
@@ -54,13 +53,7 @@ const Header = ({ height, locale, mediaPrefix }) => {
       </div>
       <div className="Header__search">
         <div className="Header__searchBox">
-          <Search
-            urlHint={URL_SEARCH_HINT}
-            urlSubmit={URL_SEARCH_SUBMIT}
-            minlength={3}
-            onError={console.log}
-            onSuccess={console.log}
-          />
+          <Search routePath="/browse" />
         </div>
       </div>
     </div>

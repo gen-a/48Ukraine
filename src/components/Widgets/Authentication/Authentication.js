@@ -81,35 +81,19 @@ class Authentication extends Component {
    * Handle input password blur event
    */
   onInputPasswordBlur() {
-    const { dictionary } = this.props;
-    const { fields: { password: { value } } } = this.state;
-    const valid = validatePassword(value);
-    this.setState(prevState => update(prevState, {
-      fields: {
-        password: {
-          error: { $set: value.length === 0 || valid ? '' : translate(dictionary, 'error.invalidPassword') },
-          valid: { $set: valid },
-        }
-      }
-    }));
+    this.validatePassword(() => {
+    });
   }
 
   /**
    * Handle input email blur event
    */
   onInputEmailBlur() {
-    const { dictionary } = this.props;
-    const { fields: { email: { value } } } = this.state;
-    const valid = validateEmail(value);
-    this.setState(prevState => update(prevState, {
-      fields: {
-        email: {
-          error: { $set: value.length === 0 || valid ? '' : translate(dictionary, 'error.invalidEmail') },
-          valid: { $set: valid },
-        }
-      }
-    }));
+    this.validateEmail(() => {
+    });
   }
+
+
 
   /**
    * Handle input email focus event
@@ -324,6 +308,71 @@ class Authentication extends Component {
     );
   }
 
+  /**
+   * On password field enter key handler
+   * @param e {Event}
+   */
+  onInputPasswordKeyPress(e) {
+    if (e.key === 'Enter') {
+      this.validatePassword(() => {
+        const { fields: { password: { valid } } } = this.state;
+        if (valid) {
+          this.checkPasswordForNextAction();
+        }
+      });
+    }
+  }
+
+  /**
+   * On email field enter key handler
+   * @param e {Event}
+   */
+  onInputEmailKeyPress(e) {
+    if (e.key === 'Enter') {
+      this.validateEmail(() => {
+        const { fields: { email: { valid } } } = this.state;
+        if (valid) {
+          this.checkEmailForNextAction();
+        }
+      });
+    }
+  }
+
+  /**
+   * Validate password and call callback on setState
+   * @param cb {Function} - callback on setState
+   */
+  validatePassword(cb) {
+    const { dictionary } = this.props;
+    const { fields: { password: { value } } } = this.state;
+    const valid = validatePassword(value);
+    this.setState(prevState => update(prevState, {
+      fields: {
+        password: {
+          error: { $set: value.length === 0 || valid ? '' : translate(dictionary, 'error.invalidPassword') },
+          valid: { $set: valid },
+        }
+      }
+    }), cb);
+  }
+
+  /**
+   * Validate e-mail and call callback on setState
+   * @param cb {Function} - callback on setState
+   */
+  validateEmail(cb) {
+    const { dictionary } = this.props;
+    const { fields: { email: { value } } } = this.state;
+    const valid = validateEmail(value);
+    this.setState(prevState => update(prevState, {
+      fields: {
+        email: {
+          error: { $set: value.length === 0 || valid ? '' : translate(dictionary, 'error.invalidEmail') },
+          valid: { $set: valid },
+        }
+      }
+    }), cb);
+  }
   render() {
     const { fields: { email, password, showPassword, rememberMe }, formAction, isNew } = this.state;
     const { dictionary } = this.props;
@@ -332,17 +381,26 @@ class Authentication extends Component {
 
         <h2 className="Authentication__title">{translate(dictionary, 'authentication.title')}</h2>
 
-        <form noValidate autoComplete="off">
+        <form
+          noValidate
+          autoComplete="off"
+          onSubmit={(e) => {
+            e.preventDefault();
+            return false;
+          }}
+        >
           <div className="Authentication__row">
             <Field
               input={{
                 onBlur: () => this.onInputEmailBlur(),
                 onFocus: () => this.onInputEmailFocus(),
+                onKeyPress: e => this.onInputEmailKeyPress(e),
                 onChange: e => this.onInputEmailChange(e.currentTarget.value),
                 value: email.value,
                 readOnly: email.readOnly
               }}
               meta={email}
+              id="auth-email-input"
               label={translate(dictionary, 'label.email')}
             />
           </div>
@@ -375,7 +433,7 @@ class Authentication extends Component {
                 input={{
                   onBlur: () => this.onInputPasswordBlur(),
                   onFocus: () => this.onInputPasswordFocus(),
-
+                  onKeyPress: e => this.onInputPasswordKeyPress(e),
                   onChange: e => this.onInputPasswordChange(e.currentTarget.value),
                   value: password.value,
                   readOnly: password.readOnly
@@ -383,6 +441,7 @@ class Authentication extends Component {
                 meta={password}
                 type={password.type}
                 label={translate(dictionary, 'label.password')}
+                id="auth-password-input"
               />
               <Switch
                 onChange={() => this.onInputShowPasswordChange()}
@@ -410,8 +469,8 @@ class Authentication extends Component {
               />
               {password.busy && <CircularProgress/>}
               {!isNew && (
-                <div style={{paddingTop:'5px'}}>
-                <Divider/>
+                <div style={{ paddingTop: '5px' }}>
+                  <Divider/>
                   <GUIConnect
                     email={email.valid ? email.value : ''}
                     dictionary={dictionary}

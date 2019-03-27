@@ -15,6 +15,7 @@ import {
   FETCH_INITIAL_STATE_FULFILLED,
   FETCH_INITIAL_STATE_REJECTED,
   FETCH_INITIAL_STATE_PENDING,
+  SET_CURRENT_DEPARTMENT
 } from '../actions/app';
 
 const initialState = {
@@ -41,10 +42,16 @@ const initialState = {
   openDrawer: '',
   openScrims: [],
   isInitialized: false,
+  currentDepartment: {}
 };
 
 function app(state = initialState, action) {
   switch (action.type) {
+    case SET_CURRENT_DEPARTMENT:
+      return {
+        ...state,
+        currentDepartment: action.payload
+      };
     case FETCH_INITIAL_STATE_FULFILLED:
       return {
         ...state,

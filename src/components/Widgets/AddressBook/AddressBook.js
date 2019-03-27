@@ -123,7 +123,7 @@ class AddressBook extends Component {
         </div>
         <div className="AddressBook__select">
           <FormControl className={classes.formControl}>
-            <InputLabel htmlFor="address-selector">Address Book</InputLabel>
+            <InputLabel htmlFor="address-selector">Адресна книга</InputLabel>
             <Select
               value={selectedAddress}
               onChange={e => this.onChange(e)}

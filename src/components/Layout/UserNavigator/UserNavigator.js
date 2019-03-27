@@ -7,7 +7,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import './UserNavigator.scss';
-import NavLink from "react-router-dom/es/NavLink";
+import {NavLink} from 'react-router-dom';
+
+import ProfileIcon from '../../Svg/AccountCardDetailsOutline';
+import HistoryIcon from '../../Svg/History';
+import ChangePassIcon from '../../Svg/Lastpass';
+import LogoutIcon from '../../Svg/Logout';
+import colors from '../../../_colors.scss';
 
 /**
  * PropTypes of the component
@@ -32,9 +38,9 @@ const defaultProps = {
  */
 const UserNavigator = ({ match: { path: currentRoute }, email, callLogOut }) => {
   const routes = [
-    { route: '/user/profile', name: 'Profile' },
-    { route: '/user/orders', name: 'Orders History' },
-    { route: '/user/reset-password', name: 'Reset Password' },
+    { route: '/user/profile', name: 'Персональні відомості' , icon: ProfileIcon},
+    { route: '/user/orders', name: 'Історія замовлень', icon: HistoryIcon },
+    { route: '/user/reset-password', name: 'Змінити пароль', icon: ChangePassIcon },
   ];
 
   return (
@@ -45,24 +51,35 @@ const UserNavigator = ({ match: { path: currentRoute }, email, callLogOut }) => 
 
       <ul className="UserNavigator__entries">
         {routes.map((r) => {
+          const I = r.icon;
+
           return (
             <li key={r.route} className="UserNavigator__node">
               {currentRoute === r.route
                 ? (
                   <div className="UserNavigator__label UserNavigator__label_isSelected">
-                    <span>
+                    <div className="UserNavigator__labelIcon">
+                      <I fill={colors.colorPrimaryHB}/>
+                    </div>
+                    <div className="UserNavigator__labelTExt">
                       {r.name}
-                    </span>
+                    </div>
                   </div>
                 )
                 : (
-                  <div className="UserNavigator__label">
+
                     <NavLink
                       to={r.route}
+                      className="UserNavigator__label"
                     >
-                      {r.name}
+                      <div className="UserNavigator__labelIcon">
+                        <I fill={colors.colorPrimaryHB}/>
+                      </div>
+                      <div className="UserNavigator__labelTExt">
+                        {r.name}
+                      </div>
                     </NavLink>
-                  </div>
+
                 )
               }
             </li>
@@ -72,11 +89,14 @@ const UserNavigator = ({ match: { path: currentRoute }, email, callLogOut }) => 
           <button
             className="UserNavigator__label"
             type="button"
-            onClick={() => {
-              callLogOut()
-            }}
+            onClick={() => callLogOut()}
           >
-            LogOut
+            <div className="UserNavigator__labelIcon">
+              <LogoutIcon fill={colors.colorPrimaryHB}/>
+            </div>
+            <div className="UserNavigator__labelTExt">
+              Вийти
+            </div>
           </button>
         </li>
       </ul>

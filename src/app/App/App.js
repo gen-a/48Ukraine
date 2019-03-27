@@ -10,12 +10,12 @@ import { Route, Switch } from 'react-router-dom';
 import Browse from '../../pages/Browse';
 import Product from '../../pages/Product';
 import Cart from '../../pages/Cart';
-import Search from '../../pages/Search';
 import PrivateRoute from '../../components/Router/PrivateRoute';
 import Checkout from '../../pages/Checkout';
 import EnterAccount from '../../pages/EnterAccount';
 import GUIConnect from '../../components/Containers/GUIConnect';
 import DictionaryConnect from '../../components/Containers/DictionaryConnect';
+import StoreCurrentDepartment from '../../components/Containers/StoreCurrentDepartment';
 
 import Layout from '../../components/Layout';
 import { localizePath } from '../../localization/index';
@@ -41,6 +41,9 @@ const propTypes = {
  * @param C
  */
 export const renderRoute = C => routeProps => (
+
+  <>
+  <StoreCurrentDepartment/>
   <DictionaryConnect
     {...routeProps}
     render={dictionaryProps => (
@@ -49,36 +52,40 @@ export const renderRoute = C => routeProps => (
         render={layoutProps => (
           <GUIConnect
             {...layoutProps}
-            render={guiProps => <C {...guiProps} key={routeProps.match.url}/>}
+            render={guiProps => (
+              <C {...guiProps} key={routeProps.match.url}/>
+            )}
           />
         )}
       />
     )}
   />
+  </>
+
 );
 
 
-class App extends Component{
+class App extends Component {
 
-  constructor(props){
+  constructor(props) {
     super(props);
     this.location = '';
   }
 
-  componentDidMount(){
-    const {locale, callFetchInitialSate, location} = this.props;
+  componentDidMount() {
+    const { locale, callFetchInitialSate, location } = this.props;
     callFetchInitialSate({ locale });
     this.location = location;
   }
 
-  componentDidUpdate(){
-    const { location, callSetOpenDrawer} = this.props;
-    if(location !== this.location){
+  componentDidUpdate() {
+    const { location, callSetOpenDrawer } = this.props;
+    if (location !== this.location) {
       callSetOpenDrawer('');
     }
   }
 
-  render(){
+  render() {
     const { locale, isInitialized } = this.props;
 
     if (!isInitialized) {
@@ -88,17 +95,17 @@ class App extends Component{
     return (
       <Switch>
         <Route exact path={localizePath('/', locale)} render={renderRoute(Home)}/>
+        <Route exact path={localizePath('/browse', locale)} render={renderRoute(Browse)}/>
+        <Route exact path={localizePath('/browse/page/:page', locale)} render={renderRoute(Browse)}/>
         <Route exact path={localizePath('/browse/:department', locale)} render={renderRoute(Browse)}/>
         <Route exact path={localizePath('/browse/:department/page/:page', locale)} render={renderRoute(Browse)}/>
         <Route exact path={localizePath('/product/:id', locale)} render={renderRoute(Product)}/>
         <Route exact path={localizePath('/cart', locale)} render={renderRoute(Cart)}/>
         <Route exact path={localizePath('/checkout', locale)} render={renderRoute(Checkout)}/>
         <Route exact path={localizePath('/enter-account/:visa', locale)} render={renderRoute(EnterAccount)}/>
-        <Route exact path={localizePath('/search', locale)} render={renderRoute(Search)}/>
-        <Route exact path={localizePath('/search/page/:page', locale)} render={renderRoute(Search)}/>
         <PrivateRoute
           path={localizePath('/user/:section', locale)}
-          render={(routeProps)=>(
+          render={(routeProps) => (
             <DictionaryConnect
               {...routeProps}
               render={dictionaryProps => (
@@ -111,7 +118,7 @@ class App extends Component{
                         <AsyncComponent
                           {...guiProps}
                           key={routeProps.match.url}
-                          component={()=> import('../../pages/User')}
+                          component={() => import('../../pages/User')}
                           placeholder={<Loader isVisible/>}
                         />
                       )}
@@ -122,7 +129,7 @@ class App extends Component{
             />
           )}
         />
-        <Route path="*" render={renderRoute(NotFound)} />
+        <Route path="*" render={renderRoute(NotFound)}/>
       </Switch>
     )
   }

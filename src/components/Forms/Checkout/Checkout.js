@@ -167,25 +167,27 @@ class Checkout extends Component {
       >
         <div className="Forms__fields Forms__fields_outlined">
 
-          <h2 className="Forms__sectionTitle">Sender data</h2>
+          <h2 className="Forms__sectionTitle">Дані відправника (Ваші дані)</h2>
+
+          <p className="Forms__sectionInfo">Можна заповнювати латинськими літерами. Всі поля є обов'язкові</p>
 
           <div className="Forms__field xs-flex_100 md-flex_50 md-marginRight_50">
-            <Field name="email" type="email" component={RenderField} label="Email"/>
+            <Field name="email" type="email" component={RenderField} label="Електронна адреса"/>
           </div>
           <div className="Forms__field xs-flex_100 md-flex_50">
-            <Field name="firstName" type="text" component={RenderField} label="First Name"/>
+            <Field name="firstName" type="text" component={RenderField} label="Ім'я"/>
           </div>
           <div className="Forms__field xs-flex_100 md-flex_50">
-            <Field name="lastName" type="text" component={RenderField} label="Last Name"/>
+            <Field name="lastName" type="text" component={RenderField} label="Прізвище"/>
           </div>
           <div className="Forms__field xs-flex_100 md-flex_50 md-marginRight_50">
-            <Field name="phone" type="text" component={RenderField} label="Phone"/>
+            <Field name="phone" type="text" component={RenderField} label="Номер телефону"/>
           </div>
         </div>
 
 
         <div className="Forms__fields Forms__fields_outlined">
-          <h2 className="Forms__sectionTitle">Addressee data</h2>
+          <h2 className="Forms__sectionTitle">Дані отримувача</h2>
 
           <div className="Forms__field xs-flex_100 md-flex_50 md-marginLeft_25">
             {
@@ -211,32 +213,32 @@ class Checkout extends Component {
 
 
           <div className="Forms__field xs-flex_100 md-flex_50">
-            <Field name="toFirstName" type="text" component={RenderField} label="To First Name"/>
+            <Field name="toFirstName" type="text" component={RenderField} label="Ім'я"/>
           </div>
           <div className="Forms__field xs-flex_100 md-flex_50">
-            <Field name="toLastName" type="text" component={RenderField} label="To Last Name"/>
+            <Field name="toLastName" type="text" component={RenderField} label="Прізвище"/>
           </div>
 
           <div className="Forms__field xs-flex_100">
-            <Field name="toAddress" type="text" component={RenderField} label="toAddress"/>
+            <Field name="toAddress" type="text" component={RenderField} label="Адреса"/>
           </div>
 
           <div className="Forms__field xs-flex_50">
-            <Field name="toZip" type="text" component={RenderField} label="toZip"/>
+            <Field name="toZip" type="text" component={RenderField} label="Поштовий Ідекс"/>
           </div>
 
           <div className="Forms__field xs-flex_50">
-            <Field name="toCity" type="text" component={RenderField} label="toCity"/>
+            <Field name="toCity" type="text" component={RenderField} label="Місто"/>
           </div>
 
           <div className="Forms__field xs-flex_100 md-flex_50 md-marginRight_50">
-            <Field name="toPhone" type="text" component={RenderField} label="toPhone"/>
+            <Field name="toPhone" type="text" component={RenderField} label="Номер телефону"/>
           </div>
 
         </div>
 
         <div className="Forms__fields Forms__fields_outlined">
-          <h2 className="Forms__sectionTitle">Payment details</h2>
+          <h2 className="Forms__sectionTitle">Платіжна інформація</h2>
 
           <div className="Forms__field xs-flex_100 md-flex_50">
             <Cards
@@ -245,6 +247,9 @@ class Checkout extends Component {
               expiry={cardExpiry || ''}
               cvc={cardCvc || ''}
               focused={cardFocused || ''}
+              placeholders={
+                {name: ''}
+              }
             />
           </div>
 

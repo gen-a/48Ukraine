@@ -1,0 +1,108 @@
+@import '../../../colors';
+
+.SearchForm {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  padding: 0 1rem;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
+  margin: 0;
+  transition: all 0.4s;
+  max-height: 36px;
+  width: 100%;
+  max-width: 150px;
+
+  overflow: hidden;
+  outline: none;
+  box-sizing: border-box;
+
+  &_focused {
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.7);
+    max-height: 400px;
+    max-width: 400px;
+    .SearchForm {
+      &__input {
+        /*border-bottom: 2px solid rgba(0, 0, 0, 0.1);*/
+        &:focus {
+          /*border-bottom: 2px solid $color-cool-grey-4h;*/
+        }
+      }
+      &__filters {
+
+      }
+    }
+  }
+  &__inputBox {
+    flex: 0 0 100%;
+    height: 36px;
+    display: flex;
+  }
+  &__filtersBox {
+    flex: 1 1;
+    width: 100%;
+    overflow: auto;
+  }
+
+  &__input {
+    flex: 1 1 100%;
+    box-sizing: border-box;
+    display: block;
+    height: 36px;
+    border: 0;
+    font-size: 1rem;
+    line-height: 1.125em;
+    padding: 0.25rem 0 0.125rem 0;
+    outline: none;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    border-bottom: 2px solid rgba(0, 0, 0, 0);
+    transition: all 0.4s;
+
+    &::placeholder {
+      font-size: 0.875em;
+      color: $color-cool-grey-h;
+    }
+
+  }
+
+  &__icon {
+    position:absolute;
+    box-sizing: border-box;
+    background: transparent;
+    border: none;
+    height: 36px;
+    width: 36px;
+    padding: 6px;
+    top: 0;
+    right: 0;
+    opacity: 0.3;
+  }
+
+  &__filters {
+    display: block;
+    background: white;
+    font-size:0.875rem;
+    line-height: 1.345em;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+
+    & li {
+      padding: 5px 0 5px 0;
+      transition: all 0.4s;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      vertical-align: middle;
+
+      & b {
+        background: $color-secondary-2h;
+        font-weight: 400;
+      }
+    }
+  }
+
+}

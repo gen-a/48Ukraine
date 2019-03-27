@@ -30,6 +30,18 @@ export const FETCH_INITIAL_STATE_FULFILLED = 'FETCH_INITIAL_STATE_FULFILLED';
 export const FETCH_INITIAL_STATE_REJECTED = 'FETCH_INITIAL_STATE_REJECTED';
 export const FETCH_INITIAL_STATE_PENDING = 'FETCH_INITIAL_STATE_PENDING';
 
+export const SET_CURRENT_DEPARTMENT = 'SET_CURRENT_DEPARTMENT';
+
+/**
+ * Set current department
+ * @param data {object} - request parameters
+ * @returns {function(*, *)}
+ */
+export function setCurrentDepartment(data) {
+  return (dispatch) => {
+    dispatch({ type: SET_CURRENT_DEPARTMENT, payload: data });
+  };
+}
 
 /**
  * Load initial state from the server
@@ -44,14 +56,14 @@ export function fetchInitialSate(data) {
     axios.get(URL_FETCH_INITIAL_STATE, data)
       .then(result => result.data)
       .then((result) => {
-        const { user, cart, ...otherDate } = result.data;
+        const { user, cart, ...otherData } = result.data;
         if (user) {
           dispatch({ type: SET_AUTHENTICATED_DATA, payload: user });
         }
         if (cart) {
           dispatch({ type: INITIALIZE_CART, payload: cart });
         }
-        dispatch({ type: FETCH_INITIAL_STATE_FULFILLED, payload: otherDate });
+        dispatch({ type: FETCH_INITIAL_STATE_FULFILLED, payload: otherData });
       })
       .catch(err => dispatch({ type: FETCH_INITIAL_STATE_REJECTED, payload: err }));
   };

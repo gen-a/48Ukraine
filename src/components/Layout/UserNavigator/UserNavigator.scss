@@ -19,6 +19,8 @@
 
   &__label{
     @include navigator-entry-label();
+    display:flex;
+    text-decoration: none;
     &:hover{
       @include navigator-entry-label-hover();
     }
@@ -26,4 +28,16 @@
       @include navigator-entry-label-current();
     }
   }
+  &__labelIcon{
+    flex: 0 0 38px;
+    margin-right:0.5rem;
+    width:38px;
+    height:38px;
+    box-sizing: border-box;
+    padding:6px;
+  }
+  &__labelText{
+    flex: 1 1 ;
+  }
+
 }

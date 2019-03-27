@@ -49,7 +49,7 @@ const defaultProps = {
  * General component description in JSDoc format. Markdown is *supported*.
  */
 class InfinityScroll extends Component {
-  static scrollTop(){
+  static scrollTop() {
     return (window.pageYOffset || document.documentElement.scrollTop) - (document.documentElement.clientTop || 0);
   }
 
@@ -57,6 +57,8 @@ class InfinityScroll extends Component {
     super(props);
     this.state = {
       records: [],
+      pagesTotal: 0,
+      count: 0,
       i: 0
     };
     this.isComplete = false;
@@ -84,7 +86,7 @@ class InfinityScroll extends Component {
   }
 
   fetchNext() {
-    const { url, params, currentPage, callShowLoader, callHideLoader, callShowToast, callAddFlashMessage } = this.props;
+    const { url, params, currentPage, callShowLoader, callHideLoader, callAddFlashMessage } = this.props;
     const { i } = this.state;
     this.isBusy = true;
     callShowLoader();
@@ -96,9 +98,10 @@ class InfinityScroll extends Component {
         this.setState(prevState => ({
           ...prevState,
           records: [...prevState.records, ...data.records],
+          pagesTotal: data.pagesTotal,
+          count: data.count,
           i: prevState.i + 1
         }));
-        //callShowToast('browse.info.productsHasBeenLoaded');
       } else {
         callAddFlashMessage(message, 'server response', 'error');
       }
@@ -108,8 +111,8 @@ class InfinityScroll extends Component {
 
   render() {
     const { render, ...otherProps } = this.props;
-    const { records, i } = this.state;
-    return render({ ...otherProps, records, infinityLoads: i });
+    const { records, pagesTotal, count, i } = this.state;
+    return render({ ...otherProps, records, pagesTotal, count, infinityLoads: i });
   }
 }
 

@@ -29,6 +29,12 @@ const propTypes = {
     value: PropTypes.string,
     /** On change handler. */
     onChange: PropTypes.func,
+    /** On key press handler. */
+    onKeyPress: PropTypes.func,
+    /** On blur handler. */
+    onBlur: PropTypes.func,
+    /** On focus handler. */
+    onFocus: PropTypes.func,
   }),
   /** Input node attributes */
   meta: PropTypes.shape({
@@ -41,25 +47,33 @@ const propTypes = {
   label: PropTypes.string,
   /** Label of the field.  */
   type: PropTypes.string,
+  /** Id of the field.  */
+  id: PropTypes.string,
 };
 
 const defaultProps = {
   type: 'text',
   label: '',
-  busy: false,
   input: {
     required: false,
     disabled: false,
     readOnly: false,
     value: '',
+    onKeyPress: () => {
+    },
     onChange: () => {
+    },
+    onBlur: () => {
+    },
+    onFocus: () => {
     },
   },
   meta: {
     error: '',
     warning: '',
     touched: false
-  }
+  },
+  id: 'inputTextField'
 };
 
 const styles = () => ({
@@ -69,7 +83,7 @@ const styles = () => ({
   }
 });
 
-const RenderField = ({ classes, input, label, type, meta: { error } }) => {
+const RenderField = ({ id, classes, input, label, type, meta: { error } }) => {
   return (
     <MuiTheme>
       <TextField
@@ -78,7 +92,7 @@ const RenderField = ({ classes, input, label, type, meta: { error } }) => {
         required={input.required}
         disabled={input.disabled}
         type={type}
-        id="outlined-name"
+        id={id}
         label={label}
         helperText={error || ' '}
         className={classes.textField}
@@ -86,6 +100,7 @@ const RenderField = ({ classes, input, label, type, meta: { error } }) => {
         onChange={(event) => input.onChange(event)}
         onBlur={(event) => input.onBlur(event)}
         onFocus={(event) => input.onFocus(event)}
+        onKeyPress={(event) => input.onKeyPress(event)}
         margin="normal"
         variant="outlined"
         InputLabelProps={{
