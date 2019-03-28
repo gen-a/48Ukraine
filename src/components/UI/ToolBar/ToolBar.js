@@ -17,7 +17,9 @@ const propTypes = {
   /** Children tools . */
   children: PropTypes.node.isRequired,
   /** Z-index . */
-  depth: PropTypes.number
+  depth: PropTypes.number,
+  /** Visibility control. */
+  isVisible: PropTypes.bool,
 };
 /**
  * Default settings for move detection.
@@ -26,10 +28,18 @@ const propTypes = {
 const defaultProps = {
   position: 'topLeft',
   depth: 1,
+  isVisible: false
 };
 
-const ToolBar = ({ position, children, depth }) => (
-  <div className={`ToolBar ToolBar_${position}`} style={{zIndex: depth}}>
+const ToolBar = ({ isVisible, position, children, depth }) => (
+  <div
+    className={
+      isVisible
+        ? `ToolBar ToolBar_isVisible ToolBar_${position}`
+        : `ToolBar ToolBar_${position}`
+    }
+    style={{zIndex: depth}}
+  >
     {children}
   </div>
 );

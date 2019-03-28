@@ -1,72 +1,189 @@
 @import '../../../colors';
 @import '../../../settings';
 
-.ToolBar{
+.ToolBar {
 
   position: fixed;
-  padding:0.25rem;
+  padding: 0.25rem;
   background: $color-cool-grey-5h;
   box-sizing: border-box;
-  height:$tool-bar-size-xs;
-  box-shadow: 0 0 4px rgba(0,0,0,0.5);
+  height: $tool-bar-size-xs;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
+  transition: all 0.2s ease-out;
 
-  &_topLeft{
-    top:0;
-    left:0;
+  &_isVisible {
+    &.ToolBar {
+      &_topLeft {
+        top: 0;
+        left: 0;
+      }
+      &_topCenter {
+        top: 0;
+      }
+      &_topRight {
+        top: 0;
+        right: 0;
+      }
+      &_bottomLeft {
+        bottom: 0;
+        left: 0;
+      }
+      &_bottomCenter {
+        bottom: 0;
+      }
+      &_bottomRight {
+        bottom: 0;
+        right: 0;
+      }
+    }
+  }
+
+  &_topLeft {
+    top: -$tool-bar-size-xs;
+    left: -$tool-bar-size-xs;
     border-radius: 0 0 $tool-bar-border-radius 0;
   }
-  &_topCenter{
-    top:0;
-    left:50%;
-    transform:translateX(-50%);
+  &_topCenter {
+    top: -$tool-bar-size-xs;
+    left: 50%;
+    transform: translateX(-50%);
     border-radius: 0 $tool-bar-border-radius $tool-bar-border-radius 0;
   }
-  &_topRight{
-    top:0;
-    right:0;
-    border-radius: 0 0 0 $tool-bar-border-radius ;
+  &_topRight {
+    top: -$tool-bar-size-xs;
+    right: -$tool-bar-size-xs;
+    border-radius: 0 0 0 $tool-bar-border-radius;
   }
-  &_bottomLeft{
-    bottom:0;
-    left:0;
+  &_bottomLeft {
+    bottom: -$tool-bar-size-xs;
+    left: -$tool-bar-size-xs;
     border-radius: 0 $tool-bar-border-radius 0 0;
   }
-  &_bottomCenter{
-    bottom:0;
-    left:50%;
-    transform:translateX(-50%);
-    border-radius:  $tool-bar-border-radius $tool-bar-border-radius 0 0;
+  &_bottomCenter {
+    bottom: -$tool-bar-size-xs;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: $tool-bar-border-radius $tool-bar-border-radius 0 0;
   }
-  &_bottomRight{
-    bottom:0;
-    right:0;
-    border-radius:  $tool-bar-border-radius 0 0 0;
+  &_bottomRight {
+    bottom: -$tool-bar-size-xs;
+    right: -$tool-bar-size-xs;
+    border-radius: $tool-bar-border-radius 0 0 0;
   }
 }
+
 /* Extra Small Devices, Phones */
-@media only screen and (min-width : $sm-media-step-min ) {
-  .ToolBar{
-    height:$tool-bar-size-sm;
+@media only screen and (min-width: $sm-media-step-min) {
+  .ToolBar {
+    height: $tool-bar-size-sm;
+    &_topLeft {
+      top: -$tool-bar-size-sm;
+      left: -$tool-bar-size-sm;
+    }
+    &_topCenter {
+      top: -$tool-bar-size-sm;
+    }
+    &_topRight {
+      top: -$tool-bar-size-sm;
+      right: -$tool-bar-size-sm;
+    }
+    &_bottomLeft {
+      bottom: -$tool-bar-size-sm;
+      left: -$tool-bar-size-sm;
+    }
+    &_bottomCenter {
+      bottom: -$tool-bar-size-sm;
+    }
+    &_bottomRight {
+      bottom: -$tool-bar-size-sm;
+      right: -$tool-bar-size-sm;
+    }
   }
 }
 
 /* Small Devices, Tablets */
-@media only screen and (min-width : $md-media-step-min) {
-  .ToolBar{
-    height:$tool-bar-size-md;
+@media only screen and (min-width: $md-media-step-min) {
+  .ToolBar {
+    height: $tool-bar-size-md;
+    &_topLeft {
+      top: -$tool-bar-size-md;
+      left: -$tool-bar-size-md;
+    }
+    &_topCenter {
+      top: -$tool-bar-size-md;
+    }
+    &_topRight {
+      top: -$tool-bar-size-md;
+      right: -$tool-bar-size-md;
+    }
+    &_bottomLeft {
+      bottom: -$tool-bar-size-md;
+      left: -$tool-bar-size-md;
+    }
+    &_bottomCenter {
+      bottom: -$tool-bar-size-md;
+    }
+    &_bottomRight {
+      bottom: -$tool-bar-size-md;
+      right: -$tool-bar-size-md;
+    }
   }
 }
 
 /* Medium Devices, Desktops */
-@media only screen and (min-width : $lg-media-step-min) {
-  .ToolBar{
-    height:$tool-bar-size-lg;
+@media only screen and (min-width: $lg-media-step-min) {
+  .ToolBar {
+    height: $tool-bar-size-lg;
+    &_topLeft {
+      top: -$tool-bar-size-lg;
+      left: -$tool-bar-size-lg;
+    }
+    &_topCenter {
+      top: -$tool-bar-size-lg;
+    }
+    &_topRight {
+      top: -$tool-bar-size-lg;
+      right: -$tool-bar-size-lg;
+    }
+    &_bottomLeft {
+      bottom: -$tool-bar-size-lg;
+      left: -$tool-bar-size-lg;
+    }
+    &_bottomCenter {
+      bottom: -$tool-bar-size-lg;
+    }
+    &_bottomRight {
+      bottom: -$tool-bar-size-lg;
+      right: -$tool-bar-size-lg;
+    }
   }
 }
 
 /* Large Devices, Wide Screens */
-@media only screen and (min-width : $xl-media-step-min) {
-  .ToolBar{
-    height:$tool-bar-size-xl;
+@media only screen and (min-width: $xl-media-step-min) {
+  .ToolBar {
+    height: $tool-bar-size-xl;
+    &_topLeft {
+      top: -$tool-bar-size-xl;
+      left: -$tool-bar-size-xl;
+    }
+    &_topCenter {
+      top: -$tool-bar-size-xl;
+    }
+    &_topRight {
+      top: -$tool-bar-size-xl;
+      right: -$tool-bar-size-xl;
+    }
+    &_bottomLeft {
+      bottom: -$tool-bar-size-xl;
+      left: -$tool-bar-size-xl;
+    }
+    &_bottomCenter {
+      bottom: -$tool-bar-size-xl;
+    }
+    &_bottomRight {
+      bottom: -$tool-bar-size-xl;
+      right: -$tool-bar-size-xl;
+    }
   }
 }

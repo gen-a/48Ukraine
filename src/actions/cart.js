@@ -12,6 +12,7 @@ export const CHECKOUT_PENDING = 'CHECKOUT_PENDING';
 export const CHECKOUT_FULFILLED = 'CHECKOUT_FULFILLED';
 export const CHECKOUT_REJECTED = 'CHECKOUT_REJECTED';
 export const INITIALIZE_CART = 'INITIALIZE_CART';
+
 /**
  * Clear cart
  * @returns {function(*, *)}
@@ -23,12 +24,13 @@ export function clearCart() {
 }
 
 
-export function sendToServer(){
+export function sendToServer() {
   return (dispatch, getState) => {
     return axios.post(URL_STORE_CART, getState().cart)
       .catch(console.log);
   }
 }
+
 /**
  * Add product to cart. Check if already exits increment number else add new object.
  * @param product
@@ -86,6 +88,7 @@ export function updateProductInCart(id, quantity = 0) {
     sendToServer()(dispatch, getState);
   };
 }
+
 /**
  * Update current user password
  * @param data
@@ -96,8 +99,42 @@ export function checkout(data) {
     dispatch(
       { type: CHECKOUT_PENDING, payload: {} }
     );
-    return axios.post(URL_CHECKOUT, { ...data, products: getState().cart.products })
-      .then(result => handleFormSubmissionSuccess( CHECKOUT_FULFILLED, result.data )(dispatch, getState))
+    const {
+      cardCvc,
+      cardExpiry,
+      cardNumber,
+      email,
+      firstName,
+      lastName,
+      phone,
+      toAddress,
+      toCity,
+      toFirstName,
+      toLastName,
+      toPhone,
+      toZip
+    } = data;
+
+    return axios.post(URL_CHECKOUT, {
+      cardCvc,
+      cardExpiry,
+      cardNumber,
+      email,
+      firstName,
+      lastName,
+      phone,
+      toAddress,
+      toCity,
+      toFirstName,
+      toLastName,
+      toPhone,
+      toZip,
+      products: getState().cart.products
+    })
+      .then(result => handleFormSubmissionSuccess(
+        CHECKOUT_FULFILLED,
+        result.data
+      )(dispatch, getState))
       .then(() => {
         clearCart()(dispatch);
         dispatch(reset('formCheckout'));

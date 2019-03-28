@@ -24,14 +24,14 @@ $header-background-color: $color-primary-2b;
     left:100%;
     right:auto;
     & .Drawer__header{
-      text-align: left;
+      text-align: center;
     }
   }
   &_left{
     right:100%;
     left:auto;
     & .Drawer__header{
-      text-align: right;
+      text-align: center;
     }
   }
 

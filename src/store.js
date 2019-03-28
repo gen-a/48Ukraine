@@ -6,8 +6,8 @@ import { throttle } from 'lodash';
 import rootReducer from './reducers/index';
 import { saveState, loadState } from './services/local-storage';
 
-//const middleware = [promise, thunk, logger];
-const middleware = [promise, thunk];
+const middleware = [promise, thunk, logger];
+//const middleware = [promise, thunk];
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
