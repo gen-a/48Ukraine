@@ -40,7 +40,7 @@ router.post('/email', checkRequiredInBody(['email']), authController.email);
 
 
 /**
- * @api {post} /data/auth/restore-password Set new temporary password
+ * @api {post} /data/auth/request-access Set new temporary password
  * @apiVersion 1.0.0
  * @apiName RestorePassword
  * @apiGroup Auth
@@ -53,9 +53,9 @@ router.post('/email', checkRequiredInBody(['email']), authController.email);
  *   "email": "email@examles.com"
  * }
  *
- * @apiSuccess (Success 200) {String} message auth.error.missing_email
- * @apiSuccess (Success 200) {String} message auth.error.invalid_email
- * @apiSuccess (Success 200) {String} message auth.info.password_has_been_set
+ * @apiSuccess (Success 200) {String} message auth.error.missingEmail
+ * @apiSuccess (Success 200) {String} message auth.error.invalidEmail
+ * @apiSuccess (Success 200) {String} message auth.info.passwordHasBeenSet
  *
  * @apiSuccessExample {json} Success response:
  *     HTTPS 200 OK
@@ -86,21 +86,21 @@ router.get('/request-access/:visa', authController.requestAccessWithVisa);
  *   "remember": 0
  * }
  *
- * @apiSuccess (Success 200) {String} message auth.info.missing_credentials
- * @apiSuccess (Success 200) {String} message auth.error.incorrect_user_name
- * @apiSuccess (Success 200) {String} message auth.error.incorrect_password
- * @apiSuccess (Success 200) {String} message auth.info.you_have_been_logged_in
+ * @apiSuccess (Success 200) {String} message auth.error.missingCredentials
+ * @apiSuccess (Success 200) {String} message auth.error.incorrectUserName
+ * @apiSuccess (Success 200) {String} message auth.error.incorrectPassword
+ * @apiSuccess (Success 200) {String} message auth.info.youHaveBeenLoggedIn
  *
  * @apiSuccessExample {json} Success response:
  *     HTTPS 200 OK
  *     {
- *      "message": "auth.error.incorrect_user_name",
+ *      "message": "auth.error.incorrectUserName",
  *      "data": "{}"
  *      "error": 0
  *    }
  */
 router.post('/login', (req, res, next) => {
-  passport.authenticate('local', { badRequestMessage: 'auth.info.missing_credentials' }, (err, user, info) => {
+  passport.authenticate('local', { badRequestMessage: 'auth.error.missingCredentials' }, (err, user, info) => {
     if (err) {
       return next(err);
     }
@@ -119,7 +119,7 @@ router.post('/login', (req, res, next) => {
         // Cookie expires at end of session
         req.session.cookie.expires = false;
       }
-      res.status(200).json(response(req.user, 'auth.info.you_have_been_logged_in', 0));
+      res.status(200).json(response(req.user, 'auth.info.youHaveBeenLoggedIn', 0));
       return next();
     });
     return null;
@@ -136,19 +136,19 @@ router.post('/login', (req, res, next) => {
  * @apiGroup Auth
  * @apiPermission authenticated user
  *
- * @apiSuccess (Success 200) {String} message auth.info.you_have_been_logged_out
+ * @apiSuccess (Success 200) {String} message auth.info.youHaveBeenLoggedOut
  *
  * @apiSuccessExample {json} Success response:
  *     HTTPS 200 OK
  *     {
- *      "message": "auth.info.you_have_been_logged_out",
+ *      "message": "auth.info.youHaveBeenLoggedOut",
  *      "data": "{}"
  *      "error": 0
  *    }
  */
 router.get('/logout', (req, res) => {
   req.logout();
-  res.status(200).json(response({}, 'auth.info.you_have_been_logged_out', 0));
+  res.status(200).json(response({}, 'auth.info.youHaveBeenLoggedOut', 0));
 });
 
 

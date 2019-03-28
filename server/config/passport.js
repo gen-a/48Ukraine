@@ -11,10 +11,10 @@ passport.use(new LocalStrategy(
     User.findOne({ email: username })
       .then((user) => {
         if (!user) {
-          return done(null, false, { message: 'auth.error.incorrect_user_name' });
+          return done(null, false, { message: 'auth.error.incorrectUserName' });
         }
         if (!user.comparePassword(password)) {
-          return done(null, false, { message: 'auth.error.incorrect_password' });
+          return done(null, false, { message: 'auth.error.incorrectPassword' });
         }
         return done(null, user);
       })

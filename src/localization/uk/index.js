@@ -17,6 +17,9 @@ const articles = {
   },
   auth: {
     error: {
+      incorrectUserName: 'Incorrect email',
+      incorrectPassword: 'Incorrect password',
+      missingCredentials: 'Missing credentials',
       noUserFound: 'No user found',
       noValidEntryFound: 'No account found foк :email',
       noValidEntryFoundByVisa: 'Access link is not valid or outdated',
@@ -25,6 +28,7 @@ const articles = {
     },
     info: {
       youHaveBeenLoggedIn: 'You have been logged in',
+      youHaveBeenLoggedOut: 'You have been logged out',
       accessLetterHasBeenSent: 'Letter with further instructions has been sent to :email',
       passwordHasBeenSent: 'Letter with the password has been set to :email',
       pleaseUsePasswordToEnter: 'Please use the password to login'
@@ -51,7 +55,7 @@ const articles = {
         timeout: 'Taking a long time... Please try again',
       }
     }
-    },
+  },
   order:{
     info:{
       theOrderHasBeenPlaced:'Ваше замовлення отримано. Номер замовдення :number. Підтверження надіслано на адресу :email'

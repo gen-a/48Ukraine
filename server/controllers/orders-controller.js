@@ -77,14 +77,11 @@ exports.history = function getAllOrders(req, res, next) {
     pagesTotal: 0,
     filters: {}
   };
-
-
   if (!req.user) {
-    res.status(400).json(response({}, 'Not found', 1));
+    res.status(404).json(response({}, 'Not found', 1));
     return next();
   }
   const { email } = req.user;
-
   Order.find({ email })
     .skip(data.perPage * ( data.page - 1 ))
     .limit(data.perPage)
@@ -132,19 +129,14 @@ exports.add = (req, res, next) => {
     ...info,
     stages: { new: new Date().getTime(), payed: new Date().getTime() }
   });
-  console.log(order);
-
-
   order.save()
     .then((result) => {
-
-      console.log(result);
       sendNewOrderLetter(req.body.email, result.number)
-        //.then(console.log)
-        .catch(console.error);
-      req.session.cart = {};
-      res.status(200).json(response(result, 'order.info.theOrderHasBeenPlaced', 0));
-      return next();
+        .then(()=>{
+          req.session.cart = {};
+          res.status(200).json(response(result, 'order.info.theOrderHasBeenPlaced', 0));
+          return next();
+        });
     })
     .catch((err) => {
       res.status(200).json(mongooseErrorToResponse(err));

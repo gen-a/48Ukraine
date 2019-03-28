@@ -8,11 +8,13 @@ const request = require('supertest');
 const chai = require('chai');
 const app = require('../../server');
 const User = require('../../models/user-model');
-const Counter = require('../../models/counter-model');
+const predict = require('../predict');
+const { testBodyRequired } = require('../test-required');
 
 mongoose.set('useCreateIndex', true);
 
 const { expect } = chai;
+const validEmail = 'johnsmith@gmail.com';
 
 describe('API Integration Tests', () => {
 
@@ -24,22 +26,7 @@ describe('API Integration Tests', () => {
 
   describe('/POST /data/auth/email', () => {
 
-    const validEmail = 'johnsmith@gmail.com';
-
-    it('should failed for missing email', (done) => {
-      request(app)
-        .post('/data/auth/email')
-        .send({})
-        .end((err, res) => {
-          expect(res.statusCode).to.equal(200);
-          expect(res.body).to.be.an('object');
-          expect(res.body).to.have.all.keys(['data', 'message', 'error']);
-          expect(res.body.error).to.be.a('number').to.equal(1);
-          expect(res.body.message).to.be.a('string').to.equal('auth.error.missing_email');
-          expect(res.body.data).to.be.an('object');
-          done();
-        });
-    });
+    testBodyRequired('/data/auth/email', { email: validEmail }, ['email']);
 
     it('should failed for invalid email', (done) => {
       const email = 'invalidEmail';
@@ -47,11 +34,7 @@ describe('API Integration Tests', () => {
         .post('/data/auth/email')
         .send({ email })
         .end((err, res) => {
-          expect(res.statusCode).to.equal(200);
-          expect(res.body).to.be.an('object');
-          expect(res.body).to.have.all.keys(['data', 'message', 'error']);
-          expect(res.body.error).to.be.a('number').to.equal(1);
-          expect(res.body.message).to.be.a('string').to.equal('auth.error.invalid_email');
+          predict.response(res, 'auth.error.invalidEmail', 1);
           expect(res.body.data).to.be.an('object').to.own.include({ email });
           done();
         });
@@ -63,11 +46,7 @@ describe('API Integration Tests', () => {
         .post('/data/auth/email')
         .send({ email })
         .end((err, res) => {
-          expect(res.statusCode).to.equal(200);
-          expect(res.body).to.be.an('object');
-          expect(res.body).to.have.all.keys(['data', 'message', 'error']);
-          expect(res.body.error).to.be.a('number').to.equal(0);
-          expect(res.body.message).to.be.a('string').to.equal('auth.info.password_has_been_sent');
+          predict.response(res, 'auth.info.passwordHasBeenSent', 0);
           expect(res.body.data).to.be.an('object').to.own.include({ email });
           done();
         });
@@ -79,16 +58,62 @@ describe('API Integration Tests', () => {
         .post('/data/auth/email')
         .send({ email })
         .end((err, res) => {
-          expect(res.statusCode).to.equal(200);
-          expect(res.body).to.be.an('object');
-          expect(res.body).to.have.all.keys(['data', 'message', 'error']);
-          expect(res.body.error).to.be.a('number').to.equal(0);
-          expect(res.body.message).to.be.a('string').to.equal('auth.info.please_use_password_to_enter');
+          predict.response(res, 'auth.info.pleaseUsePasswordToEnter', 0);
           expect(res.body.data).to.be.an('object').to.own.include({ email });
           done();
         });
     });
 
+  });
+
+  describe('/POST /data/auth/request-access', () => {
+    it('should failed for not registered email', (done) => {
+      const email = 'not.registered@gmail.com';
+      request(app)
+        .post('/data/auth/request-access')
+        .send({ email })
+        .end((err, res) => {
+          predict.response(res, 'auth.error.noValidEntryFound', 1);
+          done();
+        });
+    });
+
+    it('should succeed for registered email', (done) => {
+      request(app)
+        .post('/data/auth/request-access')
+        .send({ email: validEmail })
+        .end((err, res) => {
+          predict.response(res, 'auth.info.accessLetterHasBeenSent', 0);
+          done();
+        });
+    });
+  });
+  describe('/POST /data/auth/request-access/:visa', () => {
+
+    it('should failed for invalid visa', (done) => {
+      request(app)
+        .get('/data/auth/request-access/anything')
+        .end((err, res) => {
+          predict.response(res, 'auth.error.noValidEntryFoundByVisa', 1);
+          done();
+        });
+    });
+
+    const user = User.findOne({ email: validEmail })
+      .then((found) => {
+        return found.visa;
+      })
+      .then((visa) => {
+
+        it('should succeed for valid visa', (done) => {
+          request(app)
+            .get(`/data/auth/request-access${visa}`)
+            .end((err, res) => {
+              predict.response(res, 'auth.info.youHaveBeenLoggedIn', 0);
+              done();
+            });
+        });
+      });
   });
 
   after((done) => {

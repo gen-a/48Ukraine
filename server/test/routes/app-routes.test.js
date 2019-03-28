@@ -7,7 +7,7 @@ const mongoose = require('mongoose');
 const request = require('supertest');
 const chai = require('chai');
 const app = require('../../server');
-
+const predict = require('../predict');
 mongoose.set('useCreateIndex', true);
 
 const { expect } = chai;
@@ -22,13 +22,8 @@ describe('API Integration Tests', () => {
         .get('/data/app/initial-state')
         .send({locale})
         .end((err, res) => {
-          expect(res.statusCode).to.equal(200);
-          expect(res.body).to.be.an('object');
-          expect(res.body).to.have.all.keys(['data', 'message', 'error']);
-          expect(res.body.error).to.be.a('number').to.equal(0);
-          expect(res.body.message).to.be.a('string').to.equal('');
-          expect(res.body.data).to.be.an('object');
-          expect(res.body.data).to.have.all.keys(['departments']);
+          predict.response(res, '', 0)
+          expect(res.body.data).to.have.all.keys(['departments', 'cart']);
           done();
         });
     });

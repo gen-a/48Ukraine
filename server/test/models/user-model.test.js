@@ -50,16 +50,16 @@ describe('Validations: ', () => {
       });
     });
     it('should be failed if first name is too short', (done) => {
-      const user = new User({ first_name: '2' });
+      const user = new User({ firstName: '2' });
       user.validate((err) => {
-        expect(err.errors.first_name).to.exist;
+        expect(err.errors.firstName).to.exist;
         done();
       });
     });
     it('should be failed if last name is too short', (done) => {
-      const user = new User({ last_name: '2' });
+      const user = new User({ lastName: '2' });
       user.validate((err) => {
-        expect(err.errors.last_name).to.exist;
+        expect(err.errors.lastName).to.exist;
         done();
       });
     });

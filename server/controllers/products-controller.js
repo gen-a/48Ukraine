@@ -3,11 +3,9 @@ const fs = require('fs');
 const axios = require('axios');
 const { response } = require('../lib/response');
 
-
 const toCoins = value => Math.round(parseFloat(value) * 100);
 
-
-const mapListedProducts = (products) => {
+exports.mapListedProducts = (products) => {
   return products.map(p => (
     {
       id: p.id,
@@ -33,7 +31,7 @@ exports.findPopular = function findPopular(req, res, next) {
     .then(({data, message, error}) => {
       res.status(200).json(response({
         ...data,
-        records: mapListedProducts(data.records).map(p => ({ ...p, isPopular: true }))
+        records: exports.mapListedProducts(data.records).map(p => ({ ...p, isPopular: true }))
       },  message, error));
       return next();
     })
@@ -49,7 +47,7 @@ exports.findNew = function findNew(req, res, next) {
     .then(({data, message, error}) => {
       res.status(200).json(response({
         ...data,
-        records: mapListedProducts(data.records).map(p => ({ ...p, isBrandNew: true }))
+        records: exports.mapListedProducts(data.records).map(p => ({ ...p, isBrandNew: true }))
       }, message, error));
       return next();
     })
@@ -65,7 +63,7 @@ exports.findOnSale = function getProductById(req, res, next) {
     .then(({data, message, error}) => {
       res.status(200).json(response({
         ...data,
-        records: mapListedProducts(data.records)
+        records: exports.mapListedProducts(data.records)
       }, message, error));
       return next();
     })
@@ -194,7 +192,7 @@ exports.find = function getAllProducts(req, res, next) {
         page: parseInt(data.page, 10),
         pagesTotal: parseInt(data.pagesTotal, 10),
         recPerPage: parseInt(data.recPerPage, 10),
-        records: mapListedProducts(data.records),
+        records: exports.mapListedProducts(data.records),
       }, message, error));
       return next();
     })

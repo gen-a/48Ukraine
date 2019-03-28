@@ -35,17 +35,12 @@ exports.requestAccessWithVisa = (req, res, next) => {
       });
 
       const {visa, visaExpirationDate, ...otherData} = found;
-
-      res.status(200).json(response(otherData, 'auth.info.youHaveBeenLoggedIn', 0));
-      return next();
-
-      /*
       const { email } = found;
       return User.updateOne({ email }, { $set: { visa: '', visaExpirationDate: 0 } })
         .then(()=>{
-          res.status(200).json(response({}, 'auth.info.youHaveBeenLoggedIn', 0));
+          res.status(200).json(response({otherData}, 'auth.info.youHaveBeenLoggedIn', 0));
           return next();
-        });*/
+        });
     })
     .catch((err) => {
       res.status(500).json({ error: err });
