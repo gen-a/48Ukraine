@@ -231,7 +231,7 @@ class Authentication extends Component {
    */
   handleCheckPasswordResult(result) {
     const { dictionary } = this.props;
-    const { error, message, data } = result;
+    const { error, message } = result;
 
     if (error === 0) {
       this.setState(prevState => update(prevState, {

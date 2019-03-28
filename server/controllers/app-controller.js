@@ -27,7 +27,12 @@ const mapListedSections = (data) => {
     'pobutova-ximiya': 'IconHouseholdChemicals',
     'korm-dlya-domashnix-tvaryn': 'IconPetFood',
     'kancelyarski-tovary': 'IconStationery',
-    'alkohol': 'IconAlcohol'
+    'alkohol': 'IconAlcohol',
+    'ihrashky': 'IconToys',
+    'posud': 'IconDishes',
+    'vse-dlya-tvaryn': 'IconGoodsForPets',
+    'tovary-dlya-domu': 'IconGoodsForHome'
+
   };
 
   return data.map(s => ({

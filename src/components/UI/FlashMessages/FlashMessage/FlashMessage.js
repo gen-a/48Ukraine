@@ -46,7 +46,7 @@ const defaultProps = {
   type: 'error',
   swipeOff: false,
   collapse: false,
-  height: 110,
+  height: 130,
   remove: () => console.log('remove'),
 };
 

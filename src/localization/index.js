@@ -44,6 +44,9 @@ const readEntryByKeys = (src, keys)=>{
 
 export const translate = (dictionary, path, data = {}) =>{
   let value = readEntryByKeys(dictionary, path.split('.'));
+  if(!value){
+    return path;
+  }
   Object.keys(data).forEach( k => value = value.replace(new RegExp(`:${k}`, 'gi'), data[k]));
   return value;
 };

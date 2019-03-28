@@ -51,7 +51,13 @@ const articles = {
         timeout: 'Taking a long time... Please try again',
       }
     }
+    },
+  order:{
+    info:{
+      theOrderHasBeenPlaced:'Ваше замовлення отримано. Номер замовдення :number. Підтверження надіслано на адресу :email'
+    }
   }
+
 };
 
 export default articles;

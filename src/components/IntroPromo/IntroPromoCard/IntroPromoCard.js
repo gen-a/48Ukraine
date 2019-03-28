@@ -13,15 +13,12 @@ import './IntroPromoCard.scss';
  * @type {object}
  */
 const propTypes = {
-  /** Text message of the toast. */
-  //prop: PropTypes.string,
-};
-/**
- * Default props of the component
- * @type {object}
- */
-const defaultProps = {
-  //prop: '',
+  /** Title of the card. */
+  title: PropTypes.string.isRequired,
+  /** Text of the card. */
+  text: PropTypes.string.isRequired,
+  /** Icon image. */
+  svg: PropTypes.node.isRequired,
 };
 
 /**
@@ -39,6 +36,7 @@ const IntroPromoCard = ({ title, text, svg }) => {
             margin: '0 auto 1rem auto',
             display: 'block'
           }}
+          alt={title}
         />
       </div>
       <div className="IntroPromoCard__info">
@@ -50,6 +48,5 @@ const IntroPromoCard = ({ title, text, svg }) => {
 };
 
 IntroPromoCard.propTypes = propTypes;
-IntroPromoCard.defaultProps = defaultProps;
 
 export default IntroPromoCard;

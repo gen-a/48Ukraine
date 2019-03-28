@@ -6,6 +6,8 @@ import { importDictionaryArticles } from './dictionary';
 import { URL_FETCH_INITIAL_STATE } from '../config/api';
 import { SET_AUTHENTICATED_DATA } from './user';
 import { INITIALIZE_CART } from './cart';
+import { translate } from '../localization';
+
 
 axios.defaults.withCredentials = true;
 
@@ -221,11 +223,15 @@ export function setOpenDrawer(name) {
  * @returns {function(*=)}
  */
 export function handleFormSubmissionSuccess(type, response) {
-  return (dispatch) => {
+  return (dispatch, getState) => {
     const { error, data: payload, message } = response;
     if (error === 0) {
       dispatch({ type, payload });
-      addFlashMessage(message, 'submission succeed', 'success')(dispatch);
+      addFlashMessage(
+        translate(getState().dictionary, message, payload),
+        'submission succeed',
+        'success'
+      )(dispatch);
     } else {
       throw new SubmissionError({ ...payload, _error: message });
     }
@@ -247,7 +253,8 @@ export function handleFormSubmissionError(type, payload) {
       addFlashMessage(_error, 'submission error', 'error')(dispatch);
       throw payload;
     } else {
-      addFlashMessage(message, 'submission error', 'error')(dispatch);
+      addFlashMessage(
+        message, 'submission error', 'error')(dispatch);
       throw new SubmissionError({ _error: message });
     }
   };

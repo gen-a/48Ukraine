@@ -1,8 +1,7 @@
 import axios from 'axios';
 
-import { SubmissionError } from 'redux-form';
 import { URL_UPDATE_USER_PROFILE, URL_UPDATE_USER_PASSWORD, URL_LOG_OUT } from '../config/api';
-import { addFlashMessage, handleFormSubmissionError, handleFormSubmissionSuccess } from './app';
+import { handleFormSubmissionError, handleFormSubmissionSuccess } from './app';
 
 axios.defaults.withCredentials = true;
 
@@ -66,8 +65,8 @@ export function updatePassword(data) {
       { type: UPDATE_PASSWORD_PENDING, payload: {} }
     );
     return axios.put(URL_UPDATE_USER_PASSWORD, data)
-      .then(result => handleFormSubmissionSuccess( UPDATE_PASSWORD_FULFILLED, result.data )(dispatch))
-      .catch(error => handleFormSubmissionError(UPDATE_PASSWORD_REJECTED, error)(dispatch));
+      .then(result => handleFormSubmissionSuccess( UPDATE_PASSWORD_FULFILLED, result.data )(dispatch, getState))
+      .catch(error => handleFormSubmissionError(UPDATE_PASSWORD_REJECTED, error)(dispatch, getState));
   };
 
 }
@@ -83,7 +82,7 @@ export function updateProfile(data) {
       { type: UPDATE_PROFILE_PENDING, payload: {} }
     );
     return axios.put(URL_UPDATE_USER_PROFILE, data)
-      .then(result => handleFormSubmissionSuccess( UPDATE_PROFILE_FULFILLED, result.data )(dispatch))
-      .catch(error => handleFormSubmissionError(UPDATE_PROFILE_REJECTED, error)(dispatch));
+      .then(result => handleFormSubmissionSuccess( UPDATE_PROFILE_FULFILLED, result.data )(dispatch, getState))
+      .catch(error => handleFormSubmissionError(UPDATE_PROFILE_REJECTED, error)(dispatch, getState));
   };
 }

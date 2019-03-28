@@ -62,13 +62,18 @@ const OrdersList = ({ pagesTotal, paginationUrl, orders, currentPage }) => {
         <li key={order.creationDate} className="OrdersList__entry">
           <div className="OrdersList__entryNumber">{order.number}</div>
           <div className="OrdersList__entryDate">{order.creationDate}</div>
-          <div className="OrdersList__entryName">{order.toFirstName} {order.toLastName}</div>
-          <div className="OrdersList__entryAddress">{order.toAddress}, {order.toZip}, {order.toCity}</div>
-          <div className="OrdersList__entryPhone">{order.toPhone}</div>
           <div className="OrdersList__entryCount">{order.count}</div>
           <div className="OrdersList__entryTotal">
             <PriceSticker retail={order.total} fontSize="1rem"/>
           </div>
+
+
+          <div className="OrdersList__entryAddress">
+            <span className="OrdersList__entryName">{order.toFirstName} {order.toLastName}</span>
+            {order.toAddress}, {order.toZip}, {order.toCity}
+            </div>
+          <div className="OrdersList__entryPhone">{order.toPhone}</div>
+
         </li>
       ))}
       </ul>

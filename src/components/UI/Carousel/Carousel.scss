@@ -1,4 +1,5 @@
 @import '../../../colors';
+@import '../../../settings';
 
 $button-width: 48px;
 
@@ -38,41 +39,75 @@ $button-width: 48px;
   }
 
   &_withButtons .Carousel__frame{
-    right:$button-width;
-    left:$button-width;
+    right:0;
+    left:0;
   }
 
   &__button{
-    position:absolute;
-    top:0;
-    bottom:0;
-    width:$button-width;
-    background:$color-cool-grey-h;
-    outline:none;
-    border:none;
-    display:block;
-    box-sizing: border-box;
-    cursor: pointer;
+  display:none;
+  }
+}
+/* Extra Small Devices, Phones */
+@media only screen and (min-width: $sm-media-step-min) {
+  .Carousel {
 
-    & svg{
-      display:block;
+  }
+}
+
+/* Small Devices, Tablets */
+@media only screen and (min-width: $md-media-step-min) {
+  .Carousel {
+    &_withButtons .Carousel__frame{
+      right:$button-width;
+      left:$button-width;
+    }
+
+    &__button{
       position:absolute;
-      left:0;
-      top:50%;
-      transform:translateY(-50%);
-    }
-    &_left{
-      left:0;
-    }
-    &_right {
-      right:0;
+      top:0;
+      bottom:0;
+      width:$button-width;
+      background:$color-cool-grey-h;
+      outline:none;
+      border:none;
+      display:block;
+      box-sizing: border-box;
+      cursor: pointer;
+
       & svg{
-        transform:translateY(-50%) rotate(180deg);
+        display:block;
+        position:absolute;
+        left:0;
+        top:50%;
+        transform:translateY(-50%);
+      }
+      &_left{
+        left:0;
+      }
+      &_right {
+        right:0;
+        & svg{
+          transform:translateY(-50%) rotate(180deg);
+        }
+      }
+      &_disabled {
+        opacity:0.2;
+        cursor:default;
       }
     }
-    &_disabled {
-      opacity:0.2;
-      cursor:default;
-    }
+  }
+}
+
+/* Medium Devices, Desktops */
+@media only screen and (min-width: $lg-media-step-min) {
+  .Carousel {
+
+  }
+}
+
+/* Large Devices, Wide Screens */
+@media only screen and (min-width: $xl-media-step-min) {
+  .Carousel {
+
   }
 }

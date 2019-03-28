@@ -15,14 +15,7 @@ import SwipeDetect from '../../../utils/events/swipe-detect';
  */
 const propTypes = {
   /** Text message of the toast. */
-  //prop: PropTypes.string,
-};
-/**
- * Default props of the component
- * @type {object}
- */
-const defaultProps = {
-  //prop: '',
+  children: PropTypes.arrayOf(PropTypes.node).isRequired,
 };
 
 /**
@@ -33,7 +26,6 @@ const Slider = ({ children }) => {
 
   const transform = `translateX(-${current * parseInt(styles.slotWidth, 10)}px)`;
   const max = children.length - parseInt(styles.slotsInViewer, 10);
-
 
   const swipeDetect = new SwipeDetect();
   swipeDetect.onSwipe = (e) => {
@@ -52,7 +44,6 @@ const Slider = ({ children }) => {
       setCurrent(Math.min(current + 1, max));
     }
   };
-
 
   return (
 
@@ -106,6 +97,5 @@ const Slider = ({ children }) => {
 };
 
 Slider.propTypes = propTypes;
-Slider.defaultProps = defaultProps;
 
 export default Slider;

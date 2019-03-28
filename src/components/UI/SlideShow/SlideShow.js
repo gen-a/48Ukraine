@@ -5,7 +5,7 @@
  */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-
+import SwipeDetect from '../../../utils/events/swipe-detect';
 import IconKeysLeftRight from '../../Svg/IconKeysLeftRight';
 import './SlideShow.scss';
 import Slide from './Slide/Slide';
@@ -21,6 +21,8 @@ const propTypes = {
   autoPlay: PropTypes.bool,
   /** Delay in milliseconds. */
   delay: PropTypes.number,
+  /** Pause timeout to autoplay. */
+  inactivityTimeout: PropTypes.number,
 };
 
 /**
@@ -29,7 +31,8 @@ const propTypes = {
  */
 const defaultProps = {
   autoPlay: false,
-  delay: 2000,
+  delay: 3000,
+  inactivityTimeout: 5000
 };
 
 /**
@@ -43,9 +46,28 @@ class SlideShow extends Component {
       length: props.children.length
     };
     this.interval = 0;
+    this.stopTimeout = 2000;
     this.next = this.next.bind(this);
     this.prev = this.prev.bind(this);
+    this.play = this.play.bind(this);
+    this.swipeDetect = new SwipeDetect();
+    this.swipeDetect.onSwipe = (e) => {
+      if (e.direction === 'right') {
+        this.stop();
+        this.prev();
+      }
+      if (e.direction === 'left') {
+        this.stop();
+        this.next();
+      }
+    };
+
   }
+
+
+
+
+
 
   /**
    * If autoPlay mode start playing
@@ -62,6 +84,7 @@ class SlideShow extends Component {
    */
   componentWillUnmount() {
     this.stop();
+    clearTimeout(this.stopTimeout);
   }
 
   /**
@@ -93,14 +116,27 @@ class SlideShow extends Component {
    * Start autoPlay
    */
   play() {
+    clearTimeout(this.stopTimeout);
     const { delay } = this.props;
     this.interval = setInterval(() => this.next(), delay);
+  }
+
+  /**
+   * Set time out of inactivity
+   */
+  setOnInactivityPlay(){
+    clearTimeout(this.stopTimeout);
+    const { autoPlay, inactivityTimeout } = this.props;
+    if(autoPlay){
+      this.stopTimeout = setTimeout( ()=>this.play(), inactivityTimeout );
+    }
   }
 
   /**
    * Stop autoPlay
    */
   stop() {
+    this.setOnInactivityPlay();
     clearInterval(this.interval);
   }
 
@@ -108,6 +144,7 @@ class SlideShow extends Component {
    * Go to next slide
    */
   next() {
+    this.setOnInactivityPlay();
     const { current, length } = this.state;
     this.goTo(current === length - 1 ? 0 : current + 1);
   }
@@ -116,6 +153,7 @@ class SlideShow extends Component {
    * Go to previous slide
    */
   prev() {
+    this.setOnInactivityPlay();
     const { current, length } = this.state;
     this.goTo(current === 0 ? length - 1 : current - 1);
   }
@@ -124,6 +162,7 @@ class SlideShow extends Component {
    * Go to N slide
    */
   goTo(n) {
+    this.setOnInactivityPlay();
     this.setState(prevState => ({
       ...prevState,
       current: n,
@@ -142,6 +181,10 @@ class SlideShow extends Component {
           tabIndex="0"
           onClick={() => this.onSlidesClick()}
           onKeyDown={(e) => this.onKeyDown(e)}
+
+          onTouchStart={e => this.swipeDetect.start(e.touches[0].clientX, e.touches[0].clientY)}
+          onTouchMove={e => this.swipeDetect.move(e.touches[0].clientX, e.touches[0].clientY)}
+          onTouchEnd={e => this.swipeDetect.end(e)}
         >
           <div className="SlideShow__container">
             {children.map((slide, index) => <Slide key={slide.props.id} isCurrent={current === index}>{slide}</Slide>)}

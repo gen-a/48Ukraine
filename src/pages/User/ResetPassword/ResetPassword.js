@@ -6,7 +6,7 @@ const ResetPassword = () => {
   return (
     <>
     <PageTitle
-      title="Reset Password"
+      title="Змінити пароль"
     />
       <UserPassword/>
     </>

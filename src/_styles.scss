@@ -9,13 +9,19 @@ $node-height: 42px;
   border:0;
   cursor:pointer;
   font-size:1rem;
-  padding: 10px 20px;
+  padding: 0.75rem 1rem;
   text-decoration: none;
   text-transform: uppercase;
   display:inline-block;
   text-align:center;
   box-sizing: border-box;
-  transition:0.4s background;
+  transition: 0.4s all;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width:160px;
+  line-height: 1rem;
+
   &:hover{
     background: $color-secondary-hb;
   }
@@ -65,4 +71,13 @@ $node-height: 42px;
 @mixin navigator-entry-label-current(){
   border-left: 2px solid $color-secondary-b;
   color: $color-secondary-2b;
+}
+
+@mixin divider(){
+  height:1px;
+  display:block;
+  width:100%;
+  background: rgba(0,0,0,.2);
+  margin:0.5rem auto;
+  max-width:700px;
 }

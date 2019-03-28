@@ -6,7 +6,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
-import CompanyLogo, { ASPECT_RATIO } from '../../Svg/CompanyLogo';
+import CompanyLogo from '../../Svg/CompanyLogo';
+import CompanyLogoCompact from '../../Svg/CompanyLogoCompact';
 import { localizePath, APP_DEFAULT_LOCALE } from '../../../localization/index';
 import Ripple from '../../UI/Ripple';
 import Search from '../../Containers/Search';
@@ -21,8 +22,6 @@ const propTypes = {
   locale: PropTypes.string,
   /** Media query prefix. */
   mediaPrefix: PropTypes.string,
-  /** Height in pixels. */
-  height: PropTypes.number,
 };
 /**
  * Default props of the component
@@ -30,30 +29,32 @@ const propTypes = {
  */
 const defaultProps = {
   locale: APP_DEFAULT_LOCALE,
-  mediaPrefix: 'xs',
-  height: 48
+  mediaPrefix: 'xs'
 };
 
 /**
  * General component description in JSDoc format. Markdown is *supported*.
  */
-const Header = ({ height, locale, mediaPrefix }) => {
+const Header = ({ locale, mediaPrefix }) => {
 
-  const logoWidth = 32 * ASPECT_RATIO;
   return (
     <div className="Header">
       <div className="Header__logo">
         <Ripple>
           <div className="Header__logoBox">
             <NavLink to={localizePath('/', locale)}>
-              <CompanyLogo height="100%"/>
+              {
+                ['xs'].includes(mediaPrefix)
+                  ? <CompanyLogoCompact height="100%"/>
+                  : <CompanyLogo height="100%"/>
+              }
             </NavLink>
           </div>
         </Ripple>
       </div>
       <div className="Header__search">
         <div className="Header__searchBox">
-          <Search routePath="/browse" />
+          <Search routePath="/browse"/>
         </div>
       </div>
     </div>

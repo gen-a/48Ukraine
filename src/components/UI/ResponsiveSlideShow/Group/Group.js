@@ -3,9 +3,7 @@
  * Placeholder fot the description
  * @module Group
  */
-import React from 'react';
 import PropTypes from 'prop-types';
-
 /**
  * PropTypes of the component
  * @type {object}

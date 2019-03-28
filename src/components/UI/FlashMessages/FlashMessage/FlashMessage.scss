@@ -1,4 +1,5 @@
 @import '../../../../colors';
+@import '../../../../settings';
 
 .FlashMessage {
   position: relative;
@@ -12,10 +13,11 @@
     position: absolute;
     width:100%;
     box-sizing: border-box;
-    border-radius:0.5rem;
+    border-radius:1rem;
     overflow: hidden;
     background: rgba(255, 255, 255, 1);
     transition: all 0.2s ease-out;
+    box-shadow: 0 0 4px rgba(0,0,0,0.7);
   }
 
   &__title{
@@ -25,15 +27,16 @@
     text-overflow: ellipsis;
     font-weight: 400;
     bottom:0;
-    left:1rem;
-    right:42px;
-    line-height: 32px;
+    left:0;
+    padding:0 1rem 0 1rem;
+    right:0;
+    line-height: 2rem;
     font-size:0.875rem;
   }
   &__body {
     box-sizing: border-box;
-    max-height:80px;
-    top:0.5rem;
+    max-height:4rem;
+    top:1rem;
     position:absolute;
     left:1rem;
     right:2rem;
@@ -47,8 +50,8 @@
 
   &__closeButton {
     position: absolute;
-    right: 0;
-    top: 0;
+    right: 5px;
+    top: 5px;
     padding: 0;
     border: 0;
     outline: none;
@@ -59,22 +62,54 @@
   &_error {
     .FlashMessage{
       &__title{
-        color:$color-error-hb;
+        background:$color-error-hb;
+        color:white;
       }
     }
   }
   &_info {
     .FlashMessage{
       &__title{
-        color:$color-info-hb;
+        background:$color-info-hb;
+        color:white;
       }
     }
   }
   &_success {
     .FlashMessage{
       &__title{
-        color:$color-success-hb;
+        background:$color-success-b;
+        color:white;
       }
     }
+  }
+}
+
+
+/* Extra Small Devices, Phones */
+@media only screen and (min-width : $sm-media-step-min ) {
+  .FlashMessage{
+
+  }
+}
+
+/* Small Devices, Tablets */
+@media only screen and (min-width : $md-media-step-min) {
+  .FlashMessage{
+
+  }
+}
+
+/* Medium Devices, Desktops */
+@media only screen and (min-width : $lg-media-step-min) {
+  .FlashMessage{
+
+  }
+}
+
+/* Large Devices, Wide Screens */
+@media only screen and (min-width : $xl-media-step-min) {
+  .FlashMessage {
+
   }
 }

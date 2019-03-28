@@ -2,32 +2,72 @@
 @import '../../../settings';
 
 .ToolToTheTop{
+  position: fixed;
+  padding:0.25rem;
+  background: $color-cool-grey-5h;
+  box-sizing: border-box;
+  height:$tool-bar-size-xs;
+  bottom:-$tool-bar-size-xs;
+  right:-$tool-bar-size-xs;
+  border-radius:  $tool-bar-border-radius 0 0 0;
+  transition: all 0.2s ease-out;
+  box-shadow: 0 0 4px rgba(0,0,0,0.5);
 
+  &_isVisible{
+    bottom:0;
+    right:0;
+  }
 }
+
+
 /* Extra Small Devices, Phones */
 @media only screen and (min-width : $sm-media-step-min ) {
   .ToolToTheTop{
-
+    height:$tool-bar-size-sm;
+    bottom:-$tool-bar-size-sm;
+    right:-$tool-bar-size-sm;
+    &_isVisible{
+      bottom:0;
+      right:0;
+    }
   }
 }
 
 /* Small Devices, Tablets */
 @media only screen and (min-width : $md-media-step-min) {
   .ToolToTheTop{
-
+    height:$tool-bar-size-md;
+    bottom:-$tool-bar-size-md;
+    right:-$tool-bar-size-md;
+    &_isVisible{
+      bottom:0;
+      right:0;
+    }
   }
 }
 
 /* Medium Devices, Desktops */
 @media only screen and (min-width : $lg-media-step-min) {
   .ToolToTheTop{
-
+    height:$tool-bar-size-lg;
+    bottom:-$tool-bar-size-lg;
+    right:-$tool-bar-size-lg;
+    &_isVisible{
+      bottom:0;
+      right:0;
+    }
   }
 }
 
 /* Large Devices, Wide Screens */
 @media only screen and (min-width : $xl-media-step-min) {
   .ToolToTheTop{
-
+    height:$tool-bar-size-xl;
+    bottom:-$tool-bar-size-xl;
+    right:-$tool-bar-size-xl;
+    &_isVisible{
+      bottom:0;
+      right:0;
+    }
   }
 }

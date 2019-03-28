@@ -1,8 +1,8 @@
 import axios from 'axios';
 
-import { SubmissionError, reset } from 'redux-form';
+import { reset } from 'redux-form';
 import { URL_CHECKOUT, URL_STORE_CART } from '../config/api';
-import { addFlashMessage, handleFormSubmissionError, handleFormSubmissionSuccess } from './app';
+import { handleFormSubmissionError, handleFormSubmissionSuccess } from './app';
 
 axios.defaults.withCredentials = true;
 
@@ -23,7 +23,7 @@ export function clearCart() {
 }
 
 
-export function sendToServer(data){
+export function sendToServer(){
   return (dispatch, getState) => {
     return axios.post(URL_STORE_CART, getState().cart)
       .catch(console.log);
@@ -97,12 +97,11 @@ export function checkout(data) {
       { type: CHECKOUT_PENDING, payload: {} }
     );
     return axios.post(URL_CHECKOUT, { ...data, products: getState().cart.products })
-      .then(result => handleFormSubmissionSuccess( CHECKOUT_FULFILLED, result.data )(dispatch))
+      .then(result => handleFormSubmissionSuccess( CHECKOUT_FULFILLED, result.data )(dispatch, getState))
       .then(() => {
         clearCart()(dispatch);
-        sendToServer()(dispatch, getState);
         dispatch(reset('formCheckout'));
       })
-      .catch(error => handleFormSubmissionError(CHECKOUT_REJECTED, error));
+      .catch(error => handleFormSubmissionError(CHECKOUT_REJECTED, error)(dispatch, getState));
   };
 }

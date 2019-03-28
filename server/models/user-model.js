@@ -90,8 +90,8 @@ function hashPassword(next) {
   const user = this;
   if (user.isModified('password')) {
     user.password = bcrypt.hashSync(user.password, bcrypt.genSaltSync(10));
-    next();
   }
+  next();
 }
 
 function addDateUpdate(next) {

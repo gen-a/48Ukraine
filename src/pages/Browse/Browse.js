@@ -73,9 +73,6 @@ class Browse extends Component {
     const values = queryString.parse(search);
     const currentPage = params.page ? parseInt(params.page, 10) : 1;
 
-
-
-
     return (
       <InfinityScroll
 

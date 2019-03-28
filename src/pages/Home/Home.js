@@ -3,108 +3,48 @@
  * Placeholder fot the description
  * @module Home
  */
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import React from 'react';
 
 import { URL_FETCH_PRODUCTS_POPULAR, URL_FETCH_PRODUCTS_NEW, URL_FETCH_PRODUCTS_ON_SALE } from '../../config/api';
 import './Home.scss';
-import { addFlashMessage, removeFlashMessage } from '../../actions/app';
 import HomeSlideShow from '../../components/HomeSlideShow';
 import WindowSize from '../../components/Containers/WindowSize';
 import ProductsPromo from '../../components/ProductsPromo';
 import IntroPromo from '../../components/IntroPromo';
 
-/**
- * PropTypes of the component
- * @type {object}
- */
-const propTypes = {
-  /** Text message of the toast. */
-  //prop: PropTypes.string,
-};
-
-/**
- * Default props of the component
- * @type {object}
- */
-const defaultProps = {
-  //prop: '',
-};
 
 /**
  * General component description in JSDoc format. Markdown is *supported*.
  */
-class Home extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
+const Home = () => {
+  return (
+    <div className="Home">
 
-  componentDidMount() {
+      <WindowSize render={props => <HomeSlideShow {...props} />}/>
 
-  }
+      <ProductsPromo
+        url={URL_FETCH_PRODUCTS_ON_SALE}
+        title="Sale products"
+        more={{ url: '', label: '' }}
+      />
 
-  render() {
+      <IntroPromo/>
 
-    const { window: { width, height } } = this.props;
-    const imageStyle = { display: 'block', width: '100%' };
+      <ProductsPromo
+        url={URL_FETCH_PRODUCTS_NEW}
+        title="New products"
+        more={{ url: '', label: '' }}
+      />
 
-    const slideShowVariant = width / height > 1 ? 'h' : 'v';
-    const slideShowBoxStyle = slideShowVariant == 'h'
-      ? { margin: '40px auto 60px auto' }
-      : { maxWidth: '500px', margin: '40px auto 60px auto' };
+      <ProductsPromo
+        url={URL_FETCH_PRODUCTS_POPULAR}
+        title="Popular products"
+        more={{ url: '', label: '' }}
+      />
 
+    </div>
+  );
+};
 
-    return (
-      <div className="Home">
-
-        <WindowSize render={props => <HomeSlideShow {...props} />} />
-
-        <ProductsPromo
-          url={URL_FETCH_PRODUCTS_ON_SALE}
-          title="Sale products"
-          more={{ url: '', label: ''}}
-        />
-
-        <IntroPromo />
-
-        <ProductsPromo
-          url={URL_FETCH_PRODUCTS_NEW}
-          title="New products"
-          more={{ url: '', label: ''}}
-        />
-
-        <ProductsPromo
-          url={URL_FETCH_PRODUCTS_POPULAR}
-          title="Popular products"
-          more={{ url: '', label: ''}}
-        />
-
-
-      </div>
-    );
-  }
-}
-
-Home.propTypes = propTypes;
-Home.defaultProps = defaultProps;
-
-const mapStateToProps = state => (
-  {
-    locale: state.app.locale,
-    openDrawer: state.app.openDrawer,
-    window: state.app.window,
-  }
-);
-
-const mapDispatchToProps = dispatch => (
-  {
-    callAddFlashMessage: (body, title, type) => dispatch(addFlashMessage(body, title, type)),
-    callRemoveFlashMessage: (id) => dispatch(removeFlashMessage(id)),
-  }
-);
-
-
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default Home;
 

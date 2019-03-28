@@ -27,14 +27,20 @@ const propTypes = {
   onSubmit: PropTypes.func.isRequired,
   /** Resets all the values in the form to the initialized state, making it pristine again. */
   onReset: PropTypes.func.isRequired,
+  /** Submit button label.  */
+  submitLabel: PropTypes.string,
+  /** Reset button label.  */
+  resetLabel: PropTypes.string,
 };
 
 const defaultProps = {
   messageType: '',
   message: '',
+  submitLabel: 'Submit',
+  resetLabel: 'Clear',
 };
 
-const RenderForm = ({ isPristine, isSubmitting, messageType, message, children, onSubmit, onReset }) => {
+const RenderForm = ({ submitLabel, resetLabel, isPristine, isSubmitting, messageType, message, children, onSubmit, onReset }) => {
   return (
     <form onSubmit={onSubmit}>
       {message && <strong>{message}</strong>}
@@ -47,7 +53,7 @@ const RenderForm = ({ isPristine, isSubmitting, messageType, message, children, 
           <RenderButton
             type="submit"
             input={{ disabled: isPristine }}
-            label="Submit"
+            label={submitLabel}
           />
         </div>
         <div className="RenderForm__button">
@@ -57,7 +63,7 @@ const RenderForm = ({ isPristine, isSubmitting, messageType, message, children, 
               disabled: isPristine || isSubmitting,
               onClick: onReset
             }}
-            label="Clear"
+            label={resetLabel}
           />
         </div>
       </div>

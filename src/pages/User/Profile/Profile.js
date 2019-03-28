@@ -6,7 +6,7 @@ const Profile = () => {
   return (
     <>
     <PageTitle
-      title="Your Profile"
+      title="Персональні відомості"
     />
       <UserProfile />
     </>

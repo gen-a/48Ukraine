@@ -7,7 +7,7 @@ import PriceSticker from '../../components/PriceSticker';
 import Image from '../../components/UI/FlexibleImage/FlexibleImage';
 import IconClose from '../../components/Svg/IconClose';
 import PageTitle from '../../components/PageTitle';
-
+import Redirect from '../../components/Router/Redirect';
 import { localizePath } from '../../localization/index';
 import { NavLink } from 'react-router-dom';
 
@@ -67,17 +67,21 @@ const defaultProps = {
 
 const Cart = ({ products, callUpdateProductInCart, count, total, locale }) => {
   if (products.length === 0) {
-    return (<div>
-      <PageTitle
-        title="Shopping cart"
-        description="Your cart is empty"
-      />
-    </div>);
+    return (
+      <Redirect
+        to={localizePath('/', locale)}
+        message={{
+          body: 'Ваш кошик порожній.',
+          title: 'повідомлення кошика',
+          type: 'error'
+        }}
+      />);
   }
   return (
     <>
     <PageTitle
-      title="Shopping cart"
+      title="Мій кошик"
+      description="Скорегуйте кількість товарів в кошику та натисніть кнопку Замовити для завершення замовлення."
     />
     {products.map(p => (
       <div key={p.id} className="Cart__item">
@@ -119,7 +123,7 @@ const Cart = ({ products, callUpdateProductInCart, count, total, locale }) => {
       to={localizePath('/checkout', locale)}
       className="Cart__checkoutButton"
     >
-      Check out
+      Замовити
     </NavLink>
     </div>
 

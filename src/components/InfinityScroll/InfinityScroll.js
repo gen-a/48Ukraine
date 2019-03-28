@@ -3,7 +3,7 @@
  * Placeholder fot the description
  * @module InfinityScroll
  */
-import React, { Component } from 'react';
+import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { get } from '../../services/ajax';
 import { connect } from 'react-redux';

@@ -98,7 +98,8 @@ class App extends Component {
         <Route exact path={localizePath('/browse', locale)} render={renderRoute(Browse)}/>
         <Route exact path={localizePath('/browse/page/:page', locale)} render={renderRoute(Browse)}/>
         <Route exact path={localizePath('/browse/:department', locale)} render={renderRoute(Browse)}/>
-        <Route exact path={localizePath('/browse/:department/page/:page', locale)} render={renderRoute(Browse)}/>
+        <Route exact path={localizePath('/browse/:department/page/:page', locale)}
+               render={renderRoute(Browse)}/>
         <Route exact path={localizePath('/product/:id', locale)} render={renderRoute(Product)}/>
         <Route exact path={localizePath('/cart', locale)} render={renderRoute(Cart)}/>
         <Route exact path={localizePath('/checkout', locale)} render={renderRoute(Checkout)}/>

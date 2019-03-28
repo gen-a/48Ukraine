@@ -4,7 +4,6 @@
  * @module IntroPromo
  */
 import React from 'react';
-import PropTypes from 'prop-types';
 import IntroPromoCard from './IntroPromoCard';
 
 import iconOnline from './icon-online.svg';
@@ -14,25 +13,9 @@ import iconSpeed from './icon-speed.svg';
 import './IntroPromo.scss';
 
 /**
- * PropTypes of the component
- * @type {object}
- */
-const propTypes = {
-  /** Text message of the toast. */
-  //prop: PropTypes.string,
-};
-/**
- * Default props of the component
- * @type {object}
- */
-const defaultProps = {
-  //prop: '',
-};
-
-/**
  * General component description in JSDoc format. Markdown is *supported*.
  */
-const IntroPromo = ({ ...props }) => {
+const IntroPromo = () => {
 
 
   const data = [
@@ -70,8 +53,5 @@ const IntroPromo = ({ ...props }) => {
     </div>
   );
 };
-
-IntroPromo.propTypes = propTypes;
-IntroPromo.defaultProps = defaultProps;
 
 export default IntroPromo;

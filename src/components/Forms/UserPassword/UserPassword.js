@@ -118,8 +118,8 @@ class UserPassword extends Component {
         title="Has to be form title"
         message={message.text}
         messageType={message.type}
-        submitLabel="Submit data"
-        resetLabel="Reset form"
+        submitLabel="Зберегти"
+        resetLabel="Скинути"
       >
 
         <div className="Forms__fields">
@@ -128,7 +128,7 @@ class UserPassword extends Component {
               name="password"
               type={isVisible ? 'text' : 'password'}
               component={RenderField}
-              label="Password"
+              label="Пароль"
             />
           </div>
           <div className="Forms__field xs-flex_100 md-flex_50">
@@ -136,14 +136,14 @@ class UserPassword extends Component {
               name="passwordAgain"
               type={isVisible ? 'text' : 'password'}
               component={RenderField}
-              label="Password again"
+              label="Пароль знову"
             />
           </div>
           <div className="Forms__field xs-flex_100">
           <Switch
             onChange={() => this.setState({ ...this.state, isVisible: !isVisible })}
             checked={isVisible}
-            label="Show/hide password"
+            label="Позазати/сховати пароль"
           />
           </div>
         </div>

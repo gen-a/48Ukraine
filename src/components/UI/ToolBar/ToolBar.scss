@@ -8,6 +8,7 @@
   background: $color-cool-grey-5h;
   box-sizing: border-box;
   height:$tool-bar-size-xs;
+  box-shadow: 0 0 4px rgba(0,0,0,0.5);
 
   &_topLeft{
     top:0;

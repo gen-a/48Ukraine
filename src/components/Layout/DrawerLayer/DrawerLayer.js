@@ -42,14 +42,14 @@ const defaultProps = {
 const DrawerLayer = ({ callSetOpenDrawer, callSetAuthenticatedUser, isAuthenticated, openDrawer }) => (
   <>
   <Scrim id="DrawerLayer" onClick={() => callSetOpenDrawer('')} isVisible={openDrawer !== ''}/>
-  <Drawer position="left" depth={50} isOpen={openDrawer === 'menu'} header="Departments">
+  <Drawer position="left" depth={50} isOpen={openDrawer === 'menu'} header="Відділи">
     <ScrollBox>
       <div style={{ paddingRight: '16px' }}>
         <DepartmentsNavigator/>
       </div>
     </ScrollBox>
   </Drawer>
-  <Drawer position="right" depth={50} isOpen={openDrawer === 'user'} header="User Data">
+  <Drawer position="right" depth={50} isOpen={openDrawer === 'user'} header="Дані користувача">
     {isAuthenticated
       ? <UserNavigator/>
       : (

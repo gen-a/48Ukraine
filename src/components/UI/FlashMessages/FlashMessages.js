@@ -98,7 +98,7 @@ class FlashMessages extends Component {
               <FlashMessage
                 key={message.id}
                 {...message}
-                height={110}
+                height={130}
                 swipeOff={removing.includes(message.id)}
                 collapse={collapse && removing.includes(message.id)}
                 remove={id => this.removeMessage(id)}

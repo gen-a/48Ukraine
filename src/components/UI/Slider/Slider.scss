@@ -16,28 +16,7 @@ $slots-in-viewer: 3;
   margin: 0 auto;
 
   &__button {
-    flex: 0 0 48px;
-    border: none;
-    background: none;
-    outline: none;
-    cursor: pointer;
-    opacity: .3;
-    transition: opacity 0.2s;
-    &_right {
-      transform: rotate(180deg);
-    }
-    &[disabled] {
-      opacity: .1;
-      cursor: default;
-      &:hover {
-        opacity: .1;
-        cursor: default;
-      }
-    }
-    &:hover {
-      opacity: 1;
-    }
-
+    display:none;
   }
   &__viewer {
     flex: 0 1 $slot-width * $slots-in-viewer;
@@ -64,13 +43,40 @@ $slots-in-viewer: 3;
 /* Small Devices, Tablets */
 @media only screen and (min-width: $md-media-step-min) {
   .Slider {
+    &__button {
+      display:block;
+      flex: 0 0 48px;
+      border: none;
+      background: none;
+      outline: none;
+      cursor: pointer;
+      opacity: .3;
+      transition: opacity 0.2s;
+      &_right {
+        transform: rotate(180deg);
+      }
+      &[disabled] {
+        opacity: .1;
+        cursor: default;
+        &:hover {
+          opacity: .1;
+          cursor: default;
+        }
+      }
+      &:hover {
+        opacity: 1;
+      }
 
+    }
   }
 }
 
 /* Medium Devices, Desktops */
 @media only screen and (min-width: $lg-media-step-min) {
   .Slider {
+
+
+
     &__viewer {
       flex: 0 0 $slot-width * $slots-in-viewer;
       width: $slot-width * $slots-in-viewer;

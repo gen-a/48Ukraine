@@ -6,6 +6,8 @@
 import { connect } from 'react-redux';
 import Tree from '../../UI/Tree/Tree';
 import { expandNodeOfDepartmentTree } from '../../../actions/app';
+import './DepartmentsTree.scss';
+
 
 const mapStateToProps = (state, ownProps) => {
   return {

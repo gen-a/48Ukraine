@@ -2,7 +2,6 @@ const mongoose = require('mongoose');
 const { response } = require('../lib/response');
 const { mongooseErrorToResponse } = require('../lib/mongoose-error-to-response');
 const Order = require('../models/order-model');
-//const Product = require('../models/product-model');
 const { sendNewOrderLetter } = require('../letters/send-new-order-letter');
 /**
  * Get all orders
@@ -86,7 +85,10 @@ exports.history = function getAllOrders(req, res, next) {
   }
   const { email } = req.user;
 
-  Order.find({ email }).skip(data.perPage * ( data.page - 1 )).limit(data.perPage)
+  Order.find({ email })
+    .skip(data.perPage * ( data.page - 1 ))
+    .limit(data.perPage)
+    .sort({creationDate: -1})
     .then((records) => {
       data.records = records;
       return Order.find({ email }).countDocuments();
@@ -130,9 +132,17 @@ exports.add = (req, res, next) => {
     ...info,
     stages: { new: new Date().getTime(), payed: new Date().getTime() }
   });
+  console.log(order);
+
+
   order.save()
     .then((result) => {
-      sendNewOrderLetter(req.body.email, result.number).then(console.log).catch(console.error);
+
+      console.log(result);
+      sendNewOrderLetter(req.body.email, result.number)
+        //.then(console.log)
+        .catch(console.error);
+      req.session.cart = {};
       res.status(200).json(response(result, 'order.info.theOrderHasBeenPlaced', 0));
       return next();
     })

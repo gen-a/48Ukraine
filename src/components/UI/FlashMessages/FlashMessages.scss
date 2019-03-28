@@ -1,3 +1,5 @@
+@import '../../../colors';
+@import '../../../settings';
 
 .FlashMessages {
   position: fixed;
@@ -11,6 +13,7 @@
   transition: bottom 0s linear 0.2s;
 
   &__container{
+    top:40px;
     position: relative;
     z-index: 3;
     margin:3px auto;
@@ -32,5 +35,43 @@
         transition: opacity 0.2s linear 0s;
       }
     }
+  }
+}
+
+
+/* Extra Small Devices, Phones */
+@media only screen and (min-width : $sm-media-step-min ) {
+  .FlashMessages{
+
+  }
+}
+
+/* Small Devices, Tablets */
+@media only screen and (min-width : $md-media-step-min) {
+  .FlashMessages{
+    &__container{
+      top:50%;
+      transform:translateY(-50%);
+      position: relative;
+      z-index: 3;
+      margin:3px auto;
+      width:400px;
+      opacity: 1;
+      transition: opacity 0.2s linear 0s;
+    }
+  }
+}
+
+/* Medium Devices, Desktops */
+@media only screen and (min-width : $lg-media-step-min) {
+  .FlashMessages{
+
+  }
+}
+
+/* Large Devices, Wide Screens */
+@media only screen and (min-width : $xl-media-step-min) {
+  .FlashMessages {
+
   }
 }

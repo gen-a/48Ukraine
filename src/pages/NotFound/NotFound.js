@@ -4,43 +4,30 @@
  * @module NotFound
  */
 import React from 'react';
-import PropTypes from 'prop-types';
-import CompanyLogoWhite from '../../components/Svg/CompanyLogoWhite';
-
+import { URL_FETCH_PRODUCTS_ON_SALE } from '../../config/api';
+import ProductsPromo from '../../components/ProductsPromo';
+import PageTitle from '../../components/PageTitle';
 import './NotFound.scss';
 
-/**
- * PropTypes of the component
- * @type {object}
- */
-const propTypes = {
-  /** Text message of the toast. */
-  //prop: PropTypes.string,
-};
-/**
- * Default props of the component
- * @type {object}
- */
-const defaultProps = {
-  //prop: '',
-};
 
 /**
  * General component description in JSDoc format. Markdown is *supported*.
  */
-const NotFound = ({ ...props }) =>{
+const NotFound = () =>{
   return (
     <div className="NotFound">
-      <div style={{maxWidth: '300px', padding: '1rem', margin: '30px auto'}}>
-        <CompanyLogoWhite />
-      </div>
-      <div className="NotFound__code">404</div>
-      <p className="NotFound__message">Not Found Page</p>
+      <PageTitle
+        title="404"
+        description="Строрінку не знайдено."
+      />
+      <div className="NotFound__divider"/>
+      <ProductsPromo
+        url={URL_FETCH_PRODUCTS_ON_SALE}
+        title="Спеціальні пропозиції"
+        more={{ url: '', label: ''}}
+      />
     </div>
   );
 };
-
-NotFound.propTypes = propTypes;
-NotFound.defaultProps = defaultProps;
 
 export default NotFound;

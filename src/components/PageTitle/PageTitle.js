@@ -13,16 +13,21 @@ import './PageTitle.scss';
  * @type {object}
  */
 const propTypes = {
-  /** Text message of the toast. */
-  //prop: PropTypes.string,
+  /** Text of the title. */
+  title: PropTypes.string.isRequired,
+  /** Text for description. */
+  description: PropTypes.string,
 };
 /**
  * Default props of the component
  * @type {object}
  */
 const defaultProps = {
-  //prop: '',
+  description: '',
 };
+
+
+
 
 /**
  * General component description in JSDoc format. Markdown is *supported*.

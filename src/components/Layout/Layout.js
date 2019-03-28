@@ -11,11 +11,10 @@ import Toast from '../UI/Toast';
 import FlashMessages from '../Containers/FlashMessages';
 import Loader from '../Containers/Loader';
 import StoreWindowSize from '../Containers/StoreWindowSize';
-
+import ToolToTheTop from './ToolToTheTop';
 import ToolBarLayer from './ToolBarLayer';
 import DrawerLayer from './DrawerLayer';
 import Header from './Header';
-import { storeScrollData } from '../../actions/app';
 import './Layout.scss';
 import DepartmentsCarousel from '../Containers/DepartmentsCarousel';
 import ShoppingCart from '../Containers/ShoppingCart/ShoppingCart';
@@ -52,9 +51,13 @@ const Layout = ({ render, ...otherProps }) => {
       <Toast />
       <FlashMessages />
       <Loader />
+      <ToolToTheTop size={38} />
 
       <div className="Layout__content">
-        <Header height={['xs', 'sm', 'md'].includes(window.mediaPrefix) ? 48 : 64} />
+        <Header
+          height={['xs', 'sm', 'md'].includes(window.mediaPrefix) ? 48 : 64}
+          mediaPrefix={window.mediaPrefix}
+        />
         <div style={{marginTop: '2rem'}}>
         <DepartmentsCarousel height={['xs', 'sm', 'md'].includes(window.mediaPrefix) ? 64 : 52} />
       </div>

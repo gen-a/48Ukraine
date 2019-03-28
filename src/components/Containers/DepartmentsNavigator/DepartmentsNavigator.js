@@ -5,10 +5,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Route } from 'react-router-dom';
 import DepartmentsTree from '../DepartmentsTree';
 import { localizePath } from '../../../localization';
-import { Route } from 'react-router-dom';
+import Icons from '../../Svg/Departments';
 /**
  * PropTypes of the component
  * @type {object}
@@ -59,12 +59,19 @@ class DepartmentsNavigator extends Component {
       position: 'inline-block'
     };
 
-    return departments.map(({ children, name, nameInUrl, productsQuantity }) => {
+    return departments.map(({ children, name, nameInUrl, icon, productsQuantity }) => {
       const to = `/browse/${nameInUrl}`;
+      const C = icon ? Icons[icon]: null;
       return {
         children: this.setLinks(children),
         label: (
           <NavLink to={localizePath(to, locale)} style={{ textDecoration: 'none', display: 'block' }}>
+            {C && (
+              <div style={{display: 'inline-block', verticalAlign: 'middle', marginRight: '1rem'}}>
+                <C viewBox="0 0 64 64" width="32px" height="32px" style={{ display: 'block' }}/>
+              </div>
+            )}
+
             {name}
             <sup style={numberStyle}>
               {productsQuantity}
@@ -78,7 +85,7 @@ class DepartmentsNavigator extends Component {
 
   render() {
     const { match: { params: { department: currentDepartment } }, departments } = this.props;
-    return <DepartmentsTree {...{ currentDepartment, departments: this.setLinks(departments)}} />;
+    return <div className="DepartmentsTree"><DepartmentsTree {...{ currentDepartment, departments: this.setLinks(departments)}} /></div>;
   }
 }
 

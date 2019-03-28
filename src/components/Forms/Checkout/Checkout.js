@@ -57,9 +57,9 @@ const validate = (values) => {
     errors.cardNumber = 'Not valid Credit Card number address';
   }
 
-  if (values.cardExpiry ) {
+  if (values.cardExpiry) {
     const exp = values.cardExpiry.replace(/[^\d]/g, '');
-    if(!expiryDate(exp.substr(0, 2), exp.substr(2))){
+    if (!expiryDate(exp.substr(0, 2), exp.substr(2))) {
       errors.cardExpiry = 'Not valid Expiry date';
     }
   }
@@ -162,12 +162,17 @@ class Checkout extends Component {
         title="Has to be form title"
         message={message.text}
         messageType={message.type}
-        submitLabel="Submit data"
-        resetLabel="Reset form"
+        submitLabel="Замовити"
+        resetLabel="Очистити"
       >
         <div className="Forms__fields Forms__fields_outlined">
 
-          <h2 className="Forms__sectionTitle">Дані відправника (Ваші дані)</h2>
+          <div className="Forms__sectionTitle">
+            <h2 className="Forms__sectionTitleText">
+              Дані відправника (Ваші дані)
+            </h2>
+          </div>
+          <div className="Forms__fields">
 
           <p className="Forms__sectionInfo">Можна заповнювати латинськими літерами. Всі поля є обов'язкові</p>
 
@@ -184,107 +189,118 @@ class Checkout extends Component {
             <Field name="phone" type="text" component={RenderField} label="Номер телефону"/>
           </div>
         </div>
-
-
-        <div className="Forms__fields Forms__fields_outlined">
-          <h2 className="Forms__sectionTitle">Дані отримувача</h2>
-
-          <div className="Forms__field xs-flex_100 md-flex_50 md-marginLeft_25">
-            {
-              <GUIConnect render={(guiProps) => (
-                <AddressBook
-                  {...guiProps}
-                  onChange={
-                    (address) => {
-                      changeFieldValue('toFirstName', address.toFirstName);
-                      changeFieldValue('toLastName', address.toLastName);
-                      changeFieldValue('toAddress', address.toAddress);
-                      changeFieldValue('toZip', address.toZip);
-                      changeFieldValue('toCity', address.toCity);
-                      changeFieldValue('toPhone', address.toPhone);
-                    }
-                  }
-                />
-              )}/>
-            }
-          </div>
-
-
-
-
-          <div className="Forms__field xs-flex_100 md-flex_50">
-            <Field name="toFirstName" type="text" component={RenderField} label="Ім'я"/>
-          </div>
-          <div className="Forms__field xs-flex_100 md-flex_50">
-            <Field name="toLastName" type="text" component={RenderField} label="Прізвище"/>
-          </div>
-
-          <div className="Forms__field xs-flex_100">
-            <Field name="toAddress" type="text" component={RenderField} label="Адреса"/>
-          </div>
-
-          <div className="Forms__field xs-flex_50">
-            <Field name="toZip" type="text" component={RenderField} label="Поштовий Ідекс"/>
-          </div>
-
-          <div className="Forms__field xs-flex_50">
-            <Field name="toCity" type="text" component={RenderField} label="Місто"/>
-          </div>
-
-          <div className="Forms__field xs-flex_100 md-flex_50 md-marginRight_50">
-            <Field name="toPhone" type="text" component={RenderField} label="Номер телефону"/>
-          </div>
-
         </div>
 
         <div className="Forms__fields Forms__fields_outlined">
-          <h2 className="Forms__sectionTitle">Платіжна інформація</h2>
 
-          <div className="Forms__field xs-flex_100 md-flex_50">
-            <Cards
-              number={cardNumber || ''}
-              name={cardName || ''}
-              expiry={cardExpiry || ''}
-              cvc={cardCvc || ''}
-              focused={cardFocused || ''}
-              placeholders={
-                {name: ''}
-              }
-            />
+          <div className="Forms__sectionTitle">
+            <h2 className="Forms__sectionTitleText">
+              Дані отримувача
+            </h2>
           </div>
+          <div className="Forms__fields">
 
-          <div className="Forms__field xs-flex_100 md-flex_50">
+            <div className="Forms__field xs-flex_100 md-flex_50 md-marginLeft_25">
+              {
+                <GUIConnect render={(guiProps) => (
+                  <AddressBook
+                    {...guiProps}
+                    onChange={
+                      (address) => {
+                        changeFieldValue('toFirstName', address.toFirstName);
+                        changeFieldValue('toLastName', address.toLastName);
+                        changeFieldValue('toAddress', address.toAddress);
+                        changeFieldValue('toZip', address.toZip);
+                        changeFieldValue('toCity', address.toCity);
+                        changeFieldValue('toPhone', address.toPhone);
+                      }
+                    }
+                  />
+                )}/>
+              }
+            </div>
+
+            <div className="Forms__field xs-flex_100 md-flex_50">
+              <Field name="toFirstName" type="text" component={RenderField} label="Ім'я"/>
+            </div>
+            <div className="Forms__field xs-flex_100 md-flex_50">
+              <Field name="toLastName" type="text" component={RenderField} label="Прізвище"/>
+            </div>
+
             <div className="Forms__field xs-flex_100">
-              <Field
-                name="cardNumber"
-                type="text"
-                component={RenderField}
-                label="cardNumber"
-                onFocus={() => this.setCardFocus('number')}
+              <Field name="toAddress" type="text" component={RenderField} label="Адреса"/>
+            </div>
 
+            <div className="Forms__field xs-flex_50">
+              <Field name="toZip" type="text" component={RenderField} label="Поштовий Ідекс"/>
+            </div>
+
+            <div className="Forms__field xs-flex_50">
+              <Field name="toCity" type="text" component={RenderField} label="Місто"/>
+            </div>
+
+            <div className="Forms__field xs-flex_100 md-flex_50 md-marginRight_50">
+              <Field name="toPhone" type="text" component={RenderField} label="Номер телефону"/>
+            </div>
+
+          </div>
+        </div>
+
+        <div className="Forms__fields_outlined">
+          <div className="Forms__sectionTitle">
+            <h2 className="Forms__sectionTitleText">
+              Платіжна інформація
+            </h2>
+          </div>
+          <div className="Forms__fields">
+
+
+            <div className="Forms__field xs-flex_100 md-flex_50">
+              <Cards
+                number={cardNumber || ''}
+                name={cardName || ''}
+                expiry={cardExpiry || ''}
+                cvc={cardCvc || ''}
+                focused={cardFocused || ''}
+                placeholders={
+                  { name: '' }
+                }
               />
             </div>
 
-            <div className="Forms__field xs-flex_50 md-flex_50">
-              <Field
-                name="cardExpiry"
-                type="text"
-                component={RenderField}
-                label="cardExp"
-                onFocus={() => this.setCardFocus('expiry')}
+            <div className="Forms__field xs-flex_100 md-flex_50">
+              <div className="Forms__field xs-flex_100">
+                <Field
+                  name="cardNumber"
+                  type="text"
+                  component={RenderField}
+                  label="Номер платіжної карти"
+                  onFocus={() => this.setCardFocus('number')}
 
-              />
-            </div>
-            <div className="Forms__field xs-flex_50 md-flex_50">
-              <Field
-                name="cardCvc"
-                type="password"
-                component={RenderField}
-                label="cardCvc"
-                onFocus={() => this.setCardFocus('cvc')}
-              />
-            </div>
+                />
+              </div>
 
+              <div className="Forms__field xs-flex_50 md-flex_50">
+                <Field
+                  name="cardExpiry"
+                  type="text"
+                  component={RenderField}
+                  label="Дійсна до"
+                  onFocus={() => this.setCardFocus('expiry')}
+
+                />
+              </div>
+              <div className="Forms__field xs-flex_50 md-flex_50">
+                <Field
+                  name="cardCvc"
+                  type="password"
+                  component={RenderField}
+                  label="CVC"
+                  onFocus={() => this.setCardFocus('cvc')}
+                />
+              </div>
+
+            </div>
           </div>
 
         </div>

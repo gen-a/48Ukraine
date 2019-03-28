@@ -100,22 +100,22 @@ const UserProfile = ({
       title="Has to be form title"
       message={message.text}
       messageType={message.type}
-      submitLabel="Submit data"
-      resetLabel="Reset form"
+      submitLabel="Зберегти"
+      resetLabel="Скинути"
     >
 
       <div className="Forms__fields">
         <div className="Forms__field xs-flex_100 md-flex_50 md-marginRight_50">
-          <Field name="email" type="email" disabled component={RenderField} label="Email"/>
+          <Field name="email" type="email" disabled component={RenderField} label="Електронна адреса"/>
         </div>
         <div className="Forms__field xs-flex_100 md-flex_50">
-          <Field name="firstName" type="text" component={RenderField} label="First Name"/>
+          <Field name="firstName" type="text" component={RenderField} label="Ім'я"/>
         </div>
         <div className="Forms__field xs-flex_100 md-flex_50">
-          <Field name="lastName" type="text" component={RenderField} label="Last Name"/>
+          <Field name="lastName" type="text" component={RenderField} label="Прізвище"/>
         </div>
         <div className="Forms__field xs-flex_100 md-flex_50 md-marginRight_50">
-          <Field name="phone" type="text" component={RenderField} label="Phone"/>
+          <Field name="phone" type="text" component={RenderField} label="Номер телефону"/>
         </div>
       </div>
 

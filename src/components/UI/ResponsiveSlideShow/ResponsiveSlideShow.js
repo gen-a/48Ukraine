@@ -15,15 +15,10 @@ import './ResponsiveSlideShow.scss';
  * @type {object}
  */
 const propTypes = {
-  /** Text message of the toast. */
-  //prop: PropTypes.string,
-};
-/**
- * Default props of the component
- * @type {object}
- */
-const defaultProps = {
-  //prop: '',
+  /** Current variant of the group name to show. */
+  variant: PropTypes.string.isRequired,
+  /** Children array of Groups. */
+  children: PropTypes.arrayOf( PropTypes.node ).isRequired,
 };
 
 /**
@@ -40,7 +35,7 @@ const ResponsiveSlideShow = ({ children: groups, variant }) => {
   return (
     <div className="ResponsiveSlideShow">
       <AspectRatioBox width={width} height={height}>
-        <SlideShow autoPlay={true}>
+        <SlideShow autoPlay>
           {children}
         </SlideShow>
       </AspectRatioBox>
@@ -49,6 +44,5 @@ const ResponsiveSlideShow = ({ children: groups, variant }) => {
 };
 
 ResponsiveSlideShow.propTypes = propTypes;
-ResponsiveSlideShow.defaultProps = defaultProps;
 
 export default ResponsiveSlideShow;

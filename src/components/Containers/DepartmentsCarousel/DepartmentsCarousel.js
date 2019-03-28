@@ -96,30 +96,38 @@ class DepartmentsCarousel extends Component {
     const nodes = departments.filter(d => d.icon)
       .map(({ icon, name, nameInUrl }, i) => {
         const C = Icons[icon];
+        const label = (
+          <div
+            className={nameInUrl === currentDepartment
+              ? 'DepartmentsCarousel__entry DepartmentsCarousel__entry_current'
+              : `DepartmentsCarousel__entry DepartmentsCarousel__entry_${i % 2 ? 'odd' : 'even'}`}
+            style={{ height: `${height}px`, width: `${width}px` }}
+          >
+            <div className="DepartmentsCarousel__icon">
+              <C viewBox="0 0 64 64" width="32px" height="32px" style={{ display: 'block' }}/>
+            </div>
+            <div className="DepartmentsCarousel__label">
+              {name}
+            </div>
+          </div>
+        );
         return (
           <CarouselNode
             key={nameInUrl}
             id={nameInUrl}
           >
-            <NavLink
-              to={localizePath(`/browse/${nameInUrl}`, locale)}
-              onClick={(e) => this.handleClick(e)}
-              style={{ textDecoration: 'none', color: 'white' }}
-            >
-              <div
-                className={nameInUrl === currentDepartment
-                  ? 'DepartmentsCarousel__entry DepartmentsCarousel__entry_current'
-                  : `DepartmentsCarousel__entry DepartmentsCarousel__entry_${i%2 ? 'odd' : 'even'}`}
-                style={{ height: `${height}px`, width: `${width}px` }}
-              >
-                <div className="DepartmentsCarousel__icon">
-                  <C viewBox="0 0 64 64" width="32px" height="32px" style={{ display: 'block' }}/>
-                </div>
-                <div className="DepartmentsCarousel__label">
-                  {name}
-                </div>
-              </div>
-            </NavLink>
+            {nameInUrl === currentDepartment
+              ? label
+              : (
+                <NavLink
+                  to={localizePath(`/browse/${nameInUrl}`, locale)}
+                  onClick={(e) => this.handleClick(e)}
+                  style={{ textDecoration: 'none', color: 'white' }}
+                >
+                  {label}
+                </NavLink>
+              )
+            }
           </CarouselNode>
         );
       });

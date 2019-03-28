@@ -65,6 +65,16 @@ const SearchForm = ({ pristine, values, filters, onChange }) => {
     onChange(newValue);
   };
 
+  /**
+   * On enter key handler
+   * @param key
+   */
+  const onKeyPress = (key) => {
+    if (key === 'Enter') {
+      onChange(searchValues);
+    }
+  };
+
   // collect rendered checkboxes array
   const renderFilters = filters.map((f) => {
     const id = `${f.name}-${f.value}`;
@@ -79,7 +89,7 @@ const SearchForm = ({ pristine, values, filters, onChange }) => {
             type="checkbox"
             value={f.value}
             name={f.name}
-            checked={ pristine ? searchValues[f.name] === f.value : f.selected }
+            checked={pristine ? searchValues[f.name] === f.value : f.selected}
             onChange={(e) => onChangeInput(f.name, f.value, e.currentTarget.checked)}
           />
           <label className="SearchForm__filterLabel" htmlFor={id}>
@@ -101,8 +111,9 @@ const SearchForm = ({ pristine, values, filters, onChange }) => {
         <input
           placeholder="Пошук..."
           value={searchValues.query || ''}
-          onChange={({ currentTarget: {value} }) => onChangeInput('query', value, value !== '')}
+          onChange={({ currentTarget: { value } }) => onChangeInput('query', value, value !== '')}
           className="SearchForm__input"
+          onKeyPress={({ key }) => onKeyPress(key)}
         />
       </div>
       <div className="SearchForm__filtersBox">

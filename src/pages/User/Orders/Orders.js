@@ -75,7 +75,7 @@ class Orders extends Component {
         page: { $set: data.page },
         count: { $set: data.count },
       }));
-      callShowToast('browse.info.products_has_been_loaded');
+      callShowToast('order.info.historyHasBeenLoaded');
     } else {
       callAddFlashMessage(message, 'server response', 'error');
     }
@@ -91,7 +91,7 @@ class Orders extends Component {
     return (
       <>
       <PageTitle
-        title="Orders History"
+        title="Історія замовлень"
       />
       <OrdersList
         orders={orders}

@@ -5,7 +5,6 @@ import CheckoutForm from '../../components/Forms/Checkout';
 import PageTitle from '../../components/PageTitle';
 import { localizePath } from '../../localization/index';
 import { Redirect } from 'react-router-dom';
-
 import './Checkout.scss'
 
 
@@ -60,12 +59,14 @@ const defaultProps = {
 
 const Checkout = ({ products, locale }) => {
   if (products.length === 0) {
-    return <Redirect to={localizePath('/cart', locale)} />;
+    return (
+      <Redirect to={localizePath('/', locale)} />);
   }
   return (
     <>
       <PageTitle
-        title="Checkout"
+        title="Здійснення замовлення"
+        description="Для здійснення замовлення, будьласка, заповніть всі обов'язкові поля та натисніть кнопку 'Замовити'."
       />
       <CheckoutForm />
     </>
