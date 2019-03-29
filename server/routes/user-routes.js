@@ -7,4 +7,5 @@ router.put('/profile', checkUserInRequest, usersController.updateProfile);
 router.put('/password', checkUserInRequest, checkRequiredInBody(['password']), usersController.updatePassword);
 router.get('/profile', checkUserInRequest, usersController.profile);
 
+router.use('/', (req, res, next) => {});
 module.exports = router;

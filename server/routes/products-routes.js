@@ -34,7 +34,5 @@ router.get('/popular', productsController.findPopular);
 router.get('/new', productsController.findNew);
 router.get('/on-sale', productsController.findOnSale);
 
-router.post('/search/hint', productsController.searchHint);
-router.post('/search', productsController.search);
-
+router.use('/', (req, res, next) => {});
 module.exports = router;

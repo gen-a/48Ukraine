@@ -29,11 +29,11 @@ exports.mapListedProducts = (products) => {
 exports.findPopular = function findPopular(req, res, next) {
   axios.get(`${process.env.DATA_SERVER_URL}/data/products-popular`, { params: req.query })
     .then(result => result.data)
-    .then(({data, message, error}) => {
+    .then(({ data, message, error }) => {
       res.status(200).json(response({
         ...data,
         records: exports.mapListedProducts(data.records).map(p => ({ ...p, isPopular: true }))
-      },  message, error));
+      }, message, error));
       return next();
     })
     .catch((err) => {
@@ -45,7 +45,7 @@ exports.findNew = function findNew(req, res, next) {
 
   axios.get(`${process.env.DATA_SERVER_URL}/data/products-new`, { params: req.query })
     .then(result => result.data)
-    .then(({data, message, error}) => {
+    .then(({ data, message, error }) => {
       res.status(200).json(response({
         ...data,
         records: exports.mapListedProducts(data.records).map(p => ({ ...p, isBrandNew: true }))
@@ -61,7 +61,7 @@ exports.findOnSale = function getProductById(req, res, next) {
 
   axios.get(`${process.env.DATA_SERVER_URL}/data/products-sale`, { params: req.query })
     .then(result => result.data)
-    .then(({data, message, error}) => {
+    .then(({ data, message, error }) => {
       res.status(200).json(response({
         ...data,
         records: exports.mapListedProducts(data.records)
@@ -77,26 +77,30 @@ exports.findOnSale = function getProductById(req, res, next) {
 
 exports.findById = function getProductById(req, res, next) {
 
-  axios.get(`${process.env.DATA_SERVER_URL}/data/product'`, { params: req.query })
+  axios.get(`${process.env.DATA_SERVER_URL}/data/product`, { params: req.query })
     .then(result => result.data)
-    .then(({data, message, error}) => {
+    .then(({ data, message, error }) => {
+
+      const attr = data.attributes['__all__'];
+
+
       const product = {
         ...data,
-        images: data.images.map(img =>
-          ({
-            fs: `${process.env.DATA_SERVER_URL}${img['image:src']}`,
-            md: `${process.env.DATA_SERVER_URL}${img['image-sm:src']}`,
-            sm: `${process.env.DATA_SERVER_URL}${img['image-sm:src']}`,
-          })
-        ),
+        images: data.images.map(img => ({
+          fs: `${process.env.DATA_SERVER_URL}${img['image:src']}`,
+          md: `${process.env.DATA_SERVER_URL}${img['image-sm:src']}`,
+          sm: `${process.env.DATA_SERVER_URL}${img['image-sm:src']}`,
+        })),
         price: {
           retail: toCoins(data.items[0].price),
           sale: toCoins(data.items[0].sale_price),
         },
-        attributes: Object.keys(data.attributes.__all__).map(k => ({
-          attribute: data.attributes.__all__[k].name,
-          value: data.attributes.__all__[k].values.map(v => v.value_name).join(', ')
-        }))
+        attributes: attr
+          ? Object.keys(attr).map(k => ({
+            attribute: attr[k].name,
+            value: attr[k].values.map(v => v.value_name).join(', ')
+          }))
+          : []
       };
       res.status(200).json(response(
         product,
@@ -111,70 +115,6 @@ exports.findById = function getProductById(req, res, next) {
     });
 };
 
-
-exports.searchHint = function getAllProducts(req, res, next) {
-  if(req.body.key){
-    req.query.query = req.body.key;
-  }else{
-    res.status(200).json(response({records:[]}));
-    next();
-  }
-
-  axios.get(`${process.env.DATA_SERVER_URL}/data/products-search-hint'`, { params: req.query })
-    .then(result => result.data)
-    .then(({data, message, error}) => {
-      if(data.records.length > 0){
-        const key = req.body.key.toLowerCase();
-        data.records.sort((a, b)=>{
-          return a.toLowerCase().indexOf(key) - b.toLowerCase().indexOf(key);
-        });
-      }
-
-      res.status(200).json(response(data, message, error));
-      return next();
-    })
-    .catch((err) => {
-      res.status(500).json({ error: err });
-      next();
-    });
-};
-
-exports.search = function getAllProducts(req, res, next) {
-  const products = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../dummy-data/products.json'), 'utf8'));
-  const search = new RegExp(req.body.query, 'gi');
-  const records = products.filter(product => product.name.match(search));
-
-  const data = {
-    perPage: parseInt(req.query.perPage, 10) || 12,
-    page: parseInt(req.query.page, 10) || 1,
-    records: [],
-    count: records.length,
-    pagesTotal: Math.ceil(records.length / (parseInt(req.query.perPage, 10) || 12)),
-    filters: {},
-    search: req.body.query
-  };
-  const from = ( data.page - 1 ) * data.perPage;
-  data.records = records.slice(from, from + data.perPage)
-    .map(p => (
-      {
-        id: p.itemId,
-        price: {
-          retail: toCoins(p.minItemPrice),
-          sale: toCoins(p.minItemSalePrice)
-        },
-        inStore: 24,
-        name: p.name,
-        attributesInfo: p.attributesInfo,
-        image: {
-          fs: `http://${process.env.HOST}:${process.env.PORT}/images/products/${p.image}`,
-          sm: `http://${process.env.HOST}:${process.env.PORT}/images/products/sm-${p.image}`,
-        }
-      }
-    ));
-
-  res.status(200).json(response(data, '', 0));
-  return next();
-};
 /**
  * Get all users
  * @param req {object}
@@ -182,12 +122,12 @@ exports.search = function getAllProducts(req, res, next) {
  * @param next {Function}
  */
 exports.find = function getAllProducts(req, res, next) {
-  if(req.query.department){
+  if (req.query.department) {
     req.query.section = req.query.department;
   }
-  axios.get(`${process.env.DATA_SERVER_URL}/data/products'`, { params: req.query })
+  axios.get(`${process.env.DATA_SERVER_URL}/data/products`, { params: req.query })
     .then(result => result.data)
-    .then(({data, message, error}) => {
+    .then(({ data, message, error }) => {
       res.status(200).json(response({
         count: parseInt(data.count, 10),
         page: parseInt(data.page, 10),

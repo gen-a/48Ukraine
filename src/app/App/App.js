@@ -16,7 +16,7 @@ import EnterAccount from '../../pages/EnterAccount';
 import GUIConnect from '../../components/Containers/GUIConnect';
 import DictionaryConnect from '../../components/Containers/DictionaryConnect';
 import StoreCurrentDepartment from '../../components/Containers/StoreCurrentDepartment';
-
+import InitScroll from '../../components/Containers/InitScroll';
 import Layout from '../../components/Layout';
 import { localizePath } from '../../localization/index';
 import { fetchInitialSate, setOpenDrawer } from '../../actions/app';
@@ -93,45 +93,47 @@ class App extends Component {
     }
 
     return (
-      <Switch>
-        <Route exact path={localizePath('/', locale)} render={renderRoute(Home)}/>
-        <Route exact path={localizePath('/browse', locale)} render={renderRoute(Browse)}/>
-        <Route exact path={localizePath('/browse/page/:page', locale)} render={renderRoute(Browse)}/>
-        <Route exact path={localizePath('/browse/:department', locale)} render={renderRoute(Browse)}/>
-        <Route exact path={localizePath('/browse/:department/page/:page', locale)}
-               render={renderRoute(Browse)}/>
-        <Route exact path={localizePath('/product/:id', locale)} render={renderRoute(Product)}/>
-        <Route exact path={localizePath('/cart', locale)} render={renderRoute(Cart)}/>
-        <Route exact path={localizePath('/checkout', locale)} render={renderRoute(Checkout)}/>
-        <Route exact path={localizePath('/enter-account/:visa', locale)} render={renderRoute(EnterAccount)}/>
-        <PrivateRoute
-          path={localizePath('/user/:section', locale)}
-          render={(routeProps) => (
-            <DictionaryConnect
-              {...routeProps}
-              render={dictionaryProps => (
-                <Layout
-                  {...dictionaryProps}
-                  render={layoutProps => (
-                    <GUIConnect
-                      {...layoutProps}
-                      render={guiProps => (
-                        <AsyncComponent
-                          {...guiProps}
-                          key={routeProps.match.url}
-                          component={() => import('../../pages/User')}
-                          placeholder={<Loader isVisible/>}
-                        />
-                      )}
-                    />
-                  )}
-                />
-              )}
-            />
-          )}
-        />
-        <Route path="*" render={renderRoute(NotFound)}/>
-      </Switch>
+      <InitScroll>
+        <Switch>
+          <Route exact path={localizePath('/', locale)} render={renderRoute(Home)}/>
+          <Route exact path={localizePath('/browse', locale)} render={renderRoute(Browse)}/>
+          <Route exact path={localizePath('/browse/page/:page', locale)} render={renderRoute(Browse)}/>
+          <Route exact path={localizePath('/browse/:department', locale)} render={renderRoute(Browse)}/>
+          <Route exact path={localizePath('/browse/:department/page/:page', locale)}
+                 render={renderRoute(Browse)}/>
+          <Route exact path={localizePath('/product/:id', locale)} render={renderRoute(Product)}/>
+          <Route exact path={localizePath('/cart', locale)} render={renderRoute(Cart)}/>
+          <Route exact path={localizePath('/checkout', locale)} render={renderRoute(Checkout)}/>
+          <Route exact path={localizePath('/enter-account/:visa', locale)} render={renderRoute(EnterAccount)}/>
+          <PrivateRoute
+            path={localizePath('/user/:section', locale)}
+            render={(routeProps) => (
+              <DictionaryConnect
+                {...routeProps}
+                render={dictionaryProps => (
+                  <Layout
+                    {...dictionaryProps}
+                    render={layoutProps => (
+                      <GUIConnect
+                        {...layoutProps}
+                        render={guiProps => (
+                          <AsyncComponent
+                            {...guiProps}
+                            key={routeProps.match.url}
+                            component={() => import('../../pages/User')}
+                            placeholder={<Loader isVisible/>}
+                          />
+                        )}
+                      />
+                    )}
+                  />
+                )}
+              />
+            )}
+          />
+          <Route path="*" render={renderRoute(NotFound)}/>
+        </Switch>
+      </InitScroll>
     )
   }
 }

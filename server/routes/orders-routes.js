@@ -8,4 +8,5 @@ router.get('/history', orderController.history);
 
 router.get('/addresses', orderController.addresses);
 
+router.use('/', (req, res, next) => {});
 module.exports = router;

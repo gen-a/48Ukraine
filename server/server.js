@@ -33,9 +33,12 @@ app.use(cors({
   methods:['POST', 'PUT'],
   credentials: true // enable set cookie
 }));
+
 app.use(morgan('combined'));
 app.use(flash());
-app.use(express.static(path.join(__dirname, 'dist')));
+
+app.use(express.static(path.join(__dirname, '../build')));
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 app.use(cookieParser());
@@ -53,7 +56,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // before all //
-app.use('/product-images', express.static(__dirname + '/images/products'));
+
 
 app.use((req, res, next) => {
   next();
@@ -67,9 +70,17 @@ app.use('/data/orders', ordersRoutes);
 
 // after all //
 
-app.use((req, res, next) => {
-  next();
+// Handles any requests that don't match the ones above
+app.get('*', (req, res) =>{
+  res.sendFile(path.resolve(__dirname, '../build/index.html'));
 });
+
+app.use((req, res, next) => {});
+
+//app.use('/', express.static(path.join(__dirname, '../build')));
+
+
+
 
 connect()
   .then(() => {

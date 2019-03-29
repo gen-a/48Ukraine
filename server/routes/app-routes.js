@@ -32,7 +32,6 @@ router.get('/initial-state', appController.initialState);
 
 router.post('/store-cart', appController.storeCart);
 
-
-
+router.use('/', (req, res, next) => {});
 
 module.exports = router;
