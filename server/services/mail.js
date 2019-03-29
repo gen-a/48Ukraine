@@ -1,6 +1,8 @@
 /**
  * https://nodemailer.com/about/
  */
+const path = require('path');
+require('dotenv').config({ path: path.resolve(__dirname, '../../.env') });
 const nodemailer = require('nodemailer');
 
 const { NODE_ENV, MAIL_HOST, MAIL_PORT, MAIL_USER, MAIL_PASS } = process.env;

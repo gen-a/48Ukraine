@@ -21,7 +21,7 @@ describe('/routes/app-routes.js API Integration Tests', () => {
         .send({locale})
         .end((err, res) => {
           predict.response(res, '', 0)
-          expect(res.body.data).to.have.all.keys(['departments']);
+          expect(res.body.data).to.have.all.keys(['departments', 'cart']);
           done();
         });
     });
