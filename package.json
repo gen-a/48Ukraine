@@ -101,7 +101,6 @@
     "nodemon": "^1.18.10",
     "npm-watch": "^0.6.0",
     "prop-types": "^15.7.2",
-    "session-file-store": "^1.2.0",
     "stylelint": "^9.10.1",
     "stylelint-config-standard": "^18.2.0",
     "stylelint-order": "^2.0.0",
