@@ -96,7 +96,6 @@
     "eslint-plugin-import": "^2.16.0",
     "eslint-plugin-jsx-a11y": "^6.2.0",
     "eslint-plugin-react": "^7.12.4",
-    "lint": "eslint src",
     "mocha": "^5.2.0",
     "nodemon": "^1.18.10",
     "npm-watch": "^0.6.0",
