@@ -105,7 +105,8 @@ exports.email = (req, res, next) => {
             console.log(3);
             res.status(200).json(response({ email, isNew: true }, 'auth.info.passwordHasBeenSent', 0));
             return next();
-          });
+          })
+          .catch(console.log);
       } else {
         return Promise.resolve()
           .then(() => {
