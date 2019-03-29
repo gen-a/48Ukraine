@@ -94,21 +94,18 @@ exports.email = (req, res, next) => {
         const password = generatePassword();
         const _id = new mongoose.Types.ObjectId();
         const user = new User({ _id, email, password });
-        return user.save((err)=>{
-          console.log(err);
-
-
-        });
-
-
-
-/*        return user.save()
-          .then(() => sendRegistrationLetter(email, password))
+        return user.save()
           .then(() => {
+          console.log(1);
+          return sendRegistrationLetter(email, password);
+
+        })
+          .then(() => {
+            console.log(2);
             res.status(200).json(response({ email, isNew: true }, 'auth.info.passwordHasBeenSent', 0));
             return next();
           })
-          .catch(console.log);*/
+          .catch(console.log);
 
 
       } else {
