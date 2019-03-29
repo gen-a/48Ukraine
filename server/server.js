@@ -25,10 +25,6 @@ const hostname = process.env.SERVER_HOSTNAME || '127.0.0.1';
 
 const { connect } = require( './config/mongoose');
 
-
-
-
-
 process.on('unhandledRejection', () => {});
 // middlewares //
 

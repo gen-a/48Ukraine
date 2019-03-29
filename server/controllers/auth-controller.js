@@ -90,15 +90,19 @@ exports.email = (req, res, next) => {
   }
   User.findOne({ email })
     .then((found) => {
+      console.log(0);
       if (found === null) {
         const password = generatePassword();
         const _id = new mongoose.Types.ObjectId();
+        console.log(1);
         const user = new User({ _id, email, password });
         return user.save()
           .then(() => {
+            console.log(2);
             return sendRegistrationLetter(email, password);
           })
           .then(() => {
+            console.log(3);
             res.status(200).json(response({ email, isNew: true }, 'auth.info.passwordHasBeenSent', 0));
             return next();
           });
