@@ -1,4 +1,5 @@
 const path = require('path');
+require('dotenv').config({ path: path.resolve(__dirname, '../../.env') });
 const fs = require('fs');
 const axios = require('axios');
 const { response } = require('../lib/response');
@@ -18,15 +19,15 @@ exports.mapListedProducts = (products) => {
       name: p.name,
       attributesInfo: p.attributes_info,
       image: {
-        fs: `http://48ukraine.co${p['image:src']}`,
-        sm: `http://48ukraine.co${p['image-sm:src']}`,
+        fs: `${process.env.DATA_SERVER_URL}${p['image:src']}`,
+        sm: `${process.env.DATA_SERVER_URL}${p['image-sm:src']}`,
       }
     }
   ));
 }
 
 exports.findPopular = function findPopular(req, res, next) {
-  axios.get('http://48ukraine.co/data/products-popular', { params: req.query })
+  axios.get(`${process.env.DATA_SERVER_URL}/data/products-popular`, { params: req.query })
     .then(result => result.data)
     .then(({data, message, error}) => {
       res.status(200).json(response({
@@ -42,7 +43,7 @@ exports.findPopular = function findPopular(req, res, next) {
 };
 exports.findNew = function findNew(req, res, next) {
 
-  axios.get('http://48ukraine.co/data/products-new', { params: req.query })
+  axios.get(`${process.env.DATA_SERVER_URL}/data/products-new`, { params: req.query })
     .then(result => result.data)
     .then(({data, message, error}) => {
       res.status(200).json(response({
@@ -58,7 +59,7 @@ exports.findNew = function findNew(req, res, next) {
 };
 exports.findOnSale = function getProductById(req, res, next) {
 
-  axios.get('http://48ukraine.co/data/products-sale', { params: req.query })
+  axios.get(`${process.env.DATA_SERVER_URL}/data/products-sale`, { params: req.query })
     .then(result => result.data)
     .then(({data, message, error}) => {
       res.status(200).json(response({
@@ -76,16 +77,16 @@ exports.findOnSale = function getProductById(req, res, next) {
 
 exports.findById = function getProductById(req, res, next) {
 
-  axios.get('http://48ukraine.co/data/product', { params: req.query })
+  axios.get(`${process.env.DATA_SERVER_URL}/data/product'`, { params: req.query })
     .then(result => result.data)
     .then(({data, message, error}) => {
       const product = {
         ...data,
         images: data.images.map(img =>
           ({
-            fs: `https://48ukraine.com${img['image:src']}`,
-            md: `https://48ukraine.com${img['image-sm:src']}`,
-            sm: `https://48ukraine.com${img['image-sm:src']}`,
+            fs: `${process.env.DATA_SERVER_URL}${img['image:src']}`,
+            md: `${process.env.DATA_SERVER_URL}${img['image-sm:src']}`,
+            sm: `${process.env.DATA_SERVER_URL}${img['image-sm:src']}`,
           })
         ),
         price: {
@@ -119,7 +120,7 @@ exports.searchHint = function getAllProducts(req, res, next) {
     next();
   }
 
-  axios.get('http://48ukraine.co/data/products-search-hint', { params: req.query })
+  axios.get(`${process.env.DATA_SERVER_URL}/data/products-search-hint'`, { params: req.query })
     .then(result => result.data)
     .then(({data, message, error}) => {
       if(data.records.length > 0){
@@ -184,7 +185,7 @@ exports.find = function getAllProducts(req, res, next) {
   if(req.query.department){
     req.query.section = req.query.department;
   }
-  axios.get('http://48ukraine.co/data/products', { params: req.query })
+  axios.get(`${process.env.DATA_SERVER_URL}/data/products'`, { params: req.query })
     .then(result => result.data)
     .then(({data, message, error}) => {
       res.status(200).json(response({

@@ -1,4 +1,5 @@
 const path = require('path');
+require('dotenv').config({ path: path.resolve(__dirname, '../../.env') });
 const fs = require('fs');
 const axios = require('axios');
 const { response } = require('../lib/response');
@@ -69,7 +70,7 @@ exports.storeCart = (req, res, next) => {
  */
 exports.initialState = (req, res, next) => {
   axios({
-    url: 'http://48ukraine.co/data/sections',
+    url: `${process.env.DATA_SERVER_URL}/data/sections`,
     method: 'get',
     data: {}
   })

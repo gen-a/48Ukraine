@@ -7,15 +7,12 @@ const mongoose = require('mongoose');
 const request = require('supertest');
 const chai = require('chai');
 const app = require('../../server');
-const { authenticatedRequest } = require('../authenticated-request');
 const user = require('../user');
 const predict = require('../predict');
 
 mongoose.set('useCreateIndex', true);
 
-const { expect } = chai;
-
-describe('API Integration Tests', () => {
+describe('/routes/users-routes.js API Integration Tests', () => {
   before((done) => {
     user.create()
       .then(() => {
@@ -66,6 +63,4 @@ describe('API Integration Tests', () => {
       .catch(console.log);
   });
 });
-
-//router.put('/password', checkUserInRequest, checkRequiredInBody(['password']), usersController.updatePassword);
 

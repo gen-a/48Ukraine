@@ -3,6 +3,8 @@ if (process.env.NODE_ENV !== 'test') {
   console.log('try to run test:win for windows or test:lin for Linux!');
   process.exit();
 }
+const path = require('path');
+require('dotenv').config({ path: path.resolve(__dirname, '../../.env') });
 const request = require('supertest');
 const axios = require('axios');
 const { expect } = require('chai');
@@ -32,10 +34,10 @@ const order = {
 
 
 
-describe('API Integration Tests', () => {
+describe('/routes/orders-routes.js API Integration Tests', () => {
   before((done) => {
     /** Collect products data for the order */
-    axios.get('http://48ukraine.co/data/products-popular', {})
+    axios.get(`${process.env.DATA_SERVER_URL}/data/products-popular`, {})
       .then(result => result.data)
       .then(({ data: { records } }) => mapListedProducts(records))
       .then((records) => {

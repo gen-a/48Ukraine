@@ -12,18 +12,16 @@ mongoose.set('useCreateIndex', true);
 
 const { expect } = chai;
 
-describe('API Integration Tests', () => {
-
-  describe('/GET /data/app/initial-state', () => {
-
-    it('should failed for missing email', (done) => {
+describe('/routes/app-routes.js API Integration Tests', () => {
+  describe('GET /data/app/initial-state', () => {
+    it('should be succeed', (done) => {
       const locale = 'uk';
       request(app)
         .get('/data/app/initial-state')
         .send({locale})
         .end((err, res) => {
           predict.response(res, '', 0)
-          expect(res.body.data).to.have.all.keys(['departments', 'cart']);
+          expect(res.body.data).to.have.all.keys(['departments']);
           done();
         });
     });

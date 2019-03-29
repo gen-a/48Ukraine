@@ -16,7 +16,7 @@ mongoose.set('useCreateIndex', true);
 const { expect } = chai;
 const validEmail = 'johnsmith@gmail.com';
 
-describe('API Integration Tests', () => {
+describe('/routes/auth-routes.js API Integration Tests', () => {
 
   before((done) => {
     User.deleteMany({})
@@ -24,7 +24,7 @@ describe('API Integration Tests', () => {
       .catch(console.log);
   });
 
-  describe('/POST /data/auth/email', () => {
+  describe('POST /data/auth/email', () => {
 
     testBodyRequired('/data/auth/email', { email: validEmail }, ['email']);
 
@@ -66,7 +66,7 @@ describe('API Integration Tests', () => {
 
   });
 
-  describe('/POST /data/auth/request-access', () => {
+  describe('POST /data/auth/request-access', () => {
     it('should failed for not registered email', (done) => {
       const email = 'not.registered@gmail.com';
       request(app)
@@ -88,7 +88,7 @@ describe('API Integration Tests', () => {
         });
     });
   });
-  describe('/POST /data/auth/request-access/:visa', () => {
+  describe('POST /data/auth/request-access/:visa', () => {
 
     it('should failed for invalid visa', (done) => {
       request(app)

@@ -8,7 +8,7 @@ before((done) => {
     .catch(console.log);
 });
 
-describe('Validations: ', () => {
+describe('/models/user-model tests: ', () => {
 
   describe('Required fields', () => {
     const user = new User();
