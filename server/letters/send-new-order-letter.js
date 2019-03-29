@@ -1,3 +1,5 @@
+const path = require('path');
+require('dotenv').config({ path: path.resolve(__dirname, '../../.env') });
 const { mail } = require('../services/mail');
 
 exports.sendNewOrderLetter = (email, number, visaExpirationDate) => {
