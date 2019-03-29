@@ -16,7 +16,9 @@ mongoose.set('useCreateIndex', true);
 const { expect } = chai;
 const validEmail = 'johnsmith@gmail.com';
 
-describe('/routes/auth-routes.js API Integration Tests', () => {
+describe('/routes/auth-routes.js API Integration Tests', function () {
+
+  this.timeout(5000);
 
   before((done) => {
     User.deleteMany({})
