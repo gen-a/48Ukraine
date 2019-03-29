@@ -7,7 +7,7 @@ const { generatePassword } = require('../lib/password-generator');
 const { sendRegistrationLetter } = require('../letters/send-registration-letter');
 const { sendAccessLetter } = require('../letters/send-access-letter');
 
-const VISA_EXRIRATION_TIME = 60 * 60 * 24 * 1000;
+const VISA_EXPIRATION_TIME = 60 * 60 * 24 * 1000;
 
 /**
  * Enter the site with temporary visa
@@ -56,7 +56,7 @@ exports.requestAccessWithVisa = (req, res, next) => {
 exports.requestAccess = (req, res, next) => {
   const { email } = req.body;
   const visa = uniqid();
-  const visaExpirationDate = (new Date()).getTime() + VISA_EXRIRATION_TIME;
+  const visaExpirationDate = (new Date()).getTime() + VISA_EXPIRATION_TIME;
 
   User.updateOne({ email }, { $set: { visa, visaExpirationDate } })
     .then((result) => {
@@ -100,13 +100,13 @@ exports.email = (req, res, next) => {
           })
           .then(() => {
             res.status(200).json(response({ email, isNew: true }, 'auth.info.passwordHasBeenSent', 0));
-            next();
+            return next();
           });
       } else {
         return Promise.resolve()
           .then(() => {
             res.status(200).json(response({ email, isNew: false }, 'auth.info.pleaseUsePasswordToEnter', 0));
-            next();
+            return next();
           });
       }
     })
