@@ -20,9 +20,9 @@ exports.requestAccessWithVisa = (req, res, next) => {
   const { visa } = req.params;
   const visaExpirationDate = (new Date()).getTime();
 
-  User.findOne({ visa, visaExpirationDate: { $gt: visaExpirationDate }})
-    .then( (found) =>{
-      if(found === null){
+  User.findOne({ visa, visaExpirationDate: { $gt: visaExpirationDate } })
+    .then((found) => {
+      if (found === null) {
         res.status(200).json(response({}, 'auth.error.noValidEntryFoundByVisa', 1));
         return next();
       }
@@ -34,11 +34,11 @@ exports.requestAccessWithVisa = (req, res, next) => {
         return null;
       });
 
-      const {visa, visaExpirationDate, ...otherData} = found;
+      const { visa, visaExpirationDate, ...otherData } = found;
       const { email } = found;
       return User.updateOne({ email }, { $set: { visa: '', visaExpirationDate: 0 } })
-        .then(()=>{
-          res.status(200).json(response({otherData}, 'auth.info.youHaveBeenLoggedIn', 0));
+        .then(() => {
+          res.status(200).json(response({ otherData }, 'auth.info.youHaveBeenLoggedIn', 0));
           return next();
         });
     })
@@ -47,7 +47,7 @@ exports.requestAccessWithVisa = (req, res, next) => {
       next();
     });
 };
- /**
+/**
  * Check if user exists and register new user if not
  * @param req {object}
  * @param res {object}
@@ -63,11 +63,11 @@ exports.requestAccess = (req, res, next) => {
       if (result.nModified > 0) {
         sendAccessLetter(email, visa, visaExpirationDate)
           .then(() => {
-            res.status(200).json(response({email}, 'auth.info.accessLetterHasBeenSent', 0));
+            res.status(200).json(response({ email }, 'auth.info.accessLetterHasBeenSent', 0));
             next();
           });
       } else {
-        res.status(200).json(response({email}, 'auth.error.noValidEntryFound', 1));
+        res.status(200).json(response({ email }, 'auth.error.noValidEntryFound', 1));
         next();
       }
     })
@@ -96,18 +96,13 @@ exports.email = (req, res, next) => {
         const user = new User({ _id, email, password });
         return user.save()
           .then(() => {
-          console.log(1);
-          return sendRegistrationLetter(email, password);
-
-        })
+            return sendRegistrationLetter(email, password);
+          })
           .then(() => {
-            console.log(2);
             res.status(200).json(response({ email, isNew: true }, 'auth.info.passwordHasBeenSent', 0));
             return next();
           })
           .catch(console.log);
-
-
       } else {
         return Promise.resolve()
           .then(() => {
