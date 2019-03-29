@@ -73,6 +73,7 @@
     "stylelint-dev": "stylelint 'src/**/*.scss' --cache --cache-location './.stylelintcache'; exit 0",
     "stylelint-build": "stylelint 'src/**/*.scss'",
     "stylelint-fix-sass": "stylelint --fix 'src/**/*.scss'",
+    "test": "NODE_ENV=test ./node_modules/.bin/mocha ./server/test/**/*.test.js --reporter spec --exit",
     "watch-styles-sass": "npm-watch"
   },
   "eslintConfig": {
