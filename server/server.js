@@ -29,7 +29,7 @@ process.on('unhandledRejection', () => {});
 // middlewares //
 
 app.use(cors({
-  origin:[`http://${process.env.HOST}:${process.env.PORT}`],
+  origin:[`http://${process.env.SERVER_HOSTNAME}:${process.env.SERVER_PORT}`],
   methods:['POST', 'PUT'],
   credentials: true // enable set cookie
 }));
