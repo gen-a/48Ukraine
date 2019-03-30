@@ -1,64 +1,64 @@
 const articles = {
   authentication: {
-    title: 'Authentication'
+    title: 'Аутентифікація'
   },
   label: {
-    email: 'E-mail',
-    password: 'Password',
-    next: 'Next',
-    login: 'Login',
-    showHidePassword: 'Show/hide password',
-    rememberMe: 'Remember me on this device'
+    email: 'Електронна адреса',
+    password: 'пароль',
+    next: 'Далі',
+    login: 'Увійти',
+    showHidePassword: 'Показати/сховати пароль',
+    rememberMe: 'Запам`ятати мене'
   },
   error: {
-    invalidPassword: 'Invalid password',
-    invalidEmail: 'Invalid e-mail address',
-    missingRequiredParameters: 'Missing required parameters: :parameters'
+    invalidPassword: 'Невірний пароль',
+    invalidEmail: 'Невірниа електронна адреса',
+    missingRequiredParameters: 'Відсутні обов`язкові дані: :parameters'
   },
   auth: {
     error: {
-      incorrectUserName: 'Incorrect email',
-      incorrectPassword: 'Incorrect password',
-      missingCredentials: 'Missing credentials',
-      noUserFound: 'No user found',
-      noValidEntryFound: 'No account found foк :email',
+      incorrectUserName: 'Невірниа електронна адреса',
+      incorrectPassword: 'Невірний пароль',
+      missingCredentials: 'Відсутні повноваження',
+      noUserFound: 'Користувача не знайдено',
+      noValidEntryFound: 'Відсутній обліковий запис для :email',
       noValidEntryFoundByVisa: 'Access link is not valid or outdated',
       failedLogInWithVisa: 'Access link is not valid or outdated',
       invalidEmail: 'Invalid E-mail address '
     },
     info: {
-      youHaveBeenLoggedIn: 'You have been logged in',
-      youHaveBeenLoggedOut: 'You have been logged out',
-      accessLetterHasBeenSent: 'Letter with further instructions has been sent to :email',
-      passwordHasBeenSent: 'Letter with the password has been set to :email',
-      pleaseUsePasswordToEnter: 'Please use the password to login'
+      youHaveBeenLoggedIn: 'Ви увійшли в обліковий запис',
+      youHaveBeenLoggedOut: 'Ви вийшли з облікового запису',
+      accessLetterHasBeenSent: 'Лист з подальшими кроками було відправлено на :email',
+      passwordHasBeenSent: 'Лист з паролєм було відправлено на :email',
+      pleaseUsePasswordToEnter: 'Будьласка увійдіть з систему з Вашим паролєм'
     }
   },
   user: {
     error: {
-      notFound: 'No user found'
+      notFound: 'Користувача не знайдено'
     },
     info: {
-      passwordHasBeenStored: 'Password has been stored'
+      passwordHasBeenStored: 'Паоль збережен'
     }
   },
   flashMessage: {
     title: {
-      serverMessage: 'Server Message',
-      error: 'Error!'
+      serverMessage: 'Повідомлення серверу',
+      error: 'Помилка!'
     }
   },
   loading: {
     message: {
       error: {
-        loading: 'Error to loading component... Please try again',
-        timeout: 'Taking a long time... Please try again',
+        loading: 'Помилка в завантаженні компонента... Спробуйте пізніше',
+        timeout: 'Забагато часу на обробку запиту... Спробуйте пізніше',
       }
     }
   },
   order:{
     info:{
-      theOrderHasBeenPlaced:'Ваше замовлення отримано. Номер замовдення :number. Підтверження надіслано на адресу :email'
+      theOrderHasBeenPlaced: 'Ваше замовлення отримано. Номер замовлення :number. Підтверження надіслано на адресу :email'
     }
   }
 
