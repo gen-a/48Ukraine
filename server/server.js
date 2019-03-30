@@ -20,19 +20,21 @@ const productsRoutes = require('./routes/products-routes');
 const ordersRoutes = require('./routes/orders-routes');
 
 const app = express();
-const PORT = process.env.SERVER_PORT || 5000;
-const HOST = process.env.SERVER_HOSTNAME || 'localhost';
+const PORT = process.env.PORT || 5000;
 
-const { connect } = require( './config/mongoose');
+const { connect } = require('./config/mongoose');
 
-process.on('unhandledRejection', () => {});
+process.on('unhandledRejection', () => {
+});
+
 // middlewares //
-
-app.use(cors({
-  origin:[`http://${HOST}:${PORT}`],
-  methods:['POST', 'PUT'],
-  credentials: true // enable set cookie
-}));
+if (process.env.NODE_ENV === 'development') {
+  app.use(cors({
+    origin: [`http://${process.env.HOST || 'localhost'}:${PORT}`],
+    methods: ['POST', 'PUT'],
+    credentials: true // enable set cookie
+  }));
+}
 
 app.use(morgan('combined'));
 app.use(flash());
@@ -43,11 +45,11 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 app.use(cookieParser());
 app.use(session({
-  store: new FileStore({retries: 0}),
+  store: new FileStore({ retries: 0 }),
   secret: process.env.SESSION_SECRET_KEY,
   resave: true,
   saveUninitialized: false,
-  cookie:{
+  cookie: {
     secure: false,
     httpOnly: false
   }
@@ -71,19 +73,20 @@ app.use('/data/orders', ordersRoutes);
 // after all //
 
 // Handles any requests that don't match the ones above
-app.get('*', (req, res) =>{
+app.get('*', (req, res) => {
   res.sendFile(path.resolve(__dirname, '../build/index.html'));
 });
 
-app.use((req, res, next) => {});
+app.use((req, res, next) => {
+});
 
 //app.use('/', express.static(path.join(__dirname, '../build')));
 
 connect()
   .then(() => {
     app.listen(PORT, () => {
-      if(process.env.NODE_ENV === 'development') {
-        console.log(`Server running at http://${HOST}:${PORT}/`);
+      if (process.env.NODE_ENV === 'development') {
+        console.log(`Server running at http://${process.env.HOST || 'localhost'}:${PORT}/`);
       }
     });
   })
