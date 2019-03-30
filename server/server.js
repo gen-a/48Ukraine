@@ -22,6 +22,8 @@ const ordersRoutes = require('./routes/orders-routes');
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+console.log(PORT);
+
 const { connect } = require('./config/mongoose');
 
 process.on('unhandledRejection', () => {

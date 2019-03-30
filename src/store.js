@@ -10,7 +10,7 @@ const DEV = process.env.NODE_ENV !== 'production';
 
 const middleware = DEV ? [promise, thunk, logger] : [promise, thunk];
 
-const composeEnhancers = DEV && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const composeEnhancers = ( DEV && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ) || compose;
 
 const persistedState = loadState();
 
