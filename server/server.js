@@ -20,8 +20,8 @@ const productsRoutes = require('./routes/products-routes');
 const ordersRoutes = require('./routes/orders-routes');
 
 const app = express();
-const port = process.env.SERVER_PORT || 5000;
-const hostname = process.env.SERVER_HOSTNAME || 'localhost';
+const PORT = process.env.SERVER_PORT || 5000;
+const HOST = process.env.SERVER_HOSTNAME || 'localhost';
 
 const { connect } = require( './config/mongoose');
 
@@ -29,7 +29,7 @@ process.on('unhandledRejection', () => {});
 // middlewares //
 
 app.use(cors({
-  origin:[`http://${process.env.SERVER_HOSTNAME}:${process.env.SERVER_PORT}`],
+  origin:[`http://${HOST}:${PORT}`],
   methods:['POST', 'PUT'],
   credentials: true // enable set cookie
 }));
@@ -81,9 +81,9 @@ app.use((req, res, next) => {});
 
 connect()
   .then(() => {
-    app.listen(port, hostname, () => {
+    app.listen(PORT, () => {
       if(process.env.NODE_ENV === 'development') {
-        console.log(`Server running at http://${hostname}:${port}/`);
+        console.log(`Server running at http://${HOST}:${PORT}/`);
       }
     });
   })
