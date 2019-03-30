@@ -31,16 +31,14 @@ exports.requestAccessWithVisa = (req, res, next) => {
           res.status(200).json(response({}, 'auth.error.failedLogInWithVisa', 1));
           return next();
         }
-        return null;
+        const { visa, visaExpirationDate, ...otherData } = found;
+        const { email } = found;
+        return User.updateOne({ email }, { $set: { visa: '', visaExpirationDate: 0 } })
+          .then(() => {
+            res.status(200).json(response({ otherData }, 'auth.info.youHaveBeenLoggedIn', 0));
+            return next();
+          });
       });
-
-      const { visa, visaExpirationDate, ...otherData } = found;
-      const { email } = found;
-      return User.updateOne({ email }, { $set: { visa: '', visaExpirationDate: 0 } })
-        .then(() => {
-          res.status(200).json(response({ otherData }, 'auth.info.youHaveBeenLoggedIn', 0));
-          return next();
-        });
     })
     .catch((err) => {
       res.status(500).json({ error: err });
