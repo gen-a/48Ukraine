@@ -17,8 +17,6 @@ const propTypes = {
   callShowLoader: PropTypes.func.isRequired,
   /** Hide loader handler. */
   callHideLoader: PropTypes.func.isRequired,
-  /** Show toast handler. */
-  callShowToast: PropTypes.func.isRequired,
   /** Match parameters. */
   match: PropTypes.shape({
     params: PropTypes.shape({
@@ -57,13 +55,12 @@ class Product extends Component {
   }
 
   onLoadProduct({ error, message, data }) {
-    const { callAddFlashMessage, callHideLoader, callShowToast } = this.props;
+    const { callAddFlashMessage, callHideLoader } = this.props;
     callHideLoader();
     if (error === 0) {
       this.setState(prevState => update(prevState, {
         product: { $set: data }
       }));
-      callShowToast('browse.info.product_has_been_loaded');
     } else {
       callAddFlashMessage(message, 'server response', 'error');
     }

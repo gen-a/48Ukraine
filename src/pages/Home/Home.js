@@ -4,45 +4,55 @@
  * @module Home
  */
 import React from 'react';
-
+import { Helmet } from 'react-helmet';
 import { URL_FETCH_PRODUCTS_POPULAR, URL_FETCH_PRODUCTS_NEW, URL_FETCH_PRODUCTS_ON_SALE } from '../../config/api';
-import './Home.scss';
 import HomeSlideShow from '../../components/HomeSlideShow';
 import WindowSize from '../../components/Containers/WindowSize';
 import ProductsPromo from '../../components/ProductsPromo';
 import IntroPromo from '../../components/IntroPromo';
 
-
+import './Home.scss';
 /**
  * General component description in JSDoc format. Markdown is *supported*.
  */
 const Home = () => {
   return (
-    <div className="Home">
+    <>
+    <Helmet>
+      <meta charSet="utf-8" />
+      <title>Головна | 48Ukraine | Якісні товари за найкращими цінами з доставкою в Україну!</title>
+      <link rel="canonical" href="/" />
+    </Helmet>
 
-      <WindowSize render={props => <HomeSlideShow {...props} />}/>
+    <WindowSize render={props => <HomeSlideShow {...props} />}/>
 
-      <ProductsPromo
-        url={URL_FETCH_PRODUCTS_ON_SALE}
-        title="Sale products"
-        more={{ url: '', label: '' }}
-      />
+    <h1 className="Home__h1">Якісні товари за найкращими цінами з доставкою в Україну!</h1>
 
-      <IntroPromo/>
+    <div className="Home__divider"/>
 
-      <ProductsPromo
-        url={URL_FETCH_PRODUCTS_NEW}
-        title="New products"
-        more={{ url: '', label: '' }}
-      />
+    <ProductsPromo
+      url={URL_FETCH_PRODUCTS_ON_SALE}
+      title="Гарячі пропозиції"
+      more={{ url: '', label: '' }}
+    />
 
-      <ProductsPromo
-        url={URL_FETCH_PRODUCTS_POPULAR}
-        title="Popular products"
-        more={{ url: '', label: '' }}
-      />
+    <IntroPromo/>
 
-    </div>
+    <div className="Home__divider"/>
+
+    <ProductsPromo
+      url={URL_FETCH_PRODUCTS_NEW}
+      title="Новинки"
+      more={{ url: '', label: '' }}
+    />
+
+    <ProductsPromo
+      url={URL_FETCH_PRODUCTS_POPULAR}
+      title="Популярні продукти"
+      more={{ url: '', label: '' }}
+    />
+
+    </>
   );
 };
 

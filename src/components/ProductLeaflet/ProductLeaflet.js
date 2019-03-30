@@ -33,15 +33,20 @@ const propTypes = {
   name: PropTypes.string.isRequired,
   info: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
-  //specifications,
-  mediaPrefix: PropTypes.string.isRequired
+  mediaPrefix: PropTypes.string.isRequired,
+  attributes: PropTypes.arrayOf(
+    PropTypes.shape({
+      attribute: PropTypes.string,
+      value: PropTypes.string,
+    })
+  ),
 };
 /**
  * Default props of the component
  * @type {object}
  */
 const defaultProps = {
-  //prop: '',
+  attributes: []
 };
 
 /**
@@ -110,11 +115,11 @@ const ProductLeaflet = ({ images, id, price, name, info, description, attributes
           )}
         </div>
       </div>
-      </div>
-      );
-      };
+    </div>
+  );
+};
 
-      ProductLeaflet.propTypes = propTypes;
-      ProductLeaflet.defaultProps = defaultProps;
+ProductLeaflet.propTypes = propTypes;
+ProductLeaflet.defaultProps = defaultProps;
 
-      export default ProductLeaflet;
+export default ProductLeaflet;

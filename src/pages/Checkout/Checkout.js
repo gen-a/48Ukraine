@@ -5,7 +5,6 @@ import CheckoutForm from '../../components/Forms/Checkout';
 import PageTitle from '../../components/PageTitle';
 import { localizePath } from '../../localization/index';
 import { Redirect } from 'react-router-dom';
-import './Checkout.scss'
 
 
 /**
