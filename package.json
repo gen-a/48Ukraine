@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "48ukraine - frontend for the store",
   "engines": {
-    "node": "10.x"
+    "node": "8"
   },
   "main": "./server/server.js",
   "private": true,
