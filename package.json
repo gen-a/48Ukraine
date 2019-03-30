@@ -1,6 +1,11 @@
 {
   "name": "48-shop",
   "version": "0.1.0",
+  "description": "48ukraine - frontend for the store",
+  "engines": {
+    "node": "10.x"
+  },
+  "main": "./server/server.js",
   "private": true,
   "dependencies": {
     "@material-ui/core": "^3.9.2",
@@ -115,5 +120,15 @@
       ],
       "extensions": "scss"
     }
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gen-a/48Ukraine"
+  },
+  "keywords": [
+    "node",
+    "heroku",
+    "express"
+  ],
+  "license": "MIT"
 }

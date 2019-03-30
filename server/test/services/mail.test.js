@@ -1,3 +1,5 @@
+const path = require('path');
+require('dotenv').config({ path: path.resolve(__dirname, '../../../.env') });
 const chai = require('chai');
 const { mail } = require('../../services/mail');
 const { expect } = chai;
@@ -18,7 +20,7 @@ describe('/services/mail.js Tests', () => {
     mail(from, to, subject, text, html)
       .then((info) => {
         expect(info).to.be.an('object');
-        expect(info.accepted).to.be.an('array').that.does.include('test.to@gmail.com');
+        expect(info.accepted).to.be.an('array').that.does.include(data.to);
         done();
       })
       .catch((err) => {

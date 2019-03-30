@@ -21,7 +21,7 @@ const ordersRoutes = require('./routes/orders-routes');
 
 const app = express();
 const port = process.env.SERVER_PORT || 5000;
-const hostname = process.env.SERVER_HOSTNAME || '127.0.0.1';
+const hostname = process.env.SERVER_HOSTNAME || 'localhost';
 
 const { connect } = require( './config/mongoose');
 
@@ -78,9 +78,6 @@ app.get('*', (req, res) =>{
 app.use((req, res, next) => {});
 
 //app.use('/', express.static(path.join(__dirname, '../build')));
-
-
-
 
 connect()
   .then(() => {
