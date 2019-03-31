@@ -28,9 +28,9 @@ process.on('unhandledRejection', () => {
 });
 
 // middlewares //
-if (process.env.NODE_ENV === 'development') {
+if(process.env.CORS_ORIGIN.length > 0){
   app.use(cors({
-    origin: [`http://${process.env.HOST || 'localhost'}:${PORT}`],
+    origin: [process.env.CORS_ORIGIN.split(',')],
     methods: ['POST', 'PUT'],
     credentials: true // enable set cookie
   }));
@@ -76,11 +76,6 @@ app.use('/data/orders', ordersRoutes);
 app.get('*', (req, res) => {
   res.sendFile(path.resolve(__dirname, '../build/index.html'));
 });
-
-app.use((req, res, next) => {
-});
-
-//app.use('/', express.static(path.join(__dirname, '../build')));
 
 connect()
   .then(() => {

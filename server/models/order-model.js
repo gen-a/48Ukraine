@@ -119,14 +119,6 @@ function addLeadingZeros(n, length = 10) {
   return '0'.repeat(length - n.toString().length) + n;
 }
 
-function maskCartNumber(){
-  const order = this;
-  if (order.cardNumber.search('*') === -1) {
-    order.cardNumber = '*'.repeat(order.cardNumber.length - 4) + order.cardNumber.substring(order.cardNumber.length - 4);
-  }
-  next();
-}
-
 
 function addOrderNumber(next){
   const order = this;
@@ -142,8 +134,6 @@ function addOrderNumber(next){
     next();
   }
 }
-
-orderSchema.pre('save', maskCartNumber);
 
 orderSchema.pre('save', addOrderNumber);
 

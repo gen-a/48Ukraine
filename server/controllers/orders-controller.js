@@ -123,15 +123,20 @@ exports.add = (req, res, next) => {
     info.count += parseInt(p.quantity, 10);
     info.total += parseInt(p.quantity, 10) * parseInt(p.price, 10);
   });
+
+  const cc = req.body.cardNumber;
+  const cardNumber = '*'.repeat(cc.length - 4) + cc.substring(cc.length - 4);
+
   const order = new Order({
     ...req.body,
+    cardNumber,
     _id: new mongoose.Types.ObjectId(),
     ...info,
     stages: { new: new Date().getTime(), payed: new Date().getTime() }
   });
   order.save()
     .then((result) => {
-      sendNewOrderLetter(req.body.email, result.number)
+      sendNewOrderLetter(req.body.email, result.number, req.body.firstName, req.body.lastName)
         .then(()=>{
           req.session.cart = {};
           res.status(200).json(response(result, 'order.info.theOrderHasBeenPlaced', 0));

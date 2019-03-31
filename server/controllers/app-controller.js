@@ -32,7 +32,8 @@ const mapListedSections = (data) => {
     'ihrashky': 'IconToys',
     'posud': 'IconDishes',
     'vse-dlya-tvaryn': 'IconGoodsForPets',
-    'tovary-dlya-domu': 'IconGoodsForHome'
+    'tovary-dlya-domu': 'IconGoodsForHome',
+    'nasinja': 'IconSeeds'
 
   };
 

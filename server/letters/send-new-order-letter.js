@@ -1,14 +1,19 @@
 const path = require('path');
 require('dotenv').config({ path: path.resolve(__dirname, '../../.env') });
 const { mail } = require('../services/mail');
+const { createHtml, htmlToText } = require('../lib/mail/generator');
 
-exports.sendNewOrderLetter = (email, number, visaExpirationDate) => {
-  //const date = new Date(new Date().setTime(visaExpirationDate)).toUTCString();
+const templatePath = path.resolve(__dirname, './template--new-order.html');
+const emailFrom = process.env.MAIL_FROM;
+const siteName = process.env.HTTP_NAME;
+
+exports.sendNewOrderLetter = (email, number, firstName, lastName) => {
+  const html = createHtml(templatePath, { emailFrom, siteName, firstName, lastName, number });
   return mail(
-    process.env.MAIL_FROM,
+    emailFrom,
     email,
-    'Your order has been placed',
-    `Your order number is ${number}`,
-    `<p>Your order number is ${number}</p>`
+    `Замовлення на сайті ${siteName}`,
+    htmlToText(html),
+    html
   );
 };
