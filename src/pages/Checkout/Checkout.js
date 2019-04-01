@@ -12,14 +12,6 @@ import { Redirect } from 'react-router-dom';
  * @type {object}
  */
 const propTypes = {
-  /** Call add flash message handler */
-  callAddFlashMessage: PropTypes.func.isRequired,
-  /** Show loader handler */
-  callShowLoader: PropTypes.func.isRequired,
-  /** Hide loader handler */
-  callHideLoader: PropTypes.func.isRequired,
-  /** Show toast handler */
-  callShowToast: PropTypes.func.isRequired,
   /** Match parameters */
   match: PropTypes.shape({
     params: PropTypes.shape({
@@ -41,10 +33,6 @@ const propTypes = {
       quantity: PropTypes.number,
     })
   ),
-  /** Number of products in the cart. */
-  count: PropTypes.number,
-  /** Total price of the cart. */
-  total: PropTypes.number,
 };
 /**
  * Default props of the component
@@ -52,8 +40,6 @@ const propTypes = {
  */
 const defaultProps = {
   products: [],
-  count: 0,
-  total: 0,
 };
 
 const Checkout = ({ products, locale }) => {
@@ -67,7 +53,7 @@ const Checkout = ({ products, locale }) => {
         title="Здійснення замовлення"
         description="Для здійснення замовлення, будьласка, заповніть всі обов'язкові поля та натисніть кнопку 'Замовити'."
       />
-      <CheckoutForm />
+      <CheckoutForm/>
     </>
   );
 };
@@ -80,7 +66,7 @@ const mapStateToProps = state => (
     locale: state.app.locale,
     products: state.cart.products,
     total: state.cart.total,
-    count: state.cart.count,
+    count: state.cart.count
   }
 );
 

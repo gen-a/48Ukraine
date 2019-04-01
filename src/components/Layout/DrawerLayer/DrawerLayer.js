@@ -15,6 +15,7 @@ import Drawer from '../../UI/Drawer';
 import Scrim from '../../Containers/Scrim';
 import { setOpenDrawer } from '../../../actions/app';
 import { setAuthenticatedUser } from '../../../actions/user';
+import SwipeDetect from '../../../utils/events/swipe-detect';
 
 /**
  * PropTypes of the component
@@ -39,29 +40,58 @@ const defaultProps = {
   isAuthenticated: false
 };
 
-const DrawerLayer = ({ callSetOpenDrawer, callSetAuthenticatedUser, isAuthenticated, openDrawer }) => (
-  <>
-  <Scrim id="DrawerLayer" onClick={() => callSetOpenDrawer('')} isVisible={openDrawer !== ''}/>
-  <Drawer position="left" depth={50} isOpen={openDrawer === 'menu'} header="Відділи">
-    <ScrollBox>
-      <div style={{ paddingRight: '16px' }}>
-        <DepartmentsNavigator/>
-      </div>
-    </ScrollBox>
-  </Drawer>
-  <Drawer position="right" depth={50} isOpen={openDrawer === 'user'} header="Дані користувача">
-    {isAuthenticated
-      ? <UserNavigator/>
-      : (
-        <DictionaryConnect
-          render={props => <Authentication {...props} onLogIn={e => callSetAuthenticatedUser(e)} />}
-        />
-      )
-    }
+const DrawerLayer = ({ callSetOpenDrawer, callSetAuthenticatedUser, isAuthenticated, openDrawer }) => {
 
-  </Drawer>
-  </>
-);
+  const leftDrawerSwipeDetect = new SwipeDetect();
+  leftDrawerSwipeDetect.onSwipe = (e) => {
+    if (e.direction === 'left') {
+      callSetOpenDrawer('');
+    }
+  };
+  const rightDrawerSwipeDetect = new SwipeDetect();
+  rightDrawerSwipeDetect.onSwipe = (e) => {
+    if (e.direction === 'right') {
+      callSetOpenDrawer('');
+    }
+  };
+
+  return (
+    <>
+      <Scrim id="DrawerLayer" onClick={() => callSetOpenDrawer('')} isVisible={openDrawer !== ''}/>
+      <div
+        onTouchStart={e => leftDrawerSwipeDetect.start(e.touches[0].clientX, e.touches[0].clientY)}
+        onTouchMove={e => leftDrawerSwipeDetect.move(e.touches[0].clientX, e.touches[0].clientY)}
+        onTouchEnd={e => leftDrawerSwipeDetect.end(e)}
+      >
+        <Drawer position="left" depth={50} isOpen={openDrawer === 'menu'} header="Відділи">
+          <ScrollBox>
+            <div style={{ paddingRight: '16px' }}>
+              <DepartmentsNavigator/>
+            </div>
+          </ScrollBox>
+        </Drawer>
+      </div>
+      <div
+        onTouchStart={e => rightDrawerSwipeDetect.start(e.touches[0].clientX, e.touches[0].clientY)}
+        onTouchMove={e => rightDrawerSwipeDetect.move(e.touches[0].clientX, e.touches[0].clientY)}
+        onTouchEnd={e => rightDrawerSwipeDetect.end(e)}
+      >
+        <Drawer position="right" depth={50} isOpen={openDrawer === 'user'} header="Дані користувача">
+          {isAuthenticated
+            ? <UserNavigator/>
+            : (
+              <DictionaryConnect
+                render={props => (
+                  <Authentication {...props} onLogIn={e => callSetAuthenticatedUser(e)}/>
+                )}
+              />
+            )
+          }
+        </Drawer>
+      </div>
+    </>
+  );
+};
 
 DrawerLayer.defaultProps = defaultProps;
 DrawerLayer.propTypes = propTypes;

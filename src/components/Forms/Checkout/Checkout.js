@@ -6,7 +6,7 @@
  */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Field, reduxForm, formValueSelector, change } from 'redux-form';
+import { Field, reduxForm, formValueSelector, change, reset } from 'redux-form';
 import { connect } from 'react-redux';
 import Cards from 'react-credit-cards';
 import 'react-credit-cards/lib/styles.scss';
@@ -174,21 +174,21 @@ class Checkout extends Component {
           </div>
           <div className="Forms__fields">
 
-          <p className="Forms__sectionInfo">Можна заповнювати латинськими літерами. Всі поля є обов'язкові</p>
+            <p className="Forms__sectionInfo">Можна заповнювати латинськими літерами. Всі поля є обов'язкові</p>
 
-          <div className="Forms__field xs-flex_100 md-flex_50 md-marginRight_50">
-            <Field name="email" type="email" component={RenderField} label="Електронна адреса"/>
+            <div className="Forms__field xs-flex_100 md-flex_50 md-marginRight_50">
+              <Field name="email" type="email" component={RenderField} label="Електронна адреса"/>
+            </div>
+            <div className="Forms__field xs-flex_100 md-flex_50">
+              <Field name="firstName" type="text" component={RenderField} label="Ім'я"/>
+            </div>
+            <div className="Forms__field xs-flex_100 md-flex_50">
+              <Field name="lastName" type="text" component={RenderField} label="Прізвище"/>
+            </div>
+            <div className="Forms__field xs-flex_100 md-flex_50 md-marginRight_50">
+              <Field name="phone" type="text" component={RenderField} label="Номер телефону"/>
+            </div>
           </div>
-          <div className="Forms__field xs-flex_100 md-flex_50">
-            <Field name="firstName" type="text" component={RenderField} label="Ім'я"/>
-          </div>
-          <div className="Forms__field xs-flex_100 md-flex_50">
-            <Field name="lastName" type="text" component={RenderField} label="Прізвище"/>
-          </div>
-          <div className="Forms__field xs-flex_100 md-flex_50 md-marginRight_50">
-            <Field name="phone" type="text" component={RenderField} label="Номер телефону"/>
-          </div>
-        </div>
         </div>
 
         <div className="Forms__fields Forms__fields_outlined">
@@ -329,10 +329,13 @@ const mapDispatchToProps = dispatch => (
     callCheckout: data => dispatch(checkout(data)),
     changeFieldValue: (field, value) => {
       dispatch(change('formCheckout', field, value))
-    }
+    },
+    callResetForm: () => dispatch(reset('formCheckout')),
   }
 );
 
 export default connect(mapStateToProps, mapDispatchToProps)(reduxForm({
-  form: 'formCheckout', validate
+  form: 'formCheckout',
+  validate,
+  enableReinitialize: true
 })(Checkout));

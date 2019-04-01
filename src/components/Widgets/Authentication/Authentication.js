@@ -94,7 +94,6 @@ class Authentication extends Component {
   }
 
 
-
   /**
    * Handle input email focus event
    */
@@ -373,6 +372,7 @@ class Authentication extends Component {
       }
     }), cb);
   }
+
   render() {
     const { fields: { email, password, showPassword, rememberMe }, formAction, isNew } = this.state;
     const { dictionary } = this.props;
@@ -458,6 +458,7 @@ class Authentication extends Component {
           )}
 
           {formAction === 'login' && (
+            <>
             <div className="Authentication__row">
               <Divider/>
               <Button
@@ -468,6 +469,8 @@ class Authentication extends Component {
                 }}
               />
               {password.busy && <CircularProgress/>}
+            </div>
+            <div className="Authentication__row">
               {!isNew && (
                 <div style={{ paddingTop: '5px' }}>
                   <Divider/>
@@ -479,6 +482,7 @@ class Authentication extends Component {
                 </div>
               )}
             </div>
+            </>
           )}
         </form>
 
