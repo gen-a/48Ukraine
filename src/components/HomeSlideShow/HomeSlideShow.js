@@ -39,7 +39,7 @@ const HomeSlideShow = ({ windowWidth, windowHeight }) => {
     'banner-step-fs-01-3.jpg',
     'banner-step-fs-01-4.jpg'
   ].map(src => (
-    <div id={src}>
+    <div id={src} key={src}>
       <img
         src={`/images/home-slide-show/${src}`}
         alt=""
@@ -53,7 +53,7 @@ const HomeSlideShow = ({ windowWidth, windowHeight }) => {
     'banner-step-sm-01-3.jpg',
     'banner-step-sm-01-4.jpg'
   ].map(src => (
-    <div id={src}>
+    <div id={src} key={src}>
       <img
         src={`/images/home-slide-show/${src}`}
         alt=""
