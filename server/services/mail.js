@@ -19,9 +19,9 @@ const transporter = nodemailer.createTransport({
 });
 
 // async..await is not allowed in global scope, must use a wrapper
-exports.mail = (from, to, subject, text, html) => {
+exports.mail = (from, to, subject, text, html, attachments = []) => {
   // send mail with defined transport object
-  return transporter.sendMail({ from, to, subject, text, html })
+  return transporter.sendMail({ from, to, subject, text, html, attachments })
     .then((info) => {
       if (NODE_ENV !== 'production') {
         console.log(`Preview URL: ${nodemailer.getTestMessageUrl(info)}`);

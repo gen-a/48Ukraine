@@ -33,54 +33,44 @@ const HomeSlideShow = ({ windowWidth, windowHeight }) => {
     ? { margin: '40px auto 60px auto' }
     : { maxWidth: '500px', margin: '40px auto 60px auto' };
 
+  const imagesFs = [
+    'banner-step-fs-01-1.jpg',
+    'banner-step-fs-01-2.jpg',
+    'banner-step-fs-01-3.jpg',
+    'banner-step-fs-01-4.jpg'
+  ].map(src => (
+    <div id={src}>
+      <img
+        src={`/images/home-slide-show/${src}`}
+        alt=""
+        style={imageStyle}
+      />
+    </div>
+  ));
+  const imagesSm = [
+    'banner-step-sm-01-1.jpg',
+    'banner-step-sm-01-2.jpg',
+    'banner-step-sm-01-3.jpg',
+    'banner-step-sm-01-4.jpg'
+  ].map(src => (
+    <div id={src}>
+      <img
+        src={`/images/home-slide-show/${src}`}
+        alt=""
+        style={imageStyle}
+      />
+    </div>
+  ));
+
+
   return (
     <div style={slideShowBoxStyle}>
       <ResponsiveSlideShow variant={slideShowVariant}>
-        <ResponsiveSlideShowGroup name="v" width={500} height={500}>
-          <div id="111">
-            <img
-              src="/images/home-slide-show/banner-facebook-flowers-624x624.jpg"
-              alt=""
-              style={imageStyle}
-            />
-          </div>
-          <div id="222">
-            <img
-              src="/images/home-slide-show/banner-facebook-free-st.niklas-624x624.jpg"
-              alt=""
-              style={imageStyle}
-            />
-          </div>
-          <div id="333">
-            <img
-              src="/images/home-slide-show/banner-facebook-free-caviar-624x624.jpg"
-              alt=""
-              style={imageStyle}
-            />
-          </div>
+        <ResponsiveSlideShowGroup name="v" width={700} height={700}>
+          {imagesSm}
         </ResponsiveSlideShowGroup>
-        <ResponsiveSlideShowGroup name="h" width={1364} height={300}>
-          <div id="111">
-            <img
-              src="/images/home-slide-show/file_2.jpg"
-              alt=""
-              style={imageStyle}
-            />
-          </div>
-          <div id="222">
-            <img
-              src="/images/home-slide-show/file_3.jpg"
-              alt=""
-              style={imageStyle}
-            />
-          </div>
-          <div id="333">
-            <img
-              src="/images/home-slide-show/file_4.jpg"
-              alt=""
-              style={imageStyle}
-            />
-          </div>
+        <ResponsiveSlideShowGroup name="h" width={1200} height={350}>
+          {imagesFs}
         </ResponsiveSlideShowGroup>
       </ResponsiveSlideShow>
     </div>

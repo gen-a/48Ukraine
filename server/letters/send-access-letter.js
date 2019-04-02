@@ -4,8 +4,8 @@ const { mail } = require('../services/mail');
 const { createHtml, htmlToText } = require('../lib/mail/generator');
 
 const templatePath = path.resolve(__dirname, './template--access.html');
-const emailFrom = process.env.MAIL_FROM;
-const siteName = process.env.HTTP_NAME;
+
+const { MAIL_FROM: emailFrom, HTTP_NAME: siteName } = process.env;
 
 exports.sendAccessLetter = (email, visa, visaExpirationDate) => {
   const time = new Date(new Date().setTime(visaExpirationDate)).toUTCString();
@@ -17,6 +17,11 @@ exports.sendAccessLetter = (email, visa, visaExpirationDate) => {
     email,
     `Відновлення доступу на сайт ${siteName}`,
     htmlToText(html),
-    html
+    html,
+    [{
+      filename: 'image.png',
+      path: path.resolve(__dirname, '../../public/images/48-ukraine-logo.png'),
+      cid: 'companyLogoImage'
+    }]
   );
 };
