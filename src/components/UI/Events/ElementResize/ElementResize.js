@@ -7,22 +7,13 @@ import React, { Component, createRef } from 'react';
 import PropTypes from 'prop-types';
 import uuidv4 from 'uuid/v4';
 
-import './ElementResize.scss';
-
 /**
  * PropTypes of the component
  * @type {object}
  */
 const propTypes = {
   /** onResize element handler. */
-  onResize: PropTypes.func,
-};
-/**
- * Default props of the component
- * @type {object}
- */
-const defaultProps = {
-  onResize: console.log,
+  onResize: PropTypes.func.isRequired,
 };
 
 /**
@@ -37,21 +28,24 @@ class ElementResize extends Component {
     this.timeout = 0;
   }
 
-  onResize(){
-    const iframe = this.iframe.current;
-    clearTimeout(this.timeout);
-    this.timeout = setTimeout(() => {
-      this.props.onResize({ width: iframe.offsetWidth, height: iframe.offsetHeight });
-    }, 30);
-  }
-
-  componentDidMount(){
-    this.iframe.current.contentWindow.addEventListener('resize', this.onResize);
+  componentDidMount() {
+    const { current: { contentWindow } } = this.iframe;
+    contentWindow.addEventListener('resize', this.onResize);
     this.onResize();
   }
 
-  componentWillUnmount(){
-    this.iframe.current.contentWindow.removeEventListener('resize', this.onResize);
+  componentWillUnmount() {
+    const { current: { contentWindow } } = this.iframe;
+    contentWindow.removeEventListener('resize', this.onResize);
+  }
+
+  onResize() {
+    const { current: target } = this.iframe;
+    const { onResize } = this.props;
+    clearTimeout(this.timeout);
+    this.timeout = setTimeout(() => {
+      onResize({ width: target.offsetWidth, height: target.offsetHeight });
+    }, 30);
   }
 
   render() {
@@ -67,22 +61,10 @@ class ElementResize extends Component {
       display: 'block',
       overflow: 'hidden',
     };
-    return (
-      <div className="ElementResize">
-        <iframe
-          style={style}
-          height="100%"
-          width="100%"
-          seamless
-          ref={this.iframe}
-          title={uuidv4()}
-        />
-      </div>
-    );
-  };
+    return <iframe style={style} height="100%" width="100%" seamless ref={this.iframe} title={uuidv4()}/>;
+  }
 }
 
 ElementResize.propTypes = propTypes;
-ElementResize.defaultProps = defaultProps;
 
 export default ElementResize;

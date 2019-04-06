@@ -246,7 +246,6 @@ class ScrollBox extends Component {
         <div
           className="ScrollBox__box"
           onWheel={(e) => {
-            e.preventDefault();
             this.onWheel(e.deltaY);
           }}
           onTouchStart={() => this.onTouchStart()}

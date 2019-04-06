@@ -4,7 +4,7 @@
  * { start:{ x, y, timer}, current:{ x, y, timer}}
  * @module MouseMotion
  */
-import React, { Component } from 'react';
+import { Component } from 'react';
 import PropTypes from 'prop-types';
 
 /**
@@ -12,23 +12,14 @@ import PropTypes from 'prop-types';
  * @type {object}
  */
 const propTypes = {
+  /** Target element for swipe detection. */
+  target: PropTypes.shape({ current: PropTypes.instanceOf(Element) }).isRequired,
   /** On move function to dispatch. */
-  onMove: PropTypes.func,
+  onMove: PropTypes.func.isRequired,
   /** On start function to dispatch. */
-  onStart: PropTypes.func,
+  onStart: PropTypes.func.isRequired,
   /** On end function to dispatch. */
-  onEnd: PropTypes.func,
-  /** Children element to be rendered inside the component. */
-  children: PropTypes.node.isRequired,
-};
-/**
- * Default settings for move detection.
- * @type {object}
- */
-const defaultProps = {
-  onMove: console.log,
-  onStart: console.log,
-  onEnd: console.log
+  onEnd: PropTypes.func.isRequired,
 };
 
 /**
@@ -44,7 +35,16 @@ class MouseMotion extends Component {
     super(props);
     this.onMove = this.onMove.bind(this);
     this.onEnd = this.onEnd.bind(this);
+    this.onStart = this.onStart.bind(this);
     this.startPoint = {};
+  }
+
+  /**
+   * Configure motion
+   */
+  componentDidMount() {
+    const { target: { current: element } } = this.props;
+    element.addEventListener('mousedown', this.onStart);
   }
 
   /**
@@ -57,13 +57,10 @@ class MouseMotion extends Component {
       y: e.clientY,
       x: e.clientX,
     };
-
     const { onStart } = this.props;
     onStart({ start: this.startPoint, current: this.startPoint });
-
     window.addEventListener('mousemove', this.onMove, false);
     window.addEventListener('mouseup', this.onEnd, false);
-
   }
 
   /**
@@ -87,10 +84,8 @@ class MouseMotion extends Component {
    * @param e {Event}
    */
   onEnd( e ) {
-
     window.removeEventListener('mousemove', this.onMove);
     window.removeEventListener('mouseup', this.onEnd);
-
     const { onEnd } = this.props;
     onEnd({
       start: this.startPoint,
@@ -102,28 +97,11 @@ class MouseMotion extends Component {
     });
   }
 
-  /**
-   * Render component
-   * @returns {Element}
-   */
-
   render() {
-    const { children } = this.props;
-    return (
-      <div
-        style={{ width: 'fit-content', height: 'fit-content' }}
-        onMouseDown={(e) => {
-          e.preventDefault();
-          this.onStart({ ...e });
-        }}
-      >
-        {children}
-      </div>
-    );
+    return null;
   }
 }
 
 MouseMotion.propTypes = propTypes;
-MouseMotion.defaultProps = defaultProps;
 
 export default MouseMotion;

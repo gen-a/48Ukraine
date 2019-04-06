@@ -9,7 +9,7 @@ import AspectRatioBox from '../AspectRatioBox/AspectRatioBox';
 import { uid } from 'react-uid';
 import Image from '../FlexibleImage/FlexibleImage';
 import Ripple from '../Ripple';
-import SwipeDetect from '../../../utils/events/swipe-detect';
+import SwipeDetect from '../../../utils/events/swipe';
 
 import './ImageViewer.scss';
 

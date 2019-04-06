@@ -44,4 +44,3 @@ export const get = (url, data, cb) => {
 export const put = (url, data, cb) => {
   sendRequest('put', url, data, cb);
 };
-

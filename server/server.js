@@ -35,7 +35,8 @@ if(process.env.CORS_ORIGIN.length > 0){
     credentials: true // enable set cookie
   }));
 }
-
+/** Turn Off X-Powered-By header*/
+app.disable('x-powered-by');
 app.use(morgan('combined'));
 app.use(flash());
 
@@ -51,7 +52,7 @@ app.use(session({
   saveUninitialized: false,
   cookie: {
     secure: false,
-    httpOnly: false
+    httpOnly: true
   }
 }));
 app.use(passport.initialize());

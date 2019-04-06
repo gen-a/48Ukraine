@@ -7,9 +7,9 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ProductCard from '../ProductCard';
 import { connect } from 'react-redux';
-import { get } from '../../services/ajax';
+import { get } from '../../services/data-request-cache';
 import { localizePath } from '../../localization/index';
-import { replaceInRoute } from '../../utils/helpers';
+import { replaceInRoute } from '../../utils/route';
 import { NavLink } from 'react-router-dom';
 import Slider from '../UI/Slider';
 
@@ -50,16 +50,26 @@ class ProductsPromo extends Component {
     this.state = {
       products: []
     };
+    this.setRecords = this.setRecords.bind(this);
   }
 
   componentDidMount() {
     const { url } = this.props;
-    get(url, {}, ({ data: { records } }) => {
-      this.setState((prevSate) => ({
-        ...prevSate,
-        products: records
-      }));
-    });
+    this.dataRequest = get(url, {});
+    this.dataRequest.promise()
+      .then(this.setRecords)
+      .catch();
+  }
+
+  componentWillUnmount() {
+    this.dataRequest.cancel();
+  }
+
+  setRecords({ data: { records } }) {
+    this.setState(prevSate => ({
+      ...prevSate,
+      products: records
+    }));
   }
 
   render() {
@@ -70,7 +80,7 @@ class ProductsPromo extends Component {
     const { inCartQuantities, locale, title, more } = this.props;
     return (
       <>
-      {title !== "" && <h2 className="ProductsPromo__title">{title}</h2>}
+      {title !== '' && <h2 className="ProductsPromo__title">{title}</h2>}
       <div className="ProductsPromo__entries">
         <Slider>
           {products.map(product => (

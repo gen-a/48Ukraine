@@ -6,7 +6,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import WindowResizeDetect from '../../UI/Detect/WindowResize/WindowResize';
+import WindowResizeDetect from '../../UI/Events/WindowResize';
 import { setWindowSize } from '../../../actions/app';
 import { mediaPrefixes } from '../../../_settings';
 

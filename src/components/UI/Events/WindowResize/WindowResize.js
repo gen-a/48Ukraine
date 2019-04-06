@@ -81,6 +81,11 @@ class WindowResize extends Component {
     window.removeEventListener('resize', this.onResize, false);
   }
 
+  detectTouchInWindow() {
+    return (('ontouchstart' in window)
+      || (navigator.MaxTouchPoints > 0)
+      || (navigator.msMaxTouchPoints > 0));
+  }
   /**
    * Call onResize prop with delay
    */
@@ -92,7 +97,8 @@ class WindowResize extends Component {
         mediaPrefix: this.getMediaPrefix(),
         width: window.innerWidth,
         height: window.innerHeight,
-        devicePixelRatio: window.devicePixelRatio
+        devicePixelRatio: window.devicePixelRatio,
+        isTouchEnabled: this.detectTouchInWindow()
       });
     }, delay);
   }

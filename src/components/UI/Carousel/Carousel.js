@@ -2,15 +2,15 @@
  * Custom scroll for overflowed contents
  * @module Carousel
  */
-import React, { Component } from 'react';
+import React, { Component, createRef } from 'react';
 import PropTypes from 'prop-types';
-import ElementResize from '../Detect/ElementResize';
+import ElementResize from '../Events/ElementResize';
 
 import CarouselButton from './CarouselButton';
 
 import styles from './Carousel.scss';
-import MouseMotion from '../Detect/MouseMotion';
-import TouchMotion from '../Detect/TouchMotion';
+import MouseMotion from '../Events/MouseMotion';
+import TouchMotion from '../Events/TouchMotion';
 
 /**
  * PropTypes of the component
@@ -74,6 +74,7 @@ class Carousel extends Component {
     this.touchMotionInProgress = false;
     this.startX = 0;
     this.buttonWidth = parseInt(styles.buttonWidth, 10);
+    this.frameRef = createRef();
   }
 
 
@@ -182,7 +183,7 @@ class Carousel extends Component {
   onPageDown() {
     const { container: { translateX }, frame: { width } } = this.state;
     const { slotWidth } = this.props;
-    const targetX = translateX + (width - (slotWidth - translateX % slotWidth));
+    const targetX = Math.min( 0, translateX + Math.floor(width / slotWidth) * slotWidth );
     this.setState(prevState => ({
       ...prevState,
       container: {
@@ -220,7 +221,7 @@ class Carousel extends Component {
       case 39:
         this.onPageUp();
         break;
-        default:
+      default:
     }
   }
 
@@ -283,7 +284,7 @@ class Carousel extends Component {
   render() {
     const { slotWidth, slotHeight, children } = this.props;
     const { container, frame, scroll } = this.state;
-    if(children.length === 0){
+    if (children.length === 0) {
       return null;
     }
 
@@ -301,41 +302,45 @@ class Carousel extends Component {
         className="Carousel"
         tabIndex="0"
         style={{ height: `${slotHeight}px` }}
-        onKeyDown={(e) => this.onKeyDown(e)}
+        onKeyDown={e => this.onKeyDown(e)}
       >
         <ElementResize onResize={e => this.onElementResize(e)}/>
+
+        <div
+          className="Carousel__frame"
+          style={frameStyle}
+          ref={this.frameRef}
+        >
+          <div
+            className="Carousel__container"
+            style={containerStyle}
+          >
+            {children.map((element, index) => (
+              <div
+                className="Carousel__slot"
+                key={element.props.id}
+                style={{ width: `${slotWidth}px`, left: `${slotWidth * index}px` }}
+              >
+                {element}
+              </div>
+            ))}
+          </div>
+
+        </div>
+
+        <MouseMotion
+          target={this.frameRef}
+          onStart={e => this.onStartMouseMotion(e)}
+          onMove={e => this.onMouseMotion(e)}
+          onEnd={e => this.onEndMotion(e)}
+        />
+
         <TouchMotion
+          target={this.frameRef}
           onStart={e => this.onStartTouchMotion(e)}
           onMove={e => this.onTouchMotion(e)}
           onEnd={e => this.onEndTouchMotion(e)}
-        >
-          <MouseMotion
-            onStart={e => this.onStartMouseMotion(e)}
-            onMove={e => this.onMouseMotion(e)}
-            onEnd={e => this.onEndMotion(e)}
-          >
-            <div
-              className="Carousel__frame"
-              style={frameStyle}
-            >
-              <div
-                className="Carousel__container"
-                style={containerStyle}
-              >
-                {children.map((element, index) => (
-                  <div
-                    className="Carousel__slot"
-                    key={element.props.id}
-                    style={{ width: `${slotWidth}px`, left: `${slotWidth * index}px` }}
-                  >
-                    {element}
-                  </div>
-                ))}
-              </div>
-
-            </div>
-          </MouseMotion>
-        </TouchMotion>
+        />
 
         <CarouselButton
           disabled={container.translateX === scroll.max}
@@ -352,15 +357,6 @@ class Carousel extends Component {
           color={styles.buttonColor}
           type="right"
         />
-
-{/*        <button className={leftButtonStyle} onClick={() => this.onPageDown()}>
-          <CarouselIconChevronLeft viewBox="0 0 64 64" width="48px" height="48px"/>
-        </button>
-
-        <button className={rightButtonStyle} onClick={() => this.onPageUp()}>
-          <CarouselIconChevronLeft viewBox="0 0 64 64" width="48px" height="48px"/>
-        </button>*/}
-
       </div>
     );
   }

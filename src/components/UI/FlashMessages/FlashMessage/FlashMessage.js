@@ -7,7 +7,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import IconClose from '../../../Svg/IconClose';
 import Icon from '../../Icon/Icon';
-import SwipeDetect from '../../../../utils/events/swipe-detect';
+import SwipeDetect from '../../../../utils/events/swipe';
 
 import './FlashMessage.scss';
 

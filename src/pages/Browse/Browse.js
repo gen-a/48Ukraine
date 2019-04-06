@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import queryString from 'query-string';
 import { URL_FETCH_PRODUCTS } from '../../config/api';
 import ProductsList from '../../components/ProductsList';
-import { buildUrl } from '../../utils/helpers';
+import { buildUrl } from '../../utils/route';
 import { localizePath } from '../../localization/index';
 import InfinityScroll from '../../components/InfinityScroll';
 import PageTitle from '../../components/PageTitle';

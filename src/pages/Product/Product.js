@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import update from 'react-addons-update';
 import { URL_FETCH_PRODUCT } from '../../config/api';
-import { get } from '../../services/ajax';
+import { get } from '../../services/data-request-cache';
 import ProductLeaflet from '../../components/ProductLeaflet';
 
 /**
@@ -31,14 +31,6 @@ const propTypes = {
   /** Media query prefix. */
   mediaPrefix: PropTypes.string.isRequired,
 };
-/**
- * Default props of the component
- * @type {object}
- */
-const defaultProps = {
-
-};
-
 
 class Product extends Component {
   constructor(props) {
@@ -46,12 +38,20 @@ class Product extends Component {
     this.state = {
       product: {}
     };
+    this.onLoadProduct = this.onLoadProduct.bind(this);
   }
 
   componentDidMount() {
     const { callShowLoader, match: { params: { id } } } = this.props;
-    get(URL_FETCH_PRODUCT, { id }, this.onLoadProduct.bind(this));
+    this.dataRequest = get(URL_FETCH_PRODUCT, {id});
+    this.dataRequest.promise()
+      .then(this.onLoadProduct)
+      .catch();
     callShowLoader();
+  }
+
+  componentWillUnmount() {
+    this.dataRequest.cancel();
   }
 
   onLoadProduct({ error, message, data }) {
@@ -83,7 +83,6 @@ class Product extends Component {
 }
 
 Product.propTypes = propTypes;
-Product.defaultProps = defaultProps;
 
 const mapStateToProps = state => (
   {

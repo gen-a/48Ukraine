@@ -19,16 +19,34 @@ export const replaceInRoute = (route, data) => {
  */
 export const clearPlaceholdersInRoute = (route, keep) => {
   let result = route;
-  const keys = route.split('/').filter(m => m.substr(0,1) === ':').map(m => m.substr(1));
-  if(keys.length > 0){
+  const keys = route.split('/').filter(m => m.substr(0, 1) === ':').map(m => m.substr(1));
+  if (keys.length > 0) {
     keys.forEach((key) => {
-      if(!keep.includes(key)){
+      if (!keep.includes(key)) {
         result = result.replace(new RegExp(`/${key}/:${key}`), '');
         result = result.replace(new RegExp(`/:${key}`), '');
       }
     });
   }
   return result;
+};
+
+/**
+ * Convert search object to string
+ * @param search {object}
+ * @returns {String}
+ */
+export const searchToString = (search) => {
+  const keys = Object.keys(search);
+  keys.sort();
+  if (keys.length > 0) {
+    const result = [];
+    Object.keys(search).forEach((key) => {
+      result.push(`${key}=${encodeURIComponent(search[key])}`);
+    });
+    return `?${result.join('&')}`;
+  }
+  return '';
 };
 
 /**
@@ -40,29 +58,7 @@ export const clearPlaceholdersInRoute = (route, keep) => {
  */
 export const buildUrl = (route, data, search = {}) => {
   const base = clearPlaceholdersInRoute(replaceInRoute(route, data), Object.keys(data));
-  if(Object.keys(search).length > 0){
-    const query = [];
-    Object.keys(search).forEach( (key) =>{
-      query.push(`${key}=${encodeURIComponent(search[key])}`);
-    });
-    return `${base}?${query.join('&')}`;
-  }
-  return base;
+  return `${base}${searchToString(search)}`;
 };
 
-/**
- * Merge objects immutable
- * @param state {object}
- * @param data {object}
- * @returns {object}
- */
-export const updateObj = (state, data) => {
-  if (typeof (data) !== 'object') {
-    return data;
-  }
-  const o = { ...state };
-  Object.keys(data).forEach((k) => {
-    o[k] = updateObj(o[k], data[k]);
-  });
-  return o;
-};
+

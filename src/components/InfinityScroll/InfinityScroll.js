@@ -5,7 +5,7 @@
  */
 import { Component } from 'react';
 import PropTypes from 'prop-types';
-import { get } from '../../services/ajax';
+import { get } from '../../services/data-request-cache';
 import { connect } from 'react-redux';
 import { addFlashMessage, showLoader, hideLoader, showToast } from '../../actions/app';
 
@@ -64,7 +64,8 @@ class InfinityScroll extends Component {
     this.isComplete = false;
     this.isBusy = false;
     this.scroll = 0;
-    this.handleScroll = this.handleScroll.bind(this)
+    this.handleScroll = this.handleScroll.bind(this);
+    this.onLoad = this.onLoad.bind(this);
   }
 
   componentDidMount() {
@@ -73,6 +74,7 @@ class InfinityScroll extends Component {
   }
 
   componentWillUnmount() {
+    this.dataRequest.cancel();
     window.removeEventListener('scroll', this.handleScroll);
   }
 
@@ -85,28 +87,34 @@ class InfinityScroll extends Component {
     }
   }
 
+  onLoad({error, message, data}){
+    const { currentPage, callHideLoader, callAddFlashMessage } = this.props;
+    const { i } = this.state;
+    callHideLoader();
+    if (error === 0) {
+      this.isComplete = currentPage + i === data.pagesTotal;
+      this.setState(prevState => ({
+        ...prevState,
+        records: [...prevState.records, ...data.records],
+        pagesTotal: data.pagesTotal,
+        count: data.count,
+        i: prevState.i + 1
+      }));
+    } else {
+      callAddFlashMessage(message, 'server response', 'error');
+    }
+    this.isBusy = false;
+  }
+
   fetchNext() {
-    const { url, params, currentPage, callShowLoader, callHideLoader, callAddFlashMessage } = this.props;
+    const { url, params, currentPage, callShowLoader } = this.props;
     const { i } = this.state;
     this.isBusy = true;
     callShowLoader();
-    get(url, { ...params, page: currentPage + i }, (response) => {
-      callHideLoader();
-      const { error, message, data } = response;
-      if (error === 0) {
-        this.isComplete = currentPage + i === data.pagesTotal;
-        this.setState(prevState => ({
-          ...prevState,
-          records: [...prevState.records, ...data.records],
-          pagesTotal: data.pagesTotal,
-          count: data.count,
-          i: prevState.i + 1
-        }));
-      } else {
-        callAddFlashMessage(message, 'server response', 'error');
-      }
-      this.isBusy = false;
-    });
+    this.dataRequest = get(url, { ...params, page: currentPage + i });
+    this.dataRequest.promise()
+      .then(this.onLoad)
+      .catch();
   }
 
   render() {

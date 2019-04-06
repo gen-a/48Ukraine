@@ -3,12 +3,12 @@
  * Placeholder fot the description
  * @module SlideShow
  */
-import React, { Component } from 'react';
+import React, { Component, createRef } from 'react';
 import PropTypes from 'prop-types';
-import SwipeDetect from '../../../utils/events/swipe-detect';
 import IconKeysLeftRight from '../../Svg/IconKeysLeftRight';
 import './SlideShow.scss';
 import Slide from './Slide/Slide';
+import TouchSwipe from '../Events/TouchSwipe';
 
 /**
  * PropTypes of the component
@@ -50,23 +50,8 @@ class SlideShow extends Component {
     this.next = this.next.bind(this);
     this.prev = this.prev.bind(this);
     this.play = this.play.bind(this);
-    this.swipeDetect = new SwipeDetect();
-    this.swipeDetect.onSwipe = (e) => {
-      if (e.direction === 'right') {
-        this.stop();
-        this.prev();
-      }
-      if (e.direction === 'left') {
-        this.stop();
-        this.next();
-      }
-    };
-
+    this.swipeTarget = createRef();
   }
-
-
-
-
 
 
   /**
@@ -124,11 +109,11 @@ class SlideShow extends Component {
   /**
    * Set time out of inactivity
    */
-  setOnInactivityPlay(){
+  setOnInactivityPlay() {
     clearTimeout(this.stopTimeout);
     const { autoPlay, inactivityTimeout } = this.props;
-    if(autoPlay){
-      this.stopTimeout = setTimeout( ()=>this.play(), inactivityTimeout );
+    if (autoPlay) {
+      this.stopTimeout = setTimeout(() => this.play(), inactivityTimeout);
     }
   }
 
@@ -182,9 +167,7 @@ class SlideShow extends Component {
           onClick={() => this.onSlidesClick()}
           onKeyDown={(e) => this.onKeyDown(e)}
 
-          onTouchStart={e => this.swipeDetect.start(e.touches[0].clientX, e.touches[0].clientY)}
-          onTouchMove={e => this.swipeDetect.move(e.touches[0].clientX, e.touches[0].clientY)}
-          onTouchEnd={e => this.swipeDetect.end(e)}
+          ref={this.swipeTarget}
         >
           <div className="SlideShow__container">
             {children.map((slide, index) => <Slide key={slide.props.id} isCurrent={current === index}>{slide}</Slide>)}
@@ -213,6 +196,19 @@ class SlideShow extends Component {
             />
           ))}
         </div>
+        <TouchSwipe
+          target={this.swipeTarget}
+          onSwipe={(e) => {
+            if (e.direction === 'right') {
+              this.stop();
+              this.prev();
+            }
+            if (e.direction === 'left') {
+              this.stop();
+              this.next();
+            }
+          }}
+        />
       </div>
     );
   }

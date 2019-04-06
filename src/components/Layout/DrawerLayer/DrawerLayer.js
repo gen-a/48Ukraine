@@ -15,7 +15,7 @@ import Drawer from '../../UI/Drawer';
 import Scrim from '../../Containers/Scrim';
 import { setOpenDrawer } from '../../../actions/app';
 import { setAuthenticatedUser } from '../../../actions/user';
-import SwipeDetect from '../../../utils/events/swipe-detect';
+import SwipeDetect from '../../../utils/events/swipe';
 
 /**
  * PropTypes of the component

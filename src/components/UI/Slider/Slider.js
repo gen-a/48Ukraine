@@ -3,11 +3,12 @@
  * Placeholder fot the description
  * @module Slider
  */
-import React, { useState } from 'react';
+import React, { createRef, Component } from 'react';
 import PropTypes from 'prop-types';
 import ChevronLeft from '../../Svg/ChevronLeft';
 import styles from './Slider.scss';
-import SwipeDetect from '../../../utils/events/swipe-detect';
+import ElementResize from '../Events/ElementResize';
+import TouchSwipe from '../Events/TouchSwipe';
 
 /**
  * PropTypes of the component
@@ -21,80 +22,84 @@ const propTypes = {
 /**
  * General component description in JSDoc format. Markdown is *supported*.
  */
-const Slider = ({ children }) => {
-  const [current, setCurrent] = useState(0);
+class Slider extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      max: 0,
+      current: 0,
+      slotWidth: parseInt(styles.slotWidth, 10),
+    };
+    this.viewer = createRef();
+  }
 
-  const transform = `translateX(-${current * parseInt(styles.slotWidth, 10)}px)`;
-  const max = children.length - parseInt(styles.slotsInViewer, 10);
+  componentDidMount() {
+    this.setIitialState();
+  }
+  onElementResize(){
+    this.setIitialState();
 
-  const swipeDetect = new SwipeDetect();
-  swipeDetect.onSwipe = (e) => {
+  }
+  setIitialState() {
+    const { children } = this.props;
+    const { slotWidth } = this.state;
+    const { current: { offsetWidth: boxWidth } } = this.viewer;
+    const max = children.length - Math.floor(boxWidth / slotWidth);
+    this.setState({ max, boxWidth });
+  }
+
+
+  onSwipe(e) {
     if (e.direction === 'right') {
-      setCurrent(Math.max(current - 1, 0));
+      this.flip(-1);
     }
     if (e.direction === 'left') {
-      setCurrent(Math.min(current + 1, max));
+      this.flip(1);
     }
-  };
+  }
 
-  const goSlideByWheel = (e) => {
-    if (e.deltaY < 0) {
-      setCurrent(Math.max(current - 1, 0));
-    } else {
-      setCurrent(Math.min(current + 1, max));
-    }
-  };
+  flip(direction) {
+    const { current, max } = this.state;
+    this.setState({
+      current: direction > 0 ? Math.min(current + 1, max) : Math.max(current - 1, 0)
+    });
+  }
 
-  return (
+  render() {
+    const { children } = this.props;
+    const { current, slotWidth, max, boxWidth } = this.state;
+    const x = Math.min(children.length * slotWidth - boxWidth, current * slotWidth);
+    const transform = `translateX(-${x}px)`;
 
-    <div
-      className="Slider"
-      onWheel={(e) => {
-        e.stopPropagation();
-        e.preventDefault();
-        goSlideByWheel(e);
-      }}
-    >
-      <button
-        className="Slider__button"
-        onClick={() => {
-          setCurrent(Math.max(current - 1, 0));
-        }}
-        disabled={current === 0}
-      >
-        <ChevronLeft/>
-      </button>
-
+    return (
       <div
-        className="Slider__viewer"
-
-        onTouchStart={e => swipeDetect.start(e.touches[0].clientX, e.touches[0].clientY)}
-        onTouchMove={e => swipeDetect.move(e.touches[0].clientX, e.touches[0].clientY)}
-        onTouchEnd={e => swipeDetect.end(e)}
-
+        className="Slider"
       >
-        <div className="Slider__slots" style={{ transform }}>
-          {children.map(c => {
-            return (
-              <div className="Slider__slot" key={c.props.id}>{c}</div>
-            );
-          })}
+        <button className="Slider__button" onClick={() => this.flip(-1)} disabled={current === 0}>
+          <ChevronLeft/>
+        </button>
+
+        <div
+          className="Slider__viewer"
+          ref={this.viewer}
+        >
+          <div className="Slider__slots" style={{ transform }}>
+            {children.map((c) => {
+              return (
+                <div className="Slider__slot" key={c.props.id}>{c}</div>
+              );
+            })}
+            <ElementResize onResize={e => this.onElementResize(e)}/>
+          </div>
         </div>
+        <button className="Slider__button Slider__button_right" onClick={() => this.flip(1)} disabled={current === max}>
+          <ChevronLeft/>
+        </button>
+        <TouchSwipe target={this.viewer} onSwipe={(e) => this.onSwipe(e)}/>
       </div>
-
-      <button
-        className="Slider__button Slider__button_right"
-        onClick={() => {
-          setCurrent(Math.min(current + 1, max));
-        }}
-        disabled={current === max}
-      >
-        <ChevronLeft/>
-      </button>
-    </div>
-
-  );
-};
+    );
+  }
+}
 
 Slider.propTypes = propTypes;
 

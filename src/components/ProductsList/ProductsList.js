@@ -7,7 +7,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ProductCard from '../ProductCard';
 import Pagination from '../UI/Pagination';
-import { replaceInRoute } from '../../utils/helpers';
+import { replaceInRoute } from '../../utils/route';
 
 import './ProductsList.scss';
 

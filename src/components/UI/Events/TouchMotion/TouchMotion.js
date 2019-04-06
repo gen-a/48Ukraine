@@ -4,7 +4,7 @@
  * {points, timer, pointerType}
  * @module TouchMotion
  */
-import React, { Component } from 'react';
+import { Component } from 'react';
 import PropTypes from 'prop-types';
 
 /**
@@ -12,23 +12,14 @@ import PropTypes from 'prop-types';
  * @type {object}
  */
 const propTypes = {
+  /** Target element for swipe detection. */
+  target: PropTypes.shape({ current: PropTypes.instanceOf(Element) }).isRequired,
   /** On move function to dispatch. */
-  onMove: PropTypes.func,
+  onMove: PropTypes.func.isRequired,
   /** On start function to dispatch. */
-  onStart: PropTypes.func,
+  onStart: PropTypes.func.isRequired,
   /** On end function to dispatch. */
-  onEnd: PropTypes.func,
-  /** Children elemEnt to be rendered inside the component. */
-  children: PropTypes.element.isRequired,
-};
-/**
- * Default settings for move detection.
- * @type {object}
- */
-const defaultProps = {
-  onMove: console.log,
-  onStart: console.log,
-  onEnd: console.log,
+  onEnd: PropTypes.func.isRequired,
 };
 
 /**
@@ -38,7 +29,7 @@ const defaultProps = {
 class TouchMotion extends Component {
   /**
    * Build object of motion data
-   * @param touches {Array} - Array of current touches
+   * @param touches {TouchList} - Array of current touches
    * @returns {{timer: number, pointerType: (string|*), points}}
    */
   static getDataObject(touches) {
@@ -58,42 +49,59 @@ class TouchMotion extends Component {
    */
   constructor(props) {
     super(props);
-    this.onTouchEnd = this.onTouchEnd.bind(this);
+    this.touchstart = this.touchstart.bind(this);
+    this.touchmove = this.touchmove.bind(this);
+    this.touchend = this.touchend.bind(this);
     this.lastData = null;
   }
 
   /**
-   * Start detect motion if touches length array is 1
-   * @param touches {Array}
+   * Configure motion
    */
-  onTouchStart(touches) {
+  componentDidMount() {
+    this.setListeners('addEventListener');
+  }
+
+  /**
+   * Touch start handler
+   * @param touches {TouchList}
+   */
+  touchstart({ touches }) {
     const { onStart } = this.props;
     onStart(this.storeData(TouchMotion.getDataObject(touches)));
-  }
+  };
 
   /**
-   * End or start detect motion depending on number of the touches
-   * @param touches {Array}
+   * Touch move handler
+   * @param touches {TouchList}
    */
-  onTouchEnd(touches) {
-    const { onEnd } = this.props;
-    onEnd({ ...this.lastData, timer: new Date().getTime() });
-  }
-
-  /**
-   * Collect on move touch data
-   * @param touches {Array}
-   */
-  onTouchMove(touches) {
+  touchmove({ touches }) {
     const { onMove } = this.props;
     onMove(this.storeData(TouchMotion.getDataObject(touches)));
+  };
+
+  /**
+   * Touch end handler
+   */
+  touchend() {
+    const { onEnd } = this.props;
+    onEnd({ ...this.lastData, timer: new Date().getTime() });
+  };
+
+  /**
+   * Add or remove event listeners
+   * @param action {string} - addEventListener or removeEventListener
+   */
+  setListeners(action) {
+    const { target: { current: element } } = this.props;
+    ['touchstart', 'touchmove', 'touchend'].forEach(key => element[action](key, this[key]));
   }
 
   /**
    * @param data
    * @returns {*}
    */
-  storeData(data){
+  storeData(data) {
     this.lastData = data;
     return data;
   }
@@ -103,21 +111,10 @@ class TouchMotion extends Component {
    * @returns {Element}
    */
   render() {
-    const { children } = this.props;
-    return (
-      <div
-        style={{ width: 'fit-content', height: 'fit-content' }}
-        onTouchStart={e => this.onTouchStart(e.touches)}
-        onTouchEnd={e => this.onTouchEnd(e.touches)}
-        onTouchMove={e => this.onTouchMove(e.touches)}
-      >
-        {children}
-      </div>
-    );
+    return null;
   }
 }
 
 TouchMotion.propTypes = propTypes;
-TouchMotion.defaultProps = defaultProps;
 
 export default TouchMotion;
