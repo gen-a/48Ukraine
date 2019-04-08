@@ -1,4 +1,3 @@
-const config = require('../../config');
 const request = require('supertest');
 const axios = require('axios');
 const { expect } = require('chai');
@@ -7,7 +6,9 @@ const mongoose = require('mongoose');
 const { authenticatedRequest } = require('../authenticated-request');
 const user = require('../user');
 const predict = require('../predict');
+const { exitIfNotTest }  = require('../../lib/env-params');
 
+exitIfNotTest();
 mongoose.set('useCreateIndex', true);
 
 const { mapListedProducts } = require('../../controllers/products-controller');

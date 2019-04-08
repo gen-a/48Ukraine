@@ -5,13 +5,15 @@ const app = require('../../server');
 const User = require('../../models/user-model');
 const predict = require('../predict');
 const { testBodyRequired } = require('../test-required');
+const { exitIfNotTest } = require('../../lib/env-params');
 
+exitIfNotTest();
 mongoose.set('useCreateIndex', true);
 
 const { expect } = chai;
 const validEmail = 'johnsmith@gmail.com';
 
-describe('/routes/auth-routes.js API Integration Tests', function () {
+describe('/routes/auth-routes.js API Integration Tests', function() {
 
   this.timeout(5000);
 

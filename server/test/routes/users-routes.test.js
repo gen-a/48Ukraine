@@ -4,6 +4,9 @@ const chai = require('chai');
 const app = require('../../server');
 const user = require('../user');
 const predict = require('../predict');
+const { exitIfNotTest } = require('../../lib/env-params');
+
+exitIfNotTest();
 
 mongoose.set('useCreateIndex', true);
 
