@@ -6,7 +6,8 @@ const mongoose = require('mongoose');
 const { authenticatedRequest } = require('../authenticated-request');
 const user = require('../user');
 const predict = require('../predict');
-const { exitIfNotTest }  = require('../../lib/env-params');
+const config = require('../../config');
+const { exitIfNotTest } = require('../../lib/env-params');
 
 exitIfNotTest();
 mongoose.set('useCreateIndex', true);
