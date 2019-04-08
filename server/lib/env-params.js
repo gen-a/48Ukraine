@@ -24,6 +24,8 @@ exports.checkRequired = (params) => {
  * Break script if Node is not in test mode
  */
 exports.exitIfNotTest = () => {
-  console.log('run this script in NODE_ENV test mode only!'.red);
-  process.exit();
+  if(process.env.NODE_ENV !== 'test'){
+    console.log('run this script in NODE_ENV test mode only!'.red);
+    process.exit();
+  }
 };
