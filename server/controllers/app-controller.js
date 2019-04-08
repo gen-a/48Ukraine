@@ -1,10 +1,8 @@
-const path = require('path');
-require('dotenv').config({ path: path.resolve(__dirname, '../../.env') });
-const fs = require('fs');
 const axios = require('axios');
+
+const config = require('../config');
 const { response } = require('../lib/response');
 const { arrayToTree } = require('../lib/data-tree');
-
 
 const mapListedSections = (data) => {
   const icons = {
@@ -71,7 +69,7 @@ exports.storeCart = (req, res, next) => {
  */
 exports.initialState = (req, res, next) => {
   axios({
-    url: `${process.env.DATA_SERVER_URL}/data/sections`,
+    url: `${config.get('app.dataUrl')}/data/sections`,
     method: 'get',
     data: {}
   })

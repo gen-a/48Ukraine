@@ -1,12 +1,11 @@
-const path = require('path');
-require('dotenv').config({ path: path.resolve(__dirname, '../../../.env') });
+const config = require('../../config');
 const chai = require('chai');
 const { mail } = require('../../services/mail');
 const { expect } = chai;
 
 const data = {
-  from: process.env.MAIL_FROM,
-  to: process.env.MAIL_FOR_TEST,
+  from: config.get('app.mailFrom'),
+  to: config.get('app.mailFrom'),
   subject: 'testing email',
   text: 'text of the mail',
   html: '<p>HTML</p>',

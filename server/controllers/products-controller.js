@@ -1,6 +1,4 @@
-const path = require('path');
-require('dotenv').config({ path: path.resolve(__dirname, '../../.env') });
-const fs = require('fs');
+const config = require('../config');
 const axios = require('axios');
 const { response } = require('../lib/response');
 
@@ -19,15 +17,15 @@ exports.mapListedProducts = (products) => {
       name: p.name,
       attributesInfo: p.attributes_info,
       image: {
-        fs: `${process.env.DATA_SERVER_URL}${p['image:src']}`,
-        sm: `${process.env.DATA_SERVER_URL}${p['image-sm:src']}`,
+        fs: `${config.get('app.dataUrl')}${p['image:src']}`,
+        sm: `${config.get('app.dataUrl')}${p['image-sm:src']}`,
       }
     }
   ));
-}
+};
 
 exports.findPopular = function findPopular(req, res, next) {
-  axios.get(`${process.env.DATA_SERVER_URL}/data/products-popular`, { params: req.query })
+  axios.get(`${config.get('app.dataUrl')}/data/products-popular`, { params: req.query })
     .then(result => result.data)
     .then(({ data, message, error }) => {
       res.status(200).json(response({
@@ -43,7 +41,7 @@ exports.findPopular = function findPopular(req, res, next) {
 };
 exports.findNew = function findNew(req, res, next) {
 
-  axios.get(`${process.env.DATA_SERVER_URL}/data/products-new`, { params: req.query })
+  axios.get(`${config.get('app.dataUrl')}/data/products-new`, { params: req.query })
     .then(result => result.data)
     .then(({ data, message, error }) => {
       res.status(200).json(response({
@@ -59,7 +57,7 @@ exports.findNew = function findNew(req, res, next) {
 };
 exports.findOnSale = function getProductById(req, res, next) {
 
-  axios.get(`${process.env.DATA_SERVER_URL}/data/products-sale`, { params: req.query })
+  axios.get(`${config.get('app.dataUrl')}/data/products-sale`, { params: req.query })
     .then(result => result.data)
     .then(({ data, message, error }) => {
       res.status(200).json(response({
@@ -77,7 +75,7 @@ exports.findOnSale = function getProductById(req, res, next) {
 
 exports.findById = function getProductById(req, res, next) {
 
-  axios.get(`${process.env.DATA_SERVER_URL}/data/product`, { params: req.query })
+  axios.get(`${config.get('app.dataUrl')}/data/product`, { params: req.query })
     .then(result => result.data)
     .then(({ data, message, error }) => {
 
@@ -87,9 +85,9 @@ exports.findById = function getProductById(req, res, next) {
       const product = {
         ...data,
         images: data.images.map(img => ({
-          fs: `${process.env.DATA_SERVER_URL}${img['image:src']}`,
-          md: `${process.env.DATA_SERVER_URL}${img['image-sm:src']}`,
-          sm: `${process.env.DATA_SERVER_URL}${img['image-sm:src']}`,
+          fs: `${config.get('app.dataUrl')}${img['image:src']}`,
+          md: `${config.get('app.dataUrl')}${img['image-sm:src']}`,
+          sm: `${config.get('app.dataUrl')}${img['image-sm:src']}`,
         })),
         price: {
           retail: toCoins(data.items[0].price),
@@ -125,7 +123,7 @@ exports.find = function getAllProducts(req, res, next) {
   if (req.query.department) {
     req.query.section = req.query.department;
   }
-  axios.get(`${process.env.DATA_SERVER_URL}/data/products`, { params: req.query })
+  axios.get(`${config.get('app.dataUrl')}/data/products`, { params: req.query })
     .then(result => result.data)
     .then(({ data, message, error }) => {
       res.status(200).json(response({

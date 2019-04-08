@@ -1,5 +1,4 @@
-require('./config/env');
-require('./config/passport');
+require('./services/passport');
 
 const cors = require('cors');
 const morgan = require('morgan');
@@ -13,6 +12,8 @@ const FileStore = require('session-file-store')(session);
 const path = require('path');
 const flash = require('connect-flash');
 
+const config = require('./config');
+
 const userRoutes = require('./routes/user-routes');
 const authRoutes = require('./routes/auth-routes');
 const appRoutes = require('./routes/app-routes');
@@ -20,17 +21,17 @@ const productsRoutes = require('./routes/products-routes');
 const ordersRoutes = require('./routes/orders-routes');
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = config.get('server.port');
 
-const { connect } = require('./config/mongoose');
+const { connect } = require('./services/mongoose');
 
 process.on('unhandledRejection', () => {
 });
 
 // middlewares //
-if(process.env.CORS_ORIGIN.length > 0){
+if( config.get('corsOrigin').length > 0){
   app.use(cors({
-    origin: [process.env.CORS_ORIGIN.split(',')],
+    origin: [config.get('corsOrigin').split(',')],
     methods: ['POST', 'PUT'],
     credentials: true // enable set cookie
   }));
@@ -47,7 +48,7 @@ app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 app.use(cookieParser());
 app.use(session({
   store: new FileStore({ retries: 0 }),
-  secret: process.env.SESSION_SECRET_KEY,
+  secret: config.get('session.secretKey'),
   resave: true,
   saveUninitialized: false,
   cookie: {
@@ -81,8 +82,8 @@ app.get('*', (req, res) => {
 connect()
   .then(() => {
     app.listen(PORT, () => {
-      if (process.env.NODE_ENV === 'development') {
-        console.log(`Server running at http://${process.env.HOST || 'localhost'}:${PORT}/`);
+      if (config.get('env') === 'development') {
+        console.log(`Server running at http://${config.get('server.host')}:${PORT}/`);
       }
     });
   })

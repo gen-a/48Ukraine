@@ -1,6 +1,6 @@
 const { expect } = require('chai');
 const User = require('../../models/user-model');
-const { connect } = require('../../config/mongoose');
+const { connect } = require('../../services/mongoose');
 
 before((done) => {
   connect()

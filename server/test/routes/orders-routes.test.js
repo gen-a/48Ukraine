@@ -1,10 +1,4 @@
-if (process.env.NODE_ENV !== 'test') {
-  console.log('run this script in NODE_ENV test mode only!');
-  console.log('try to run test:win for windows or test:lin for Linux!');
-  process.exit();
-}
-const path = require('path');
-require('dotenv').config({ path: path.resolve(__dirname, '../../.env') });
+const config = require('../../config');
 const request = require('supertest');
 const axios = require('axios');
 const { expect } = require('chai');
@@ -37,7 +31,7 @@ const order = {
 describe('/routes/orders-routes.js API Integration Tests', () => {
   before((done) => {
     /** Collect products data for the order */
-    axios.get(`${process.env.DATA_SERVER_URL}/data/products-popular`, {})
+    axios.get(`${config.get('app.dataUrl')}/data/products-popular`, {})
       .then(result => result.data)
       .then(({ data: { records } }) => mapListedProducts(records))
       .then((records) => {
