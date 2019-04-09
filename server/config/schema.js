@@ -2,10 +2,22 @@ const path = require('path');
 const fs = require('fs');
 const { checkRequired } = require('../lib/env-params');
 
+/** Check required parameters. */
 const params = ['DB_MONGO_URL', 'DB_MONGO_URL_TEST', 'SESSION_SECRET_KEY', 'MAIL_PASS', 'JWT_PRIVATE_KEY'];
 checkRequired(params);
 
+/** Set env parameters depending on mode. */
+if (process.env.NODE_ENV === 'test') {
+  process.env.DB_MONGO_URL = process.env.DB_MONGO_URL_TEST;
+}
 
+/** Destructurization of process.env for using in schema. */
+const {
+  DB_MONGO_URL, SESSION_SECRET_KEY, MAIL_PASS, JWT_PRIVATE_KEY
+} = process.env;
+
+
+/** Export schema. */
 module.exports = {
   env: {
     doc: 'The application environment.',
@@ -38,7 +50,7 @@ module.exports = {
     secretKey: {
       doc: 'Session secret key.',
       format: String,
-      default: process.env.SESSION_SECRET_KEY,
+      default: SESSION_SECRET_KEY,
       env: 'SESSION_SECRET_KEY',
       sensitive: true
     },
@@ -48,17 +60,9 @@ module.exports = {
       url: {
         doc: 'MongoDB url connect address.',
         format: String,
-        default: process.env.DB_MONGO_URL,
+        default: DB_MONGO_URL,
         env: 'DB_MONGO_URL',
       },
-      test: {
-        url: {
-          doc: 'MongoDB url connect address for testing.',
-          format: String,
-          default: process.env.DB_MONGO_URL_TEST,
-          env: 'DB_MONGO_URL_TEST',
-        }
-      }
     }
   },
   mail: {
@@ -83,7 +87,7 @@ module.exports = {
     pass: {
       doc: 'Mail password.',
       format: String,
-      default: process.env.MAIL_PASS,
+      default: MAIL_PASS,
       env: 'MAIL_PASS',
       sensitive: true
     },
@@ -92,7 +96,7 @@ module.exports = {
     privateKey: {
       doc: 'JWT private key.',
       format: String,
-      default: process.env.JWT_PRIVATE_KEY,
+      default: JWT_PRIVATE_KEY,
       env: 'JWT_PRIVATE_KEY',
       sensitive: true
     },
